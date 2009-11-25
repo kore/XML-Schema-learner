@@ -41,6 +41,16 @@ class slSingleOccurenceAutomaton extends slAutomaton
      */
     public function learn( array $tokens )
     {
+        switch ( count( $tokens ) )
+        {
+            case 0:
+                return;
+
+            case 1:
+                $this->nodes[reset( $tokens )] = true;
+                return;
+        }
+
         $first = array_shift( $tokens );
         while ( $next = array_shift( $tokens ) )
         {

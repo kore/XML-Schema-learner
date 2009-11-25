@@ -37,6 +37,13 @@ class slMainSingleOccurenceAutomatonTests extends PHPUnit_Framework_TestCase
 		return new PHPUnit_Framework_TestSuite( __CLASS__ );
 	}
 
+    public function testLearnSingle()
+    {
+        $automaton = new slSingleOccurenceAutomaton();
+        $automaton->learn( array( 'a' ) );
+        $this->assertEquals( array( 'a' ), $automaton->getNodes() );
+    }
+
     public function testLearnTriple()
     {
         $automaton = new slSingleOccurenceAutomaton();
