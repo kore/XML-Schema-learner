@@ -27,6 +27,7 @@
  */
 require 'main/automaton_tests.php';
 require 'main/single_occurence_automaton_tests.php';
+require 'main/type_inferencer_tests.php';
 
 /**
  * General root test suite
@@ -45,6 +46,7 @@ class slMainTestSuite extends PHPUnit_Framework_TestSuite
 
         $this->addTest( slMainAutomatonTests::suite() );
         $this->addTest( slMainSingleOccurenceAutomatonTests::suite() );
+        $this->addTest( slMainTypeInferencerTests::suite() );
     }
 
     /**
