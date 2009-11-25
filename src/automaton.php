@@ -69,6 +69,35 @@ class slAutomaton
     }
 
     /**
+     * Remove the given node from the graph
+     *
+     * Removes the given node from the graph including all edges from and to 
+     * the given node.
+     *
+     * Returns false, if the node did not exist, and tru otherwise.
+     * 
+     * @param string $node 
+     * @return bool
+     */
+    public function removeNode( $node )
+    {
+        if ( !isset( $this->nodes[$node] ) )
+        {
+            return false;
+        }
+
+        unset( $this->nodes[$node] );
+        unset( $this->edges[$node] );
+        foreach ( $this->edges as $source => $edge )
+        {
+            if ( isset( $edge[$node] ) )
+            {
+                unset( $this->edges[$source][$node] );
+            }
+        }
+    }
+
+    /**
      * Get all nodes
      * 
      * @return void

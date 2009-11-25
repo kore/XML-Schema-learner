@@ -90,5 +90,19 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
         $this->assertEquals( array( 'b', 'c' ), $automaton->getOutgoing( 'a' ) );
         $this->assertEquals( array( 'a', 'b' ), $automaton->getIncoming( 'c' ) );
     }
+
+    public function testRemoveNode()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->addEdge( 'a', 'c' );
+        $automaton->addEdge( 'b', 'c' );
+        $automaton->removeNode( 'b' );
+
+        $this->assertEquals( array( 'a', 'c' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'c' ), $automaton->getOutgoing( 'a' ) );
+        $this->assertEquals( array( 'a' ), $automaton->getIncoming( 'c' ) );
+    }
 }
 

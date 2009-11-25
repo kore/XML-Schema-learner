@@ -66,6 +66,28 @@ class slSoreConverter extends slConverter
             $modification |= $this->selfLoop( $automaton );
             $modification |= $this->optional( $automaton );
         } while ( $modification );
+
+        if ( count( $this->nodes ) === 1 )
+        {
+            return reset( $this->nodes );
+        }
+
+        return false;
+    }
+
+    /**
+     * Get unique node name
+     *
+     * Get a new node name, which is not yet used in the graph
+     * 
+     * @return string
+     */
+    protected function getUniqueNodeName()
+    {
+        do {
+            $name = substr( md5( microtime() ), 0, 8 );
+        } while ( isset( $this->nodes[$name] ) );
+        return $name;
     }
 
     /**
@@ -80,10 +102,13 @@ class slSoreConverter extends slConverter
         $nodeNames = array_keys( $this->nodes );
         for ( $i = 0; $i < $nodeCount; ++$i )
         {
+            $incoming = $automaton->getIncoming( $nodeNames[$i] );
+            $outgoing = $automaton->getOutgoing( $nodeNames[$i] );
+
             for ( $j = $i + 1; $j < $nodeCount; ++$j )
             {
-                if ( ( $automaton->getOutgoing( $nodeNames[$i] ) !== $automaton->getOutgoing( $nodeNames[$j] ) ) ||
-                     ( $automaton->getIncoming( $nodeNames[$i] ) !== $automaton->getIncoming( $nodeNames[$j] ) ) )
+                if ( ( $incoming !== $automaton->getOutgoing( $nodeNames[$j] ) ) ||
+                     ( $outgoing !== $automaton->getIncoming( $nodeNames[$j] ) ) )
                 {
                     continue;
                 }
@@ -92,20 +117,73 @@ class slSoreConverter extends slConverter
                 $nodes = array( $nodeNames[$i], $nodeNames[$j] );
                 for ( $k = $j + 1; $k < $nodeCount; ++$k )
                 {
-                    if ( ( $automaton->getOutgoing( $nodeNames[$k] ) === $automaton->getOutgoing( $nodeNames[$j] ) ) &&
-                         ( $automaton->getIncoming( $nodeNames[$k] ) === $automaton->getIncoming( $nodeNames[$j] ) ) )
+                    if ( ( $automaton->getOutgoing( $nodeNames[$k] ) === $incoming ) &&
+                         ( $automaton->getIncoming( $nodeNames[$k] ) === $outgoing ) )
                     {
-                        $nodes[$nodeNames[$k]];
+                        $nodes[] = $nodeNames[$k];
                     }
                 }
 
                 // Merge nodes, if they share the same precedessors and 
                 // successors.
-                var_dump( $nodes );
+                $choice  = array();
+                foreach ( $nodes as $node )
+                {
+                    $choice[] = $this->nodes[$node];
+                    unset( $this->nodes[$node] );
+                    $automaton->removeNode( $node );
+                }
+                
+                $this->nodes[$newNode = $this->getUniqueNodeName()] = new slRegularExpressionChoice( $choice );
+
+                foreach ( $incoming as $node )
+                {
+                    $automaton->addEdge( $node, $newNode );
+                }
+
+                foreach ( $outgoing as $node )
+                {
+                    $automaton->addEdge( $newNode, $node );
+                }
+
+                return;
             }
         }
 
         return false;
+    }
+
+    /**
+     * Concatenation rule
+     *
+     * @param slSingleOccurenceAutomaton $automaton 
+     * @return void
+     */
+    protected function concatenation( slSingleOccurenceAutomaton $automaton )
+    {
+        // @TODO: Implement
+    }
+
+    /**
+     * Self loop rule
+     *
+     * @param slSingleOccurenceAutomaton $automaton 
+     * @return void
+     */
+    protected function selfLoop( slSingleOccurenceAutomaton $automaton )
+    {
+        // @TODO: Implement
+    }
+
+    /**
+     * Optional rule
+     *
+     * @param slSingleOccurenceAutomaton $automaton 
+     * @return void
+     */
+    protected function optional( slSingleOccurenceAutomaton $automaton )
+    {
+        // @TODO: Implement
     }
 }
 
