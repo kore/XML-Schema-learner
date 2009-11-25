@@ -107,8 +107,8 @@ class slSoreConverter extends slConverter
 
             for ( $j = $i + 1; $j < $nodeCount; ++$j )
             {
-                if ( ( $incoming !== $automaton->getOutgoing( $nodeNames[$j] ) ) ||
-                     ( $outgoing !== $automaton->getIncoming( $nodeNames[$j] ) ) )
+                if ( ( $incoming !== $automaton->getIncoming( $nodeNames[$j] ) ) ||
+                     ( $outgoing !== $automaton->getOutgoing( $nodeNames[$j] ) ) )
                 {
                     continue;
                 }
@@ -117,8 +117,8 @@ class slSoreConverter extends slConverter
                 $nodes = array( $nodeNames[$i], $nodeNames[$j] );
                 for ( $k = $j + 1; $k < $nodeCount; ++$k )
                 {
-                    if ( ( $automaton->getOutgoing( $nodeNames[$k] ) === $incoming ) &&
-                         ( $automaton->getIncoming( $nodeNames[$k] ) === $outgoing ) )
+                    if ( ( $automaton->getIncoming( $nodeNames[$k] ) === $incoming ) &&
+                         ( $automaton->getOutgoing( $nodeNames[$k] ) === $outgoing ) )
                     {
                         $nodes[] = $nodeNames[$k];
                     }
@@ -146,7 +146,7 @@ class slSoreConverter extends slConverter
                     $automaton->addEdge( $newNode, $node );
                 }
 
-                return;
+                return true;
             }
         }
 
@@ -161,7 +161,58 @@ class slSoreConverter extends slConverter
      */
     protected function concatenation( slSingleOccurenceAutomaton $automaton )
     {
-        // @TODO: Implement
+        $nodeCount = count( $this->nodes );
+        $nodeNames = array_keys( $this->nodes );
+        for ( $i = 0; $i < $nodeCount; ++$i )
+        {
+            if ( count( $outgoing = $automaton->getOutgoing( $nodeNames[$i] ) ) !== 1 )
+            {
+                continue;
+            }
+
+            // Collect nodes
+            $nodes = array( $nodeNames[$i] );
+            while ( ( count( $outgoing ) === 1 ) &&
+                    ( count( $automaton->getIncoming( $outgoing[0] ) ) === 1 ) )
+            {
+                $nodes[]  = $outgoing[0];
+                $outgoing = $automaton->getOutgoing( $outgoing[0] );
+            }
+
+            if ( count( $nodes ) <= 1 )
+            {
+                continue;
+            }
+
+            // Create a sequence out of the found sequence
+            $incoming = $automaton->getIncoming( $nodeNames[$i] );
+
+            // Merge nodes, if they share the same precedessors and 
+            // successors.
+            $sequence  = array();
+            foreach ( $nodes as $node )
+            {
+                $sequence[] = $this->nodes[$node];
+                unset( $this->nodes[$node] );
+                $automaton->removeNode( $node );
+            }
+            
+            $this->nodes[$newNode = $this->getUniqueNodeName()] = new slRegularExpressionSequence( $sequence );
+
+            foreach ( $incoming as $node )
+            {
+                $automaton->addEdge( $node, $newNode );
+            }
+
+            foreach ( $outgoing as $node )
+            {
+                $automaton->addEdge( $newNode, $node );
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**

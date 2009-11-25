@@ -72,5 +72,78 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
             $regexp
         );
     }
+
+    public function testGlobalConcatenation()
+    {
+        $automaton = new slSingleOccurenceAutomaton();
+        $automaton->learn( array( 'a', 'b' ) );
+
+        $converter = new slSoreConverter();
+        $regexp    = $converter->convertAutomaton( $automaton );
+        $this->assertEquals(
+            new slRegularExpressionSequence( array(
+                new slRegularExpressionSequence( array( 'a' ) ),
+                new slRegularExpressionSequence( array( 'b' ) ),
+            ) ),
+            $regexp
+        );
+    }
+
+    public function testGlobalTripleConcatenation()
+    {
+        $automaton = new slSingleOccurenceAutomaton();
+        $automaton->learn( array( 'a', 'b', 'c' ) );
+
+        $converter = new slSoreConverter();
+        $regexp    = $converter->convertAutomaton( $automaton );
+        $this->assertEquals(
+            new slRegularExpressionSequence( array(
+                new slRegularExpressionSequence( array( 'a' ) ),
+                new slRegularExpressionSequence( array( 'b' ) ),
+                new slRegularExpressionSequence( array( 'c' ) ),
+            ) ),
+            $regexp
+        );
+    }
+
+    public function testGlobalConcatenationOfDisjunction()
+    {
+        $automaton = new slSingleOccurenceAutomaton();
+        $automaton->learn( array( 'a', 'b1' ) );
+        $automaton->learn( array( 'a', 'b2' ) );
+
+        $converter = new slSoreConverter();
+        $regexp    = $converter->convertAutomaton( $automaton );
+        $this->assertEquals(
+            new slRegularExpressionSequence( array(
+                new slRegularExpressionSequence( array( 'a' ) ),
+                new slRegularExpressionChoice( array(
+                    new slRegularExpressionSequence( array( 'b1' ) ),
+                    new slRegularExpressionSequence( array( 'b2' ) ),
+                ) ),
+            ) ),
+            $regexp
+        );
+    }
+
+    public function testGlobalDisjunctionOfConcatenation()
+    {
+        $automaton = new slSingleOccurenceAutomaton();
+        $automaton->learn( array( 'a' ) );
+        $automaton->learn( array( 'b', 'c' ) );
+
+        $converter = new slSoreConverter();
+        $regexp    = $converter->convertAutomaton( $automaton );
+        $this->assertEquals(
+            new slRegularExpressionChoice( array(
+                new slRegularExpressionSequence( array( 'a' ) ),
+                new slRegularExpressionSequence( array(
+                    new slRegularExpressionSequence( array( 'b' ) ),
+                    new slRegularExpressionSequence( array( 'c' ) ),
+                ) ),
+            ) ),
+            $regexp
+        );
+    }
 }
 
