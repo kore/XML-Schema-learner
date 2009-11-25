@@ -22,11 +22,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
 
-/*
- * Require environment file
- */
-require __DIR__ . '/../src/environment.php';
-
 /**
  * Require tests
  */
