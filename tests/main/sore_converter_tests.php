@@ -37,7 +37,7 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
 		return new PHPUnit_Framework_TestSuite( __CLASS__ );
 	}
 
-    public function testGlobalDisjunction()
+    public function testDisjunction()
     {
         $automaton = new slSingleOccurenceAutomaton();
         $automaton->learn( array( 'a' ) );
@@ -54,7 +54,7 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGlobalTripleDisjunction()
+    public function testTripleDisjunction()
     {
         $automaton = new slSingleOccurenceAutomaton();
         $automaton->learn( array( 'a' ) );
@@ -73,7 +73,7 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGlobalConcatenation()
+    public function testConcatenation()
     {
         $automaton = new slSingleOccurenceAutomaton();
         $automaton->learn( array( 'a', 'b' ) );
@@ -89,7 +89,7 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGlobalTripleConcatenation()
+    public function testTripleConcatenation()
     {
         $automaton = new slSingleOccurenceAutomaton();
         $automaton->learn( array( 'a', 'b', 'c' ) );
@@ -106,7 +106,7 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGlobalConcatenationOfDisjunction()
+    public function testConcatenationOfDisjunction()
     {
         $automaton = new slSingleOccurenceAutomaton();
         $automaton->learn( array( 'a', 'b1' ) );
@@ -126,7 +126,7 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGlobalDisjunctionOfConcatenation()
+    public function testDisjunctionOfConcatenation()
     {
         $automaton = new slSingleOccurenceAutomaton();
         $automaton->learn( array( 'a' ) );
@@ -146,7 +146,7 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGlobalSelfLoop()
+    public function testSelfLoop()
     {
         $automaton = new slSingleOccurenceAutomaton();
         $automaton->learn( array( 'a', 'a' ) );
@@ -156,6 +156,49 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             new slRegularExpressionRepeated( array(
                 new slRegularExpressionSequence( array( 'a' ) ),
+            ) ),
+            $regexp
+        );
+    }
+
+    public function testOptional()
+    {
+        $automaton = new slSingleOccurenceAutomaton();
+        $automaton->learn( array( 'a', 'b', 'c' ) );
+        $automaton->learn( array( 'a', 'c' ) );
+
+        $converter = new slSoreConverter();
+        $regexp    = $converter->convertAutomaton( $automaton );
+        $this->assertEquals(
+            new slRegularExpressionSequence( array(
+                new slRegularExpressionSequence( array( 'a' ) ),
+                new slRegularExpressionOptional( array(
+                    new slRegularExpressionSequence( array( 'b' ) ),
+                ) ),
+                new slRegularExpressionSequence( array( 'c' ) ),
+            ) ),
+            $regexp
+        );
+    }
+
+    public function testOptionalDouble()
+    {
+        $automaton = new slSingleOccurenceAutomaton();
+        $automaton->learn( array( 'a1', 'b', 'c' ) );
+        $automaton->learn( array( 'a2', 'b', 'c' ) );
+        $automaton->learn( array( 'a1', 'c' ) );
+        $automaton->learn( array( 'a2', 'c' ) );
+
+        $converter = new slSoreConverter();
+        $regexp    = $converter->convertAutomaton( $automaton );
+        var_dump( $regexp );
+        $this->assertEquals(
+            new slRegularExpressionSequence( array(
+                new slRegularExpressionSequence( array( 'a' ) ),
+                new slRegularExpressionOptional( array(
+                    new slRegularExpressionSequence( array( 'b' ) ),
+                ) ),
+                new slRegularExpressionSequence( array( 'c' ) ),
             ) ),
             $regexp
         );

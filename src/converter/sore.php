@@ -252,7 +252,42 @@ class slSoreConverter extends slConverter
      */
     protected function optional( slSingleOccurenceAutomaton $automaton )
     {
-        // @TODO: Implement
+        $nodeCount = count( $this->nodes );
+        $nodeNames = array_keys( $this->nodes );
+        for ( $i = 0; $i < $nodeCount; ++$i )
+        {
+            $outgoing = $automaton->getOutgoing( $nodeNames[$i] );
+            $incoming = $automaton->getIncoming( $nodeNames[$i] );
+            if ( !count( $incoming ) )
+            {
+                continue;
+            }
+
+            foreach ( $incoming as $precedessor )
+            {
+                if ( !count( array_diff( $outgoing, $automaton->getOutgoing( $precedessor ) ) ) === 0 )
+                {
+                    continue 2;
+                }
+            }
+
+            $this->nodes[$nodeNames[$i]] = new slRegularExpressionOptional( array( $this->nodes[$nodeNames[$i]] ) );
+            foreach ( $incoming as $src )
+            {
+                foreach ( $outgoing as $dst )
+                {
+                    if ( $dst === $nodeNames[$i] )
+                    {
+                        continue;
+                    }
+
+                    $automaton->removeEdge( $src, $dst );
+                }
+            }
+
+            return true;
+        }
+
         return false;
     }
 }
