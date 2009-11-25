@@ -145,5 +145,20 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
             $regexp
         );
     }
+
+    public function testGlobalSelfLoop()
+    {
+        $automaton = new slSingleOccurenceAutomaton();
+        $automaton->learn( array( 'a', 'a' ) );
+
+        $converter = new slSoreConverter();
+        $regexp    = $converter->convertAutomaton( $automaton );
+        $this->assertEquals(
+            new slRegularExpressionRepeated( array(
+                new slRegularExpressionSequence( array( 'a' ) ),
+            ) ),
+            $regexp
+        );
+    }
 }
 

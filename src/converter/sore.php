@@ -47,9 +47,9 @@ class slSoreConverter extends slConverter
     public function convertAutomaton( slSingleOccurenceAutomaton $automaton )
     {
         $states = $automaton->getNodes();
-        if ( ( $stateCount = count( $states ) ) <= 1 )
+        if ( ( $stateCount = count( $states ) ) < 1 )
         {
-            return new slRegularExpressionSequence( $states );
+            return new slRegularExpressionSequence();
         }
 
         $this->nodes = array();
@@ -175,6 +175,12 @@ class slSoreConverter extends slConverter
             while ( ( count( $outgoing ) === 1 ) &&
                     ( count( $automaton->getIncoming( $outgoing[0] ) ) === 1 ) )
             {
+                if ( in_array( $outgoing[0], $nodes, true ) )
+                {
+                    // Do not find (indirect) self-loops here
+                    continue 2;
+                }
+
                 $nodes[]  = $outgoing[0];
                 $outgoing = $automaton->getOutgoing( $outgoing[0] );
             }
@@ -223,7 +229,19 @@ class slSoreConverter extends slConverter
      */
     protected function selfLoop( slSingleOccurenceAutomaton $automaton )
     {
-        // @TODO: Implement
+        $nodeCount = count( $this->nodes );
+        $nodeNames = array_keys( $this->nodes );
+        for ( $i = 0; $i < $nodeCount; ++$i )
+        {
+            if ( in_array( $nodeNames[$i], $automaton->getOutgoing( $nodeNames[$i] ), true ) )
+            {
+                $this->nodes[$nodeNames[$i]] = new slRegularExpressionRepeated( array( $this->nodes[$nodeNames[$i]] ) );
+                $automaton->removeEdge( $nodeNames[$i], $nodeNames[$i] );
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -235,6 +253,7 @@ class slSoreConverter extends slConverter
     protected function optional( slSingleOccurenceAutomaton $automaton )
     {
         // @TODO: Implement
+        return false;
     }
 }
 
