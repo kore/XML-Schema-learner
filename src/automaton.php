@@ -86,6 +86,11 @@ class slAutomaton
      */
     public function getOutgoing( $node )
     {
+        if ( !isset( $this->edges[$node] ) )
+        {
+            return array();
+        }
+
         return array_keys( $this->edges[$node] );
     }
 

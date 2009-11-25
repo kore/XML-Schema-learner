@@ -37,9 +37,58 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 		return new PHPUnit_Framework_TestSuite( __CLASS__ );
 	}
 
-    public function testFail()
+    public function testFreshAutomaton()
     {
-        $this->assertTrue( false );
+        $automaton = new slAutomaton();
+        $this->assertEquals( array(), $automaton->getNodes() );
+    }
+
+    public function testCreateEdge()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $this->assertEquals( array( 'a', 'b' ), $automaton->getNodes() );
+    }
+
+    public function testIncoming()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $this->assertEquals( array( 'a' ), $automaton->getIncoming( 'b' ) );
+    }
+
+    public function testNoIncoming()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $this->assertEquals( array(), $automaton->getIncoming( 'a' ) );
+    }
+
+    public function testOutgoing()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $this->assertEquals( array( 'b' ), $automaton->getOutgoing( 'a' ) );
+    }
+
+    public function testNoOutgoing()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $this->assertEquals( array(), $automaton->getOutgoing( 'b' ) );
+    }
+
+    public function testMultipleEdges()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->addEdge( 'a', 'c' );
+        $automaton->addEdge( 'b', 'c' );
+
+        $this->assertEquals( array( 'a', 'b', 'c' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'b', 'c' ), $automaton->getOutgoing( 'a' ) );
+        $this->assertEquals( array( 'a', 'b' ), $automaton->getIncoming( 'c' ) );
     }
 }
 
