@@ -22,20 +22,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
 
-require 'type_inferencer.php';
-require 'type_inferencer/name_based.php';
-
-require 'automaton.php';
-require 'automaton/single_occurence.php';
-
-require 'regular_expression.php';
-require 'regular_expression/sequence.php';
-require 'regular_expression/choice.php';
-require 'regular_expression/optional.php';
-require 'regular_expression/repeated.php';
-
-require 'converter.php';
-require 'converter/sore.php';
+require 'environment.php';
 
 /**
  * Main class, which implements the argument loading and dispatching to the 

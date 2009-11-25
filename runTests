@@ -1,0 +1,29 @@
+#!/usr/bin/env php
+<?php
+
+// List of special test modules.
+$modules = array(
+//	'name' => array( 'class', 'tests/file.php' ),
+);
+
+$argv[0] = 'phpunit';
+$argv = array_merge( $argv, array( '--configuration', 'tests/phpunit.xml' ) );
+
+// Check if the test should only be run for a specified module.
+if ( isset( $argv[1] ) &&
+     isset( $modules[$argv[1]] ) )
+{
+    $module = $argv[1];
+    unset( $argv[1] );
+    $_SERVER['argv'] = array_merge( $argv, $modules[$module] );
+}
+elseif ( count( $argv ) < 4 )
+{
+    $_SERVER['argv'] = array_merge( $argv, array( 'slTestSuite', 'tests/suite.php' ) );
+}
+
+echo "Executing: ", array_reduce( array_map( function( $arg ) { return escapeshellarg( $arg ); }, $_SERVER['argv'] ), function( $a, $b ) { return $a . ' ' . $b; } ), "\n";
+
+require __DIR__ . '/tests/runner/command.php';
+arbitTextUiCommand::main();
+
