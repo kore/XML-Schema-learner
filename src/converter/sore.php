@@ -93,6 +93,16 @@ class slSoreConverter extends slConverter
     /**
      * Disjuction rule
      *
+     * Precondition: W = {r1, …, rn} is a set of states with n ≥ 2 such that 
+     * every two nodes ri, rj have the same predecessor and successor set. 
+     * (Note, that this implies that either (i) there are no edges in G 
+     * between r1, …, rn at all or (ii) that, for each i, j there is an edge
+     * (ri , rj ) in G∗ .)
+     *
+     * Action: Remove r1, …, rn, add a new node r = r1 + … + rn , redirect
+     * all incoming and outgoing edges of r1, …, rn to r. In case of (ii)
+     * add the edge (r, r).
+     *
      * @param slSingleOccurenceAutomaton $automaton 
      * @return void
      */
@@ -155,6 +165,15 @@ class slSoreConverter extends slConverter
 
     /**
      * Concatenation rule
+     *
+     * Precondition: W = {r1, …, rn} is a maximal set of states, n ≥ 2,
+     * such that there is an edge from every ri to ri+1 , every node 
+     * besides r1 has only one incoming edge, and every node besides rn
+     * has only one outgoing edge.
+     *
+     * Action: Remove r1, …, rn, add a new node r = r1 … rn, redirect all 
+     * incoming edges of r1 and all outgoing edges of rn to r. (In particular:
+     * if G has an edge (rn, r1) then (r, r) is added.)
      *
      * @param slSingleOccurenceAutomaton $automaton 
      * @return void
@@ -224,6 +243,10 @@ class slSoreConverter extends slConverter
     /**
      * Self loop rule
      *
+     * Precondition: (r, r) ∈ E.
+     *
+     * Action: Delete (r, r), relabel r by r+.
+     *
      * @param slSingleOccurenceAutomaton $automaton 
      * @return void
      */
@@ -246,6 +269,13 @@ class slSoreConverter extends slConverter
 
     /**
      * Optional rule
+     *
+     * Precondition: Every r′ ∈ Pred(r), Succ(r) ⊆ Succ(r′). (Thus:
+     * every node that can be reached through r from a predecessor, can
+     * also be reached directly from that predecessor.)
+     *
+     * Action: Relabel r by r?, remove all edges (r′ , r′′) such that 
+     * r′ ∈ Pred(r) and r′′ ∈ Succ(r) \ {r}.
      *
      * @param slSingleOccurenceAutomaton $automaton 
      * @return void
