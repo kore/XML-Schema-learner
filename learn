@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 /**
  * Schema learning
@@ -22,20 +23,8 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
 
-require __DIR__ . '/main.php';
+require __DIR__ . '/src/environment.php';
 
-require __DIR__ . '/type_inferencer.php';
-require __DIR__ . '/type_inferencer/name_based.php';
-
-require __DIR__ . '/automaton.php';
-require __DIR__ . '/automaton/single_occurence.php';
-
-require __DIR__ . '/regular_expression.php';
-require __DIR__ . '/regular_expression/sequence.php';
-require __DIR__ . '/regular_expression/choice.php';
-require __DIR__ . '/regular_expression/optional.php';
-require __DIR__ . '/regular_expression/repeated.php';
-
-require __DIR__ . '/converter.php';
-require __DIR__ . '/converter/sore.php';
+$main = new slMain();
+$main->main( $argv );
 

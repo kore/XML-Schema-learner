@@ -22,8 +22,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
 
-require_once 'environment.php';
-
 /**
  * Main class, which implements the argument loading and dispatching to the 
  * learning implementations
@@ -173,6 +171,3 @@ class slMain
     }
 }
  
-$main = new slMain();
-$main->main( $argv );
-
