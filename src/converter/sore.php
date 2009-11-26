@@ -25,6 +25,15 @@
 /**
  * Basic converter for single occurence automatons to regular expressions
  *
+ * Algorithm implemented like described in:
+ *
+ * "Inference of Concise DTDs from XML Data",
+ * by
+ *  - Geert Jan Bex
+ *  - Frank Neven
+ *  - Thomas Schwentick
+ *  - Karl Tuyls
+ *
  * @package Core
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
