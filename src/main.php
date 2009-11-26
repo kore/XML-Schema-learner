@@ -162,12 +162,13 @@ class slMain
      * Convert automaton to regular expression
      * 
      * @param slAutomaton $automaton 
-     * @return void
+     * @return slRegularExpression
      */
     protected function convertRegularExpression( $automaton )
     {
         // Convert automatons
-        return $automaton;
+        $converter = new slSoreConverter();
+        return $converter->convertAutomaton( $automaton );
     }
 }
  
