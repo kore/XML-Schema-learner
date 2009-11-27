@@ -180,5 +180,32 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
             $regexp
         );
     }
+
+    public function testOptionalDouble()
+    {
+        $automaton = new slSingleOccurenceAutomaton();
+        $automaton->learn( array( 'a1', 'b', 'c' ) );
+        $automaton->learn( array( 'a2', 'b', 'c' ) );
+        $automaton->learn( array( 'a1', 'c' ) );
+        $automaton->learn( array( 'a2', 'c' ) );
+
+        $converter = new slSoreConverter();
+        $regexp    = $converter->convertAutomaton( $automaton );
+        $this->assertEquals(
+            new slRegularExpressionSequence( array(
+                new slRegularExpressionChoice( array(
+                    new slRegularExpressionSequence( array( 'a1' ) ),
+                    new slRegularExpressionSequence( array( 'a2' ) ),
+                ) ),
+                new slRegularExpressionSequence( array(
+                    new slRegularExpressionOptional( array(
+                        new slRegularExpressionSequence( array( 'b' ) ),
+                    ) ),
+                    new slRegularExpressionSequence( array( 'c' ) ),
+                ) ),
+            ) ),
+            $regexp
+        );
+    }
 }
 

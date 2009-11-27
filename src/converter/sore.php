@@ -332,7 +332,7 @@ class slSoreConverter extends slConverter
         {
             $outgoing = $automaton->getOutgoing( $nodeNames[$i] );
             $incoming = $automaton->getIncoming( $nodeNames[$i] );
-            if ( !count( $incoming ) )
+            if ( !count( $incoming ) || !count( $outgoing ) )
             {
                 continue;
             }
