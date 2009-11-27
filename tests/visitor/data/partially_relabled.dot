@@ -1,0 +1,22 @@
+digraph G 
+{
+    node [
+        fontname  = Arial,
+        fontcolor = "#2e3436",
+        fontsize  = 10,
+
+        style     = filled,
+        color     = "#2e3436",
+        fillcolor = "#babdb6",
+        shape     = ellipse
+    ];
+
+    splines = true;
+    overlap = false;
+    a [label = "Node a"]
+    b [label = "b?"]
+    c [label = "c"]
+
+    a -> b
+    a -> c
+}

@@ -23,37 +23,31 @@
  */
 
 /**
- * Require tests
+ * Automaton visitor base class.
+ *
+ * @package Core
+ * @version $Revision: 1236 $
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-require 'visitor/regular_expression_string_visitor_tests.php';
-require 'visitor/automaton_dot_visitor.php';
-
-/**
- * General root test suite
- */
-class slVisitorTestSuite extends PHPUnit_Framework_TestSuite
+abstract class slAutomatonVisitor
 {
     /**
-     * Basic constructor for test suite
+     * Main visit function
+     *
+     * Visit function to process an automaton (directed, cyclic, discontinuous 
+     * graph). No more detailed methods are defined, since the process of 
+     * visiting is highly dependent on the concrete visitor implementation.
+     *
+     * Optionally labels may be passed for each node in the graph, which might 
+     * be used during the rendering process.
+     *
+     * The return type of this method varies deping on the concrete visitor 
+     * implementation
      * 
-     * @return void
+     * @param slAutomaton $automaton
+     * @param array $labels
+     * @return mixed
      */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->setName( 'SchemaLearner - Visitor tests' );
-
-        $this->addTest( slVisitorRegularExpressionStringTests::suite() );
-        $this->addTest( slVisitorAutomatonDotTests::suite() );
-    }
-
-    /**
-     * Return test suite
-     * 
-     * @return slTestSuite
-     */
-    public static function suite()
-    {
-        return new slVisitorTestSuite( __CLASS__ );
-    }
+    abstract public function visit( slAutomaton $automaton, array $labels = array() );
 }
+
