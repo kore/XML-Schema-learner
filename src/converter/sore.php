@@ -67,13 +67,18 @@ class slSoreConverter extends slConverter
             $this->nodes[$state] = new slRegularExpressionSequence( array( $state ) );
         }
 
+        $this->debugAutomaton( $automaton, $this->nodes, $i = 1, 'start' );
         do {
             $modification = false;
             
             $modification |= $this->disjunction( $automaton );
+            $this->debugAutomaton( $automaton, $this->nodes, ++$i, 'disjunction' );
             $modification |= $this->concatenation( $automaton );
+            $this->debugAutomaton( $automaton, $this->nodes, ++$i, 'concatenation' );
             $modification |= $this->selfLoop( $automaton );
+            $this->debugAutomaton( $automaton, $this->nodes, ++$i, 'selfLoop' );
             $modification |= $this->optional( $automaton );
+            $this->debugAutomaton( $automaton, $this->nodes, ++$i, 'optional' );
         } while ( $modification );
 
         if ( count( $this->nodes ) === 1 )
@@ -82,6 +87,34 @@ class slSoreConverter extends slConverter
         }
 
         return false;
+    }
+
+    /**
+     * Store a dot file representing the current automaton for debugging
+     * 
+     * @param slSingleOccurenceAutomaton $automaton 
+     * @param array $regularExpressions 
+     * @param int $counter 
+     * @param string $label 
+     * @return void
+     */
+    protected function debugAutomaton( slSingleOccurenceAutomaton $automaton, array $regularExpressions, $counter, $label )
+    {
+        // @codeCoverageIgnoreStart
+        // This is pure debugging code, which is not required to be covered by 
+        // unit tests.
+        return;
+
+        $fileName         = sprintf( 'debug/%04d_%s.dot', $counter, $label );
+        $regExpVisitor    = new slRegularExpressionStringVisitor();
+        $labels           = array_map( array( $regExpVisitor, 'visit' ), $regularExpressions );
+        $automatonVisitor = new slAutomatonDotVisitor();
+
+        file_put_contents(
+            $fileName,
+            $automatonVisitor->visit( $automaton, $labels )
+        );
+        // @codeCoverageIgnoreEnd
     }
 
     /**
@@ -154,6 +187,7 @@ class slSoreConverter extends slConverter
                 }
                 
                 $this->nodes[$newNode = $this->getUniqueNodeName()] = new slRegularExpressionChoice( $choice );
+                $automaton->addNode( $newNode );
 
                 foreach ( $incoming as $node )
                 {
@@ -232,6 +266,7 @@ class slSoreConverter extends slConverter
             }
             
             $this->nodes[$newNode = $this->getUniqueNodeName()] = new slRegularExpressionSequence( $sequence );
+            $automaton->addNode( $newNode );
 
             foreach ( $incoming as $node )
             {
