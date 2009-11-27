@@ -64,7 +64,7 @@ class slSoreConverter extends slConverter
         $this->nodes = array();
         foreach ( $states as $state )
         {
-            $this->nodes[$state] = new slRegularExpressionSequence( array( $state ) );
+            $this->nodes[$state] = $state;
         }
 
         $this->debugAutomaton( $automaton, $this->nodes, $i = 1, 'start' );
