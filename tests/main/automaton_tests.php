@@ -43,6 +43,13 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
         $this->assertEquals( array(), $automaton->getNodes() );
     }
 
+    public function testCreateNode()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addNode( 'a' );
+        $this->assertEquals( array( 'a' ), $automaton->getNodes() );
+    }
+
     public function testCreateEdge()
     {
         $automaton = new slAutomaton();

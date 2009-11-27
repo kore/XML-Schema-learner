@@ -69,6 +69,18 @@ class slAutomaton
     }
 
     /**
+     * Add a node, which is not connected to any other nodes
+     * 
+     * @param string $node 
+     * @return void
+     */
+    public function addNode( $node )
+    {
+        $this->nodes[$node] = true;
+        $this->edges[$node] = array();
+    }
+
+    /**
      * Remove the given node from the graph
      *
      * Removes the given node from the graph including all edges from and to 
