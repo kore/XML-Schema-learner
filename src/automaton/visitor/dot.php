@@ -71,7 +71,7 @@ EOSTYLE;
 
         foreach ( $automaton->getNodes() as $node )
         {
-            $content .= sprintf( "    %s [label = \"%s\"]\n",
+            $content .= sprintf( "    \"%s\" [label = \"%s\"]\n",
                 $node,
                 isset( $labels[$node] ) ? $labels[$node] : $node
             );
@@ -82,7 +82,7 @@ EOSTYLE;
         {
             foreach ( $automaton->getOutgoing( $node ) as $dst )
             {
-                $content .= sprintf( "    %s -> %s\n",
+                $content .= sprintf( "    \"%s\" -> \"%s\"\n",
                     $node,
                     $dst
                 );

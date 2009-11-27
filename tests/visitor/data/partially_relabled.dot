@@ -13,10 +13,10 @@ digraph G
 
     splines = true;
     overlap = false;
-    a [label = "Node a"]
-    b [label = "b?"]
-    c [label = "c"]
+    "a" [label = "Node a"]
+    "b" [label = "b?"]
+    "c" [label = "c"]
 
-    a -> b
-    a -> c
+    "a" -> "b"
+    "a" -> "c"
 }

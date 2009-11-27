@@ -13,6 +13,6 @@ digraph G
 
     splines = true;
     overlap = false;
-    a [label = "a"]
+    "a" [label = "a"]
 
 }
