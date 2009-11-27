@@ -39,3 +39,6 @@ require __DIR__ . '/regular_expression/repeated.php';
 require __DIR__ . '/converter.php';
 require __DIR__ . '/converter/sore.php';
 
+require __DIR__ . '/regular_expression/visitor.php';
+require __DIR__ . '/regular_expression/visitor/string.php';
+

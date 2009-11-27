@@ -72,5 +72,18 @@ abstract class slRegularExpression
     {
         return $this->children;
     }
+
+    /**
+     * Get child
+     *
+     * Return the single (first) child for the regular expression, assuming it 
+     * only has one child.
+     * 
+     * @return slRegularExpression
+     */
+    public function getChild()
+    {
+        return $this->children[0];
+    }
 }
 

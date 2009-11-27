@@ -22,21 +22,15 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
 
-/*
- * Require environment file
+/**
+ * Require tests
  */
-require __DIR__ . '/../src/environment.php';
-
-/*
- * Require test suites.
- */
-require 'main_suite.php';
-require 'visitor_suite.php';
+require 'visitor/regular_expression_string_visitor_tests.php';
 
 /**
  * General root test suite
  */
-class slTestSuite extends PHPUnit_Framework_TestSuite
+class slVisitorTestSuite extends PHPUnit_Framework_TestSuite
 {
     /**
      * Basic constructor for test suite
@@ -46,10 +40,9 @@ class slTestSuite extends PHPUnit_Framework_TestSuite
     public function __construct()
     {
         parent::__construct();
-        $this->setName( 'SchemaLearner' );
+        $this->setName( 'SchemaLearner - Visitor tests' );
 
-        $this->addTestSuite( slMainTestSuite::suite() );
-        $this->addTestSuite( slVisitorTestSuite::suite() );
+        $this->addTest( slVisitorRegularExpressionStringTests::suite() );
     }
 
     /**
@@ -59,6 +52,6 @@ class slTestSuite extends PHPUnit_Framework_TestSuite
      */
     public static function suite()
     {
-        return new slTestSuite( __CLASS__ );
+        return new slVisitorTestSuite( __CLASS__ );
     }
 }
