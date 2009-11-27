@@ -1,0 +1,2 @@
+#!/bin/sh
+for FILE in *.dot ; do dot -Tpng $FILE > $FILE.png ; done
