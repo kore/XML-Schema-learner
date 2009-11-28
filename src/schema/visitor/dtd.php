@@ -32,6 +32,28 @@
 class slSchemaDtdVisitor extends slSchemaVisitor
 {
     /**
+     * Root element
+     * 
+     * @var string
+     */
+    protected $root;
+
+    /**
+     * Construct DTD visitor
+     *
+     * A DTD requires one single specified root element. Since this cannot be
+     * (yet) be inferenced from the schema you need to specify it to the 
+     * constructor.
+     * 
+     * @param string $root 
+     * @return void
+     */
+    public function __construct( $root )
+    {
+        $this->root = $root;
+    }
+
+    /**
      * Visit a schema
      *
      * The visitor is not structured, since the types might be required to be 
@@ -45,7 +67,7 @@ class slSchemaDtdVisitor extends slSchemaVisitor
      */
     public function visit( slSchema $schema )
     {
-        $dtd = "<!DOCTYPE \$root>\n\n";
+        $dtd = "<!DOCTYPE {$this->root}>\n\n";
 
         $regExpVisitor = new slRegularExpressionDtdVisitor();
         foreach ( $schema->getRegularExpressions() as $type => $expression )

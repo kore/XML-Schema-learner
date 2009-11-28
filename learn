@@ -33,6 +33,6 @@ foreach ( $files as $file )
     $dtdSchema->learnFile( $file );
 }
 
-$visitor = new slSchemaDtdVisitor();
+$visitor = new slSchemaDtdVisitor( 'html' );
 echo $visitor->visit( $dtdSchema );
 

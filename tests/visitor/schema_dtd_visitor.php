@@ -67,7 +67,7 @@ class slVisitorSchemaDtdTests extends PHPUnit_Framework_TestCase
             $dtd->learnFile( $file );
         }
 
-        $visitor = new slSchemaDtdVisitor();
+        $visitor = new slSchemaDtdVisitor( 'root' );
         $result = $visitor->visit( $dtd );
 
         // Read expectation from file, if available
