@@ -103,7 +103,7 @@ class slSoreConverter extends slConverter
         // @codeCoverageIgnoreStart
         // This is pure debugging code, which is not required to be covered by 
         // unit tests.
-        //return;
+        return;
 
         $fileName         = sprintf( 'debug/%04d_%s.dot', $counter, $label );
         $regExpVisitor    = new slRegularExpressionStringVisitor();
