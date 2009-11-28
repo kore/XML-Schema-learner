@@ -1,4 +1,3 @@
-#!/usr/bin/php
 <?php
 /**
  * Schema learning
@@ -23,16 +22,27 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
 
-require __DIR__ . '/src/environment.php';
-
-$files = array_slice( $argv, 1 );
-
-$dtdSchema = new slDtdSchema();
-foreach ( $files as $file )
+/**
+ * Base class for visiting schemas
+ *
+ * @package Core
+ * @version $Revision: 1236 $
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
+ */
+abstract class slSchemaVisitor
 {
-    $dtdSchema->learnFile( $file );
+    /**
+     * Visit a schema
+     *
+     * The visitor is not structured, since the types might be required to be 
+     * iterated tree-based for more complex schema definitions (like XML Schema 
+     * schemas).
+     *
+     * The return value depends on the concrete visitor implementation.
+     * 
+     * @param slSchema $schema 
+     * @return mixed
+     */
+    abstract public function visit( slSchema $schema );
 }
-
-$visitor = new slSchemaDtdVisitor();
-echo $visitor->visit( $dtdSchema );
 
