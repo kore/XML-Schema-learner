@@ -25,7 +25,7 @@
 /**
  * Basic converter for single occurence automatons to regular expressions
  *
- * Algorithm implemented like described in:
+ * REWRITE-Algorithm implemented like described in:
  *
  * "Inference of Concise DTDs from XML Data",
  * by
