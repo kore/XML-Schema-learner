@@ -103,7 +103,7 @@ class slSoreConverter extends slConverter
         // @codeCoverageIgnoreStart
         // This is pure debugging code, which is not required to be covered by 
         // unit tests.
-        return;
+        //return;
 
         $fileName         = sprintf( 'debug/%04d_%s.dot', $counter, $label );
         $regExpVisitor    = new slRegularExpressionStringVisitor();
@@ -159,6 +159,7 @@ class slSoreConverter extends slConverter
 
             for ( $j = $i + 1; $j < $nodeCount; ++$j )
             {
+                // Precondition
                 if ( ( $incoming !== $automaton->getIncoming( $nodeNames[$j] ) ) ||
                      ( $outgoing !== $automaton->getOutgoing( $nodeNames[$j] ) ) )
                 {
@@ -176,7 +177,7 @@ class slSoreConverter extends slConverter
                     }
                 }
 
-                // Merge nodes, if they share the same precedessors and 
+                // Action: Merge nodes, if they share the same precedessors and 
                 // successors.
                 $choice  = array();
                 foreach ( $nodes as $node )
@@ -227,6 +228,7 @@ class slSoreConverter extends slConverter
         $nodeNames = array_keys( $this->nodes );
         for ( $i = 0; $i < $nodeCount; ++$i )
         {
+            // Precondition
             if ( count( $outgoing = $automaton->getOutgoing( $nodeNames[$i] ) ) !== 1 )
             {
                 continue;
@@ -252,6 +254,7 @@ class slSoreConverter extends slConverter
                 continue;
             }
 
+            // Action
             // Create a sequence out of the found sequence
             $incoming = $automaton->getIncoming( $nodeNames[$i] );
 
@@ -300,8 +303,10 @@ class slSoreConverter extends slConverter
         $nodeNames = array_keys( $this->nodes );
         for ( $i = 0; $i < $nodeCount; ++$i )
         {
+            // Precondition
             if ( in_array( $nodeNames[$i], $automaton->getOutgoing( $nodeNames[$i] ), true ) )
             {
+                // Action
                 $this->nodes[$nodeNames[$i]] = new slRegularExpressionRepeated( array( $this->nodes[$nodeNames[$i]] ) );
                 $automaton->removeEdge( $nodeNames[$i], $nodeNames[$i] );
                 return true;
@@ -309,6 +314,23 @@ class slSoreConverter extends slConverter
         }
 
         return false;
+    }
+
+    /**
+     * Check if subset subsumes set
+     *
+     * Check if the subset is entirely contained in the set, and return true in 
+     * this case - return false otherwise.
+     * 
+     * @param array $set 
+     * @param array $subset 
+     * @return bool
+     */
+    protected function superset( array $set, array $subset )
+    {
+        sort( $set );
+        sort( $subset );
+        return array_values( array_intersect( $set, $subset ) ) === array_values( $subset );
     }
 
     /**
@@ -330,6 +352,7 @@ class slSoreConverter extends slConverter
         $nodeNames = array_keys( $this->nodes );
         for ( $i = 0; $i < $nodeCount; ++$i )
         {
+            // Precondition
             $outgoing = $automaton->getOutgoing( $nodeNames[$i] );
             $incoming = $automaton->getIncoming( $nodeNames[$i] );
             if ( !count( $incoming ) || !count( $outgoing ) )
@@ -339,12 +362,13 @@ class slSoreConverter extends slConverter
 
             foreach ( $incoming as $precedessor )
             {
-                if ( !count( array_diff( $outgoing, $automaton->getOutgoing( $precedessor ) ) ) === 0 )
+                if ( !$this->superset( $automaton->getOutgoing( $precedessor ), $outgoing ) )
                 {
                     continue 2;
                 }
             }
 
+            // Action
             $this->nodes[$nodeNames[$i]] = new slRegularExpressionOptional( array( $this->nodes[$nodeNames[$i]] ) );
             foreach ( $incoming as $src )
             {

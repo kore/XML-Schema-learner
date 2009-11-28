@@ -23,22 +23,14 @@
  */
 
 /**
- * Main class, which implements the argument loading and dispatching to the 
- * learning implementations
+ * Class representing a schema.
  *
  * @package Core
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-class slMain
+abstract class slSchema
 {
-    /**
-     * Used type inferencer
-     * 
-     * @var slTypeInferencer
-     */
-    protected $typeInferencer;
-
     /**
      * Array of automatons
      *
@@ -49,42 +41,65 @@ class slMain
     protected $automatons = array();
 
     /**
-     * Construct new main class
+     * Schema structure
+     *
+     * Inferenced scema structure consisting of types and their associated 
+     * regular expressions.
      * 
-     * @param slTypeInferencer $typeInferencer 
+     * @var array
+     */
+    protected $expressions = array();
+
+    /**
+     * Construct new schema class
+     * 
      * @return void
      */
-    public function __construct( slTypeInferencer $typeInferencer = null )
+    public function __construct()
     {
-        $this->typeInferencer = $typeInferencer === null ? new slNameBasedTypeInferencer() : $typeInferencer;
-
-        $this->automatons = array();
+        $this->automatons  = array();
+        $this->expressions = array();
     }
 
     /**
-     * Start execution of learning process
+     * Inference type from DOMElement
      * 
-     * @param array $argv 
+     * @param DOMElement $element 
      * @return void
      */
-    public function main( array $argv )
+    abstract protected function inferenceType( DOMElement $element );
+
+    /**
+     * Learn XML file
+     *
+     * Learn the automaton from an XML file
+     * 
+     * @param string $file 
+     * @return void
+     */
+    public function learnFile( $file )
     {
-        array_shift( $argv );
+        $doc = new DOMDocument();
+        $doc->load( $file );
+        $this->traverse( $doc );
+    }
 
-        // Learn all provided files
-        foreach ( $argv as $file )
-        {
-            $this->learnAutomatons( $file );
-        }
-
-        // Get regular expressions from automatons
-        $expressions = array();
+    /**
+     * Get regular expressions for learned schema
+     *
+     * Get an array of type -> regular expression associations for the learned 
+     * schema.
+     * 
+     * @return void
+     */
+    public function getRegularExpressions()
+    {
         foreach ( $this->automatons as $type => $automaton )
         {
-            $expressions[$type] = $this->convertRegularExpression( $automaton );
+            $this->expressions[$type] = $this->convertRegularExpression( $automaton );
         }
 
-        return $expressions;
+        return $this->expressions;
     }
 
     /**
@@ -96,11 +111,10 @@ class slMain
      */
     protected function learnAutomaton( DOMElement $element, array $children )
     {
-        $type = $this->typeInferencer->inferenceType( $element );
+        $type = $this->inferenceType( $element );
 
         if ( !isset( $this->automatons[$type] ) )
         {
-            // @TODO: Make this injectable.
             $this->automatons[$type] = new slSingleOccurenceAutomaton();
         }
 
@@ -142,20 +156,6 @@ class slMain
         {
             $this->learnAutomaton( $root, $elements );
         }
-    }
-
-    /**
-     * Learn automatons from given XML file
-     * 
-     * @param string $file 
-     * @return void
-     */
-    protected function learnAutomatons( $file )
-    {
-        // Traverse whole XML, to find all DOMElement nodes
-        $doc = new DOMDocument();
-        $doc->load( $file );
-        $this->traverse( $doc );
     }
 
     /**

@@ -22,7 +22,8 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
 
-require __DIR__ . '/main.php';
+require __DIR__ . '/schema.php';
+require __DIR__ . '/schema/dtd.php';
 
 require __DIR__ . '/type_inferencer.php';
 require __DIR__ . '/type_inferencer/name_based.php';

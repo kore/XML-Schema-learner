@@ -25,6 +25,13 @@
 
 require __DIR__ . '/src/environment.php';
 
-$main = new slMain();
-$main->main( $argv );
+$files = array_slice( $argv, 1 );
+
+$dtdSchema = new slDtdSchema();
+foreach ( $files as $file )
+{
+    $dtdSchema->learnFile( $file );
+}
+
+var_dump( $dtdSchema->getRegularExpressions() );
 
