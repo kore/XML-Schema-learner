@@ -25,7 +25,7 @@
 /**
  * Test class
  */
-class slVisitorRegularExpressionStringTests extends PHPUnit_Framework_TestCase
+class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
 {
     /**
      * Return test suite
@@ -39,7 +39,7 @@ class slVisitorRegularExpressionStringTests extends PHPUnit_Framework_TestCase
 
     public function testVisitElement()
     {
-        $visitor = new slRegularExpressionStringVisitor();
+        $visitor = new slRegularExpressionDtdVisitor();
         $this->assertSame(
             'a',
             $visitor->visit( 'a' )
@@ -48,7 +48,7 @@ class slVisitorRegularExpressionStringTests extends PHPUnit_Framework_TestCase
 
     public function testVisitNumericElement()
     {
-        $visitor = new slRegularExpressionStringVisitor();
+        $visitor = new slRegularExpressionDtdVisitor();
         $this->assertSame(
             '23',
             $visitor->visit( 23 )
@@ -57,7 +57,7 @@ class slVisitorRegularExpressionStringTests extends PHPUnit_Framework_TestCase
 
     public function testVisitInvalidElement()
     {
-        $visitor = new slRegularExpressionStringVisitor();
+        $visitor = new slRegularExpressionDtdVisitor();
 
         try {
             $visitor->visit( new StdClass() );
@@ -68,9 +68,9 @@ class slVisitorRegularExpressionStringTests extends PHPUnit_Framework_TestCase
 
     public function testVisitSequence()
     {
-        $visitor = new slRegularExpressionStringVisitor();
+        $visitor = new slRegularExpressionDtdVisitor();
         $this->assertEquals(
-            '( a b )',
+            '( a, b )',
             $visitor->visit(
                 new slRegularExpressionSequence( array( 'a', 'b' ) )
             )
@@ -79,9 +79,9 @@ class slVisitorRegularExpressionStringTests extends PHPUnit_Framework_TestCase
 
     public function testVisitChoice()
     {
-        $visitor = new slRegularExpressionStringVisitor();
+        $visitor = new slRegularExpressionDtdVisitor();
         $this->assertEquals(
-            '( a + b )',
+            '( a | b )',
             $visitor->visit(
                 new slRegularExpressionChoice( array( 'a', 'b' ) )
             )
@@ -90,7 +90,7 @@ class slVisitorRegularExpressionStringTests extends PHPUnit_Framework_TestCase
 
     public function testVisitOptional()
     {
-        $visitor = new slRegularExpressionStringVisitor();
+        $visitor = new slRegularExpressionDtdVisitor();
         $this->assertEquals(
             'a?',
             $visitor->visit(
@@ -101,7 +101,7 @@ class slVisitorRegularExpressionStringTests extends PHPUnit_Framework_TestCase
 
     public function testVisitRepeated()
     {
-        $visitor = new slRegularExpressionStringVisitor();
+        $visitor = new slRegularExpressionDtdVisitor();
         $this->assertEquals(
             'a*',
             $visitor->visit(
@@ -112,9 +112,9 @@ class slVisitorRegularExpressionStringTests extends PHPUnit_Framework_TestCase
 
     public function testVisitStackedSequence()
     {
-        $visitor = new slRegularExpressionStringVisitor();
+        $visitor = new slRegularExpressionDtdVisitor();
         $this->assertEquals(
-            '( ( a ) ( b ) )',
+            '( ( a ), ( b ) )',
             $visitor->visit(
                 new slRegularExpressionSequence( array(
                     new slRegularExpressionSequence( array( 'a' ) ),
@@ -126,9 +126,9 @@ class slVisitorRegularExpressionStringTests extends PHPUnit_Framework_TestCase
 
     public function testVisitConcatenationOfDisjunction()
     {
-        $visitor = new slRegularExpressionStringVisitor();
+        $visitor = new slRegularExpressionDtdVisitor();
         $this->assertEquals(
-            '( ( a ) ( ( b1 ) + ( b2 ) ) )',
+            '( ( a ), ( ( b1 ) | ( b2 ) ) )',
             $visitor->visit(
                 new slRegularExpressionSequence( array(
                     new slRegularExpressionSequence( array( 'a' ) ),
@@ -143,9 +143,9 @@ class slVisitorRegularExpressionStringTests extends PHPUnit_Framework_TestCase
 
     public function testDisjunctionOfConcatenation()
     {
-        $visitor = new slRegularExpressionStringVisitor();
+        $visitor = new slRegularExpressionDtdVisitor();
         $this->assertEquals(
-            '( ( a ) + ( ( b ) ( c ) ) )',
+            '( ( a ) | ( ( b ), ( c ) ) )',
             $visitor->visit(
                 new slRegularExpressionChoice( array(
                     new slRegularExpressionSequence( array( 'a' ) ),
