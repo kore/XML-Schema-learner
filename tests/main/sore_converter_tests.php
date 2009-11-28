@@ -178,5 +178,19 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
             $regexp
         );
     }
+
+    public function testFalseOnFail()
+    {
+        $automaton = new slSingleOccurenceAutomaton();
+        $automaton->learn( array( 'a', 'b' ) );
+        $automaton->learn( array( 'b', 'a' ) );
+
+        $converter = new slSoreConverter();
+        $regexp    = $converter->convertAutomaton( $automaton );
+        $this->assertEquals(
+            false,
+            $regexp
+        );
+    }
 }
 
