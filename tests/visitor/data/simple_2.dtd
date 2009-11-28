@@ -1,0 +1,3 @@
+<!DOCTYPE $root>
+
+<!ELEMENT root ( alpha, optional?, beta )>

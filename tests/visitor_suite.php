@@ -28,6 +28,7 @@
 require 'visitor/regular_expression_string_visitor_tests.php';
 require 'visitor/regular_expression_dtd_visitor_tests.php';
 require 'visitor/automaton_dot_visitor.php';
+require 'visitor/schema_dtd_visitor.php';
 
 /**
  * General root test suite
@@ -47,6 +48,7 @@ class slVisitorTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTest( slVisitorRegularExpressionStringTests::suite() );
         $this->addTest( slVisitorRegularExpressionDtdTests::suite() );
         $this->addTest( slVisitorAutomatonDotTests::suite() );
+        $this->addTest( slVisitorSchemaDtdTests::suite() );
     }
 
     /**
