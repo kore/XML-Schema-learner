@@ -157,7 +157,8 @@ class slChareConverter extends slConverter
         $classCount = count( $classes );
         for ( $i = 0; $i < $classCount; ++$i )
         {
-            if ( count( $classes[$i] ) > 1 )
+            if ( !isset( $this->equivalenceClasses[$classes[$i]] ) ||
+                 count( $this->equivalenceClasses[$classes[$i]] ) > 1 )
             {
                 // We only care for singletons
                 continue;
@@ -165,7 +166,8 @@ class slChareConverter extends slConverter
 
             for ( $j = $i + 1; $j < $classCount; ++$j )
             {
-                if ( count( $classes[$j] ) > 1 )
+                if ( !isset( $this->equivalenceClasses[$classes[$j]] ) ||
+                     count( $this->equivalenceClasses[$classes[$j]] ) > 1 )
                 {
                     // We only care for singletons
                     continue;
