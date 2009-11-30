@@ -145,5 +145,53 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
         $this->assertFalse( $automaton->removeEdge( 'unknown', 'b' ) );
     }
+
+    public function testTransitiveClosure1()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addNode( 'a' );
+
+        $this->assertEquals(
+            array( 'a' ),
+            $automaton->transitiveClosure( 'a' )
+        );
+    }
+
+    public function testTransitiveClosure2()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+
+        $this->assertEquals(
+            array( 'a', 'b' ),
+            $automaton->transitiveClosure( 'a' )
+        );
+    }
+
+    public function testTransitiveClosure3()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->addEdge( 'a', 'c' );
+        $automaton->addEdge( 'd', 'b' );
+
+        $this->assertEquals(
+            array( 'a', 'b', 'c' ),
+            $automaton->transitiveClosure( 'a' )
+        );
+    }
+
+    public function testTransitiveClosure4()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->addEdge( 'b', 'c' );
+        $automaton->addEdge( 'c', 'd' );
+
+        $this->assertEquals(
+            array( 'a', 'b', 'c', 'd' ),
+            $automaton->transitiveClosure( 'a' )
+        );
+    }
 }
 

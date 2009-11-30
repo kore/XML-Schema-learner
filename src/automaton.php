@@ -181,5 +181,36 @@ class slAutomaton
 
         return array_keys( $incoming );
     }
+
+    /**
+     * Get transitive closure for node
+     *
+     * Returns an array of the nodes which build the transitive closure for the 
+     * given node in the current automaton.
+     * 
+     * @param string $node 
+     * @return array
+     */
+    public function transitiveClosure( $node )
+    {
+        $nodes = array( $node );
+        do {
+            $old = $nodes;
+            $nodes = array_unique( 
+                array_merge( $nodes,
+                    array_reduce(
+                        array_map(
+                            array( $this, 'getOutgoing' ),
+                            $nodes
+                        ),
+                        'array_merge',
+                        array()
+                    )
+                )
+            );
+        } while ( $nodes != $old );
+
+        return $nodes;
+    }
 }
 
