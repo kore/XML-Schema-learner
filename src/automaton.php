@@ -212,5 +212,52 @@ class slAutomaton
 
         return $nodes;
     }
+
+    /**
+     * Get leaves
+     *
+     * Return an array of "leaves" in the current graph. All nodes are 
+     * considered leaves which do not have any outgoing edges.
+     * 
+     * @return array
+     */
+    public function getLeaves()
+    {
+        $leaves = array();
+        foreach ( $this->nodes as $node => $true )
+        {
+            if ( !isset( $this->edges[$node] ) ||
+                 ( count( $this->edges[$node] ) === 0 ) )
+            {
+                $leaves[] = $node;
+            }
+        }
+
+        return $leaves;
+    }
+
+    /**
+     * Get topologically sorted node list
+     *
+     * Returns an array of the nodes in the automaton, topologically sorted.
+     * 
+     * @return array
+     */
+    public function getTopologicallySortedNodeList()
+    {
+        $list      = array();
+        $automaton = clone $this;
+        $leaves    = $automaton->getLeaves();
+        var_dumP( $leaves );
+
+        while ( ( $leave = array_pop( $leaves ) ) !== null )
+        {
+            $list[] = $leave;
+            $automaton->removeNode( $leave );
+            $leaves = $automaton->getLeaves();
+        }
+
+        return array_reverse( $list );
+    }
 }
 

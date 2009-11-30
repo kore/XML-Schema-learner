@@ -193,5 +193,66 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
             $automaton->transitiveClosure( 'a' )
         );
     }
+
+    public function testGetLeaves()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+
+        $this->assertEquals(
+            array( 'b' ),
+            $automaton->getLeaves()
+        );
+    }
+
+    public function testGetLeaves2()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->addEdge( 'c', 'd' );
+
+        $this->assertEquals(
+            array( 'b', 'd' ),
+            $automaton->getLeaves()
+        );
+    }
+
+    public function testGetLeaves3()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->addEdge( 'b', 'c' );
+        $automaton->addEdge( 'c', 'd' );
+
+        $this->assertEquals(
+            array( 'd' ),
+            $automaton->getLeaves()
+        );
+    }
+
+    public function testTopologicalSorting()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->addEdge( 'b', 'c' );
+        $automaton->addEdge( 'c', 'd' );
+
+        $this->assertEquals(
+            array( 'a', 'b', 'c', 'd' ),
+            $automaton->getTopologicallySortedNodeList()
+        );
+    }
+
+    public function testTopologicalSorting2()
+    {
+        $automaton = new slAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->addEdge( 'c', 'd' );
+
+        $this->assertEquals(
+            array( 'a', 'b', 'c', 'd' ),
+            $automaton->getTopologicallySortedNodeList()
+        );
+    }
 }
 
