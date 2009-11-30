@@ -37,23 +37,33 @@ class slMainSingleOccurenceAutomatonTests extends PHPUnit_Framework_TestCase
 		return new PHPUnit_Framework_TestSuite( __CLASS__ );
 	}
 
+    /**
+     * Return automaton implementation to test
+     * 
+     * @return slSingleOccurenceAutomaton
+     */
+    protected function getAutomaton()
+    {
+        return new slSingleOccurenceAutomaton();
+    }
+
     public function testLearnEmptySequence()
     {
-        $automaton = new slSingleOccurenceAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->learn( array() );
         $this->assertEquals( array(), $automaton->getNodes() );
     }
 
     public function testLearnSingle()
     {
-        $automaton = new slSingleOccurenceAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->learn( array( 'a' ) );
         $this->assertEquals( array( 'a' ), $automaton->getNodes() );
     }
 
     public function testLearnTriple()
     {
-        $automaton = new slSingleOccurenceAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->learn( array( 'a', 'b', 'c' ) );
         $this->assertEquals( array( 'a', 'b', 'c' ), $automaton->getNodes() );
         $this->assertEquals( array( 'b' ), $automaton->getOutgoing( 'a' ) );
@@ -63,7 +73,7 @@ class slMainSingleOccurenceAutomatonTests extends PHPUnit_Framework_TestCase
 
     public function testTwoTuples()
     {
-        $automaton = new slSingleOccurenceAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->learn( array( 'a', 'b' ) );
         $automaton->learn( array( 'b', 'c' ) );
         $this->assertEquals( array( 'a', 'b', 'c' ), $automaton->getNodes() );
@@ -74,7 +84,7 @@ class slMainSingleOccurenceAutomatonTests extends PHPUnit_Framework_TestCase
 
     public function testCircle()
     {
-        $automaton = new slSingleOccurenceAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->learn( array( 'a', 'b' ) );
         $automaton->learn( array( 'b', 'c' ) );
         $automaton->learn( array( 'c', 'a' ) );

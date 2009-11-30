@@ -30,6 +30,7 @@ require __DIR__ . '/type_inferencer/name_based.php';
 
 require __DIR__ . '/automaton.php';
 require __DIR__ . '/automaton/single_occurence.php';
+require __DIR__ . '/automaton/counting_single_occurence.php';
 
 require __DIR__ . '/regular_expression.php';
 require __DIR__ . '/regular_expression/sequence.php';
@@ -39,6 +40,7 @@ require __DIR__ . '/regular_expression/repeated.php';
 
 require __DIR__ . '/converter.php';
 require __DIR__ . '/converter/sore.php';
+require __DIR__ . '/converter/chare.php';
 
 require __DIR__ . '/regular_expression/visitor.php';
 require __DIR__ . '/regular_expression/visitor/string.php';
