@@ -47,8 +47,6 @@ class slSoreConverter extends slConverter
      */
     protected $nodes = array();
 
-    public static $debug = 1;
-
     /**
      * VConvert automaton to regular expression
      * 
@@ -84,8 +82,6 @@ class slSoreConverter extends slConverter
             $this->debugAutomaton( $automaton, $this->nodes, ++$i, 'optional' );
         } while ( $modification );
 
-        self::$debug++;
-
         if ( count( $this->nodes ) === 1 )
         {
             return reset( $this->nodes );
@@ -108,8 +104,7 @@ class slSoreConverter extends slConverter
         // @codeCoverageIgnoreStart
         // This is pure debugging code, which is not required to be covered by 
         // unit tests.
-        var_dump( self::$debug );
-        if ( self::$debug !== 1 ) return;
+        return;
 
         $fileName         = sprintf( 'debug/%04d_%s.dot', $counter, $label );
         $regExpVisitor    = new slRegularExpressionStringVisitor();
