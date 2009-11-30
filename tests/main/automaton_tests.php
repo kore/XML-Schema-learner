@@ -37,57 +37,67 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 		return new PHPUnit_Framework_TestSuite( __CLASS__ );
 	}
 
+    /**
+     * Return automaton implementation to test
+     * 
+     * @return slSingleOccurenceAutomaton
+     */
+    protected function getAutomaton()
+    {
+        return new slAutomaton();
+    }
+
     public function testFreshAutomaton()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $this->assertEquals( array(), $automaton->getNodes() );
     }
 
     public function testCreateNode()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addNode( 'a' );
         $this->assertEquals( array( 'a' ), $automaton->getNodes() );
     }
 
     public function testCreateEdge()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
         $this->assertEquals( array( 'a', 'b' ), $automaton->getNodes() );
     }
 
     public function testIncoming()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
         $this->assertEquals( array( 'a' ), $automaton->getIncoming( 'b' ) );
     }
 
     public function testNoIncoming()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
         $this->assertEquals( array(), $automaton->getIncoming( 'a' ) );
     }
 
     public function testOutgoing()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
         $this->assertEquals( array( 'b' ), $automaton->getOutgoing( 'a' ) );
     }
 
     public function testNoOutgoing()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
         $this->assertEquals( array(), $automaton->getOutgoing( 'b' ) );
     }
 
     public function testMultipleEdges()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
         $automaton->addEdge( 'a', 'b' );
         $automaton->addEdge( 'a', 'c' );
@@ -100,7 +110,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
     public function testRemoveNode()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
         $automaton->addEdge( 'a', 'b' );
         $automaton->addEdge( 'a', 'c' );
@@ -114,13 +124,13 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
     public function testRemoveUnknownNode()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $this->assertFalse( $automaton->removeNode( 'unknown' ) );
     }
 
     public function testRemoveEdge()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
         $automaton->addEdge( 'a', 'c' );
         $automaton->removeEdge( 'a', 'b' );
@@ -132,7 +142,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
     public function testRemoveUnknownEdge1()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
 
         $this->assertFalse( $automaton->removeEdge( 'a', 'unknown' ) );
@@ -140,7 +150,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
     public function testRemoveUnknownEdge2()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
 
         $this->assertFalse( $automaton->removeEdge( 'unknown', 'b' ) );
@@ -148,7 +158,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
     public function testTransitiveClosure1()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addNode( 'a' );
 
         $this->assertEquals(
@@ -159,7 +169,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
     public function testTransitiveClosure2()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
 
         $this->assertEquals(
@@ -170,7 +180,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
     public function testTransitiveClosure3()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
         $automaton->addEdge( 'a', 'c' );
         $automaton->addEdge( 'd', 'b' );
@@ -183,7 +193,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
     public function testTransitiveClosure4()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
         $automaton->addEdge( 'b', 'c' );
         $automaton->addEdge( 'c', 'd' );
@@ -196,7 +206,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
     public function testGetLeaves()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
 
         $this->assertEquals(
@@ -207,7 +217,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
     public function testGetLeaves2()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
         $automaton->addEdge( 'c', 'd' );
 
@@ -219,7 +229,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
     public function testGetLeaves3()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
         $automaton->addEdge( 'b', 'c' );
         $automaton->addEdge( 'c', 'd' );
@@ -232,7 +242,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
     public function testTopologicalSorting()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
         $automaton->addEdge( 'b', 'c' );
         $automaton->addEdge( 'c', 'd' );
@@ -245,7 +255,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
     public function testTopologicalSorting2()
     {
-        $automaton = new slAutomaton();
+        $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
         $automaton->addEdge( 'c', 'd' );
 

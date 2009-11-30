@@ -25,7 +25,7 @@
 /**
  * Test class
  */
-class slMainSingleOccurenceAutomatonTests extends PHPUnit_Framework_TestCase
+class slMainSingleOccurenceAutomatonTests extends slMainAutomatonTests
 {
     /**
      * Return test suite
