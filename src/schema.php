@@ -115,7 +115,7 @@ abstract class slSchema
 
         if ( !isset( $this->automatons[$type] ) )
         {
-            $this->automatons[$type] = new slSingleOccurenceAutomaton();
+            $this->automatons[$type] = new slCountingSingleOccurenceAutomaton();
         }
 
         $elementNames = array();
@@ -168,6 +168,12 @@ abstract class slSchema
     {
         // Convert automatons
         $converter = new slSoreConverter();
+        if ( ( $expression = $converter->convertAutomaton( $automaton ) ) !== false )
+        {
+            return $expression;
+        }
+
+        $converter = new slChareConverter();
         return $converter->convertAutomaton( $automaton );
     }
 }
