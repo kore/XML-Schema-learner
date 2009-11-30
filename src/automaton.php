@@ -248,7 +248,6 @@ class slAutomaton
         $list      = array();
         $automaton = clone $this;
         $leaves    = $automaton->getLeaves();
-        var_dumP( $leaves );
 
         while ( ( $leave = array_pop( $leaves ) ) !== null )
         {

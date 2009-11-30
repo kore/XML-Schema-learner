@@ -39,41 +39,80 @@ class slMainChareConverterTests extends PHPUnit_Framework_TestCase
 
     public function testDisjunction()
     {
-        $automaton = new slSingleOccurenceAutomaton();
+        $automaton = new slCountingSingleOccurenceAutomaton();
         $automaton->learn( array( 'a' ) );
         $automaton->learn( array( 'b' ) );
 
         $converter = new slChareConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionChoice( array( 'a', 'b' ) ),
+            new slRegularExpressionSequence( array(
+                new slRegularExpressionRepeated( array(
+                    new slRegularExpressionChoice( array( 'a', 'b' ) ),
+                ) ),
+            ) ),
             $regexp
         );
     }
 
     public function testConcatenation()
     {
-        $automaton = new slSingleOccurenceAutomaton();
+        $automaton = new slCountingSingleOccurenceAutomaton();
         $automaton->learn( array( 'a', 'b' ) );
 
         $converter = new slChareConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionSequence( array( 'a', 'b' ) ),
+            new slRegularExpressionSequence( array(
+                new slRegularExpressionRepeated( array( 'a' ) ),
+                new slRegularExpressionRepeated( array( 'b' ) ),
+            ) ),
             $regexp
         );
     }
 
     public function testConvertOrderInsignificant()
     {
-        $automaton = new slSingleOccurenceAutomaton();
+        $automaton = new slCountingSingleOccurenceAutomaton();
         $automaton->learn( array( 'a', 'b' ) );
         $automaton->learn( array( 'b', 'a' ) );
 
         $converter = new slChareConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            'foo',
+            new slRegularExpressionSequence( array(
+                new slRegularExpressionRepeated( array(
+                    new slRegularExpressionChoice( array( 'a', 'b' ) ),
+                ) ),
+            ) ),
+            $regexp
+        );
+    }
+
+    public function testConvertPaperExample()
+    {
+        // Example 2. Let W = {abccde, cccad, bfegg, bfehi}.
+        $automaton = new slCountingSingleOccurenceAutomaton();
+        $automaton->learn( array( 'a', 'b', 'c', 'c', 'd', 'e' ) );
+        $automaton->learn( array( 'c', 'c', 'c', 'a', 'd' ) );
+        $automaton->learn( array( 'b', 'f', 'e', 'g', 'g' ) );
+        $automaton->learn( array( 'b', 'f', 'e', 'h', 'i' ) );
+
+        $converter = new slChareConverter();
+        $regexp    = $converter->convertAutomaton( $automaton );
+        $this->assertEquals(
+            new slRegularExpressionSequence( array(
+                new slRegularExpressionRepeated( array(
+                    new slRegularExpressionChoice( array( 'a', 'b', 'c' ) ),
+                ) ),
+                new slRegularExpressionRepeated( array(
+                    new slRegularExpressionChoice( array( 'd', 'f' ) ),
+                ) ),
+                new slRegularExpressionRepeated( array( 'e' ) ),
+                new slRegularExpressionRepeated( array( 'g' ) ),
+                new slRegularExpressionRepeated( array( 'h' ) ),
+                new slRegularExpressionRepeated( array( 'i' ) ),
+            ) ),
             $regexp
         );
     }

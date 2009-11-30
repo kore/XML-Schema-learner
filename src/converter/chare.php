@@ -48,18 +48,202 @@ class slChareConverter extends slConverter
     protected $nodes = array();
 
     /**
+     * Equivalence classes found in the passed automaton.
+     * 
+     * @var array
+     */
+    protected $equivalenceClasses = array();
+
+    /**
      * VConvert automaton to regular expression
      * 
      * @param slCountingSingleOccurenceAutomaton $automaton 
      * @return slRegularExpression
      */
-    public function convertAutomaton( slCountingSingleOccurenceAutomaton $automaton )
+    public function convertAutomaton( slSingleOccurenceAutomaton $automaton )
     {
-        // Build transitive reflexive closures of doubly linked nodes
+        // Calculate equivalency classes
+        $this->equivalenceClasses = array();
+        $equivalence = $this->calculateEquivalencyAutomaton( $automaton );
+
+        // Merge singleton nodes
+        $this->mergeSingletonNodes( $equivalence );
 
         // Sort nodes topologically
+        $nodes = $equivalence->getTopologicallySortedNodeList();
 
         // Build regular expression from sorted node sets
+        return $this->buildRegularExpression( $automaton, $nodes );
+    }
+
+    /**
+     * Calculate equivalent nodes
+     *
+     * Calculate groups of nodes, which are contained in their respective 
+     * transitive reflexive closure in the automaton.
+     *
+     * Returns an automaton consisting of nodes, which each links to such a 
+     * node group.
+     * 
+     * @param slCountingSingleOccurenceAutomaton $automaton 
+     * @return void
+     */
+    protected function calculateEquivalencyAutomaton( slAutomaton $automaton )
+    {
+        $nodes      = $automaton->getNodes();
+        $nodeCount  = count( $nodes );
+        $equivalent = array();
+        $skip       = array();
+
+        // Find equivalence classes in automaton
+        for ( $i = 0; $i < $nodeCount; ++$i )
+        {
+            if ( isset( $skip[$i] ) )
+            {
+                continue;
+            }
+
+            $this->equivalenceClasses[$nodes[$i]] = array( $nodes[$i] );
+            $equivalent[$nodes[$i]] = $nodes[$i];
+            for ( $j = $i + 1; $j < $nodeCount; ++$j )
+            {
+                if ( in_array( $nodes[$i], $automaton->transitiveClosure( $nodes[$j] ) ) &&
+                     in_array( $nodes[$j], $automaton->transitiveClosure( $nodes[$i] ) ) )
+                {
+                    $this->equivalenceClasses[$nodes[$i]][] = $nodes[$j];
+                    $equivalent[$nodes[$j]] = $nodes[$i];
+
+                    // The mutal containment in eachs reflexive transitive 
+                    // closure is obviously symetric
+                    $skip[$j] = true;
+                }
+            }
+        }
+
+        // Readd edges between equivalency classes based on source automaton
+        $equivalencyAutomaton = new slAutomaton();
+        foreach ( $this->equivalenceClasses as $name => $nodes )
+        {
+            $equivalencyAutomaton->addNode( $name );
+
+            foreach ( $nodes as $node )
+            {
+                foreach ( $automaton->getOutgoing( $node ) as $dst )
+                {
+                    if ( $name !== $equivalent[$dst] )
+                    {
+                        $equivalencyAutomaton->addEdge( $name, $equivalent[$dst] );
+                    }
+                }
+            }
+        }
+
+        return $equivalencyAutomaton;
+    }
+
+    /**
+     * Merge singleton nodes
+     *
+     * All equivalency classes which consist of just one nodes are considered 
+     * singleton nodes. This method merges all maximum sets of singleton nodes, 
+     * which share the same successors and precedessors.
+     * 
+     * @param slAutomaton $automaton 
+     * @return void
+     */
+    protected function mergeSingletonNodes( slAutomaton $automaton )
+    {
+        $classes    = array_keys( $this->equivalenceClasses );
+        $classCount = count( $classes );
+        for ( $i = 0; $i < $classCount; ++$i )
+        {
+            if ( count( $classes[$i] ) > 1 )
+            {
+                // We only care for singletons
+                continue;
+            }
+
+            for ( $j = $i + 1; $j < $classCount; ++$j )
+            {
+                if ( count( $classes[$j] ) > 1 )
+                {
+                    // We only care for singletons
+                    continue;
+                }
+
+                if ( ( $automaton->getOutgoing( $classes[$i] ) === $automaton->getOutgoing( $classes[$j] ) ) &&
+                     ( $automaton->getIncoming( $classes[$i] ) === $automaton->getIncoming( $classes[$j] ) ) )
+                {
+                    $this->equivalenceClasses[$classes[$i]][] = $classes[$j];
+                    unset( $this->equivalenceClasses[$classes[$j]] );
+                    $automaton->removeNode( $classes[$j] );
+                }
+            }
+        }
+    }
+
+    /**
+     * Build regular expression
+     *
+     * Builds the regilar expression from the provided automaton, where each 
+     * node associates with one of the equivalency classes, and a topologically 
+     * sorted list of these nodes.
+     *
+     * The provided automaton must be an instance of the 
+     * slCountingSingleOccurenceAutomaton, so t at it provides information on 
+     * how often the token occur in the learned strings.
+     *
+     * @TODO: We do not maintain word context for occurences in the 
+     * slCountingSingleOccurenceAutomaton, so that we can only decide between + 
+     * and * for the subpatterns.
+     * 
+     * @param slCountingSingleOccurenceAutomaton $automaton 
+     * @param array $classes 
+     * @return slRegularExpression
+     */
+    protected function buildRegularExpression( slCountingSingleOccurenceAutomaton $automaton, array $classes )
+    {
+        $terms = array();
+        foreach ( $classes as $class )
+        {
+            $term = $nodes = $this->equivalenceClasses[$class];
+            if ( count( $term ) > 1 )
+            {
+                $term = array( new slRegularExpressionChoice( $term ) );
+            }
+
+            $occurences = array_reduce(
+                array_map(
+                    array( $automaton, 'getOccurences' ),
+                    $nodes
+                ),
+                function ( $prior, $current )
+                {
+                    if ( $prior === null )
+                    {
+                        return $current;
+                    }
+
+                    return array(
+                        $prior[0] || $current[0],
+                        $prior[1] || $current[1],
+                        $prior[2] || $current[2],
+                    );
+                }
+            );
+
+            if ( $occurences[0] === false )
+            {
+                // TODO: Subclass for the usage of (…)+
+                $terms[] = new slRegularExpressionRepeated( $term );
+            }
+            else
+            {
+                $terms[] = new slRegularExpressionRepeated( $term );
+            }
+        }
+
+        return  new slRegularExpressionSequence( $terms );
     }
 }
 
