@@ -25,14 +25,96 @@
 
 require __DIR__ . '/src/environment.php';
 
+// Handle provided options
+$defaults = array(
+    'help' => null,
+    'type' => 'dtd',
+    'root' => null,
+);
+
+$mapping = array(
+    'h' => 'help',
+    't' => 'type',
+    'r' => 'root',
+);
+
+$options = getopt(
+    'ht:r:',
+    array(
+        'help',
+        'type:',
+        'root:',
+    )
+);
+
+// Merge options
+foreach ( $mapping as $short => $long )
+{
+    if ( isset( $options[$short] ) &&
+         !isset( $options[$long] ) )
+    {
+        $options[$long] = $options[$short];
+        unset( $options[$short] );
+    }
+}
+$options += $defaults;
+
+// Show help output, if requested
+if ( ( $options['help'] !== null ) ||
+     ( count( $argv ) <= 1 ) )
+{
+    echo <<<EOHELP
+Scheam Learner
+by Kore Nordmann
+
+Usage: {$argv[0]} [-t <type>] (-r <root>)+ <xml-files>
+
+-t / --type     Type of the schema to generate. Currently implemented schema 
+                languages: dtd, xsd
+-r / --root     Root element(s) used in the schema. Is not yet detected from 
+                the provided XML files.
+
+-h / --help     Display this help output
+
+EOHELP;
+    exit( 0 );
+}
+
+// Handle required arguments errors
+if ( $options['root'] === null )
+{
+    echo "Please provide at least one root element. This caanot yet be inferenced from the XML files.\n";
+    exit( 1 );
+}
+
 $files = array_slice( $argv, 1 );
 
 $dtdSchema = new slDtdSchema();
 foreach ( $files as $file )
 {
+    if ( !file_exists( $file ) )
+    {
+        continue;
+    }
+
     $dtdSchema->learnFile( $file );
 }
 
-$visitor = new slSchemaDtdVisitor( 'html' );
-echo $visitor->visit( $dtdSchema );
+switch ( $options['type'] )
+{
+    case 'dtd':
+        $visitor = new slSchemaDtdVisitor( $options['root'] );
+        echo $visitor->visit( $dtdSchema );
+        exit( 0 );
+
+    case 'xsd':
+        $visitor = new slSchemaXmlSchemaVisitor( is_array( $options['root'] ) ? $options['root'] : array( $options['root'] ) );
+        echo $visitor->visit( $dtdSchema );
+        exit( 0 );
+
+    default:
+        echo "Unknown schema type '{$options['type']}'.\n";
+        exit( 2 );
+}
+
 
