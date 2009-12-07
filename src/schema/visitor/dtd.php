@@ -72,12 +72,6 @@ class slSchemaDtdVisitor extends slSchemaVisitor
         $regExpVisitor = new slRegularExpressionDtdVisitor();
         foreach ( $schema->getRegularExpressions() as $type => $expression )
         {
-            if ( $expression === false )
-            {
-                $dtd .= "<!-- $type: Broken regular expression. -->\n";
-                continue;
-            }
-
             $dtd .= sprintf( "<!ELEMENT %s %s>\n",
                 $type,
                 $regExpVisitor->visit( $expression )
