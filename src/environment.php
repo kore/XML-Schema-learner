@@ -45,10 +45,12 @@ require __DIR__ . '/converter/chare.php';
 require __DIR__ . '/regular_expression/visitor.php';
 require __DIR__ . '/regular_expression/visitor/string.php';
 require __DIR__ . '/regular_expression/visitor/dtd.php';
+require __DIR__ . '/regular_expression/visitor/xml_schema.php';
 
 require __DIR__ . '/automaton/visitor.php';
 require __DIR__ . '/automaton/visitor/dot.php';
 
 require __DIR__ . '/schema/visitor.php';
 require __DIR__ . '/schema/visitor/dtd.php';
+require __DIR__ . '/schema/visitor/xml_schema.php';
 
