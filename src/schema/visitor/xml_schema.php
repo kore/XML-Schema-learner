@@ -76,19 +76,19 @@ class slSchemaXmlSchemaVisitor extends slSchemaVisitor
         $doc->appendChild( $root );
 
         $regExpVisitor = new slRegularExpressionXmlSchemaVisitor( $doc );
-        foreach ( $schema->getRegularExpressions() as $type => $expression )
+        foreach ( $schema->getTypes() as $type )
         {
             if ( in_array( $type, $this->roots ) )
             {
                 $element = $doc->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'element' );
-                $element->setAttribute( 'name', $type );
-                $element->setAttribute( 'type', $type );
+                $element->setAttribute( 'name', $type->type );
+                $element->setAttribute( 'type', $type->type );
                 $root->appendChild( $element );
             }
 
             $complexType = $doc->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'complexType' );
             $complexType->setAttribute( 'name', $type );
-            $complexType->appendChild( $regExpVisitor->visit( $expression ) );
+            $complexType->appendChild( $regExpVisitor->visit( $type->regularExpression ) );
             $root->appendChild( $complexType );
         }
 

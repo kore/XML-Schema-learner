@@ -70,11 +70,11 @@ class slSchemaDtdVisitor extends slSchemaVisitor
         $dtd = "<!DOCTYPE {$this->root}>\n\n";
 
         $regExpVisitor = new slRegularExpressionDtdVisitor();
-        foreach ( $schema->getRegularExpressions() as $type => $expression )
+        foreach ( $schema->getTypes() as $type )
         {
             $dtd .= sprintf( "<!ELEMENT %s %s>\n",
-                $type,
-                $regExpVisitor->visit( $expression )
+                $type->type,
+                $regExpVisitor->visit( $type->regularExpression )
             );
         }
 

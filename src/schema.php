@@ -32,23 +32,24 @@
 abstract class slSchema
 {
     /**
-     * Array of automatons
+     * Array of types
      *
-     * Contains a distinct automaton for each found type
+     * Contains a list of all found elements / types with their context
+     * information.
+     *
+     * The slSchemaElement contains information about the elements simple,
+     * type, attriubutes and its regular expression.
      * 
      * @var array
      */
-    protected $automatons = array();
+    protected $types = array();
 
     /**
-     * Schema structure
-     *
-     * Inferenced scema structure consisting of types and their associated 
-     * regular expressions.
+     * Types of found root elements
      * 
      * @var array
      */
-    protected $expressions = array();
+    protected $rootElements = array();
 
     /**
      * Construct new schema class
@@ -57,8 +58,8 @@ abstract class slSchema
      */
     public function __construct()
     {
-        $this->automatons  = array();
-        $this->expressions = array();
+        $this->types        = array();
+        $this->rootElements = array();
     }
 
     /**
@@ -90,16 +91,17 @@ abstract class slSchema
      * Get an array of type -> regular expression associations for the learned 
      * schema.
      * 
-     * @return void
+     * @return array(slSchemaElement)
      */
-    public function getRegularExpressions()
+    public function getTypes()
     {
-        foreach ( $this->automatons as $type => $automaton )
+        // Ensure the regular expressions in all types are up to date
+        foreach ( $this->types as $type => $element )
         {
-            $this->expressions[$type] = $this->convertRegularExpression( $automaton );
-        }
+            $element->regularExpression = $this->convertRegularExpression( $element->automaton );
+        };
 
-        return $this->expressions;
+        return $this->types;
     }
 
     /**
@@ -111,21 +113,39 @@ abstract class slSchema
      */
     protected function learnAutomaton( DOMElement $element, array $children )
     {
-        $type = $this->inferenceType( $element );
+        $type = $this->getType( $this->inferenceType( $element ) );
 
-        if ( !isset( $this->automatons[$type] ) )
-        {
-            $this->automatons[$type] = new slCountingSingleOccurenceAutomaton();
-        }
-
-        $elementNames = array();
+        $elements = array();
         foreach ( $children as $child )
         {
-            // @TODO: make this namespace aware
-            $elementNames[] = $child->tagName;
+            $elements[] = $this->inferenceType( $child );
         }
 
-        $this->automatons[$type]->learn( $elementNames );
+        // @todo: Update the element from found contents, etc.
+
+        $type->automaton->learn( $elements );
+    }
+
+    /**
+     * Return element representation for the given type
+     *
+     * Return the element representation object for the provided type. If non
+     * exists yet a new blank one will be created.
+     *
+     * The slSchemaElement contains information about the elements simple,
+     * type, attriubutes and its regular expression.
+     * 
+     * @param mixed $type 
+     * @return void
+     */
+    protected function getType( $type )
+    {
+        if ( isset( $this->types[$type] ) )
+        {
+            return $this->types[$type];
+        }
+
+        return $this->types[$type] = new slSchemaElement( $type );
     }
 
     /**
@@ -139,6 +159,8 @@ abstract class slSchema
      */
     protected function traverse( DOMNode $root )
     {
+        // @todo detect root elements
+
         $elements = array();
         foreach ( $root->childNodes as $node )
         {

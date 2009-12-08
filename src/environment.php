@@ -24,6 +24,7 @@
 
 require __DIR__ . '/schema.php';
 require __DIR__ . '/schema/dtd.php';
+require __DIR__ . '/schema/element.php';
 
 require __DIR__ . '/type_inferencer.php';
 require __DIR__ . '/type_inferencer/name_based.php';

@@ -42,11 +42,17 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
         $dtd = new slDtdSchema();
         $dtd->learnFile( __DIR__ . '/data/simple.xml' );
 
+        $expressions = array();
+        foreach ( $dtd->getTypes() as $type )
+        {
+            $expressions[$type->type] = $type->regularExpression;
+        }
+
         $this->assertEquals(
             array(
                 'root' => new slRegularExpressionSequence( array( 'alpha', 'beta' ) ),
             ),
-            $dtd->getRegularExpressions()
+            $expressions
         );
     }
 
@@ -56,6 +62,12 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
         $dtd->learnFile( __DIR__ . '/data/simple.xml' );
         $dtd->learnFile( __DIR__ . '/data/simple_2.xml' );
 
+        $expressions = array();
+        foreach ( $dtd->getTypes() as $type )
+        {
+            $expressions[$type->type] = $type->regularExpression;
+        }
+
         $this->assertEquals(
             array(
                 'root' => new slRegularExpressionSequence( array(
@@ -64,7 +76,7 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
                     'beta'
                 ) ),
             ),
-            $dtd->getRegularExpressions()
+            $expressions
         );
     }
 }
