@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/gegenrated" elementFormDefault="qualified">
+  <element name="root" type="root"/>
+  <complexType name="root">
+    <sequence>
+      <element name="alpha" type="alpha"/>
+      <sequence minOccurs="0" maxOccurs="1">
+        <element name="optional" type="optional"/>
+      </sequence>
+      <element name="beta" type="beta"/>
+    </sequence>
+  </complexType>
+</schema>
