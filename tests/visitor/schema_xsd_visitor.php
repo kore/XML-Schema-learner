@@ -73,7 +73,6 @@ class slVisitorSchemaXmlSchemaTests extends PHPUnit_Framework_TestCase
         // Read expectation from file, if available
         if ( !is_file( $file = __DIR__ . '/data/' . $name . '.xsd' ) )
         {
-            var_dump( $file, $result );
             $this->MarkTestSkipped( "No comparision file ($file) available; Generated result:\n" . $result );
         }
 
