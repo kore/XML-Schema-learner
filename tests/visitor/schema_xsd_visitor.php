@@ -67,7 +67,7 @@ class slVisitorSchemaXmlSchemaTests extends PHPUnit_Framework_TestCase
             $xsd->learnFile( $file );
         }
 
-        $visitor = new slSchemaXmlSchemaVisitor( array( 'root' ) );
+        $visitor = new slSchemaXmlSchemaVisitor();
         $result = $visitor->visit( $xsd );
 
         // Read expectation from file, if available

@@ -29,21 +29,18 @@ require __DIR__ . '/src/environment.php';
 $defaults = array(
     'help' => null,
     'type' => 'dtd',
-    'root' => null,
 );
 
 $mapping = array(
     'h' => 'help',
     't' => 'type',
-    'r' => 'root',
 );
 
 $options = getopt(
-    'ht:r:',
+    'ht:',
     array(
         'help',
         'type:',
-        'root:',
     )
 );
 
@@ -71,20 +68,11 @@ Usage: {$argv[0]} [-t <type>] (-r <root>)+ <xml-files>
 
 -t / --type     Type of the schema to generate. Currently implemented schema 
                 languages: dtd, xsd
--r / --root     Root element(s) used in the schema. Is not yet detected from 
-                the provided XML files.
 
 -h / --help     Display this help output
 
 EOHELP;
     exit( 0 );
-}
-
-// Handle required arguments errors
-if ( $options['root'] === null )
-{
-    echo "Please provide at least one root element. This caanot yet be inferenced from the XML files.\n";
-    exit( 1 );
 }
 
 $files = array_slice( $argv, 1 );
@@ -103,12 +91,12 @@ foreach ( $files as $file )
 switch ( $options['type'] )
 {
     case 'dtd':
-        $visitor = new slSchemaDtdVisitor( $options['root'] );
+        $visitor = new slSchemaDtdVisitor();
         echo $visitor->visit( $dtdSchema );
         exit( 0 );
 
     case 'xsd':
-        $visitor = new slSchemaXmlSchemaVisitor( is_array( $options['root'] ) ? $options['root'] : array( $options['root'] ) );
+        $visitor = new slSchemaXmlSchemaVisitor();
         echo $visitor->visit( $dtdSchema );
         exit( 0 );
 

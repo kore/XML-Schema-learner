@@ -32,28 +32,6 @@
 class slSchemaXmlSchemaVisitor extends slSchemaVisitor
 {
     /**
-     * Root elements
-     * 
-     * @var array
-     */
-    protected $roots;
-
-    /**
-     * Construct XSD visitor
-     *
-     * A XML Schema schema may consist of any number of root elements. The 
-     * constructor parameter let you define which of the found elements should 
-     * be made available as root elements in the generated schema.
-     * 
-     * @param array $root 
-     * @return void
-     */
-    public function __construct( array $rootElements )
-    {
-        $this->roots = $rootElements;
-    }
-
-    /**
      * Visit a schema
      *
      * The visitor is not structured, since the types might be required to be 
@@ -75,10 +53,12 @@ class slSchemaXmlSchemaVisitor extends slSchemaVisitor
         $root->setAttribute( 'elementFormDefault', 'qualified' );
         $doc->appendChild( $root );
 
+        $rootElements = $schema->getRootElements();
+
         $regExpVisitor = new slRegularExpressionXmlSchemaVisitor( $doc );
         foreach ( $schema->getTypes() as $type )
         {
-            if ( in_array( $type, $this->roots ) )
+            if ( in_array( $type, $rootElements ) )
             {
                 $element = $doc->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'element' );
                 $element->setAttribute( 'name', $type->type );

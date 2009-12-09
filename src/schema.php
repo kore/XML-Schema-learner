@@ -105,6 +105,19 @@ abstract class slSchema
     }
 
     /**
+     * Return types found as root elements
+     *
+     * Returns an array with the string representations of the types, which
+     * have been found as root elements in the provided schemas.
+     * 
+     * @return void
+     */
+    public function getRootElements()
+    {
+        return array_keys( $this->rootElements );
+    }
+
+    /**
      * Lear Automaton for element
      * 
      * @param DOMElement $element 
@@ -159,7 +172,10 @@ abstract class slSchema
      */
     protected function traverse( DOMNode $root )
     {
-        // @todo detect root elements
+        if ( $root->parentNode instanceof DOMDocument )
+        {
+            $this->rootElements[$this->inferenceType( $root )] = true;
+        }
 
         $elements = array();
         foreach ( $root->childNodes as $node )

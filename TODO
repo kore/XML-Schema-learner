@@ -4,7 +4,6 @@ TODO
 
 Open issues for the Schema Learner implementation.
 
-- Test XSD visitor
 - Aggregate information in types about
   - Simple type content
   - Empty elements
@@ -12,3 +11,4 @@ Open issues for the Schema Learner implementation.
     - With aggregated simple type inferencer
 - Enhance visitors to use new data
 - Detect root element(s)
+

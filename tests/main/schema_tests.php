@@ -79,5 +79,30 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
             $expressions
         );
     }
+
+    public function testDtdSchemaRootElements()
+    {
+        $dtd = new slDtdSchema();
+        $dtd->learnFile( __DIR__ . '/data/simple.xml' );
+        $dtd->learnFile( __DIR__ . '/data/simple_2.xml' );
+
+        $this->assertEquals(
+            array( 'root' ),
+            $dtd->getRootElements()
+        );
+    }
+
+    public function testDtdSchemaMultipleRootElements()
+    {
+        $dtd = new slDtdSchema();
+        $dtd->learnFile( __DIR__ . '/data/simple.xml' );
+        $dtd->learnFile( __DIR__ . '/data/simple_2.xml' );
+        $dtd->learnFile( __DIR__ . '/data/simple_3.xml' );
+
+        $this->assertEquals(
+            array( 'root', 'xml' ),
+            $dtd->getRootElements()
+        );
+    }
 }
 
