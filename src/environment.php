@@ -29,6 +29,9 @@ require __DIR__ . '/schema/element.php';
 require __DIR__ . '/type_inferencer.php';
 require __DIR__ . '/type_inferencer/name_based.php';
 
+require __DIR__ . '/simple_type_inferencer.php';
+require __DIR__ . '/simple_type_inferencer/pcdata.php';
+
 require __DIR__ . '/automaton.php';
 require __DIR__ . '/automaton/single_occurence.php';
 require __DIR__ . '/automaton/counting_single_occurence.php';

@@ -71,6 +71,13 @@ abstract class slSchema
     abstract protected function inferenceType( DOMElement $element );
 
     /**
+     * Get schema dependent simple type inferencer
+     * 
+     * @return slSimpleTypeInferencer
+     */
+    abstract protected function getSimpleInferencer();
+
+    /**
      * Learn XML file
      *
      * Learn the automaton from an XML file
@@ -134,8 +141,6 @@ abstract class slSchema
             $elements[] = $this->inferenceType( $child );
         }
 
-        // @todo: Update the element from found contents, etc.
-
         $type->automaton->learn( $elements );
     }
 
@@ -158,7 +163,9 @@ abstract class slSchema
             return $this->types[$type];
         }
 
-        return $this->types[$type] = new slSchemaElement( $type );
+        $this->types[$type] = new slSchemaElement( $type );
+//        $this->types[$type]->simpleTypeInferencer = $this->getSimpleInferencer();
+        return $this->types[$type];
     }
 
     /**
@@ -189,10 +196,11 @@ abstract class slSchema
             $this->traverse( $node );
         }
 
-        if ( ( $root->nodeType === XML_ELEMENT_NODE ) &&
-             count( $elements ) )
+        if ( $root->nodeType === XML_ELEMENT_NODE )
         {
             $this->learnAutomaton( $root, $elements );
+//            $this->learnSimpleType( $root, $elements );
+//            $this->learnAttributes( $root, $elements );
         }
     }
 

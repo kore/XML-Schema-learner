@@ -23,55 +23,32 @@
  */
 
 /**
- * Class representing a DTD schema.
- *
- * DTD schemas can only learn each element name as a single type, so that this 
- * schema uses the simple element name based type inferencer.
+ * Class for inferencing simple types from string contents of elements.
  *
  * @package Core
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-class slDtdSchema extends slSchema
+abstract class slSimpleTypeInferencer
 {
     /**
-     * Use type inferencer
+     * Learn the given string
+     *
+     * Record the given string, to inference a simple type from it.
      * 
-     * @var slNameBasedTypeInferencer
-     */
-    protected $typeInferencer;
-
-    /**
-     * Construct new schema class
-     * 
+     * @param string $string 
      * @return void
      */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->typeInferencer = new slNameBasedTypeInferencer();
-    }
+    abstract public function learnString( $string );
 
     /**
-     * Inference type from DOMElement
+     * Inference type from learned strings
+     *
+     * Return a string type representation from all the strings, which have
+     * been learned until now.
      * 
-     * @param DOMElement $element 
-     * @return void
+     * @return string
      */
-    protected function inferenceType( DOMElement $element )
-    {
-        return $this->typeInferencer->inferenceType( $element );
-    }
-
-    /**
-     * Get schema dependent simple type inferencer
-     * 
-     * @return slSimpleTypeInferencer
-     */
-    protected function getSimpleInferencer()
-    {
-        return new slPcdataSimpleTypeInferencer();
-    }
+    abstract public function inferenceType();
 }
-
+ 
