@@ -31,14 +31,5 @@
  */
 abstract class slRegularExpression
 {
-    /**
-     * Get children
-     * 
-     * @return array(slRegularExpression)
-     */
-    public function getChildren()
-    {
-        return array();
-    }
 }
 
