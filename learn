@@ -61,7 +61,7 @@ if ( ( $options['help'] !== null ) ||
      ( count( $argv ) <= 1 ) )
 {
     echo <<<EOHELP
-Scheam Learner
+Schema Learner
 by Kore Nordmann
 
 Usage: {$argv[0]} [-t <type>] (-r <root>)+ <xml-files>
