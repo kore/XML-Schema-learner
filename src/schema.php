@@ -106,6 +106,13 @@ abstract class slSchema
         foreach ( $this->types as $type => $element )
         {
             $element->regularExpression = $this->convertRegularExpression( $element->automaton );
+
+            // If the element has been empty at least once, make the whole 
+            // subpattern optional
+            if ( $element->empty )
+            {
+                $element->regularExpression = new slRegularExpressionOptional( array( $element->regularExpression ) );
+            }
         };
 
         return $this->types;
@@ -127,13 +134,17 @@ abstract class slSchema
     /**
      * Lear Automaton for element
      * 
-     * @param DOMElement $element 
+     * @param slSchemaElement $type
      * @param array $children 
      * @return void
      */
-    protected function learnAutomaton( DOMElement $element, array $children )
+    protected function learnAutomaton( slSchemaElement $type, array $children )
     {
-        $type = $this->getType( $this->inferenceType( $element ) );
+        if ( !count( $children ) )
+        {
+            $type->empty = true;
+            return;
+        }
 
         $elements = array();
         foreach ( $children as $child )
@@ -145,6 +156,39 @@ abstract class slSchema
     }
 
     /**
+     * Lear simple type for element
+     * 
+     * @param slSchemaElement $type
+     * @param array $children 
+     * @return void
+     */
+    protected function learnSimpleType( slSchemaElement $type, array $children )
+    {
+        foreach ( $children as $textNode )
+        {
+            $type->simpleTypeInferencer->learnString( $textNode->wholeText );
+        }
+    }
+
+    /**
+     * Lear attributes for element
+     * 
+     * @param slSchemaElement $type
+     * @param array $children 
+     * @return void
+     */
+    protected function learnAttributes( slSchemaElement $type, array $children )
+    {
+        $attributes = array();
+        foreach ( $children as $attrNode )
+        {
+            $attributes[$attrNode->name] = $attrNode->value;
+        }
+
+        $type->learnAttributes( $attributes );
+    }
+
+    /**
      * Return element representation for the given type
      *
      * Return the element representation object for the provided type. If non
@@ -153,8 +197,8 @@ abstract class slSchema
      * The slSchemaElement contains information about the elements simple,
      * type, attriubutes and its regular expression.
      * 
-     * @param mixed $type 
-     * @return void
+     * @param string $type 
+     * @return slSchemaElement
      */
     protected function getType( $type )
     {
@@ -164,7 +208,8 @@ abstract class slSchema
         }
 
         $this->types[$type] = new slSchemaElement( $type );
-//        $this->types[$type]->simpleTypeInferencer = $this->getSimpleInferencer();
+        $this->types[$type]->simpleTypeInferencer    = $this->getSimpleInferencer();
+        $this->types[$type]->attributeTypeInferencer = $this->getSimpleInferencer();
         return $this->types[$type];
     }
 
@@ -184,23 +229,35 @@ abstract class slSchema
             $this->rootElements[$this->inferenceType( $root )] = true;
         }
 
-        $elements = array();
+        $elements   = array();
+        $attributes = array();
+        $contents   = array();
         foreach ( $root->childNodes as $node )
         {
-            if ( $node->nodeType !== XML_ELEMENT_NODE )
+            switch ( $node->nodeType )
             {
-                continue;
-            }
+                case XML_ELEMENT_NODE:
+                    $elements[] = $node;
+                    $this->traverse( $node );
+                    break;
 
-            $elements[] = $node;
-            $this->traverse( $node );
+                case XML_ATTRIBUTE_NODE:
+                    $attributes[] = $node;
+                    break;
+
+                case XML_TEXT_NODE:
+                    $content[] = $node;
+                    break;
+            }
         }
 
         if ( $root->nodeType === XML_ELEMENT_NODE )
         {
-            $this->learnAutomaton( $root, $elements );
-//            $this->learnSimpleType( $root, $elements );
-//            $this->learnAttributes( $root, $elements );
+            $type = $this->getType( $this->inferenceType( $root ) );
+
+            $this->learnAutomaton( $type, $elements );
+            $this->learnSimpleType( $type, $contents );
+            $this->learnAttributes( $type, $attributes );
         }
     }
 

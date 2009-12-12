@@ -48,17 +48,27 @@ class slSchemaElement
      * element will be passed. The simple typoe inferencer might then be used
      * to inference a simple type for the current element.
      * 
-     * @todo Make this injectable somehow
      * @var slSimpleTypeInferencer
      */
-    protected $typeInferencer = null;
+    protected $simpleTypeInferencer = null;
+
+    /**
+     * Attribute type inferencer
+     *
+     * Instance of a simple type inferencer, to which the text contents of the
+     * attributes will be passed. The simple typoe inferencer might then be 
+     * used to inference a simple type for the current attribute.
+     * 
+     * @var slSimpleTypeInferencer
+     */
+    protected $attributeTypeInferencer = null;
 
     /**
      * Array with attribute oocuring in the elment
      * 
      * @var array(slSchemaAttribute)
      */
-    protected $attributes = false;
+    protected $attributes = array();
 
     /**
      * The element occured without any child elements at elast once in the
@@ -103,6 +113,63 @@ class slSchemaElement
     }
 
     /**
+     * Learn attributes
+     *
+     * Learn the given attributes. This methods receives an array with the 
+     * attribute values of one element instance, like:
+     *
+     * <code>
+     *  array(
+     *      'name_1' => 'value',
+     *      …
+     *  )
+     * </code>
+     *
+     * From all instances this method should learn, if the attribute is 
+     * optional, or mandatory. It should also dispatch the values to the simple 
+     * type inferencer for the given attribute.
+     * 
+     * @param array $attributes 
+     * @return void
+     */
+    public function learnAttributes( array $attributes )
+    {
+        // First set of attributes, just add all
+        if ( !count( $this->attributes ) )
+        {
+            foreach ( $attributes as $name => $value )
+            {
+                $this->attributes[$name] = new slSchemaAttribute( $name, clone $this->attributeTypeInferencer );
+                $this->attributes[$name]->simpleTypeInferencer->learnString( $value );
+            }
+            return;
+        }
+
+        // First check for reoccurences of already known attributes. If 
+        // attribute does not reoocur store as optional.
+        foreach ( $this->attributes as $name => $attribute )
+        {
+            if ( isset( $attributes[$name] ) )
+            {
+                $this->attributes[$name]->simpleTypeInferencer->learnString( $value );
+            }
+            else
+            {
+                $this->attributes[$name]->optional = true;
+            }
+            unset( $attributes[$name] );
+        }
+
+        // Add all new attributes as optional to the list
+        foreach ( $attributes as $name => $value )
+        {
+            $this->attributes[$name] = new slSchemaAttribute( $name, clone $this->attributeTypeInferencer );
+            $this->attributes[$name]->simpleTypeInferencer->learnString( $value );
+            $this->attributes[$name]->optional = true;
+        }
+    }
+
+    /**
      * Get property from object
      *
      * Provides limited read-access to some of the object properties.
@@ -121,6 +188,8 @@ class slSchemaElement
             case 'empty':
             case 'automaton':
             case 'regularExpression':
+            case 'simpleTypeInferencer':
+            case 'attributeTypeInferencer':
                 return $this->$property;
 
             default:
@@ -147,6 +216,8 @@ class slSchemaElement
         {
             case 'empty':
             case 'regularExpression':
+            case 'simpleTypeInferencer':
+            case 'attributeTypeInferencer':
                 return $this->$property = $value;
 
             default:
