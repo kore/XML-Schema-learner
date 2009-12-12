@@ -36,6 +36,13 @@
 class slPcdataSimpleTypeInferencer extends slSimpleTypeInferencer
 {
     /**
+     * Store if the type has content at all
+     * 
+     * @var bool
+     */
+    protected $empty = true;
+
+    /**
      * Learn the given string
      *
      * Record the given string, to inference a simple type from it.
@@ -45,7 +52,10 @@ class slPcdataSimpleTypeInferencer extends slSimpleTypeInferencer
      */
     public function learnString( $string )
     {
-        // We just don't care
+        if ( !empty( $string ) )
+        {
+            $this->empty = false;
+        }
     }
 
     /**
@@ -59,7 +69,7 @@ class slPcdataSimpleTypeInferencer extends slSimpleTypeInferencer
     public function inferenceType()
     {
         // @todo: Return slPcdataSimpleType or similar
-        return 'PCDATA';
+        return $this->empty ? 'empty' : 'PCDATA';
     }
 }
  
