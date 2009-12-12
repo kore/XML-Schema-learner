@@ -32,58 +32,13 @@
 abstract class slRegularExpression
 {
     /**
-     * Children in regular expression syntax tree
-     * 
-     * @var array
-     */
-    protected $children = array();
-
-    /**
-     * Construct regular expression
-     *
-     * Optionally from a set of given child nodes in the regular expression 
-     * syntax tree
-     * 
-     * @param array $children 
-     * @return void
-     */
-    public function __construct( array $children = array() )
-    {
-        $this->setChildren( $children );
-    }
-
-    /**
-     * Set children
-     * 
-     * @param array $children 
-     * @return void
-     */
-    public function setChildren( array $children )
-    {
-        $this->children = $children;
-    }
-
-    /**
      * Get children
      * 
      * @return array(slRegularExpression)
      */
     public function getChildren()
     {
-        return $this->children;
-    }
-
-    /**
-     * Get child
-     *
-     * Return the single (first) child for the regular expression, assuming it 
-     * only has one child.
-     * 
-     * @return slRegularExpression
-     */
-    public function getChild()
-    {
-        return $this->children[0];
+        return array();
     }
 }
 
