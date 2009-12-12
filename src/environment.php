@@ -22,39 +22,52 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
 
-require __DIR__ . '/schema.php';
-require __DIR__ . '/schema/dtd.php';
-require __DIR__ . '/schema/element.php';
-
-require __DIR__ . '/type_inferencer.php';
-require __DIR__ . '/type_inferencer/name_based.php';
-
-require __DIR__ . '/simple_type_inferencer.php';
-require __DIR__ . '/simple_type_inferencer/pcdata.php';
-
 require __DIR__ . '/automaton.php';
 require __DIR__ . '/automaton/single_occurence.php';
 require __DIR__ . '/automaton/counting_single_occurence.php';
 
-require __DIR__ . '/regular_expression.php';
-require __DIR__ . '/regular_expression/sequence.php';
-require __DIR__ . '/regular_expression/choice.php';
-require __DIR__ . '/regular_expression/optional.php';
-require __DIR__ . '/regular_expression/repeated.php';
+require __DIR__ . '/automaton/visitor.php';
+require __DIR__ . '/automaton/visitor/dot.php';
 
 require __DIR__ . '/converter.php';
-require __DIR__ . '/converter/sore.php';
 require __DIR__ . '/converter/chare.php';
+require __DIR__ . '/converter/sore.php';
+
+require __DIR__ . '/regular_expression.php';
+require __DIR__ . '/regular_expression/element.php';
+require __DIR__ . '/regular_expression/empty.php';
+require __DIR__ . '/regular_expression/container.php';
+require __DIR__ . '/regular_expression/multiple.php';
+require __DIR__ . '/regular_expression/multiple/choice.php';
+require __DIR__ . '/regular_expression/multiple/sequence.php';
+require __DIR__ . '/regular_expression/singular.php';
+require __DIR__ . '/regular_expression/singular/optional.php';
+require __DIR__ . '/regular_expression/singular/repeated.php';
+
+require __DIR__ . '/regular_expression/optimizer.php';
+require __DIR__ . '/regular_expression/optimizer/base.php';
+require __DIR__ . '/regular_expression/optimizer/choice.php';
+require __DIR__ . '/regular_expression/optimizer/empty.php';
+require __DIR__ . '/regular_expression/optimizer/repetition.php';
+require __DIR__ . '/regular_expression/optimizer/sequence.php';
+require __DIR__ . '/regular_expression/optimizer/singleton.php';
 
 require __DIR__ . '/regular_expression/visitor.php';
 require __DIR__ . '/regular_expression/visitor/string.php';
 require __DIR__ . '/regular_expression/visitor/dtd.php';
 require __DIR__ . '/regular_expression/visitor/xml_schema.php';
 
-require __DIR__ . '/automaton/visitor.php';
-require __DIR__ . '/automaton/visitor/dot.php';
-
+require __DIR__ . '/schema.php';
+require __DIR__ . '/schema/dtd.php';
 require __DIR__ . '/schema/visitor.php';
 require __DIR__ . '/schema/visitor/dtd.php';
 require __DIR__ . '/schema/visitor/xml_schema.php';
+
+require __DIR__ . '/schema/element.php';
+
+require __DIR__ . '/simple_type_inferencer.php';
+require __DIR__ . '/simple_type_inferencer/pcdata.php';
+
+require __DIR__ . '/type_inferencer.php';
+require __DIR__ . '/type_inferencer/name_based.php';
 
