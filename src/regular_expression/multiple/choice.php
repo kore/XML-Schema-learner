@@ -29,7 +29,7 @@
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-class slRegularExpressionChoice extends slRegularExpression
+class slRegularExpressionChoice extends slRegularExpressionMultiple
 {
 }
 
