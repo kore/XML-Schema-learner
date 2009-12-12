@@ -29,7 +29,7 @@
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-abstract class slRegularExpressionMultiple extends slRegularExpression implements ArrayAccess, Countable // , Iterator
+abstract class slRegularExpressionMultiple extends slRegularExpressionContainer implements ArrayAccess // , Iterator
 {
     /**
      * Children in regular expression syntax tree
@@ -161,7 +161,7 @@ abstract class slRegularExpressionMultiple extends slRegularExpression implement
     }
 
     /**
-     * Returns the number of childrensets in the row.
+     * Returns the number of children
      *
      * This method is part of the Countable interface to allow the usage of
      * PHP's count() function to check how many childrensets exist.

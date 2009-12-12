@@ -29,7 +29,7 @@
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-class slRegularExpressionSingular extends slRegularExpression
+class slRegularExpressionSingular extends slRegularExpressionContainer
 {
     /**
      * Child of the regular expression
@@ -84,6 +84,19 @@ class slRegularExpressionSingular extends slRegularExpression
     public function getChildren()
     {
         return array( $this->child );
+    }
+
+    /**
+     * Returns the number of children
+     *
+     * This method is part of the Countable interface to allow the usage of
+     * PHP's count() function to check how many childrensets exist.
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return 1;
     }
 }
 
