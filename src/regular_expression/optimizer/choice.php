@@ -42,7 +42,21 @@ class slRegularExpressionChoiceOptimizer extends slRegularExpressionOptimizerBas
      */
     public function optimize( slRegularExpression &$regularExpression )
     {
-        return false;
+        $children = $regularExpression->getChildren();
+        foreach ( $children as $nr => &$child )
+        {
+            if ( $child instanceof slRegularExpressionChoice )
+            {
+                $regularExpression->setChildren( array_merge(
+                    array_slice( $children, 0, $nr ),
+                    $child->getChildren(),
+                    array_slice( $children, $nr + 1 )
+                ) );
+                return true;
+            }
+        }
+
+        return $this->recurse( $regularExpression );
     }
 }
 

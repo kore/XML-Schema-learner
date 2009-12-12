@@ -216,5 +216,85 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
             $regexp
         );
     }
+
+    public function testChoiceOptimizerSingle()
+    {
+        $optimzer = new slRegularExpressionChoiceOptimizer();
+
+        $regexp = new slRegularExpressionChoice(
+            new slRegularExpressionChoice(
+                new slRegularExpressionElement( 'a' )
+            ),
+            new slRegularExpressionElement( 'b' )
+        );
+
+        $this->assertTrue( $optimzer->optimize( $regexp ) );
+
+        $this->assertEquals(
+            new slRegularExpressionChoice(
+                new slRegularExpressionElement( 'a' ),
+                new slRegularExpressionElement( 'b' )
+            ),
+            $regexp
+        );
+    }
+
+    public function testChoiceOptimizerDouble()
+    {
+        $optimzer = new slRegularExpressionChoiceOptimizer();
+
+        $regexp = new slRegularExpressionChoice(
+            new slRegularExpressionChoice(
+                new slRegularExpressionElement( 'a' )
+            ),
+            new slRegularExpressionChoice(
+                new slRegularExpressionElement( 'b' )
+            )
+        );
+
+        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimzer->optimize( $regexp ) );
+
+        $this->assertEquals(
+            new slRegularExpressionChoice(
+                new slRegularExpressionElement( 'a' ),
+                new slRegularExpressionElement( 'b' )
+            ),
+            $regexp
+        );
+    }
+
+    public function testChoiceOptimizerTriple()
+    {
+        $optimzer = new slRegularExpressionChoiceOptimizer();
+
+        $regexp = new slRegularExpressionChoice(
+            new slRegularExpressionChoice(
+                new slRegularExpressionChoice(
+                    new slRegularExpressionElement( 'a' )
+                ),
+                new slRegularExpressionChoice(
+                    new slRegularExpressionElement( 'b' )
+                )
+            ),
+            new slRegularExpressionChoice(
+                new slRegularExpressionElement( 'c' )
+            )
+        );
+
+        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimzer->optimize( $regexp ) );
+
+        $this->assertEquals(
+            new slRegularExpressionChoice(
+                new slRegularExpressionElement( 'a' ),
+                new slRegularExpressionElement( 'b' ),
+                new slRegularExpressionElement( 'c' )
+            ),
+            $regexp
+        );
+    }
 }
 
