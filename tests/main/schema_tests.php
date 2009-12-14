@@ -50,7 +50,12 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             array(
-                'root' => new slRegularExpressionSequence( array( 'alpha', 'beta' ) ),
+                'alpha' => new slRegularExpressionEmpty(),
+                'beta' => new slRegularExpressionEmpty(),
+                'root' => new slRegularExpressionSequence( 
+                    new slRegularExpressionElement( 'alpha' ),
+                    new slRegularExpressionElement( 'beta' )
+                ),
             ),
             $expressions
         );
@@ -70,11 +75,16 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             array(
-                'root' => new slRegularExpressionSequence( array(
-                    'alpha',
-                    new slRegularExpressionOptional( array( 'optional' ) ),
-                    'beta'
-                ) ),
+                'alpha' => new slRegularExpressionEmpty(),
+                'beta' => new slRegularExpressionEmpty(),
+                'root' => new slRegularExpressionSequence(
+                    new slRegularExpressionElement( 'alpha' ),
+                    new slRegularExpressionOptional(
+                        new slRegularExpressionElement( 'optional' )
+                    ),
+                    new slRegularExpressionElement( 'beta' )
+                ),
+                'optional' => new slRegularExpressionEmpty()
             ),
             $expressions
         );

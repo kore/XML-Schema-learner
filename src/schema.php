@@ -111,7 +111,7 @@ abstract class slSchema
             // subpattern optional
             if ( $element->empty )
             {
-                $element->regularExpression = new slRegularExpressionOptional( array( $element->regularExpression ) );
+                $element->regularExpression = new slRegularExpressionOptional( $element->regularExpression );
             }
         };
 
