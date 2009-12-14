@@ -39,13 +39,13 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testSingletonOptimizerSingle()
     {
-        $optimzer = new slRegularExpressionSingletonOptimizer();
+        $optimizer = new slRegularExpressionSingletonOptimizer();
 
         $regexp = new slRegularExpressionSequence(
             new slRegularExpressionElement( 'a' )
         );
 
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionElement( 'a' ),
@@ -55,7 +55,7 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testSingletonOptimizerDouble()
     {
-        $optimzer = new slRegularExpressionSingletonOptimizer();
+        $optimizer = new slRegularExpressionSingletonOptimizer();
 
         $regexp = new slRegularExpressionSequence(
             new slRegularExpressionChoice(
@@ -63,8 +63,8 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionElement( 'a' ),
@@ -74,7 +74,7 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testSingletonOptimizerNoOptimzation()
     {
-        $optimzer = new slRegularExpressionSingletonOptimizer();
+        $optimizer = new slRegularExpressionSingletonOptimizer();
 
         $regexp = new slRegularExpressionSequence(
             new slRegularExpressionChoice(
@@ -83,8 +83,8 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
-        $this->assertFalse( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertFalse( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionChoice(
@@ -97,11 +97,11 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testEmptyOptimizerSingle()
     {
-        $optimzer = new slRegularExpressionEmptyOptimizer();
+        $optimizer = new slRegularExpressionEmptyOptimizer();
 
         $regexp = new slRegularExpressionSequence();
 
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionEmpty(),
@@ -111,14 +111,14 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testEmptyOptimizerDouble()
     {
-        $optimzer = new slRegularExpressionEmptyOptimizer();
+        $optimizer = new slRegularExpressionEmptyOptimizer();
 
         $regexp = new slRegularExpressionSequence(
             new slRegularExpressionChoice()
         );
 
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionEmpty(),
@@ -128,13 +128,13 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testEmptyOptimizerSingleEmpty()
     {
-        $optimzer = new slRegularExpressionEmptyOptimizer();
+        $optimizer = new slRegularExpressionEmptyOptimizer();
 
         $regexp = new slRegularExpressionSequence(
             new slRegularExpressionEmpty()
         );
 
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionEmpty(),
@@ -144,7 +144,7 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testEmptyOptimizerDoubleEmpty()
     {
-        $optimzer = new slRegularExpressionEmptyOptimizer();
+        $optimizer = new slRegularExpressionEmptyOptimizer();
 
         $regexp = new slRegularExpressionSequence(
             new slRegularExpressionChoice(
@@ -152,8 +152,8 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionEmpty(),
@@ -163,7 +163,7 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testEmptyOptimizerDoubleEmptyOptional()
     {
-        $optimzer = new slRegularExpressionEmptyOptimizer();
+        $optimizer = new slRegularExpressionEmptyOptimizer();
 
         $regexp = new slRegularExpressionSequence(
             new slRegularExpressionOptional(
@@ -171,8 +171,24 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+
+        $this->assertEquals(
+            new slRegularExpressionEmpty(),
+            $regexp
+        );
+    }
+
+    public function testEmptyOptimizerOptional()
+    {
+        $optimizer = new slRegularExpressionEmptyOptimizer();
+
+        $regexp = new slRegularExpressionOptional(
+            new slRegularExpressionEmpty()
+        );
+
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionEmpty(),
@@ -182,7 +198,7 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testEmptyOptimizerDoubleEmptyRepeated()
     {
-        $optimzer = new slRegularExpressionEmptyOptimizer();
+        $optimizer = new slRegularExpressionEmptyOptimizer();
 
         $regexp = new slRegularExpressionSequence(
             new slRegularExpressionRepeated(
@@ -190,8 +206,8 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionEmpty(),
@@ -201,13 +217,13 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testEmptyOptimizerNoOptimzation()
     {
-        $optimzer = new slRegularExpressionEmptyOptimizer();
+        $optimizer = new slRegularExpressionEmptyOptimizer();
 
         $regexp = new slRegularExpressionSequence(
             new slRegularExpressionElement( 'a' )
         );
 
-        $this->assertFalse( $optimzer->optimize( $regexp ) );
+        $this->assertFalse( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionSequence(
@@ -219,7 +235,7 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testChoiceOptimizerSingle()
     {
-        $optimzer = new slRegularExpressionChoiceOptimizer();
+        $optimizer = new slRegularExpressionChoiceOptimizer();
 
         $regexp = new slRegularExpressionChoice(
             new slRegularExpressionChoice(
@@ -228,7 +244,7 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
             new slRegularExpressionElement( 'b' )
         );
 
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionChoice(
@@ -241,7 +257,7 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testChoiceOptimizerDouble()
     {
-        $optimzer = new slRegularExpressionChoiceOptimizer();
+        $optimizer = new slRegularExpressionChoiceOptimizer();
 
         $regexp = new slRegularExpressionChoice(
             new slRegularExpressionChoice(
@@ -252,8 +268,8 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionChoice(
@@ -266,7 +282,7 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testChoiceOptimizerTriple()
     {
-        $optimzer = new slRegularExpressionChoiceOptimizer();
+        $optimizer = new slRegularExpressionChoiceOptimizer();
 
         $regexp = new slRegularExpressionChoice(
             new slRegularExpressionChoice(
@@ -282,10 +298,10 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionChoice(
@@ -299,7 +315,7 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testSequenceOptimizerSingle()
     {
-        $optimzer = new slRegularExpressionSequenceOptimizer();
+        $optimizer = new slRegularExpressionSequenceOptimizer();
 
         $regexp = new slRegularExpressionSequence(
             new slRegularExpressionSequence(
@@ -308,7 +324,7 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
             new slRegularExpressionElement( 'b' )
         );
 
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionSequence(
@@ -321,7 +337,7 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testSequenceOptimizerDouble()
     {
-        $optimzer = new slRegularExpressionSequenceOptimizer();
+        $optimizer = new slRegularExpressionSequenceOptimizer();
 
         $regexp = new slRegularExpressionSequence(
             new slRegularExpressionSequence(
@@ -332,8 +348,8 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionSequence(
@@ -346,7 +362,7 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
 
     public function testSequenceOptimizerTriple()
     {
-        $optimzer = new slRegularExpressionSequenceOptimizer();
+        $optimizer = new slRegularExpressionSequenceOptimizer();
 
         $regexp = new slRegularExpressionSequence(
             new slRegularExpressionSequence(
@@ -362,10 +378,10 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
-        $this->assertTrue( $optimzer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
 
         $this->assertEquals(
             new slRegularExpressionSequence(
