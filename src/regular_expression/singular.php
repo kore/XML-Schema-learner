@@ -87,6 +87,17 @@ class slRegularExpressionSingular extends slRegularExpressionContainer
     }
 
     /**
+     * Set children
+     * 
+     * @param array(slRegularExpression) $children
+     * @return void
+     */
+    public function setChildren( array $children )
+    {
+        $this->child = reset( $children );
+    }
+
+    /**
      * Returns the number of children
      *
      * This method is part of the Countable interface to allow the usage of

@@ -59,10 +59,31 @@ class slSchemaDtdVisitor extends slSchemaVisitor
         $regExpVisitor = new slRegularExpressionDtdVisitor();
         foreach ( $schema->getTypes() as $type )
         {
-            $dtd .= sprintf( "<!ELEMENT %s %s>\n",
-                $type->type,
-                $regExpVisitor->visit( $type->regularExpression )
-            );
+            switch ( true )
+            {
+                case ( $type->regularExpression instanceof slRegularExpressionEmpty ) &&
+                     ( $type->simpleTypeInferencer->inferenceType() === 'empty' ):
+                    $dtd .= sprintf( "<!ELEMENT %s EMPTY>\n", $type->type );
+                    break;
+
+                case ( $type->regularExpression instanceof slRegularExpressionEmpty ):
+                    $dtd .= sprintf( "<!ELEMENT %s (#PCDATA)>\n", $type->type );
+                    break;
+
+                case ( $type->simpleTypeInferencer->inferenceType() === 'empty' ):
+                    $dtd .= sprintf( "<!ELEMENT %s ( %s )>\n",
+                        $type->type,
+                        $regExpVisitor->visit( $type->regularExpression )
+                    );
+                    break;
+                
+                default:
+                    $dtd .= sprintf( "<!ELEMENT %s ( #PCDATA | %s )*>\n",
+                        $type->type,
+                        $regExpVisitor->visit( $type->regularExpression )
+                    );
+                    break;
+            }
         }
 
         return $dtd;

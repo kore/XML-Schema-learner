@@ -1,5 +1,5 @@
 <!DOCTYPE root>
 
-<!ELEMENT alpha >
-<!ELEMENT beta >
-<!ELEMENT root ( alpha, beta )>
+<!ELEMENT alpha EMPTY>
+<!ELEMENT beta EMPTY>
+<!ELEMENT root ( ( alpha, beta ) )>

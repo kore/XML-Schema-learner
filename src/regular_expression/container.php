@@ -37,5 +37,13 @@ abstract class slRegularExpressionContainer extends slRegularExpression implemen
      * @return array(slRegularExpression)
      */
     abstract public function getChildren();
+
+    /**
+     * Set children
+     * 
+     * @param array(slRegularExpression) $children
+     * @return void
+     */
+    abstract public function setChildren( array $children );
 }
 

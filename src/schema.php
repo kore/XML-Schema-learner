@@ -172,7 +172,7 @@ abstract class slSchema
     {
         foreach ( $children as $textNode )
         {
-            $type->simpleTypeInferencer->learnString( $textNode->wholeText );
+            $type->simpleTypeInferencer->learnString( trim( $textNode->wholeText ) );
         }
     }
 
@@ -252,7 +252,7 @@ abstract class slSchema
                     break;
 
                 case XML_TEXT_NODE:
-                    $content[] = $node;
+                    $contents[] = $node;
                     break;
             }
         }
