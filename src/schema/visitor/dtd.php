@@ -50,58 +50,118 @@ class slSchemaDtdVisitor extends slSchemaVisitor
         if ( count( $rootElements ) > 1 )
         {
             // @todo: Use a proper exception here
-            throw new RuntimeException( 'Invaid DTD schema: Too many root elements.' );
+            throw new RuntimeException( 'Invalid DTD schema: Too many root elements.' );
         }
         $root = reset( $rootElements );
+        $dtd  = '';
 
-        $dtd = "<!DOCTYPE $root>\n\n";
-
-        $regExpVisitor = new slRegularExpressionDtdVisitor();
-        foreach ( $schema->getTypes() as $type )
+        // Visit all elements / types
+        foreach ( $schema->getTypes() as $element )
         {
-            switch ( true )
-            {
-                case ( $type->regularExpression instanceof slRegularExpressionEmpty ) &&
-                     ( $type->simpleTypeInferencer->inferenceType() === 'empty' ):
-                    $dtd .= sprintf( "<!ELEMENT %s EMPTY>\n", $type->type );
-                    break;
-
-                case ( $type->regularExpression instanceof slRegularExpressionEmpty ):
-                    $dtd .= sprintf( "<!ELEMENT %s (#PCDATA)>\n", $type->type );
-                    break;
-
-                case ( $type->simpleTypeInferencer->inferenceType() === 'empty' ):
-                    $dtd .= sprintf( "<!ELEMENT %s ( %s )>\n",
-                        $type->type,
-                        $regExpVisitor->visit( $type->regularExpression )
-                    );
-                    break;
-                
-                default:
-                    $dtd .= sprintf( "<!ELEMENT %s ( #PCDATA | %s )*>\n",
-                        $type->type,
-                        $regExpVisitor->visit( $type->regularExpression )
-                    );
-                    break;
-            }
+            $dtd .= $this->visitElement( $element );
         }
 
         $dtd .= "\n";
 
+        // Visit all attributes below the element definitions
         $regExpVisitor = new slRegularExpressionDtdVisitor();
-        foreach ( $schema->getTypes() as $type )
+        foreach ( $schema->getTypes() as $element )
         {
-            foreach ( $type->attributes as $attribute )
+            foreach ( $element->attributes as $attribute )
             {
-                $dtd .= sprintf( "<!ATTLIST %s %s CDATA %s>\n",
-                    $type->type,
-                    $attribute->name,
-                    $attribute->optional ? '#IMPLIED' : '#REQUIRED'
-                );
+                $dtd .= $this->visitAttribute( $element, $attribute );
             }
         }
 
-        return $dtd;
+        return trim( $dtd ) . "\n";
+    }
+
+    /**
+     * Visit element
+     *
+     * Create the attribute DTD specification from the provided 
+     * slSchemaAttribute object.
+     * 
+     * @param slSchemaElement $element 
+     * @param slSchemaAttribute $attribute 
+     * @return string
+     */
+    protected function visitAttribute( slSchemaElement $element, slSchemaAttribute $attribute )
+    {
+        return sprintf( "<!ATTLIST %s %s CDATA %s>\n",
+            $element->type,
+            $attribute->name,
+            $attribute->optional ? '#IMPLIED' : '#REQUIRED'
+        );
+    }
+
+    /**
+     * Visit element
+     *
+     * Create the element DTD specification from the provided slSchemaElement 
+     * object.
+     * 
+     * @param slSchemaElement $element 
+     * @return string
+     */
+    protected function visitElement( slSchemaElement $element )
+    {
+        $regExpVisitor = new slRegularExpressionDtdVisitor();
+        switch ( true )
+        {
+            case ( $element->regularExpression instanceof slRegularExpressionEmpty ) &&
+                 ( $element->simpleTypeInferencer->inferenceType() === 'empty' ):
+                return sprintf( "<!ELEMENT %s EMPTY>\n",
+                    $element->type
+                );
+
+            case ( $element->regularExpression instanceof slRegularExpressionEmpty ):
+                return sprintf( "<!ELEMENT %s (#PCDATA)>\n",
+                    $element->type
+                );
+
+            case ( $element->simpleTypeInferencer->inferenceType() === 'empty' ):
+                return sprintf( "<!ELEMENT %s ( %s )>\n",
+                    $element->type,
+                    $regExpVisitor->visit( $element->regularExpression )
+                );
+            
+            default:
+                return sprintf( "<!ELEMENT %s ( #PCDATA | %s )*>\n",
+                    $element->type,
+                    implode( ' | ', $this->extractTypes( $element->regularExpression ) )
+                );
+        }
+    }
+
+    /**
+     * Extracts all types mentioned in a regular exression
+     *
+     * Returns an unique array with all types mentioned in the regular 
+     * expression, to create proper mixed types in the DTD schema output.
+     * 
+     * @param slRegularExpression $regularExpression 
+     * @return array
+     */
+    protected function extractTypes( slRegularExpression $regularExpression )
+    {
+        if ( $regularExpression instanceof slRegularExpressionElement )
+        {
+            return array( $regularExpression->getContent() );
+        }
+
+        if ( !$regularExpression instanceof slRegularExpressionContainer )
+        {
+            return array();
+        }
+
+        $types = array();
+        foreach ( $regularExpression->getChildren() as $child )
+        {
+            $types = array_merge( $types, $this->extractTypes( $child ) );
+        }
+
+        return array_unique( $types );
     }
 }
 
