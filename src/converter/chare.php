@@ -211,7 +211,16 @@ class slChareConverter extends slConverter
             $term = $nodes = $this->equivalenceClasses[$class];
             if ( count( $term ) > 1 )
             {
-                $term = array( new slRegularExpressionChoice( $term ) );
+                $term = new slRegularExpressionChoice( array_map( function( $term )
+                    {
+                        return new slRegularExpressionElement( $term );
+                    },
+                    $term 
+                ) );
+            }
+            else
+            {
+                $term = new slRegularExpressionElement( reset( $term ) );
             }
 
             $occurences = array_reduce(

@@ -51,7 +51,34 @@ abstract class slRegularExpressionMultiple extends slRegularExpressionContainer 
      */
     public function __construct()
     {
-        $this->setChildren( func_get_args() );
+        $this->setChildren( $this->flattenArray( func_get_args() ) );
+    }
+
+    /**
+     * Flatten a (deeply) nested array into a one-dimensional array.
+     *
+     * Preserves all contents of the input array, but just flattens the array 
+     * into one dimension, maintaining the original order of the elements.
+     * 
+     * @param array $arguments 
+     * @return array
+     */
+    protected function flattenArray( array $arguments )
+    {
+        $flattened = array();
+        foreach ( $arguments as $arg )
+        {
+            if ( is_array( $arg ) )
+            {
+                $flattened = array_merge( $flattened, $this->flattenArray( $arg ) );
+            }
+            else
+            {
+                $flattened[] = $arg;
+            }
+        }
+        
+        return $flattened;
     }
 
     /**

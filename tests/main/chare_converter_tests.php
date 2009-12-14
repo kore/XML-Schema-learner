@@ -46,11 +46,14 @@ class slMainChareConverterTests extends PHPUnit_Framework_TestCase
         $converter = new slChareConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionSequence( array(
-                new slRegularExpressionRepeated( array(
-                    new slRegularExpressionChoice( array( 'a', 'b' ) ),
-                ) ),
-            ) ),
+            new slRegularExpressionSequence(
+                new slRegularExpressionRepeated(
+                    new slRegularExpressionChoice(
+                        new slRegularExpressionElement( 'a' ),
+                        new slRegularExpressionElement( 'b' )
+                    )
+                )
+            ),
             $regexp
         );
     }
@@ -63,10 +66,14 @@ class slMainChareConverterTests extends PHPUnit_Framework_TestCase
         $converter = new slChareConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionSequence( array(
-                new slRegularExpressionRepeated( array( 'a' ) ),
-                new slRegularExpressionRepeated( array( 'b' ) ),
-            ) ),
+            new slRegularExpressionSequence(
+                new slRegularExpressionRepeated(
+                    new slRegularExpressionElement( 'a' )
+                ),
+                new slRegularExpressionRepeated(
+                    new slRegularExpressionElement( 'b' )
+                )
+            ),
             $regexp
         );
     }
@@ -80,11 +87,14 @@ class slMainChareConverterTests extends PHPUnit_Framework_TestCase
         $converter = new slChareConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionSequence( array(
-                new slRegularExpressionRepeated( array(
-                    new slRegularExpressionChoice( array( 'a', 'b' ) ),
-                ) ),
-            ) ),
+            new slRegularExpressionSequence(
+                new slRegularExpressionRepeated(
+                    new slRegularExpressionChoice( 
+                        new slRegularExpressionElement( 'a' ),
+                        new slRegularExpressionElement( 'b' )
+                    )
+                )
+            ),
             $regexp
         );
     }
@@ -101,18 +111,33 @@ class slMainChareConverterTests extends PHPUnit_Framework_TestCase
         $converter = new slChareConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionSequence( array(
-                new slRegularExpressionRepeated( array(
-                    new slRegularExpressionChoice( array( 'a', 'b', 'c' ) ),
-                ) ),
-                new slRegularExpressionRepeated( array(
-                    new slRegularExpressionChoice( array( 'd', 'f' ) ),
-                ) ),
-                new slRegularExpressionRepeated( array( 'e' ) ),
-                new slRegularExpressionRepeated( array( 'g' ) ),
-                new slRegularExpressionRepeated( array( 'h' ) ),
-                new slRegularExpressionRepeated( array( 'i' ) ),
-            ) ),
+            new slRegularExpressionSequence(
+                new slRegularExpressionRepeated(
+                    new slRegularExpressionChoice( 
+                        new slRegularExpressionElement( 'a' ),
+                        new slRegularExpressionElement( 'b' ),
+                        new slRegularExpressionElement( 'c' )
+                    )
+                ),
+                new slRegularExpressionRepeated(
+                    new slRegularExpressionChoice(
+                        new slRegularExpressionElement( 'd' ),
+                        new slRegularExpressionElement( 'f' )
+                    )
+                ),
+                new slRegularExpressionRepeated(
+                    new slRegularExpressionElement( 'e' )
+                ),
+                new slRegularExpressionRepeated(
+                    new slRegularExpressionElement( 'g' )
+                ),
+                new slRegularExpressionRepeated(
+                    new slRegularExpressionElement( 'h' )
+                ),
+                new slRegularExpressionRepeated(
+                    new slRegularExpressionElement( 'i' )
+                )
+            ),
             $regexp
         );
     }

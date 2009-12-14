@@ -46,7 +46,10 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         $converter = new slSoreConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionChoice( array( 'a', 'b' ) ),
+            new slRegularExpressionChoice(
+                new slRegularExpressionElement( 'a' ),
+                new slRegularExpressionElement( 'b' )
+            ),
             $regexp
         );
     }
@@ -61,7 +64,11 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         $converter = new slSoreConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionChoice( array( 'a', 'b', 'c' ) ),
+            new slRegularExpressionChoice(
+                new slRegularExpressionElement( 'a' ),
+                new slRegularExpressionElement( 'b' ),
+                new slRegularExpressionElement( 'c' )
+            ),
             $regexp
         );
     }
@@ -74,7 +81,10 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         $converter = new slSoreConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionSequence( array( 'a', 'b' ) ),
+            new slRegularExpressionSequence(
+                new slRegularExpressionElement( 'a' ),
+                new slRegularExpressionElement( 'b' )
+            ),
             $regexp
         );
     }
@@ -87,7 +97,11 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         $converter = new slSoreConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionSequence( array( 'a', 'b', 'c' ) ),
+            new slRegularExpressionSequence(
+                new slRegularExpressionElement( 'a' ),
+                new slRegularExpressionElement( 'b' ),
+                new slRegularExpressionElement( 'c' )
+            ),
             $regexp
         );
     }
@@ -101,10 +115,13 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         $converter = new slSoreConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionSequence( array(
-                'a',
-                new slRegularExpressionChoice( array( 'b1', 'b2' ) ),
-            ) ),
+            new slRegularExpressionSequence(
+                new slRegularExpressionElement( 'a' ),
+                new slRegularExpressionChoice(
+                    new slRegularExpressionElement( 'b1' ),
+                    new slRegularExpressionElement( 'b2' )
+                )
+            ),
             $regexp
         );
     }
@@ -118,10 +135,13 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         $converter = new slSoreConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionChoice( array(
-                'a',
-                new slRegularExpressionSequence( array( 'b', 'c' ) ),
-            ) ),
+            new slRegularExpressionChoice(
+                new slRegularExpressionElement( 'a' ),
+                new slRegularExpressionSequence(
+                    new slRegularExpressionElement( 'b' ),
+                    new slRegularExpressionElement( 'c' )
+                )
+            ),
             $regexp
         );
     }
@@ -134,7 +154,9 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         $converter = new slSoreConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionRepeated( array( 'a' ) ),
+            new slRegularExpressionRepeated(
+                new slRegularExpressionElement( 'a' )
+            ),
             $regexp
         );
     }
@@ -149,9 +171,11 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
             new slRegularExpressionSequence( array(
-                'a',
-                new slRegularExpressionOptional( array( 'b' ) ),
-                'c',
+                new slRegularExpressionElement( 'a' ),
+                new slRegularExpressionOptional(
+                    new slRegularExpressionElement( 'b' )
+                ),
+                new slRegularExpressionElement( 'c' )
             ) ),
             $regexp
         );
@@ -168,13 +192,18 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         $converter = new slSoreConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionSequence( array(
-                new slRegularExpressionChoice( array( 'a1', 'a2' ) ),
-                new slRegularExpressionSequence( array(
-                    new slRegularExpressionOptional( array( 'b' ) ),
-                    'c',
-                ) ),
-            ) ),
+            new slRegularExpressionSequence(
+                new slRegularExpressionChoice(
+                    new slRegularExpressionElement( 'a1' ),
+                    new slRegularExpressionElement( 'a2' )
+                ),
+                new slRegularExpressionSequence(
+                    new slRegularExpressionOptional(
+                        new slRegularExpressionElement( 'b' )
+                    ),
+                    new slRegularExpressionElement( 'c' )
+                )
+            ),
             $regexp
         );
     }

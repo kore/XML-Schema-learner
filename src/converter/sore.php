@@ -59,13 +59,13 @@ class slSoreConverter extends slConverter
         $states = $automaton->getNodes();
         if ( ( $stateCount = count( $states ) ) < 1 )
         {
-            return new slRegularExpressionSequence();
+            return new slRegularExpressionEmpty();
         }
 
         $this->nodes = array();
         foreach ( $states as $state )
         {
-            $this->nodes[$state] = $state;
+            $this->nodes[$state] = new slRegularExpressionElement( $state );
         }
 
         $this->debugAutomaton( $automaton, $this->nodes, $i = 1, 'start' );
@@ -308,7 +308,7 @@ class slSoreConverter extends slConverter
             if ( in_array( $nodeNames[$i], $automaton->getOutgoing( $nodeNames[$i] ), true ) )
             {
                 // Action
-                $this->nodes[$nodeNames[$i]] = new slRegularExpressionRepeated( array( $this->nodes[$nodeNames[$i]] ) );
+                $this->nodes[$nodeNames[$i]] = new slRegularExpressionRepeated( $this->nodes[$nodeNames[$i]] );
                 $automaton->removeEdge( $nodeNames[$i], $nodeNames[$i] );
                 return true;
             }
@@ -370,7 +370,7 @@ class slSoreConverter extends slConverter
             }
 
             // Action
-            $this->nodes[$nodeNames[$i]] = new slRegularExpressionOptional( array( $this->nodes[$nodeNames[$i]] ) );
+            $this->nodes[$nodeNames[$i]] = new slRegularExpressionOptional( $this->nodes[$nodeNames[$i]] );
             foreach ( $incoming as $src )
             {
                 if ( $src === $nodeNames[$i] )
