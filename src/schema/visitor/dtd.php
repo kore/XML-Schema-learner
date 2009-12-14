@@ -86,6 +86,21 @@ class slSchemaDtdVisitor extends slSchemaVisitor
             }
         }
 
+        $dtd .= "\n";
+
+        $regExpVisitor = new slRegularExpressionDtdVisitor();
+        foreach ( $schema->getTypes() as $type )
+        {
+            foreach ( $type->attributes as $attribute )
+            {
+                $dtd .= sprintf( "<!ATTLIST %s %s CDATA %s>\n",
+                    $type->type,
+                    $attribute->name,
+                    $attribute->optional ? '#IMPLIED' : '#REQUIRED'
+                );
+            }
+        }
+
         return $dtd;
     }
 }

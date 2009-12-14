@@ -151,7 +151,7 @@ class slSchemaElement
         {
             if ( isset( $attributes[$name] ) )
             {
-                $this->attributes[$name]->simpleTypeInferencer->learnString( $value );
+                $this->attributes[$name]->simpleTypeInferencer->learnString( $attributes[$name] );
             }
             else
             {
@@ -187,6 +187,7 @@ class slSchemaElement
             case 'type':
             case 'empty':
             case 'automaton':
+            case 'attributes':
             case 'regularExpression':
             case 'simpleTypeInferencer':
             case 'attributeTypeInferencer':

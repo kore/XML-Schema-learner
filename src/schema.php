@@ -235,9 +235,8 @@ abstract class slSchema
             $this->rootElements[$this->inferenceType( $root )] = true;
         }
 
-        $elements   = array();
-        $attributes = array();
-        $contents   = array();
+        $elements = array();
+        $contents = array();
         foreach ( $root->childNodes as $node )
         {
             switch ( $node->nodeType )
@@ -247,13 +246,20 @@ abstract class slSchema
                     $this->traverse( $node );
                     break;
 
-                case XML_ATTRIBUTE_NODE:
-                    $attributes[] = $node;
-                    break;
-
                 case XML_TEXT_NODE:
                     $contents[] = $node;
                     break;
+            }
+        }
+
+        // How inconsistent: Attributes are not available as child nodes. Build 
+        // an extra loop just for them.
+        $attributes = array();
+        if ( $root->attributes )
+        {
+            foreach ( $root->attributes as $attribute )
+            {
+                $attributes[] = $attribute;
             }
         }
 
