@@ -392,5 +392,92 @@ class slMainRegularExpressionOptimizerTests extends PHPUnit_Framework_TestCase
             $regexp
         );
     }
+
+    public function testRepetitionOptimizerSimple1()
+    {
+        $optimizer = new slRegularExpressionRepetitionOptimizer();
+
+        $regexp = new slRegularExpressionOptional(
+            new slRegularExpressionRepeated(
+                new slRegularExpressionElement( 'a' )
+            )
+        );
+
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertFalse( $optimizer->optimize( $regexp ) );
+
+        $this->assertEquals(
+            new slRegularExpressionRepeated(
+                new slRegularExpressionElement( 'a' )
+            ),
+            $regexp
+        );
+    }
+
+    public function testRepetitionOptimizerSimple2()
+    {
+        $optimizer = new slRegularExpressionRepetitionOptimizer();
+
+        $regexp = new slRegularExpressionRepeated(
+            new slRegularExpressionOptional(
+                new slRegularExpressionElement( 'a' )
+            )
+        );
+
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertFalse( $optimizer->optimize( $regexp ) );
+
+        $this->assertEquals(
+            new slRegularExpressionRepeated(
+                new slRegularExpressionElement( 'a' )
+            ),
+            $regexp
+        );
+    }
+
+    public function testRepetitionOptimizerSimple3()
+    {
+        $optimizer = new slRegularExpressionRepetitionOptimizer();
+
+        $regexp = new slRegularExpressionOptional(
+            new slRegularExpressionOptional(
+                new slRegularExpressionElement( 'a' )
+            )
+        );
+
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertFalse( $optimizer->optimize( $regexp ) );
+
+        $this->assertEquals(
+            new slRegularExpressionOptional(
+                new slRegularExpressionElement( 'a' )
+            ),
+            $regexp
+        );
+    }
+
+    public function testRepetitionOptimizerSimpleDeep()
+    {
+        $optimizer = new slRegularExpressionRepetitionOptimizer();
+
+        $regexp = new slRegularExpressionOptional(
+            new slRegularExpressionOptional(
+                new slRegularExpressionRepeated(
+                    new slRegularExpressionElement( 'a' )
+                )
+            )
+        );
+
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertTrue( $optimizer->optimize( $regexp ) );
+        $this->assertFalse( $optimizer->optimize( $regexp ) );
+
+        $this->assertEquals(
+            new slRegularExpressionRepeated(
+                new slRegularExpressionElement( 'a' )
+            ),
+            $regexp
+        );
+    }
 }
 

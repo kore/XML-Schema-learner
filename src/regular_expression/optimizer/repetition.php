@@ -42,7 +42,17 @@ class slRegularExpressionRepetitionOptimizer extends slRegularExpressionOptimize
      */
     public function optimize( slRegularExpression &$regularExpression )
     {
-        return false;
+        if ( ( ( $op1 = $regularExpression instanceof slRegularExpressionOptional ) ||
+               ( $regularExpression instanceof slRegularExpressionRepeated ) ) &&
+             ( ( $op2 = $regularExpression->getChild() instanceof slRegularExpressionOptional ) ||
+               ( $regularExpression->getChild() instanceof slRegularExpressionRepeated ) ) )
+        {
+            $class = $op1 && $op2 ? 'slRegularExpressionOptional' : 'slRegularExpressionRepeated';
+            $regularExpression = new $class( $regularExpression->getChild()->getChild() );
+            return true;
+        }
+
+        return $this->recurse( $regularExpression );
     }
 }
 
