@@ -55,15 +55,15 @@ abstract class slRegularExpressionOptimizerBase
      */
     protected function recurse( slRegularExpression $regularExpression )
     {
+        if ( !$regularExpression instanceof slRegularExpressionContainer )
+        {
+            return false;
+        }
+
         $modified = false;
         $children = $regularExpression->getChildren();
         foreach ( $children as &$child )
         {
-            if ( !$child instanceof slRegularExpressionContainer )
-            {
-                continue;
-            }
-
             $modified |= $this->optimize( $child );
         }
 

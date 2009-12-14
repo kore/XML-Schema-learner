@@ -1,5 +1,11 @@
 <?xml version="1.0"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/gegenrated" elementFormDefault="qualified">
+  <complexType name="alpha">
+    <!--Empty regular expression-->
+  </complexType>
+  <complexType name="beta">
+    <!--Empty regular expression-->
+  </complexType>
   <element name="root" type="root"/>
   <complexType name="root">
     <sequence>
@@ -9,5 +15,8 @@
       </sequence>
       <element name="beta" type="beta"/>
     </sequence>
+  </complexType>
+  <complexType name="optional">
+    <!--Empty regular expression-->
   </complexType>
 </schema>

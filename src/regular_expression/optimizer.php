@@ -63,6 +63,7 @@ class slRegularExpressionOptimizer
             new slRegularExpressionSequenceOptimizer(),
             new slRegularExpressionRepetitionOptimizer(),
             new slRegularExpressionSingletonOptimizer(),
+            new slRegularExpressionEmptyOptimizer(),
         );
     }
 
@@ -75,10 +76,10 @@ class slRegularExpressionOptimizer
      * @param slRegularExpression $regularExpression 
      * @return void
      */
-    public function optimize( slRegularExpression $regularExpression )
+    public function optimize( slRegularExpression &$regularExpression )
     {
-        $optimized = false;
         do {
+            $optimized = false;
             foreach ( $this->optimizers as $optimizer )
             {
                 $optimized |= $optimizer->optimize( $regularExpression );

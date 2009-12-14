@@ -1,3 +1,6 @@
 <!DOCTYPE root>
 
+<!ELEMENT alpha >
+<!ELEMENT beta >
 <!ELEMENT root ( alpha, optional?, beta )>
+<!ELEMENT optional >

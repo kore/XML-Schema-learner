@@ -42,8 +42,7 @@ class slRegularExpressionSingletonOptimizer extends slRegularExpressionOptimizer
      */
     public function optimize( slRegularExpression &$regularExpression )
     {
-        if ( ( ( $regularExpression instanceof slRegularExpressionChoice ) ||
-               ( $regularExpression instanceof slRegularExpressionSequence ) ) &&
+        if ( ( $regularExpression instanceof slRegularExpressionMultiple ) &&
              ( count( $children = $regularExpression->getChildren() ) === 1 ) )
         {
             $regularExpression = reset( $children );

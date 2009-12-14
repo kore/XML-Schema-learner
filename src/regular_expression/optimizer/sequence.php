@@ -42,6 +42,11 @@ class slRegularExpressionSequenceOptimizer extends slRegularExpressionOptimizerB
      */
     public function optimize( slRegularExpression &$regularExpression )
     {
+        if ( !$regularExpression instanceof slRegularExpressionSequence )
+        {
+            return false;
+        }
+
         $children = $regularExpression->getChildren();
         foreach ( $children as $nr => &$child )
         {

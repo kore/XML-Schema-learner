@@ -102,17 +102,23 @@ abstract class slSchema
      */
     public function getTypes()
     {
+        $optimizer = new slRegularExpressionOptimizer();
+
         // Ensure the regular expressions in all types are up to date
         foreach ( $this->types as $type => $element )
         {
-            $element->regularExpression = $this->convertRegularExpression( $element->automaton );
+            $regularExpression = $this->convertRegularExpression( $element->automaton );
 
             // If the element has been empty at least once, make the whole 
             // subpattern optional
             if ( $element->empty )
             {
-                $element->regularExpression = new slRegularExpressionOptional( $element->regularExpression );
+                $regularExpression = new slRegularExpressionOptional( $regularExpression );
             }
+
+            // Optimize regular expression
+            $optimizer->optimize( $regularExpression );
+            $element->regularExpression = $regularExpression;
         };
 
         return $this->types;
