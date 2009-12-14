@@ -29,7 +29,7 @@
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-class slRegularExpressionXmlSchemaVisitor extends slRegularExpressionStringVisitor
+class slRegularExpressionXmlSchemaVisitor extends slRegularExpressionVisitor
 {
     /**
      * Owner document for the generated regular expression markup
@@ -58,10 +58,24 @@ class slRegularExpressionXmlSchemaVisitor extends slRegularExpressionStringVisit
      * The return type of this method varies deping on the concrete visitor 
      * implementation
      * 
-     * @param string $element 
+     * @param slRegularExpressionEmpty $element 
      * @return mixed
      */
-    protected function visitElement( $element )
+    protected function visitEmpty( slRegularExpressionEmpty $element )
+    {
+        return $this->document->createComment( 'Empty regular expression' );
+    }
+
+    /**
+     * Visit single element in regular expression
+     *
+     * The return type of this method varies deping on the concrete visitor 
+     * implementation
+     * 
+     * @param slRegularExpressionElement $element 
+     * @return mixed
+     */
+    protected function visitElement( slRegularExpressionElement $element )
     {
         $node = $this->document->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'element' );
         $node->setAttribute( 'name', $element );

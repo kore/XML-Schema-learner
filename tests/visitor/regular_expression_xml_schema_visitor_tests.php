@@ -37,12 +37,24 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
 		return new PHPUnit_Framework_TestSuite( __CLASS__ );
 	}
 
+    public function testVisitEmpty()
+    {
+        $visitor = new slRegularExpressionXmlSchemaVisitor( $doc = new DOMDocument() );
+        $this->assertTrue(
+            $visitor->visit(
+                new slRegularExpressionEmpty()
+            ) instanceof DOMComment
+        );
+    }
+
     public function testVisitElement()
     {
         $visitor = new slRegularExpressionXmlSchemaVisitor( $doc = new DOMDocument() );
         $this->assertSame(
             '<element xmlns="http://www.w3.org/2001/XMLSchema" name="a" type="a"/>',
-            simplexml_import_dom( $visitor->visit( 'a' ) )->asXml()
+            simplexml_import_dom( $visitor->visit(
+                new slRegularExpressionElement( 'a' )
+            ) )->asXml()
         );
     }
 
@@ -51,19 +63,10 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
         $visitor = new slRegularExpressionXmlSchemaVisitor( $doc = new DOMDocument() );
         $this->assertSame(
             '<element xmlns="http://www.w3.org/2001/XMLSchema" name="23" type="23"/>',
-            simplexml_import_dom( $visitor->visit( 23 ) )->asXml()
+            simplexml_import_dom( $visitor->visit(
+                new slRegularExpressionElement( 23 )
+            ) )->asXml()
         );
-    }
-
-    public function testVisitInvalidElement()
-    {
-        $visitor = new slRegularExpressionXmlSchemaVisitor( $doc = new DOMDocument() );
-
-        try {
-            $visitor->visit( new StdClass() );
-            $this->fail( 'Expected RuntimeException.' );
-        } catch ( RuntimeException $e )
-        { /* Expected */ }
     }
 
     public function testVisitSequence()
@@ -72,7 +75,10 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
         $this->assertEquals(
             '<sequence xmlns="http://www.w3.org/2001/XMLSchema"><element name="a" type="a"/><element name="b" type="b"/></sequence>',
             simplexml_import_dom( $visitor->visit(
-                new slRegularExpressionSequence( array( 'a', 'b' ) )
+                new slRegularExpressionSequence(
+                    new slRegularExpressionElement( 'a' ),
+                    new slRegularExpressionElement( 'b' )
+                )
             ) )->asXml()
         );
     }
@@ -83,7 +89,10 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
         $this->assertEquals(
             '<choice xmlns="http://www.w3.org/2001/XMLSchema"><element name="a" type="a"/><element name="b" type="b"/></choice>',
             simplexml_import_dom( $visitor->visit(
-                new slRegularExpressionChoice( array( 'a', 'b' ) )
+                new slRegularExpressionChoice(
+                    new slRegularExpressionElement( 'a' ),
+                    new slRegularExpressionElement( 'b' )
+                )
             ) )->asXml()
         );
     }
@@ -94,7 +103,9 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
         $this->assertEquals(
             '<sequence xmlns="http://www.w3.org/2001/XMLSchema" minOccurs="0" maxOccurs="1"><element name="a" type="a"/></sequence>',
             simplexml_import_dom( $visitor->visit(
-                new slRegularExpressionOptional( array( 'a' ) )
+                new slRegularExpressionOptional(
+                    new slRegularExpressionElement( 'a' )
+                )
             ) )->asXml()
         );
     }
@@ -105,7 +116,9 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
         $this->assertEquals(
             '<sequence xmlns="http://www.w3.org/2001/XMLSchema" minOccurs="0" maxOccurs="unbounded"><element name="a" type="a"/></sequence>',
             simplexml_import_dom( $visitor->visit(
-                new slRegularExpressionRepeated( array( 'a' ) )
+                new slRegularExpressionRepeated(
+                    new slRegularExpressionElement( 'a' )
+                )
             ) )->asXml()
         );
     }
@@ -116,10 +129,14 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
         $this->assertEquals(
             '<sequence xmlns="http://www.w3.org/2001/XMLSchema"><sequence><element name="a" type="a"/></sequence><sequence><element name="b" type="b"/></sequence></sequence>',
             simplexml_import_dom( $visitor->visit(
-                new slRegularExpressionSequence( array(
-                    new slRegularExpressionSequence( array( 'a' ) ),
-                    new slRegularExpressionSequence( array( 'b' ) ),
-                ) )
+                new slRegularExpressionSequence(
+                    new slRegularExpressionSequence(
+                        new slRegularExpressionElement( 'a' )
+                    ),
+                    new slRegularExpressionSequence(
+                        new slRegularExpressionElement( 'b' )
+                    )
+                )
             ) )->asXml()
         );
     }
@@ -128,15 +145,17 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
     {
         $visitor = new slRegularExpressionXmlSchemaVisitor( $doc = new DOMDocument() );
         $this->assertEquals(
-            '<sequence xmlns="http://www.w3.org/2001/XMLSchema"><sequence><element name="a" type="a"/></sequence><choice><sequence><element name="b1" type="b1"/></sequence><sequence><element name="b2" type="b2"/></sequence></choice></sequence>',
+            '<sequence xmlns="http://www.w3.org/2001/XMLSchema"><sequence><element name="a" type="a"/></sequence><choice><element name="b1" type="b1"/><element name="b2" type="b2"/></choice></sequence>',
             simplexml_import_dom( $visitor->visit(
-                new slRegularExpressionSequence( array(
-                    new slRegularExpressionSequence( array( 'a' ) ),
-                    new slRegularExpressionChoice( array(
-                        new slRegularExpressionSequence( array( 'b1' ) ),
-                        new slRegularExpressionSequence( array( 'b2' ) ),
-                    ) ),
-                ) )
+                new slRegularExpressionSequence(
+                    new slRegularExpressionSequence(
+                        new slRegularExpressionElement( 'a' )
+                    ),
+                    new slRegularExpressionChoice(
+                        new slRegularExpressionElement( 'b1' ),
+                        new slRegularExpressionElement( 'b2' )
+                    )
+                )
             ) )->asXml()
         );
     }
@@ -147,13 +166,19 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
         $this->assertEquals(
             '<choice xmlns="http://www.w3.org/2001/XMLSchema"><sequence><element name="a" type="a"/></sequence><sequence><sequence><element name="b" type="b"/></sequence><sequence><element name="c" type="c"/></sequence></sequence></choice>',
             simplexml_import_dom( $visitor->visit(
-                new slRegularExpressionChoice( array(
-                    new slRegularExpressionSequence( array( 'a' ) ),
-                    new slRegularExpressionSequence( array(
-                        new slRegularExpressionSequence( array( 'b' ) ),
-                        new slRegularExpressionSequence( array( 'c' ) ),
-                    ) ),
-                ) )
+                new slRegularExpressionChoice(
+                    new slRegularExpressionSequence(
+                        new slRegularExpressionElement( 'a' )
+                    ),
+                    new slRegularExpressionSequence(
+                        new slRegularExpressionSequence(
+                            new slRegularExpressionElement( 'b' )
+                        ),
+                        new slRegularExpressionSequence(
+                            new slRegularExpressionElement( 'c' )
+                        )
+                    )
+                )
             ) )->asXml()
         );
     }

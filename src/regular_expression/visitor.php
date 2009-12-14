@@ -44,15 +44,14 @@ abstract class slRegularExpressionVisitor
      * @param mixed $regularExpression 
      * @return mixed
      */
-    public function visit( $regularExpression )
+    public function visit( slRegularExpression $regularExpression )
     {
-        if ( !is_object( $regularExpression ) )
-        {
-            return $this->visitElement( $regularExpression );
-        }
-
         switch ( get_class( $regularExpression ) )
         {
+            case 'slRegularExpressionEmpty':
+                return $this->visitEmpty( $regularExpression );
+            case 'slRegularExpressionElement':
+                return $this->visitElement( $regularExpression );
             case 'slRegularExpressionChoice':
                 return $this->visitChoice( $regularExpression );
             case 'slRegularExpressionSequence':
@@ -61,8 +60,6 @@ abstract class slRegularExpressionVisitor
                 return $this->visitOptional( $regularExpression );
             case 'slRegularExpressionRepeated':
                 return $this->visitRepeated( $regularExpression );
-            default:
-                throw new RuntimeException( 'Unknown class: ' . get_class( $regularExpression ) );
         }
     }
 
@@ -72,10 +69,21 @@ abstract class slRegularExpressionVisitor
      * The return type of this method varies deping on the concrete visitor 
      * implementation
      * 
-     * @param string $element 
+     * @param slRegularExpressionEmpty $element 
      * @return mixed
      */
-    abstract protected function visitElement( $element );
+    abstract protected function visitEmpty( slRegularExpressionEmpty $element );
+
+    /**
+     * Visit single element in regular expression
+     *
+     * The return type of this method varies deping on the concrete visitor 
+     * implementation
+     * 
+     * @param slRegularExpressionElement $element 
+     * @return mixed
+     */
+    abstract protected function visitElement( slRegularExpressionElement $element );
 
     /**
      * Visit choice sub expression

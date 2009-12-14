@@ -37,12 +37,25 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
 		return new PHPUnit_Framework_TestSuite( __CLASS__ );
 	}
 
+    public function testVisitEmpty()
+    {
+        $visitor = new slRegularExpressionDtdVisitor();
+        $this->assertSame(
+            '',
+            $visitor->visit(
+                new slRegularExpressionEmpty()
+            )
+        );
+    }
+
     public function testVisitElement()
     {
         $visitor = new slRegularExpressionDtdVisitor();
         $this->assertSame(
             'a',
-            $visitor->visit( 'a' )
+            $visitor->visit(
+                new slRegularExpressionElement( 'a' )
+            )
         );
     }
 
@@ -51,19 +64,10 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
         $visitor = new slRegularExpressionDtdVisitor();
         $this->assertSame(
             '23',
-            $visitor->visit( 23 )
+            $visitor->visit(
+                new slRegularExpressionElement( 23 )
+            )
         );
-    }
-
-    public function testVisitInvalidElement()
-    {
-        $visitor = new slRegularExpressionDtdVisitor();
-
-        try {
-            $visitor->visit( new StdClass() );
-            $this->fail( 'Expected RuntimeException.' );
-        } catch ( RuntimeException $e )
-        { /* Expected */ }
     }
 
     public function testVisitSequence()
@@ -72,7 +76,10 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             '( a, b )',
             $visitor->visit(
-                new slRegularExpressionSequence( array( 'a', 'b' ) )
+                new slRegularExpressionSequence(
+                    new slRegularExpressionElement( 'a' ),
+                    new slRegularExpressionElement( 'b' )
+                )
             )
         );
     }
@@ -83,7 +90,10 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             '( a | b )',
             $visitor->visit(
-                new slRegularExpressionChoice( array( 'a', 'b' ) )
+                new slRegularExpressionChoice(
+                    new slRegularExpressionElement( 'a' ),
+                    new slRegularExpressionElement( 'b' )
+                )
             )
         );
     }
@@ -94,7 +104,9 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             'a?',
             $visitor->visit(
-                new slRegularExpressionOptional( array( 'a' ) )
+                new slRegularExpressionOptional(
+                    new slRegularExpressionElement( 'a' )
+                )
             )
         );
     }
@@ -105,7 +117,9 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             'a*',
             $visitor->visit(
-                new slRegularExpressionRepeated( array( 'a' ) )
+                new slRegularExpressionRepeated(
+                    new slRegularExpressionElement( 'a' )
+                )
             )
         );
     }
@@ -116,10 +130,14 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             '( ( a ), ( b ) )',
             $visitor->visit(
-                new slRegularExpressionSequence( array(
-                    new slRegularExpressionSequence( array( 'a' ) ),
-                    new slRegularExpressionSequence( array( 'b' ) ),
-                ) )
+                new slRegularExpressionSequence(
+                    new slRegularExpressionSequence(
+                        new slRegularExpressionElement( 'a' )
+                    ),
+                    new slRegularExpressionSequence(
+                        new slRegularExpressionElement( 'b' )
+                    )
+                )
             )
         );
     }
@@ -128,15 +146,17 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
     {
         $visitor = new slRegularExpressionDtdVisitor();
         $this->assertEquals(
-            '( ( a ), ( ( b1 ) | ( b2 ) ) )',
+            '( ( a ), ( b1 | b2 ) )',
             $visitor->visit(
-                new slRegularExpressionSequence( array(
-                    new slRegularExpressionSequence( array( 'a' ) ),
-                    new slRegularExpressionChoice( array(
-                        new slRegularExpressionSequence( array( 'b1' ) ),
-                        new slRegularExpressionSequence( array( 'b2' ) ),
-                    ) ),
-                ) )
+                new slRegularExpressionSequence(
+                    new slRegularExpressionSequence(
+                        new slRegularExpressionElement( 'a' )
+                    ),
+                    new slRegularExpressionChoice(
+                        new slRegularExpressionElement( 'b1' ),
+                        new slRegularExpressionElement( 'b2' )
+                    )
+                )
             )
         );
     }
@@ -147,13 +167,19 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             '( ( a ) | ( ( b ), ( c ) ) )',
             $visitor->visit(
-                new slRegularExpressionChoice( array(
-                    new slRegularExpressionSequence( array( 'a' ) ),
-                    new slRegularExpressionSequence( array(
-                        new slRegularExpressionSequence( array( 'b' ) ),
-                        new slRegularExpressionSequence( array( 'c' ) ),
-                    ) ),
-                ) )
+                new slRegularExpressionChoice(
+                    new slRegularExpressionSequence(
+                        new slRegularExpressionElement( 'a' )
+                    ),
+                    new slRegularExpressionSequence(
+                        new slRegularExpressionSequence(
+                            new slRegularExpressionElement( 'b' )
+                        ),
+                        new slRegularExpressionSequence(
+                            new slRegularExpressionElement( 'c' )
+                        )
+                    )
+                )
             )
         );
     }

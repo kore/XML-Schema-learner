@@ -37,12 +37,26 @@ class slRegularExpressionStringVisitor extends slRegularExpressionVisitor
      * The return type of this method varies deping on the concrete visitor 
      * implementation
      * 
-     * @param string $element 
+     * @param slRegularExpressionEmpty $element 
      * @return mixed
      */
-    protected function visitElement( $element )
+    protected function visitEmpty( slRegularExpressionEmpty $element )
     {
-        return (string) $element;
+        return '';
+    }
+
+    /**
+     * Visit single element in regular expression
+     *
+     * The return type of this method varies deping on the concrete visitor 
+     * implementation
+     * 
+     * @param slRegularExpressionElement $element 
+     * @return mixed
+     */
+    protected function visitElement( slRegularExpressionElement $element )
+    {
+        return (string) $element->getContent();
     }
 
     /**
