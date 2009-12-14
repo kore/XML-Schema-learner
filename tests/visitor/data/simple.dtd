@@ -1,5 +1,3 @@
-<!DOCTYPE root>
-
 <!ELEMENT alpha EMPTY>
 <!ELEMENT beta EMPTY>
 <!ELEMENT root ( ( alpha, beta ) )>
