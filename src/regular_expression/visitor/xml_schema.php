@@ -32,6 +32,14 @@
 class slRegularExpressionXmlSchemaVisitor extends slRegularExpressionVisitor
 {
     /**
+     * XML Schema schema visitor, which provides the implementation for XML 
+     * Schema specifc simple type conversions.
+     * 
+     * @var slSchemaXmlSchemaVisitor
+     */
+    protected $schemaVisitor;
+
+    /**
      * Owner document for the generated regular expression markup
      * 
      * @var DOMDocument
@@ -47,9 +55,10 @@ class slRegularExpressionXmlSchemaVisitor extends slRegularExpressionVisitor
      * @param DOMDocument $document 
      * @return void
      */
-    public function __construct( DOMDocument $document )
+    public function __construct( slSchemaXmlSchemaVisitor $schemaVisitor, DOMDocument $document )
     {
-        $this->document = $document;
+        $this->schemaVisitor = $schemaVisitor;
+        $this->document      = $document;
     }
 
     /**
@@ -77,9 +86,22 @@ class slRegularExpressionXmlSchemaVisitor extends slRegularExpressionVisitor
      */
     protected function visitElement( slRegularExpressionElement $element )
     {
+        $type = $this->schemaVisitor->getType( $element->getContent() );
         $node = $this->document->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'element' );
-        $node->setAttribute( 'name', $element );
-        $node->setAttribute( 'type', $element );
+        $node->setAttribute( 'name', $type->type );
+
+        if ( ( $type->regularExpression instanceof slRegularExpressionEmpty ) &&
+             ( !count( $type->attributes ) ) )
+        {
+            if ( $type->simpleTypeInferencer->inferenceType() !== 'empty' )
+            {
+                $node->setAttribute( 'type', $this->schemaVisitor->getXmlSchemaSimpleType( $type->simpleTypeInferencer ) );
+            }
+        }
+        else
+        {
+            $node->setAttribute( 'type', $type->type );
+        }
 
         return $node;
     }

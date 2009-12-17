@@ -37,9 +37,27 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
 		return new PHPUnit_Framework_TestSuite( __CLASS__ );
 	}
 
+    protected function getVisitor()
+    {
+        $schemaVisitor = new slSchemaXmlSchemaVisitor();
+        $schemaVisitor->setTypes( array(
+            '23' => new slSchemaElement( '23' ),
+            'a'  => new slSchemaElement( 'a' ),
+            'b'  => new slSchemaElement( 'b' ),
+            'b1' => new slSchemaElement( 'b1' ),
+            'b2' => new slSchemaElement( 'b2' ),
+            'c'  => new slSchemaElement( 'c' ),
+        ) );
+
+        return new slRegularExpressionXmlSchemaVisitor(
+            $schemaVisitor,
+            new DOMDocument()
+        );
+    }
+
     public function testVisitEmpty()
     {
-        $visitor = new slRegularExpressionXmlSchemaVisitor( $doc = new DOMDocument() );
+        $visitor = $this->getVisitor();
         $this->assertTrue(
             $visitor->visit(
                 new slRegularExpressionEmpty()
@@ -49,7 +67,7 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
 
     public function testVisitElement()
     {
-        $visitor = new slRegularExpressionXmlSchemaVisitor( $doc = new DOMDocument() );
+        $visitor = $this->getVisitor();
         $this->assertSame(
             '<element xmlns="http://www.w3.org/2001/XMLSchema" name="a" type="a"/>',
             simplexml_import_dom( $visitor->visit(
@@ -60,7 +78,7 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
 
     public function testVisitNumericElement()
     {
-        $visitor = new slRegularExpressionXmlSchemaVisitor( $doc = new DOMDocument() );
+        $visitor = $this->getVisitor();
         $this->assertSame(
             '<element xmlns="http://www.w3.org/2001/XMLSchema" name="23" type="23"/>',
             simplexml_import_dom( $visitor->visit(
@@ -71,7 +89,7 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
 
     public function testVisitSequence()
     {
-        $visitor = new slRegularExpressionXmlSchemaVisitor( $doc = new DOMDocument() );
+        $visitor = $this->getVisitor();
         $this->assertEquals(
             '<sequence xmlns="http://www.w3.org/2001/XMLSchema"><element name="a" type="a"/><element name="b" type="b"/></sequence>',
             simplexml_import_dom( $visitor->visit(
@@ -85,7 +103,7 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
 
     public function testVisitChoice()
     {
-        $visitor = new slRegularExpressionXmlSchemaVisitor( $doc = new DOMDocument() );
+        $visitor = $this->getVisitor();
         $this->assertEquals(
             '<choice xmlns="http://www.w3.org/2001/XMLSchema"><element name="a" type="a"/><element name="b" type="b"/></choice>',
             simplexml_import_dom( $visitor->visit(
@@ -99,7 +117,7 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
 
     public function testVisitOptional()
     {
-        $visitor = new slRegularExpressionXmlSchemaVisitor( $doc = new DOMDocument() );
+        $visitor = $this->getVisitor();
         $this->assertEquals(
             '<sequence xmlns="http://www.w3.org/2001/XMLSchema" minOccurs="0" maxOccurs="1"><element name="a" type="a"/></sequence>',
             simplexml_import_dom( $visitor->visit(
@@ -112,7 +130,7 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
 
     public function testVisitRepeated()
     {
-        $visitor = new slRegularExpressionXmlSchemaVisitor( $doc = new DOMDocument() );
+        $visitor = $this->getVisitor();
         $this->assertEquals(
             '<sequence xmlns="http://www.w3.org/2001/XMLSchema" minOccurs="0" maxOccurs="unbounded"><element name="a" type="a"/></sequence>',
             simplexml_import_dom( $visitor->visit(
@@ -125,7 +143,7 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
 
     public function testVisitStackedSequence()
     {
-        $visitor = new slRegularExpressionXmlSchemaVisitor( $doc = new DOMDocument() );
+        $visitor = $this->getVisitor();
         $this->assertEquals(
             '<sequence xmlns="http://www.w3.org/2001/XMLSchema"><sequence><element name="a" type="a"/></sequence><sequence><element name="b" type="b"/></sequence></sequence>',
             simplexml_import_dom( $visitor->visit(
@@ -143,7 +161,7 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
 
     public function testVisitConcatenationOfDisjunction()
     {
-        $visitor = new slRegularExpressionXmlSchemaVisitor( $doc = new DOMDocument() );
+        $visitor = $this->getVisitor();
         $this->assertEquals(
             '<sequence xmlns="http://www.w3.org/2001/XMLSchema"><sequence><element name="a" type="a"/></sequence><choice><element name="b1" type="b1"/><element name="b2" type="b2"/></choice></sequence>',
             simplexml_import_dom( $visitor->visit(
@@ -162,7 +180,7 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
 
     public function testDisjunctionOfConcatenation()
     {
-        $visitor = new slRegularExpressionXmlSchemaVisitor( $doc = new DOMDocument() );
+        $visitor = $this->getVisitor();
         $this->assertEquals(
             '<choice xmlns="http://www.w3.org/2001/XMLSchema"><sequence><element name="a" type="a"/></sequence><sequence><sequence><element name="b" type="b"/></sequence><sequence><element name="c" type="c"/></sequence></sequence></choice>',
             simplexml_import_dom( $visitor->visit(

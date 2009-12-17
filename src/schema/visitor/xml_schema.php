@@ -32,6 +32,14 @@
 class slSchemaXmlSchemaVisitor extends slSchemaVisitor
 {
     /**
+     * Types, defined in processed schema, to return references to the types 
+     * for sub-visitors, like the regular expression visitor.
+     * 
+     * @var array
+     */
+    protected $types = array();
+
+    /**
      * Visit a schema
      *
      * The visitor is not structured, since the types might be required to be 
@@ -55,24 +63,176 @@ class slSchemaXmlSchemaVisitor extends slSchemaVisitor
 
         $rootElements = $schema->getRootElements();
 
-        $regExpVisitor = new slRegularExpressionXmlSchemaVisitor( $doc );
-        foreach ( $schema->getTypes() as $type )
+        foreach ( ( $this->types = $schema->getTypes() ) as $type )
         {
-            if ( in_array( $type, $rootElements ) )
+            if ( $elementName = array_search( $type->type, $rootElements ) )
             {
                 $element = $doc->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'element' );
-                $element->setAttribute( 'name', $type->type );
+                $element->setAttribute( 'name', $elementName );
                 $element->setAttribute( 'type', $type->type );
                 $root->appendChild( $element );
             }
 
-            $complexType = $doc->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'complexType' );
-            $complexType->setAttribute( 'name', $type );
-            $complexType->appendChild( $regExpVisitor->visit( $type->regularExpression ) );
-            $root->appendChild( $complexType );
+            $this->visitType( $root, $type );
         }
 
         return $doc->saveXml();
+    }
+
+    /**
+     * Visit single type / element
+     *
+     * Vist a single element and create proper XML Schema markup depending on 
+     * the elements contents.
+     * 
+     * @param DOMElement $root 
+     * @param slSchemaElement $element 
+     * @return void
+     */
+    protected function visitType( DOMElement $root, slSchemaElement $element )
+    {
+        $regExpVisitor = new slRegularExpressionXmlSchemaVisitor( $this, $root->ownerDocument );
+
+        switch ( true )
+        {
+            // For all non-empty regular expressions in the element, we can 
+            // create a complex type definition. This can optionally be mixed
+            // (for non-empty simple type definitions) and can always contain 
+            // attribute definitions, too.
+            case ( !$element->regularExpression instanceof slRegularExpressionEmpty ):
+                
+                $complexType = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'complexType' );
+                $complexType->setAttribute( 'name', $element->type );
+                $complexType->appendChild( $regExpVisitor->visit( $element->regularExpression ) );
+
+                if ( $element->simpleTypeInferencer->inferenceType() !== 'empty' )
+                {
+                    $complexType->setAttribute( 'mixed', 'true' );
+                }
+
+                $this->visitAttributeList( $complexType, $element );
+
+                $root->appendChild( $complexType );
+                return;
+
+            // For all following cases the regular expression can be considered 
+            // empty. If the simple type definition also contains attributes we 
+            // need to create a simple content node, this happens here:
+            case ( count( $element->attributes ) ) &&
+                 ( $element->simpleTypeInferencer->inferenceType( ) !== 'empty' ):
+
+                $complexType = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'complexType' );
+                $complexType->setAttribute( 'name', $element->type );
+                $root->appendChild( $complexType );
+
+                // Attach a simple content node to the complex type
+                $simpleContent = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'simpleContent' );
+                $complexType->appendChild( $simpleContent );
+
+                // Extend the defined simple type by the list of attributes
+                $extension = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'extension' );
+                $extension->setAttribute( 'base', $this->getXmlSchemaSimpleType( $element->simpleTypeInferencer ) );
+                $simpleContent->appendChild( $extension );
+
+                $this->visitAttributeList( $extension, $element );
+                return;
+
+            // If we have an empty regular expression, and an empty simple type 
+            // definition, we need to create a complext empty type, with 
+            // attributes.
+            case ( count( $element->attributes ) ):
+                
+                $complexType = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'complexType' );
+                $complexType->setAttribute( 'name', $element->type );
+                $this->visitAttributeList( $complexType, $element );
+                $root->appendChild( $complexType );
+                return;
+
+            // The other two cases, where no attributes and no regular 
+            // expression are provided for the element are handled by the 
+            // regular expression visitor.
+            default:
+                return;
+        }
+    }
+
+    /**
+     * Visit the attribute list of an element into the given root element.
+     * 
+     * @param DOMElement $root 
+     * @param slSchemaElement $element 
+     * @return void
+     */
+    protected function visitAttributeList( DOMElement $root, slSchemaElement $element )
+    {
+        if ( !count( $element->attributes ) )
+        {
+            return;
+        }
+
+        foreach ( $element->attributes as $attribute )
+        {
+            $attributeNode = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'attribute' );
+            $attributeNode->setAttribute( 'name', $attribute->name );
+            $attributeNode->setAttribute( 'type', $this->getXmlSchemaSimpleType( $attribute->simpleTypeInferencer ) );
+            
+            if ( !$attribute->optional )
+            {
+                $attributeNode->setAttribute( 'use', 'required' );
+            }
+
+            $root->appendChild( $attributeNode );
+        }
+    }
+
+    /**
+     * Get XML Schema simple type
+     *
+     * Return an XML Schema simple type specification from the inferenced type 
+     * provided by the given simple type inferencer.
+     * 
+     * @param slSimpleTypeInferencer $typeInferencer 
+     * @return string
+     */
+    public function getXmlSchemaSimpleType( slSimpleTypeInferencer $typeInferencer )
+    {
+        switch ( $type = $typeInferencer->inferenceType() )
+        {
+            case 'PCDATA':
+                return 'string';
+
+            default:
+                // @todo: Throw proper exception
+                throw new RuntimeException( "Unhandled inferenced simple type '$type'." );
+        }
+    }
+
+    /**
+     * Get element type definition for type identifier
+     *
+     * Returns the element type definition, specified in a slSchemaElement 
+     * object for the given type identifier.
+     * 
+     * @param string $type 
+     * @return slSchemaElement
+     */
+    public function getType( $type )
+    {
+        return $this->types[$type];
+    }
+
+    /**
+     * Set types array
+     *
+     * Method only used for testing, to set the contained types in the schema.
+     * 
+     * @param array $types
+     * @return void
+     * @access private
+     */
+    public function setTypes( array $types )
+    {
+        $this->types = $types;
     }
 }
 
