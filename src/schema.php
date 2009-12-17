@@ -134,7 +134,7 @@ abstract class slSchema
      */
     public function getRootElements()
     {
-        return array_keys( $this->rootElements );
+        return $this->rootElements;
     }
 
     /**
@@ -232,7 +232,7 @@ abstract class slSchema
     {
         if ( $root->parentNode instanceof DOMDocument )
         {
-            $this->rootElements[$this->inferenceType( $root )] = true;
+            $this->rootElements[$root->tagName] = $this->inferenceType( $root );
         }
 
         $elements = array();

@@ -97,7 +97,9 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
         $dtd->learnFile( __DIR__ . '/data/simple_2.xml' );
 
         $this->assertEquals(
-            array( 'root' ),
+            array(
+                'root' => 'root',
+            ),
             $dtd->getRootElements()
         );
     }
@@ -110,7 +112,10 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
         $dtd->learnFile( __DIR__ . '/data/simple_3.xml' );
 
         $this->assertEquals(
-            array( 'root', 'xml' ),
+            array(
+                'root' => 'root',
+                'xml'  => 'xml',
+            ),
             $dtd->getRootElements()
         );
     }
