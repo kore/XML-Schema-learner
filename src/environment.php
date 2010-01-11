@@ -59,6 +59,7 @@ require __DIR__ . '/regular_expression/visitor/xml_schema.php';
 
 require __DIR__ . '/schema.php';
 require __DIR__ . '/schema/dtd.php';
+require __DIR__ . '/schema/xsd.php';
 require __DIR__ . '/schema/visitor.php';
 require __DIR__ . '/schema/visitor/dtd.php';
 require __DIR__ . '/schema/visitor/xml_schema.php';
@@ -69,8 +70,9 @@ require __DIR__ . '/schema/attribute.php';
 require __DIR__ . '/simple_type_inferencer.php';
 require __DIR__ . '/simple_type_inferencer/pcdata.php';
 
-// require __DIR__ . '/type_merger.php';
-// require __DIR__ . '/type_merger/exact.php';
+require __DIR__ . '/type_merger.php';
+require __DIR__ . '/type_merger/no.php';
+require __DIR__ . '/type_merger/exact.php';
 
 require __DIR__ . '/type_inferencer.php';
 require __DIR__ . '/type_inferencer/name_based.php';
