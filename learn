@@ -27,20 +27,26 @@ require __DIR__ . '/src/environment.php';
 
 // Handle provided options
 $defaults = array(
-    'help' => null,
-    'type' => 'dtd',
+    'help'     => null,
+    'type'     => 'dtd',
+    'locality' => 'n',
+    'merger'   => 'exact',
 );
 
 $mapping = array(
     'h' => 'help',
     't' => 'type',
+    'l' => 'locality',
+    'm' => 'merger',
 );
 
 $options = getopt(
-    'ht:',
+    'ht:l:m:',
     array(
         'help',
         'type:',
+        'locality:',
+        'merger:',
     )
 );
 
@@ -66,18 +72,71 @@ by Kore Nordmann
 
 Usage: {$argv[0]} [-t <type>] (-r <root>)+ <xml-files>
 
+General options:
+
 -t / --type     Type of the schema to generate. Currently implemented schema 
                 languages: dtd, xsd
 
 -h / --help     Display this help output
 
+XML Schema specific options:
+
+-l / --locality Locality of the types when inferencing XML Schema schemata.
+                Valid values are integer numbers, or "n".
+
+-m / --merger   Algorithm used for type merging, available options are "none",
+                "exact".
+
 EOHELP;
     exit( 0 );
 }
 
-$files = array_slice( $argv, 1 );
+switch ( $options['type'] )
+{
+    case 'dtd':
+        $schema = new slDtdSchema();
+        $visitor = new slSchemaDtdVisitor();
+        break;
 
-$dtdSchema = new slDtdSchema();
+    case 'xsd':
+        $schema = new slXsdSchema();
+
+        // Set type inferencer based on configuration options.
+        if ( $options['locality'] === 'n' )
+        {
+            $schema->setTypeInferencer( new slFullPathTypeInferencer() );
+        }
+        else
+        {
+            $schema->setTypeInferencer( new slKLocalTypeInferencer( (int) $options['locality'] ) );
+        }
+
+        // Set type merger based on configuration options.
+        switch ( $options['merger'] )
+        {
+            case 'none':
+                $schema->setTypeMerger( new slNoTypeMerger() );
+                break;
+
+            case 'exact':
+                $schema->setTypeMerger( new slExactTypeMerger() );
+                break;
+
+            default:
+                echo "Unknown type merger '{$options['merger']}'.\n";
+                exit( 2 );
+        }
+
+        $schema = new slSchemaXmlSchemaVisitor();
+        break;
+
+    default:
+        echo "Unknown schema type '{$options['type']}'.\n";
+        exit( 2 );
+}
+
+// Learn from files
+$files = array_slice( $argv, 1 );
 foreach ( $files as $file )
 {
     if ( !file_exists( $file ) )
@@ -85,24 +144,9 @@ foreach ( $files as $file )
         continue;
     }
 
-    $dtdSchema->learnFile( $file );
+    $schema->learnFile( $file );
 }
 
-switch ( $options['type'] )
-{
-    case 'dtd':
-        $visitor = new slSchemaDtdVisitor();
-        echo $visitor->visit( $dtdSchema );
-        exit( 0 );
-
-    case 'xsd':
-        $visitor = new slSchemaXmlSchemaVisitor();
-        echo $visitor->visit( $dtdSchema );
-        exit( 0 );
-
-    default:
-        echo "Unknown schema type '{$options['type']}'.\n";
-        exit( 2 );
-}
-
+// Echo resulting schema
+echo $visitor->visit( $schema );
 
