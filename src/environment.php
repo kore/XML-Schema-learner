@@ -69,6 +69,11 @@ require __DIR__ . '/schema/attribute.php';
 require __DIR__ . '/simple_type_inferencer.php';
 require __DIR__ . '/simple_type_inferencer/pcdata.php';
 
+// require __DIR__ . '/type_merger.php';
+// require __DIR__ . '/type_merger/exact.php';
+
 require __DIR__ . '/type_inferencer.php';
 require __DIR__ . '/type_inferencer/name_based.php';
+require __DIR__ . '/type_inferencer/full_path.php';
+require __DIR__ . '/type_inferencer/k_local.php';
 
