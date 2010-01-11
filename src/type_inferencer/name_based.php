@@ -25,8 +25,8 @@
 /**
  * Name based type inferencer.
  *
- * Abstract class, which offers a method to return the type name for an element 
- * name, just using the actual element name. Works for DTD like schemas.
+ * Class, which offers a method to return the type name for an element name, 
+ * just using the actual element name. Works for DTD like schemas.
  *
  * @package Core
  * @version $Revision: 1236 $
