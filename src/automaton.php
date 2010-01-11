@@ -183,6 +183,66 @@ class slAutomaton
     }
 
     /**
+     * Merge current automaton with given automaton
+     * 
+     * @param slAutomaton $automaton 
+     * @return void
+     */
+    public function merge( slAutomaton $automaton )
+    {
+        foreach ( $automaton->getNodes() as $newNode )
+        {
+            if ( !isset( $this->nodes[$newNode] ) )
+            {
+                $this->addNode( $newNode );
+            }
+
+            foreach ( $automaton->getOutgoing( $newNode ) as $dst )
+            {
+                $this->addEdge( $newNode, $dst );
+            }
+        }
+    }
+
+    /**
+     * Rename a node
+     *
+     * Rename a node. If a node with the target name already exists the two 
+     * nodes should be merged properly.
+     * 
+     * @param string $old 
+     * @param string $new 
+     * @return void
+     */
+    public function renameNode( $old, $new )
+    {
+        if ( !isset( $this->nodes[$old] ) )
+        {
+            return;
+        }
+
+        if ( $isNew = !isset( $this->nodes[$new] ) )
+        {
+            $this->addNode( $new );
+        }
+
+        foreach ( $this->getOutgoing( $old ) as $dst )
+        {
+            $this->addEdge( $new, ( $dst === $old ) ? $new : $dst );
+        }
+
+        foreach ( $this->getIncoming( $old ) as $src )
+        {
+            if ( $src !== $old )
+            {
+                $this->addEdge( $src, $new );
+            }
+        }
+
+        $this->removeNode( $old );
+    }
+
+    /**
      * Get transitive closure for node
      *
      * Returns an array of the nodes which build the transitive closure for the 

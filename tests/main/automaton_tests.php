@@ -215,6 +215,18 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testGetNoLeaves()
+    {
+        $automaton = $this->getAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->addEdge( 'b', 'a' );
+
+        $this->assertEquals(
+            array(),
+            $automaton->getLeaves()
+        );
+    }
+
     public function testGetLeaves2()
     {
         $automaton = $this->getAutomaton();
@@ -263,6 +275,89 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
             array( 'a', 'b', 'c', 'd' ),
             $automaton->getTopologicallySortedNodeList()
         );
+    }
+
+    public function testImpossibleTopologicalSorting()
+    {
+        $automaton = $this->getAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->addEdge( 'b', 'a' );
+
+        $this->assertEquals(
+            array(),
+            $automaton->getTopologicallySortedNodeList()
+        );
+    }
+
+    public function testMergeDistinctAutomatons()
+    {
+        $a = $this->getAutomaton();
+        $a->addEdge( 'a', 'b' );
+
+        $b = $this->getAutomaton();
+        $b->addEdge( 'c', 'd' );
+
+        $a->merge( $b );
+
+        $this->assertEquals( array( 'a', 'b', 'c', 'd' ), $a->getNodes() );
+        $this->assertEquals( array( 'b' ), $a->getOutgoing( 'a' ) );
+        $this->assertEquals( array( 'd' ), $a->getOutgoing( 'c' ) );
+    }
+
+    public function testMergeAutomatons()
+    {
+        $a = $this->getAutomaton();
+        $a->addEdge( 'a', 'b' );
+
+        $b = $this->getAutomaton();
+        $b->addEdge( 'a', 'c' );
+
+        $a->merge( $b );
+
+        $this->assertEquals( array( 'a', 'b', 'c' ), $a->getNodes() );
+        $this->assertEquals( array( 'b', 'c' ), $a->getOutgoing( 'a' ) );
+    }
+
+    public function testRenameUnknownNode()
+    {
+        $automaton = $this->getAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->renameNode( 'c', 'b' );
+
+        $this->assertEquals( array( 'a', 'b' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'b' ), $automaton->getOutgoing( 'a' ) );
+    }
+
+    public function testRenameNodeToNonExisting()
+    {
+        $automaton = $this->getAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->renameNode( 'b', 'c' );
+
+        $this->assertEquals( array( 'a', 'c' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'c' ), $automaton->getOutgoing( 'a' ) );
+    }
+
+    public function testRenameNodeToExisting()
+    {
+        $automaton = $this->getAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->addEdge( 'c', 'd' );
+        $automaton->renameNode( 'c', 'a' );
+
+        $this->assertEquals( array( 'a', 'b', 'd' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'b', 'd' ), $automaton->getOutgoing( 'a' ) );
+    }
+
+    public function testRenameNodeToCycle()
+    {
+        $automaton = $this->getAutomaton();
+        $automaton->addEdge( 'a', 'b' );
+        $automaton->addEdge( 'b', 'c' );
+        $automaton->renameNode( 'c', 'b' );
+
+        $this->assertEquals( array( 'a', 'b' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'a', 'b' ), $automaton->getIncoming( 'b' ) );
     }
 }
 
