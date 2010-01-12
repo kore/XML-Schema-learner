@@ -90,17 +90,17 @@ class slRegularExpressionXmlSchemaVisitor extends slRegularExpressionVisitor
         $node = $this->document->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'element' );
         $node->setAttribute( 'name', $type->type );
 
-        if ( ( $type->regularExpression instanceof slRegularExpressionEmpty ) &&
-             ( !count( $type->attributes ) ) )
+        if ( ( $type->type->regularExpression instanceof slRegularExpressionEmpty ) &&
+             ( !count( $type->type->attributes ) ) )
         {
-            if ( $type->simpleTypeInferencer->inferenceType() !== 'empty' )
+            if ( $type->type->simpleTypeInferencer->inferenceType() !== 'empty' )
             {
-                $node->setAttribute( 'type', $this->schemaVisitor->getXmlSchemaSimpleType( $type->simpleTypeInferencer ) );
+                $node->setAttribute( 'type', $this->schemaVisitor->getXmlSchemaSimpleType( $type->type->simpleTypeInferencer ) );
             }
         }
         else
         {
-            $node->setAttribute( 'type', $type->type );
+            $node->setAttribute( 'type', $type->type->name );
         }
 
         return $node;

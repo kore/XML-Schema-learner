@@ -43,9 +43,9 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
         $dtd->learnFile( __DIR__ . '/data/simple.xml' );
 
         $expressions = array();
-        foreach ( $dtd->getTypes() as $type )
+        foreach ( $dtd->getTypes() as $element )
         {
-            $expressions[$type->type] = $type->regularExpression;
+            $expressions[$element->type->name] = $element->type->regularExpression;
         }
 
         $this->assertEquals(
@@ -68,9 +68,9 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
         $dtd->learnFile( __DIR__ . '/data/simple_2.xml' );
 
         $expressions = array();
-        foreach ( $dtd->getTypes() as $type )
+        foreach ( $dtd->getTypes() as $element )
         {
-            $expressions[$type->type] = $type->regularExpression;
+            $expressions[$element->type->name] = $element->type->regularExpression;
         }
 
         $this->assertEquals(

@@ -67,7 +67,7 @@ class slSchemaDtdVisitor extends slSchemaVisitor
         $regExpVisitor = new slRegularExpressionDtdVisitor();
         foreach ( $schema->getTypes() as $element )
         {
-            foreach ( $element->attributes as $attribute )
+            foreach ( $element->type->attributes as $attribute )
             {
                 $dtd .= $this->visitAttribute( $element, $attribute );
             }
@@ -109,27 +109,27 @@ class slSchemaDtdVisitor extends slSchemaVisitor
         $regExpVisitor = new slRegularExpressionDtdVisitor();
         switch ( true )
         {
-            case ( $element->regularExpression instanceof slRegularExpressionEmpty ) &&
-                 ( $element->simpleTypeInferencer->inferenceType() === 'empty' ):
+            case ( $element->type->regularExpression instanceof slRegularExpressionEmpty ) &&
+                 ( $element->type->simpleTypeInferencer->inferenceType() === 'empty' ):
                 return sprintf( "<!ELEMENT %s EMPTY>\n",
-                    $element->type
+                    $element->name
                 );
 
-            case ( $element->regularExpression instanceof slRegularExpressionEmpty ):
+            case ( $element->type->regularExpression instanceof slRegularExpressionEmpty ):
                 return sprintf( "<!ELEMENT %s (#PCDATA)>\n",
-                    $element->type
+                    $element->name
                 );
 
-            case ( $element->simpleTypeInferencer->inferenceType() === 'empty' ):
+            case ( $element->type->simpleTypeInferencer->inferenceType() === 'empty' ):
                 return sprintf( "<!ELEMENT %s ( %s )>\n",
-                    $element->type,
-                    $regExpVisitor->visit( $element->regularExpression )
+                    $element->name,
+                    $regExpVisitor->visit( $element->type->regularExpression )
                 );
             
             default:
                 return sprintf( "<!ELEMENT %s ( #PCDATA | %s )*>\n",
-                    $element->type,
-                    implode( ' | ', $this->extractTypes( $element->regularExpression ) )
+                    $element->name,
+                    implode( ' | ', $this->extractTypes( $element->type->regularExpression ) )
                 );
         }
     }

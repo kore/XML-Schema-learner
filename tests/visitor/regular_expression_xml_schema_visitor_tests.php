@@ -41,12 +41,12 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
     {
         $schemaVisitor = new slSchemaXmlSchemaVisitor();
         $schemaVisitor->setTypes( array(
-            '23' => new slSchemaElement( '23' ),
-            'a'  => new slSchemaElement( 'a' ),
-            'b'  => new slSchemaElement( 'b' ),
-            'b1' => new slSchemaElement( 'b1' ),
-            'b2' => new slSchemaElement( 'b2' ),
-            'c'  => new slSchemaElement( 'c' ),
+            '23' => new slSchemaElement( '23', new slSchemaType( '23' ) ),
+            'a'  => new slSchemaElement( 'a', new slSchemaType( 'a' ) ),
+            'b'  => new slSchemaElement( 'b', new slSchemaType( 'b' ) ),
+            'b1' => new slSchemaElement( 'b1', new slSchemaType( 'b1' ) ),
+            'b2' => new slSchemaElement( 'b2', new slSchemaType( 'b2' ) ),
+            'c'  => new slSchemaElement( 'c', new slSchemaType( 'c' ) ),
         ) );
 
         return new slRegularExpressionXmlSchemaVisitor(

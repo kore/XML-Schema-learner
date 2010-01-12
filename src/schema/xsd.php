@@ -29,16 +29,6 @@
  * schema uses the simple element name based type inferencer.
  *
  * @todo:
- *      Refactor element handling:
- *
- *      The element objects should only contain their local name, not the full 
- *      path, no matter which type inferencer is used.
- *
- *      The element objects should additionally contain a type object, which 
- *      contains the type name. The automatons need to reference elements, 
- *      which do have an associated types. Therefore elements must get a unique 
- *      identifier in the application.
- *
  *      The types will be merged in thy type merger, so that multiple elements 
  *      may refer to the same type.
  *

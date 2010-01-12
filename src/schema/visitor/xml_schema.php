@@ -99,13 +99,13 @@ class slSchemaXmlSchemaVisitor extends slSchemaVisitor
             // create a complex type definition. This can optionally be mixed
             // (for non-empty simple type definitions) and can always contain 
             // attribute definitions, too.
-            case ( !$element->regularExpression instanceof slRegularExpressionEmpty ):
+            case ( !$element->type->regularExpression instanceof slRegularExpressionEmpty ):
                 
                 $complexType = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'complexType' );
-                $complexType->setAttribute( 'name', $element->type );
-                $complexType->appendChild( $regExpVisitor->visit( $element->regularExpression ) );
+                $complexType->setAttribute( 'name', $element->type->name );
+                $complexType->appendChild( $regExpVisitor->visit( $element->type->regularExpression ) );
 
-                if ( $element->simpleTypeInferencer->inferenceType() !== 'empty' )
+                if ( $element->type->simpleTypeInferencer->inferenceType() !== 'empty' )
                 {
                     $complexType->setAttribute( 'mixed', 'true' );
                 }
@@ -118,11 +118,11 @@ class slSchemaXmlSchemaVisitor extends slSchemaVisitor
             // For all following cases the regular expression can be considered 
             // empty. If the simple type definition also contains attributes we 
             // need to create a simple content node, this happens here:
-            case ( count( $element->attributes ) ) &&
-                 ( $element->simpleTypeInferencer->inferenceType( ) !== 'empty' ):
+            case ( count( $element->type->attributes ) ) &&
+                 ( $element->type->simpleTypeInferencer->inferenceType( ) !== 'empty' ):
 
                 $complexType = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'complexType' );
-                $complexType->setAttribute( 'name', $element->type );
+                $complexType->setAttribute( 'name', $element->type->name );
                 $root->appendChild( $complexType );
 
                 // Attach a simple content node to the complex type
@@ -131,7 +131,7 @@ class slSchemaXmlSchemaVisitor extends slSchemaVisitor
 
                 // Extend the defined simple type by the list of attributes
                 $extension = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'extension' );
-                $extension->setAttribute( 'base', $this->getXmlSchemaSimpleType( $element->simpleTypeInferencer ) );
+                $extension->setAttribute( 'base', $this->getXmlSchemaSimpleType( $element->type->simpleTypeInferencer ) );
                 $simpleContent->appendChild( $extension );
 
                 $this->visitAttributeList( $extension, $element );
@@ -140,10 +140,10 @@ class slSchemaXmlSchemaVisitor extends slSchemaVisitor
             // If we have an empty regular expression, and an empty simple type 
             // definition, we need to create a complext empty type, with 
             // attributes.
-            case ( count( $element->attributes ) ):
+            case ( count( $element->type->attributes ) ):
                 
                 $complexType = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'complexType' );
-                $complexType->setAttribute( 'name', $element->type );
+                $complexType->setAttribute( 'name', $element->type->name );
                 $this->visitAttributeList( $complexType, $element );
                 $root->appendChild( $complexType );
                 return;
@@ -165,12 +165,12 @@ class slSchemaXmlSchemaVisitor extends slSchemaVisitor
      */
     protected function visitAttributeList( DOMElement $root, slSchemaElement $element )
     {
-        if ( !count( $element->attributes ) )
+        if ( !count( $element->type->attributes ) )
         {
             return;
         }
 
-        foreach ( $element->attributes as $attribute )
+        foreach ( $element->type->attributes as $attribute )
         {
             $attributeNode = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'attribute' );
             $attributeNode->setAttribute( 'name', $attribute->name );

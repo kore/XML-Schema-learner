@@ -32,9 +32,9 @@
 abstract class slSchema
 {
     /**
-     * Array of types
+     * Array of elements
      *
-     * Contains a list of all found elements / types with their context
+     * Contains a list of all found elements with their context
      * information.
      *
      * The slSchemaElement contains information about the elements simple,
@@ -42,7 +42,7 @@ abstract class slSchema
      * 
      * @var array
      */
-    protected $types = array();
+    protected $elements = array();
 
     /**
      * Types of found root elements
@@ -58,7 +58,7 @@ abstract class slSchema
      */
     public function __construct()
     {
-        $this->types        = array();
+        $this->elements     = array();
         $this->rootElements = array();
     }
 
@@ -104,30 +104,30 @@ abstract class slSchema
     {
         $optimizer = new slRegularExpressionOptimizer();
 
-        // Ensure the regular expressions in all types are up to date
-        foreach ( $this->types as $type => $element )
+        // Ensure the regular expressions in all elements are up to date
+        foreach ( $this->elements as $type => $element )
         {
-            $regularExpression = $this->convertRegularExpression( $element->automaton );
+            $regularExpression = $this->convertRegularExpression( $element->type->automaton );
 
             // If the element has been empty at least once, make the whole 
             // subpattern optional
-            if ( $element->empty )
+            if ( $element->type->empty )
             {
                 $regularExpression = new slRegularExpressionOptional( $regularExpression );
             }
 
             // Optimize regular expression
             $optimizer->optimize( $regularExpression );
-            $element->regularExpression = $regularExpression;
+            $element->type->regularExpression = $regularExpression;
         };
 
-        return $this->types;
+        return $this->elements;
     }
 
     /**
-     * Return types found as root elements
+     * Return elements found as root elements
      *
-     * Returns an array with the string representations of the types, which
+     * Returns an array with the string representations of the elements, which
      * have been found as root elements in the provided schemas.
      * 
      * @return void
@@ -140,15 +140,15 @@ abstract class slSchema
     /**
      * Lear Automaton for element
      * 
-     * @param slSchemaElement $type
+     * @param slSchemaElement $element
      * @param array $children 
      * @return void
      */
-    protected function learnAutomaton( slSchemaElement $type, array $children )
+    protected function learnAutomaton( slSchemaElement $element, array $children )
     {
         if ( !count( $children ) )
         {
-            $type->empty = true;
+            $element->type->empty = true;
             return;
         }
 
@@ -158,32 +158,32 @@ abstract class slSchema
             $elements[] = $this->inferenceType( $child );
         }
 
-        $type->automaton->learn( $elements );
+        $element->type->automaton->learn( $elements );
     }
 
     /**
      * Lear simple type for element
      * 
-     * @param slSchemaElement $type
+     * @param slSchemaElement $element
      * @param array $children 
      * @return void
      */
-    protected function learnSimpleType( slSchemaElement $type, array $children )
+    protected function learnSimpleType( slSchemaElement $element, array $children )
     {
         foreach ( $children as $textNode )
         {
-            $type->simpleTypeInferencer->learnString( trim( $textNode->wholeText ) );
+            $element->type->simpleTypeInferencer->learnString( trim( $textNode->wholeText ) );
         }
     }
 
     /**
      * Lear attributes for element
      * 
-     * @param slSchemaElement $type
+     * @param slSchemaElement $element
      * @param array $children 
      * @return void
      */
-    protected function learnAttributes( slSchemaElement $type, array $children )
+    protected function learnAttributes( slSchemaElement $element, array $children )
     {
         $attributes = array();
         foreach ( $children as $attrNode )
@@ -191,7 +191,7 @@ abstract class slSchema
             $attributes[$attrNode->name] = $attrNode->value;
         }
 
-        $type->learnAttributes( $attributes );
+        $element->type->learnAttributes( $attributes );
     }
 
     /**
@@ -206,17 +206,22 @@ abstract class slSchema
      * @param string $type 
      * @return slSchemaElement
      */
-    protected function getType( $type )
+    protected function getType( DOMElement $node )
     {
-        if ( isset( $this->types[$type] ) )
+        $elementTypeName = $this->inferenceType( $node );
+
+        if ( isset( $this->elements[$elementTypeName] ) )
         {
-            return $this->types[$type];
+            return $this->elements[$elementTypeName];
         }
 
-        $this->types[$type] = new slSchemaElement( $type );
-        $this->types[$type]->simpleTypeInferencer    = $this->getSimpleInferencer();
-        $this->types[$type]->attributeTypeInferencer = $this->getSimpleInferencer();
-        return $this->types[$type];
+        $this->elements[$elementTypeName] = $element = new slSchemaElement(
+            $node->tagName,
+            new slSchemaType( $elementTypeName )
+        );
+        $element->type->simpleTypeInferencer    = $this->getSimpleInferencer();
+        $element->type->attributeTypeInferencer = $this->getSimpleInferencer();
+        return $element;
     }
 
     /**
@@ -265,11 +270,11 @@ abstract class slSchema
 
         if ( $root->nodeType === XML_ELEMENT_NODE )
         {
-            $type = $this->getType( $this->inferenceType( $root ) );
+            $element = $this->getType( $root );
 
-            $this->learnAutomaton( $type, $elements );
-            $this->learnSimpleType( $type, $contents );
-            $this->learnAttributes( $type, $attributes );
+            $this->learnAutomaton( $element, $elements );
+            $this->learnSimpleType( $element, $contents );
+            $this->learnAttributes( $element, $attributes );
         }
     }
 

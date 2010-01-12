@@ -64,6 +64,7 @@ require __DIR__ . '/schema/visitor.php';
 require __DIR__ . '/schema/visitor/dtd.php';
 require __DIR__ . '/schema/visitor/xml_schema.php';
 
+require __DIR__ . '/schema/type.php';
 require __DIR__ . '/schema/element.php';
 require __DIR__ . '/schema/attribute.php';
 
