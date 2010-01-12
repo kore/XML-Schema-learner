@@ -85,7 +85,7 @@ XML Schema specific options:
                 Valid values are integer numbers, or "n".
 
 -m / --merger   Algorithm used for type merging, available options are "none",
-                "exact".
+                "exact", "node-based".
 
 EOHELP;
     exit( 0 );
@@ -120,6 +120,10 @@ switch ( $options['type'] )
 
             case 'exact':
                 $schema->setTypeMerger( new slExactTypeMerger() );
+                break;
+
+            case 'node-based':
+                $schema->setTypeMerger( new slNodeBasedTypeMerger() );
                 break;
 
             default:
