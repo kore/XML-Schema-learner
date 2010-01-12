@@ -63,6 +63,7 @@ class slSchemaXmlSchemaVisitor extends slSchemaVisitor
 
         $rootElements = $schema->getRootElements();
 
+        $visitedTypes = array();
         foreach ( ( $this->types = $schema->getTypes() ) as $type )
         {
             if ( $elementName = array_search( $type->type, $rootElements ) )
@@ -73,7 +74,11 @@ class slSchemaXmlSchemaVisitor extends slSchemaVisitor
                 $root->appendChild( $element );
             }
 
-            $this->visitType( $root, $type );
+            if ( !isset( $visitedTypes[$type->type->name] ) )
+            {
+                $this->visitType( $root, $type );
+                $visitedTypes[$type->type->name] = true;
+            }
         }
 
         return $doc->saveXml();

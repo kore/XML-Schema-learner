@@ -26,7 +26,7 @@
  * Type merger.
  *
  * Abstract class, which offers the API for type mergers, which evaluate sets 
- * of types as equivalent.
+ * of elements as equivalent.
  *
  * @package Core
  * @version $Revision: 1236 $
@@ -35,32 +35,41 @@
 class slExactTypeMerger extends slTypeMerger
 {
     /**
-     * Group equivalent types
+     * Group equivalent elements
      *
-     * Receives an array with types => automaton pairs. Returns an identical 
+     * Receives an array with elements => automaton pairs. Returns an identical 
      * array, or leaves the type association array, as it was.
      *
-     * If the types are transformed it is especially important, that the types 
+     * If the elements are transformed it is especially important, that the elements 
      * references, referenced in the automatons, itself, are also updated with 
      * the new type names.
      * 
-     * @param array $types
+     * @param array $elements
      * @return array
      */
-    public function groupTypes( array $types )
+    public function groupTypes( array $elements )
     {
         do {
             $changed   = false;
-            $typeCount = count( $types );
-            $typeIndex = array_keys( $types );
+            $typeCount = count( $elements );
+            $typeIndex = array_keys( $elements );
 
             for ( $i = 0; $i < $typeCount; ++$i )
             {
                 for ( $j = $i + 1; $j < $typeCount; ++$j )
                 {
-                    if ( $this->equals( $types[$typeIndex[$i]], $types[$typeIndex[$j]] ) )
+                    $elementI = $elements[$typeIndex[$i]];
+                    $elementJ = $elements[$typeIndex[$j]];
+
+                    // Skip if the type already points to the same object
+                    if ( $elementI->type === $elementJ->type )
                     {
-                        $types   = $this->mergeTypes( $types, $typeIndex[$i], $typeIndex[$j] );
+                        continue;
+                    }
+
+                    if ( $this->equals( $elementI, $elementJ ) )
+                    {
+                        $this->mergeTypes( $elements, $typeIndex[$i], $typeIndex[$j] );
                         $changed = true;
                         break 2;
                     }
@@ -69,7 +78,7 @@ class slExactTypeMerger extends slTypeMerger
 
         } while ( $changed );
 
-        return $types;
+        return $elements;
     }
 
     /**
@@ -85,21 +94,15 @@ class slExactTypeMerger extends slTypeMerger
      */
     protected function equals( slSchemaElement $a, slSchemaElement $b )
     {
-        // If there are simple types, check first if those are compatible
-        if ( $a->simpleTypeInferencer->inferenceType() !== $b->simpleTypeInferencer->inferenceType() )
-        {
-            return false;
-        }
-
-        if ( ( $nodes = $a->automaton->getNodes() ) !== $b->automaton->getNodes() )
+        if ( ( $nodes = $a->type->automaton->getNodes() ) !== $b->type->automaton->getNodes() )
         {
             return false;
         }
 
         foreach ( $nodes as $node )
         {
-            if ( ( $a->automaton->getOutgoing( $node ) !== $b->automaton->getOutgoing( $node ) ) ||
-                 ( $a->automaton->getIncoming( $node ) !== $b->automaton->getIncoming( $node ) ) )
+            if ( ( $a->type->automaton->getOutgoing( $node ) !== $b->type->automaton->getOutgoing( $node ) ) ||
+                 ( $a->type->automaton->getIncoming( $node ) !== $b->type->automaton->getIncoming( $node ) ) )
             {
                 return false;
             }

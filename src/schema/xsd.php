@@ -29,7 +29,7 @@
  * schema uses the simple element name based type inferencer.
  *
  * @todo:
- *      The types will be merged in thy type merger, so that multiple elements 
+ *      The elements will be merged in thy type merger, so that multiple elements 
  *      may refer to the same type.
  *
  *      It will still not be possible to backtrack the locality of a type, 
@@ -122,7 +122,7 @@ class slXsdSchema extends slSchema
      */
     public function getTypes()
     {
-        $this->types = $this->typeMerger->groupTypes( $this->types );
+        $this->elements = $this->typeMerger->groupTypes( $this->elements );
         return parent::getTypes();
     }
 }

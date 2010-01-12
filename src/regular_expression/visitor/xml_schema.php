@@ -86,21 +86,21 @@ class slRegularExpressionXmlSchemaVisitor extends slRegularExpressionVisitor
      */
     protected function visitElement( slRegularExpressionElement $element )
     {
-        $type = $this->schemaVisitor->getType( $element->getContent() );
+        $schemaElement = $this->schemaVisitor->getType( $element->getContent() );
         $node = $this->document->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'element' );
-        $node->setAttribute( 'name', $type->type );
+        $node->setAttribute( 'name', $schemaElement->name );
 
-        if ( ( $type->type->regularExpression instanceof slRegularExpressionEmpty ) &&
-             ( !count( $type->type->attributes ) ) )
+        if ( ( $schemaElement->type->regularExpression instanceof slRegularExpressionEmpty ) &&
+             ( !count( $schemaElement->type->attributes ) ) )
         {
-            if ( $type->type->simpleTypeInferencer->inferenceType() !== 'empty' )
+            if ( $schemaElement->type->simpleTypeInferencer->inferenceType() !== 'empty' )
             {
-                $node->setAttribute( 'type', $this->schemaVisitor->getXmlSchemaSimpleType( $type->type->simpleTypeInferencer ) );
+                $node->setAttribute( 'type', $this->schemaVisitor->getXmlSchemaSimpleType( $schemaElement->type->simpleTypeInferencer ) );
             }
         }
         else
         {
-            $node->setAttribute( 'type', $type->type->name );
+            $node->setAttribute( 'type', $schemaElement->type->name );
         }
 
         return $node;

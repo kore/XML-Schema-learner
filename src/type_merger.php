@@ -26,7 +26,7 @@
  * Type merger.
  *
  * Abstract class, which offers the API for type mergers, which evaluate sets 
- * of types as equivalent.
+ * of elements as equivalent.
  *
  * @package Core
  * @version $Revision: 1236 $
@@ -35,46 +35,39 @@
 abstract class slTypeMerger
 {
     /**
-     * Group equivalent types
+     * Group equivalent elements
      *
-     * Receives an array with types => automaton pairs. Returns an identical 
+     * Receives an array with elements => automaton pairs. Returns an identical 
      * array, or leaves the type association array, as it was.
      *
-     * If the types are transformed it is especially important, that the types 
+     * If the elements are transformed it is especially important, that the elements 
      * references, referenced in the automatons, itself, are also updated with 
      * the new type names.
      * 
-     * @param array $types
+     * @param array $elements
      * @return array
      */
-    abstract public function groupTypes( array $types );
+    abstract public function groupTypes( array $elements );
 
     /**
-     * Merge the types a and b into a single type
+     * Merge the elements a and b into a single type
      *
-     * Merges the types a and b. Only one merged type automaton will be left at 
-     * either the name of a or b. Occurences on automatons of other types of a 
+     * Merges the elements a and b. Only one merged type automaton will be left at 
+     * either the name of a or b. Occurences on automatons of other elements of a 
      * or b will be replaced by the new name.
-     *
-     * Returns a type => automaton array with the merged and updated type 
-     * definitions.
      * 
-     * @param array $types 
+     * @param array $elements 
      * @param string $a 
      * @param string $b 
      * @return array
      */
-    protected function mergeTypes( array $types, $a, $b )
+    protected function mergeTypes( array $elements, $a, $b )
     {
-        $types[$a]->merge( $types[$b] );
-        unset( $types[$b] );
+        $mergedType = $elements[$a]->type;
+        $mergedType->merge( $elements[$b]->type );
 
-        foreach ( $types as $type => $element )
-        {
-            $element->automaton->renameNode( $b, $a );
-        }
-
-        return $types;
+        $elements[$a]->type = $mergedType;
+        $elements[$b]->type = $mergedType;
     }
 }
 

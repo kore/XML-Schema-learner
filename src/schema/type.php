@@ -167,6 +167,35 @@ class slSchemaType
     }
 
     /**
+     * Merge type with another type
+     *
+     * @todo: Ignore simple types, for now, and especially does not merge 
+     * attribute types. Only builds a list with all attributes from all merged 
+     * types.
+     * 
+     * @param slSchemaType $type 
+     * @return void
+     */
+    public function merge( slSchemaType $type )
+    {
+        // Merge simple type
+        $this->empty = $this->empty & $type->empty;
+
+        // Merge attributes
+        foreach ( $type->attributes as $name => $attribute )
+        {
+            if ( !isset( $this->attributes[$name] ) )
+            {
+                $this->attributes[$name] = $attribute;
+            }
+        }
+
+        // Merge type automatons
+        $this->regularExpression = null;
+        $this->automaton->merge( $type->automaton );
+    }
+
+    /**
      * Get property from object
      *
      * Provides limited read-access to some of the object properties.
