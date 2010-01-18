@@ -194,10 +194,6 @@ class slChareConverter extends slConverter
      * The provided automaton must be an instance of the 
      * slCountingSingleOccurenceAutomaton, so t at it provides information on 
      * how often the token occur in the learned strings.
-     *
-     * @TODO: We do not maintain word context for occurences in the 
-     * slCountingSingleOccurenceAutomaton, so that we can only decide between + 
-     * and * for the subpatterns.
      * 
      * @param slCountingSingleOccurenceAutomaton $automaton 
      * @param array $classes 
@@ -223,34 +219,28 @@ class slChareConverter extends slConverter
                 $term = new slRegularExpressionElement( reset( $term ) );
             }
 
-            $occurences = array_reduce(
-                array_map(
-                    array( $automaton, 'getOccurences' ),
-                    $nodes
-                ),
-                function ( $prior, $current )
-                {
-                    if ( $prior === null )
-                    {
-                        return $current;
-                    }
+            $counts = $automaton->getOccurences( $nodes );
 
-                    return array(
-                        $prior[0] || $current[0],
-                        $prior[1] || $current[1],
-                        $prior[2] || $current[2],
-                    );
-                }
-            );
+            switch ( true )
+            {
+                case ( $counts['min'] === 1 ) &&
+                     ( $counts['max'] === 1 ):
+                    $terms[] = $term;
+                    break;
 
-            if ( $occurences[0] === false )
-            {
-                // TODO: Subclass for the usage of (…)+
-                $terms[] = new slRegularExpressionRepeated( $term );
-            }
-            else
-            {
-                $terms[] = new slRegularExpressionRepeated( $term );
+                case ( $counts['min'] === 0 ) &&
+                     ( $counts['max'] === 1 ):
+                    $terms[] = new slRegularExpressionOptional( $term );
+                    break;
+
+                case ( $counts['min'] === 0 ):
+                    $terms[] = new slRegularExpressionRepeated( $term );
+                    break;
+
+                default:
+                    // TODO: Subclass for the usage of (…)+
+                    $terms[] = new slRegularExpressionRepeated( $term );
+                    break;
             }
         }
 

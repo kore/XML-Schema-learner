@@ -24,6 +24,7 @@
 
 require __DIR__ . '/automaton.php';
 require __DIR__ . '/automaton/single_occurence.php';
+require __DIR__ . '/automaton/weighted_single_occurence.php';
 require __DIR__ . '/automaton/counting_single_occurence.php';
 
 require __DIR__ . '/automaton/visitor.php';

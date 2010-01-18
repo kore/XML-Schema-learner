@@ -30,7 +30,7 @@
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-class slCountingSingleOccurenceAutomaton extends slSingleOccurenceAutomaton
+class slCountingSingleOccurenceAutomaton extends slWeightedSingleOccurenceAutomaton
 {
     /**
      * Number of occurences for each token
@@ -38,13 +38,6 @@ class slCountingSingleOccurenceAutomaton extends slSingleOccurenceAutomaton
      * @var array
      */
     protected $occurences = array();
-
-    /**
-     * Number of already learned token sequences
-     * 
-     * @var int
-     */
-    protected $learnedSequences = 0;
 
     /**
      * Learn token array into automaton
@@ -56,72 +49,113 @@ class slCountingSingleOccurenceAutomaton extends slSingleOccurenceAutomaton
     {
         parent::learn( $tokens );
 
-        $tokenCounts = array_count_values( $tokens );
-        if ( $this->learnedSequences++ === 0 )
-        {
-            foreach ( $tokenCounts as $token => $count )
-            {
-                $this->occurences[$token][0] = false;
-                $this->occurences[$token][1] = $count === 1;
-                $this->occurences[$token][2] = $count > 1;
-            }
-        }
-        else
-        {
-            // Update numbers for existing tokens
-            foreach ( $this->occurences as $token => $occurences )
-            {
-                if ( !isset( $tokenCounts[$token] ) )
-                {
-                    $this->occurences[$token][0] = true;
-                }
-                else
-                {
-                    $this->occurences[$token][$tokenCounts[$token] > 1 ? 2 : 1] = true;
-                }
-                unset( $tokenCounts[$token] );
-            }
+        $signature = $this->getTokenSignature( $tokens );
 
-            // Update numbers for newly learned tokens
-            foreach ( $tokenCounts as $token => $count )
+        $this->occurences[$signature] = $this->mergeCounts(
+            isset( $this->occurences[$signature] ) ? $this->occurences[$signature] : array(),
+            array_count_values( $tokens )
+        );
+    }
+
+    /**
+     * Get signature from token array
+     *
+     * Returns a signature for the given token array, which is based on the 
+     * occuring tokens
+     * 
+     * @param array $tokens 
+     * @return string
+     */
+    protected function getTokenSignature( array $tokens )
+    {
+        $tokens = array_unique( $tokens );
+        sort( $tokens );
+        return implode( '|', $tokens );
+    }
+
+    /**
+     * Merge counts of read token sequences into boundaries array
+     *
+     * Merge the counts of the currently read token sequence into an array, 
+     * which contains the minimum and maximum occurence numbers of the tokens 
+     * in the array.
+     * 
+     * @param array $occurences 
+     * @param array $counts 
+     * @return array
+     */
+    protected function mergeCounts( array $occurences, array $counts )
+    {
+        foreach ( $counts as $token => $number )
+        {
+            if ( !isset( $occurences[$token] ) )
             {
-                $this->occurences[$token][0] = true;
-                $this->occurences[$token][1] = $count === 1;
-                $this->occurences[$token][2] = $count > 1;
+                $occurences[$token] = array(
+                    'min' => $number,
+                    'max' => $number,
+                );
+            }
+            else
+            {
+                $occurences[$token] = array(
+                    'min' => min( $number, $occurences[$token]['min'] ),
+                    'max' => max( $number, $occurences[$token]['max'] ),
+                );
             }
         }
+
+        return $occurences;
     }
 
     /**
      * Get number of token occurences
      *
-     * Returns how often the token occured in each of the input strings. Retuns 
-     * an array, which is structured like:
+     * Returns the minimum and maximum number of occurences of the given tokens
+     * in each read word.
+     *
+     * The results will be merged into a single array, which contains the 
+     * minimum and maximum occurences of any token in the input array. The 
+     * return value looks like:
      *
      * <code>
      *  array(
-     *      0 => bool,
-     *      1 => bool,
-     *      2 => bool,
+     *      'min' => $number,
+     *      'max' => $number,
      *  )
      * </code>
-     * 
-     * Where the 0-value indicates, whether that did token wasn't available 
-     * in at least one input string, the 1-value means that it did occure 
-     * exactly once in at least one input string, and the 2-value means that it 
-     * occured multiple times in at least one input string.
      *
      * @param string $token 
      * @return array
      */
-    public function getOccurences( $token )
+    public function getOccurences( array $tokens )
     {
-        if ( !isset( $this->occurences[$token] ) )
+        $return = array(
+            'min' => PHP_INT_MAX,
+            'max' => 0,
+        );
+
+        foreach ( $this->occurences as $occurences )
         {
-            return array( true, false, false );
+            foreach ( $tokens as $token )
+            {
+                if ( !isset( $occurences[$token] ) )
+                {
+                    $return = array(
+                        'min' => min( $return['min'], 0 ),
+                        'max' => max( $return['max'], 0 ),
+                    );
+                }
+                else
+                {
+                    $return = array(
+                        'min' => min( $return['min'], $occurences[$token]['min'] ),
+                        'max' => max( $return['max'], $occurences[$token]['max'] ),
+                    );
+                }
+            }
         }
 
-        return $this->occurences[$token];
+        return $return;
     }
 }
 

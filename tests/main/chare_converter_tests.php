@@ -47,7 +47,7 @@ class slMainChareConverterTests extends PHPUnit_Framework_TestCase
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
             new slRegularExpressionSequence(
-                new slRegularExpressionRepeated(
+                new slRegularExpressionOptional(
                     new slRegularExpressionChoice(
                         new slRegularExpressionElement( 'a' ),
                         new slRegularExpressionElement( 'b' )
@@ -67,12 +67,8 @@ class slMainChareConverterTests extends PHPUnit_Framework_TestCase
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
             new slRegularExpressionSequence(
-                new slRegularExpressionRepeated(
-                    new slRegularExpressionElement( 'a' )
-                ),
-                new slRegularExpressionRepeated(
-                    new slRegularExpressionElement( 'b' )
-                )
+                new slRegularExpressionElement( 'a' ),
+                new slRegularExpressionElement( 'b' )
             ),
             $regexp
         );
@@ -88,11 +84,9 @@ class slMainChareConverterTests extends PHPUnit_Framework_TestCase
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
             new slRegularExpressionSequence(
-                new slRegularExpressionRepeated(
-                    new slRegularExpressionChoice( 
-                        new slRegularExpressionElement( 'a' ),
-                        new slRegularExpressionElement( 'b' )
-                    )
+                new slRegularExpressionChoice( 
+                    new slRegularExpressionElement( 'a' ),
+                    new slRegularExpressionElement( 'b' )
                 )
             ),
             $regexp
@@ -119,22 +113,22 @@ class slMainChareConverterTests extends PHPUnit_Framework_TestCase
                         new slRegularExpressionElement( 'c' )
                     )
                 ),
-                new slRegularExpressionRepeated(
+                new slRegularExpressionOptional(
                     new slRegularExpressionChoice(
                         new slRegularExpressionElement( 'd' ),
                         new slRegularExpressionElement( 'f' )
                     )
                 ),
-                new slRegularExpressionRepeated(
+                new slRegularExpressionOptional(
                     new slRegularExpressionElement( 'e' )
                 ),
                 new slRegularExpressionRepeated(
                     new slRegularExpressionElement( 'g' )
                 ),
-                new slRegularExpressionRepeated(
+                new slRegularExpressionOptional(
                     new slRegularExpressionElement( 'h' )
                 ),
-                new slRegularExpressionRepeated(
+                new slRegularExpressionOptional(
                     new slRegularExpressionElement( 'i' )
                 )
             ),

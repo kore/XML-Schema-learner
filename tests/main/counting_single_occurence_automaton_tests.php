@@ -53,8 +53,11 @@ class slMainCountingSingleOccurenceAutomatonTests extends slMainSingleOccurenceA
         $automaton->learn( array( 'a' ) );
 
         $this->assertEquals(
-            array( false, true, false ),
-            $automaton->getOccurences( 'a' )
+            array(
+                'min' => 1,
+                'max' => 1,
+            ),
+            $automaton->getOccurences( array( 'a' ) )
         );
     }
 
@@ -64,8 +67,11 @@ class slMainCountingSingleOccurenceAutomatonTests extends slMainSingleOccurenceA
         $automaton->learn( array( 'a', 'a' ) );
 
         $this->assertEquals(
-            array( false, false, true ),
-            $automaton->getOccurences( 'a' )
+            array(
+                'min' => 2,
+                'max' => 2,
+            ),
+            $automaton->getOccurences( array( 'a' ) )
         );
     }
 
@@ -76,8 +82,11 @@ class slMainCountingSingleOccurenceAutomatonTests extends slMainSingleOccurenceA
         $automaton->learn( array( 'b' ) );
 
         $this->assertEquals(
-            array( true, true, false ),
-            $automaton->getOccurences( 'a' )
+            array(
+                'min' => 0,
+                'max' => 1,
+            ),
+            $automaton->getOccurences( array( 'a' ) )
         );
     }
 
@@ -88,8 +97,11 @@ class slMainCountingSingleOccurenceAutomatonTests extends slMainSingleOccurenceA
         $automaton->learn( array( 'b' ) );
 
         $this->assertEquals(
-            array( true, true, false ),
-            $automaton->getOccurences( 'b' )
+            array(
+                'min' => 0,
+                'max' => 1,
+            ),
+            $automaton->getOccurences( array( 'b' ) )
         );
     }
 
@@ -97,16 +109,14 @@ class slMainCountingSingleOccurenceAutomatonTests extends slMainSingleOccurenceA
     {
         $automaton = $this->getAutomaton();
         $automaton->learn( array( 'a', 'b', 'b' ) );
-        $automaton->learn( array( 'a', 'b', 'a' ) );
+        $automaton->learn( array( 'a' ) );
 
         $this->assertEquals(
-            array( false, true, true ),
-            $automaton->getOccurences( 'a' )
-        );
-
-        $this->assertEquals(
-            array( false, true, true ),
-            $automaton->getOccurences( 'b' )
+            array(
+                'min' => 0,
+                'max' => 2,
+            ),
+            $automaton->getOccurences( array( 'a', 'b' ) )
         );
     }
 }
