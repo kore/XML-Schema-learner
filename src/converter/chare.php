@@ -185,6 +185,36 @@ class slChareConverter extends slConverter
     }
 
     /**
+     * Wrap regular expression term in counting pattern
+     *
+     * Based on the occurences provided by the count array, the term should be 
+     * wrapped in apropriate counting patterns.
+     * 
+     * @param array $counts 
+     * @param slRegularExpression $term 
+     * @return slRegularExpression
+     */
+    protected function wrapCountingPattern( array $counts, slRegularExpression $term )
+    {
+        switch ( true )
+        {
+            case ( $counts['min'] === 1 ) &&
+                 ( $counts['max'] === 1 ):
+                return $term;
+
+            case ( $counts['min'] === 0 ) &&
+                 ( $counts['max'] === 1 ):
+                return new slRegularExpressionOptional( $term );
+
+            case ( $counts['min'] === 0 ):
+                return new slRegularExpressionRepeated( $term );
+
+            default:
+                return new slRegularExpressionRepeatedAtLeastOnce( $term );
+        }
+    }
+
+    /**
      * Build regular expression
      *
      * Builds the regilar expression from the provided automaton, where each 
@@ -219,28 +249,10 @@ class slChareConverter extends slConverter
                 $term = new slRegularExpressionElement( reset( $term ) );
             }
 
-            $counts = $automaton->getOccurences( $nodes );
-
-            switch ( true )
-            {
-                case ( $counts['min'] === 1 ) &&
-                     ( $counts['max'] === 1 ):
-                    $terms[] = $term;
-                    break;
-
-                case ( $counts['min'] === 0 ) &&
-                     ( $counts['max'] === 1 ):
-                    $terms[] = new slRegularExpressionOptional( $term );
-                    break;
-
-                case ( $counts['min'] === 0 ):
-                    $terms[] = new slRegularExpressionRepeated( $term );
-                    break;
-
-                default:
-                    $terms[] = new slRegularExpressionRepeatedAtLeastOnce( $term );
-                    break;
-            }
+            $terms[] = $this->wrapCountingPattern(
+                $automaton->getOccurences( $nodes ),
+                $term
+            );
         }
 
         return  new slRegularExpressionSequence( $terms );
