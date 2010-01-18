@@ -47,11 +47,9 @@ class slMainChareConverterTests extends PHPUnit_Framework_TestCase
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
             new slRegularExpressionSequence(
-                new slRegularExpressionOptional(
-                    new slRegularExpressionChoice(
-                        new slRegularExpressionElement( 'a' ),
-                        new slRegularExpressionElement( 'b' )
-                    )
+                new slRegularExpressionChoice(
+                    new slRegularExpressionElement( 'a' ),
+                    new slRegularExpressionElement( 'b' )
                 )
             ),
             $regexp
@@ -84,9 +82,11 @@ class slMainChareConverterTests extends PHPUnit_Framework_TestCase
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
             new slRegularExpressionSequence(
-                new slRegularExpressionChoice( 
-                    new slRegularExpressionElement( 'a' ),
-                    new slRegularExpressionElement( 'b' )
+                new slRegularExpressionRepeatedAtLeastOnce(
+                    new slRegularExpressionChoice( 
+                        new slRegularExpressionElement( 'a' ),
+                        new slRegularExpressionElement( 'b' )
+                    )
                 )
             ),
             $regexp
@@ -127,18 +127,16 @@ class slMainChareConverterTests extends PHPUnit_Framework_TestCase
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
             new slRegularExpressionSequence(
-                new slRegularExpressionRepeated(
+                new slRegularExpressionRepeatedAtLeastOnce(
                     new slRegularExpressionChoice( 
                         new slRegularExpressionElement( 'a' ),
                         new slRegularExpressionElement( 'b' ),
                         new slRegularExpressionElement( 'c' )
                     )
                 ),
-                new slRegularExpressionOptional(
-                    new slRegularExpressionChoice(
-                        new slRegularExpressionElement( 'd' ),
-                        new slRegularExpressionElement( 'f' )
-                    )
+                new slRegularExpressionChoice(
+                    new slRegularExpressionElement( 'd' ),
+                    new slRegularExpressionElement( 'f' )
                 ),
                 new slRegularExpressionOptional(
                     new slRegularExpressionElement( 'e' )

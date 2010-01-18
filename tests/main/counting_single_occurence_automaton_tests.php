@@ -47,7 +47,7 @@ class slMainCountingSingleOccurenceAutomatonTests extends slMainWeightedSingleOc
         return new slCountingSingleOccurenceAutomaton();
     }
 
-    public function testCounting()
+    public function testGeneralCounting()
     {
         $automaton = $this->getAutomaton();
         $automaton->learn( array( 'a' ) );
@@ -57,11 +57,11 @@ class slMainCountingSingleOccurenceAutomatonTests extends slMainWeightedSingleOc
                 'min' => 1,
                 'max' => 1,
             ),
-            $automaton->getOccurences( array( 'a' ) )
+            $automaton->getGeneralOccurences( array( 'a' ) )
         );
     }
 
-    public function testCounting2()
+    public function testGeneralCounting2()
     {
         $automaton = $this->getAutomaton();
         $automaton->learn( array( 'a', 'a' ) );
@@ -71,11 +71,11 @@ class slMainCountingSingleOccurenceAutomatonTests extends slMainWeightedSingleOc
                 'min' => 2,
                 'max' => 2,
             ),
-            $automaton->getOccurences( array( 'a' ) )
+            $automaton->getGeneralOccurences( array( 'a' ) )
         );
     }
 
-    public function testCounting3()
+    public function testGeneralCounting3()
     {
         $automaton = $this->getAutomaton();
         $automaton->learn( array( 'a' ) );
@@ -86,11 +86,11 @@ class slMainCountingSingleOccurenceAutomatonTests extends slMainWeightedSingleOc
                 'min' => 0,
                 'max' => 1,
             ),
-            $automaton->getOccurences( array( 'a' ) )
+            $automaton->getGeneralOccurences( array( 'a' ) )
         );
     }
 
-    public function testCounting4()
+    public function testGeneralCounting4()
     {
         $automaton = $this->getAutomaton();
         $automaton->learn( array( 'a' ) );
@@ -101,11 +101,11 @@ class slMainCountingSingleOccurenceAutomatonTests extends slMainWeightedSingleOc
                 'min' => 0,
                 'max' => 1,
             ),
-            $automaton->getOccurences( array( 'b' ) )
+            $automaton->getGeneralOccurences( array( 'b' ) )
         );
     }
 
-    public function testCounting5()
+    public function testGeneralCounting5()
     {
         $automaton = $this->getAutomaton();
         $automaton->learn( array( 'a', 'b', 'b' ) );
@@ -116,7 +116,65 @@ class slMainCountingSingleOccurenceAutomatonTests extends slMainWeightedSingleOc
                 'min' => 0,
                 'max' => 2,
             ),
-            $automaton->getOccurences( array( 'a', 'b' ) )
+            $automaton->getGeneralOccurences( array( 'a', 'b' ) )
+        );
+    }
+
+    public function testSumCounting()
+    {
+        $automaton = $this->getAutomaton();
+        $automaton->learn( array( 'a' ) );
+
+        $this->assertEquals(
+            array(
+                'min' => 1,
+                'max' => 1,
+            ),
+            $automaton->getOccurenceSum( array( 'a' ) )
+        );
+    }
+
+    public function testSumCounting2()
+    {
+        $automaton = $this->getAutomaton();
+        $automaton->learn( array( 'a', 'a' ) );
+
+        $this->assertEquals(
+            array(
+                'min' => 2,
+                'max' => 2,
+            ),
+            $automaton->getOccurenceSum( array( 'a' ) )
+        );
+    }
+
+    public function testSumCounting3()
+    {
+        $automaton = $this->getAutomaton();
+        $automaton->learn( array( 'a' ) );
+        $automaton->learn( array( 'b' ) );
+
+        $this->assertEquals(
+            array(
+                'min' => 1,
+                'max' => 1,
+            ),
+            $automaton->getOccurenceSum( array( 'a', 'b' ) )
+        );
+    }
+
+    public function testSumCounting4()
+    {
+        $automaton = $this->getAutomaton();
+        $automaton->learn( array( 'a', 'b', 'b' ) );
+        $automaton->learn( array( 'a' ) );
+
+        $this->assertEquals(
+            array(
+                'min' => 1,
+                'max' => 3,
+            ),
+            $automaton->getOccurenceSum( array( 'a', 'b' ) )
         );
     }
 }

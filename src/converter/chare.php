@@ -250,7 +250,7 @@ class slChareConverter extends slConverter
             }
 
             $terms[] = $this->wrapCountingPattern(
-                $automaton->getOccurences( $nodes ),
+                $automaton->getOccurenceSum( $nodes ),
                 $term
             );
         }

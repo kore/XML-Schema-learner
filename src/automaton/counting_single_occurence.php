@@ -124,10 +124,13 @@ class slCountingSingleOccurenceAutomaton extends slWeightedSingleOccurenceAutoma
      *  )
      * </code>
      *
+     * Any token means, that if two tokens both occur one time in a word, a min 
+     * / max value of 1 will be set.
+     *
      * @param string $token 
      * @return array
      */
-    public function getOccurences( array $tokens )
+    public function getGeneralOccurences( array $tokens )
     {
         $return = array(
             'min' => PHP_INT_MAX,
@@ -153,6 +156,56 @@ class slCountingSingleOccurenceAutomaton extends slWeightedSingleOccurenceAutoma
                     );
                 }
             }
+        }
+
+        return $return;
+    }
+
+    /**
+     * Get number of token occurences
+     *
+     * Returns the minimum and maximum number of occurences of the given tokens
+     * in each read word.
+     *
+     * The results will be merged into a single array, which contains the 
+     * minimum and maximum occurences sum of the token in the input array. The 
+     * return value looks like:
+     *
+     * <code>
+     *  array(
+     *      'min' => $number,
+     *      'max' => $number,
+     *  )
+     * </code>
+     *
+     * Occurence sum means, that if two tokens both occur one time in a word, a 
+     * min / max value of 2 will be set.
+     *
+     * @param string $token 
+     * @return array
+     */
+    public function getOccurenceSum( array $tokens )
+    {
+        $return = array(
+            'min' => PHP_INT_MAX,
+            'max' => 0,
+        );
+
+        foreach ( $this->occurences as $occurences )
+        {
+            $occurenceSum = 0;
+            foreach ( $tokens as $token )
+            {
+                if ( isset( $occurences[$token] ) )
+                {
+                    $occurenceSum += $occurences[$token]['max'];
+                }
+            }
+
+            $return = array(
+                'min' => min( $return['min'], $occurenceSum ),
+                'max' => max( $return['max'], $occurenceSum ),
+            );
         }
 
         return $return;
