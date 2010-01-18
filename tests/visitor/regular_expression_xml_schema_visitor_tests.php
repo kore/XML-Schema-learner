@@ -115,6 +115,20 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
         );
     }
 
+    public function testVisitAll()
+    {
+        $visitor = $this->getVisitor();
+        $this->assertEquals(
+            '<all xmlns="http://www.w3.org/2001/XMLSchema"><element name="a" type="a"/><element name="b" type="b"/></all>',
+            simplexml_import_dom( $visitor->visit(
+                new slRegularExpressionAll(
+                    new slRegularExpressionElement( 'a' ),
+                    new slRegularExpressionElement( 'b' )
+                )
+            ) )->asXml()
+        );
+    }
+
     public function testVisitOptional()
     {
         $visitor = $this->getVisitor();

@@ -56,6 +56,8 @@ abstract class slRegularExpressionVisitor
                 return $this->visitChoice( $regularExpression );
             case 'slRegularExpressionSequence':
                 return $this->visitSequence( $regularExpression );
+            case 'slRegularExpressionAll':
+                return $this->visitAll( $regularExpression );
             case 'slRegularExpressionOptional':
                 return $this->visitOptional( $regularExpression );
             case 'slRegularExpressionRepeated':
@@ -108,6 +110,17 @@ abstract class slRegularExpressionVisitor
      * @return mixed
      */
     abstract protected function visitSequence( slRegularExpressionSequence $regularExpression );
+
+    /**
+     * Visit all sub expression
+     *
+     * The return type of this method varies deping on the concrete visitor 
+     * implementation
+     * 
+     * @param slRegularExpressionSequence $regularExpression 
+     * @return mixed
+     */
+    abstract protected function visitAll( slRegularExpressionAll $regularExpression );
 
     /**
      * Visit optional sub expression

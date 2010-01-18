@@ -147,6 +147,31 @@ class slRegularExpressionXmlSchemaVisitor extends slRegularExpressionVisitor
     }
 
     /**
+     * Visit all sub expression
+     *
+     * The return type of this method varies deping on the concrete visitor 
+     * implementation
+     * 
+     * @param slRegularExpressionSequence $regularExpression 
+     * @return mixed
+     */
+    protected function visitAll( slRegularExpressionAll $regularExpression )
+    {
+        $all = $this->document->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'all' );
+        foreach ( $regularExpression->getChildren() as $child )
+        {
+            $all->appendChild( $this->visit( $child ) );
+        }
+
+        if ( $regularExpression->minOccurences === 0 )
+        {
+            $all->setAttribute( 'minOccurs', '0' );
+        }
+
+        return $all;
+    }
+
+    /**
      * Visit optional sub expression
      *
      * The return type of this method varies deping on the concrete visitor 

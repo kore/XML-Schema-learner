@@ -92,6 +92,22 @@ class slRegularExpressionStringVisitor extends slRegularExpressionVisitor
     }
 
     /**
+     * Visit all sub expression
+     *
+     * The return type of this method varies deping on the concrete visitor 
+     * implementation
+     * 
+     * @param slRegularExpressionSequence $regularExpression 
+     * @return mixed
+     */
+    protected function visitAll( slRegularExpressionAll $regularExpression )
+    {
+        return '( ' .
+            implode( ' & ', array_map( array( $this, 'visit' ), $regularExpression->getChildren() ) ) .
+        ' )';
+    }
+
+    /**
      * Visit optional sub expression
      *
      * The return type of this method varies deping on the concrete visitor 

@@ -98,6 +98,20 @@ class slVisitorRegularExpressionStringTests extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testVisitAll()
+    {
+        $visitor = new slRegularExpressionStringVisitor();
+        $this->assertEquals(
+            '( a & b )',
+            $visitor->visit(
+                new slRegularExpressionAll(
+                    new slRegularExpressionElement( 'a' ),
+                    new slRegularExpressionElement( 'b' )
+                )
+            )
+        );
+    }
+
     public function testVisitOptional()
     {
         $visitor = new slRegularExpressionStringVisitor();
