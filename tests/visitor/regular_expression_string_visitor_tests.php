@@ -124,6 +124,19 @@ class slVisitorRegularExpressionStringTests extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testVisitRepeatedAtLeastOnce()
+    {
+        $visitor = new slRegularExpressionStringVisitor();
+        $this->assertEquals(
+            'a+',
+            $visitor->visit(
+                new slRegularExpressionRepeatedAtLeastOnce(
+                    new slRegularExpressionElement( 'a' )
+                )
+            )
+        );
+    }
+
     public function testVisitStackedSequence()
     {
         $visitor = new slRegularExpressionStringVisitor();

@@ -183,5 +183,24 @@ class slRegularExpressionXmlSchemaVisitor extends slRegularExpressionVisitor
 
         return $sequence;
     }
+
+    /**
+     * Visit at least once repeated sub expression
+     *
+     * The return type of this method varies deping on the concrete visitor 
+     * implementation
+     * 
+     * @param slRegularExpressionRepeatedAtLeastOnce $regularExpression 
+     * @return mixed
+     */
+    protected function visitRepeatedAtLeastOnce( slRegularExpressionRepeatedAtLeastOnce $regularExpression )
+    {
+        $sequence = $this->document->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'sequence' );
+        $sequence->setAttribute( 'minOccurs', '1' );
+        $sequence->setAttribute( 'maxOccurs', 'unbounded' );
+        $sequence->appendChild( $this->visit( $regularExpression->getChild() ) );
+
+        return $sequence;
+    }
 }
 

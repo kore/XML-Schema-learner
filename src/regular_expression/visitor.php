@@ -60,6 +60,8 @@ abstract class slRegularExpressionVisitor
                 return $this->visitOptional( $regularExpression );
             case 'slRegularExpressionRepeated':
                 return $this->visitRepeated( $regularExpression );
+            case 'slRegularExpressionRepeatedAtLeastOnce':
+                return $this->visitRepeatedAtLeastOnce( $regularExpression );
         }
     }
 
@@ -128,5 +130,16 @@ abstract class slRegularExpressionVisitor
      * @return mixed
      */
     abstract protected function visitRepeated( slRegularExpressionRepeated $regularExpression );
+
+    /**
+     * Visit at least once repeated sub expression
+     *
+     * The return type of this method varies deping on the concrete visitor 
+     * implementation
+     * 
+     * @param slRegularExpressionRepeatedAtLeastOnce $regularExpression 
+     * @return mixed
+     */
+    abstract protected function visitRepeatedAtLeastOnce( slRegularExpressionRepeatedAtLeastOnce $regularExpression );
 }
 

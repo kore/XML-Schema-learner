@@ -118,5 +118,19 @@ class slRegularExpressionStringVisitor extends slRegularExpressionVisitor
     {
         return $this->visit( $regularExpression->getChild() ) . '*';
     }
+
+    /**
+     * Visit at least once repeated sub expression
+     *
+     * The return type of this method varies deping on the concrete visitor 
+     * implementation
+     * 
+     * @param slRegularExpressionRepeatedAtLeastOnce $regularExpression 
+     * @return mixed
+     */
+    protected function visitRepeatedAtLeastOnce( slRegularExpressionRepeatedAtLeastOnce $regularExpression )
+    {
+        return $this->visit( $regularExpression->getChild() ) . '+';
+    }
 }
 

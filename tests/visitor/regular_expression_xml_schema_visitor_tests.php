@@ -141,6 +141,19 @@ class slVisitorRegularExpressionXmlSchemaTests extends PHPUnit_Framework_TestCas
         );
     }
 
+    public function testVisitRepeatedAtLeastOnce()
+    {
+        $visitor = $this->getVisitor();
+        $this->assertEquals(
+            '<sequence xmlns="http://www.w3.org/2001/XMLSchema" minOccurs="1" maxOccurs="unbounded"><element name="a" type="a"/></sequence>',
+            simplexml_import_dom( $visitor->visit(
+                new slRegularExpressionRepeatedAtLeastOnce(
+                    new slRegularExpressionElement( 'a' )
+                )
+            ) )->asXml()
+        );
+    }
+
     public function testVisitStackedSequence()
     {
         $visitor = $this->getVisitor();
