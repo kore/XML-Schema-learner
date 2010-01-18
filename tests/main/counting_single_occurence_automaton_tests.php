@@ -25,7 +25,7 @@
 /**
  * Test class
  */
-class slMainCountingSingleOccurenceAutomatonTests extends slMainSingleOccurenceAutomatonTests
+class slMainCountingSingleOccurenceAutomatonTests extends slMainWeightedSingleOccurenceAutomatonTests
 {
     /**
      * Return test suite
