@@ -32,6 +32,7 @@ require __DIR__ . '/automaton/visitor/dot.php';
 
 require __DIR__ . '/converter.php';
 require __DIR__ . '/converter/chare.php';
+require __DIR__ . '/converter/echare.php';
 require __DIR__ . '/converter/sore.php';
 
 require __DIR__ . '/regular_expression.php';
@@ -39,6 +40,7 @@ require __DIR__ . '/regular_expression/element.php';
 require __DIR__ . '/regular_expression/empty.php';
 require __DIR__ . '/regular_expression/container.php';
 require __DIR__ . '/regular_expression/multiple.php';
+require __DIR__ . '/regular_expression/multiple/all.php';
 require __DIR__ . '/regular_expression/multiple/choice.php';
 require __DIR__ . '/regular_expression/multiple/sequence.php';
 require __DIR__ . '/regular_expression/singular.php';

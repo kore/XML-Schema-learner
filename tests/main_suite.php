@@ -32,6 +32,7 @@ require 'main/counting_single_occurence_automaton_tests.php';
 require 'main/type_inferencer_tests.php';
 require 'main/sore_converter_tests.php';
 require 'main/chare_converter_tests.php';
+require 'main/e_chare_converter_tests.php';
 require 'main/regular_expression_optimizer_tests.php';
 require 'main/regular_expression_optimizer_manager_tests.php';
 require 'main/schema_tests.php';
@@ -58,6 +59,7 @@ class slMainTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTest( slMainTypeInferencerTests::suite() );
         $this->addTest( slMainSoreConverterTests::suite() );
         $this->addTest( slMainChareConverterTests::suite() );
+        $this->addTest( slMainEChareConverterTests::suite() );
         $this->addTest( slMainRegularExpressionOptimizerTests::suite() );
         $this->addTest( slMainRegularExpressionOptimizerManagerTests::suite() );
         $this->addTest( slMainSchemaTests::suite() );
