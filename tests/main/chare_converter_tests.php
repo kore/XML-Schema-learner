@@ -93,6 +93,27 @@ class slMainChareConverterTests extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testConvertOrderAtLeastOnce()
+    {
+        $automaton = new slCountingSingleOccurenceAutomaton();
+        $automaton->learn( array( 'a', 'b' ) );
+        $automaton->learn( array( 'a', 'a' ) );
+
+        $converter = new slChareConverter();
+        $regexp    = $converter->convertAutomaton( $automaton );
+        $this->assertEquals(
+            new slRegularExpressionSequence(
+                new slRegularExpressionRepeatedAtLeastOnce( 
+                    new slRegularExpressionElement( 'a' )
+                ),
+                new slRegularExpressionOptional(
+                    new slRegularExpressionElement( 'b' )
+                )
+            ),
+            $regexp
+        );
+    }
+
     public function testConvertPaperExample()
     {
         // Example 2. Let W = {abccde, cccad, bfegg, bfehi}.

@@ -44,6 +44,7 @@ require __DIR__ . '/regular_expression/multiple/sequence.php';
 require __DIR__ . '/regular_expression/singular.php';
 require __DIR__ . '/regular_expression/singular/optional.php';
 require __DIR__ . '/regular_expression/singular/repeated.php';
+require __DIR__ . '/regular_expression/singular/repeated_at_least_once.php';
 
 require __DIR__ . '/regular_expression/optimizer.php';
 require __DIR__ . '/regular_expression/optimizer/base.php';

@@ -238,8 +238,7 @@ class slChareConverter extends slConverter
                     break;
 
                 default:
-                    // TODO: Subclass for the usage of (…)+
-                    $terms[] = new slRegularExpressionRepeated( $term );
+                    $terms[] = new slRegularExpressionRepeatedAtLeastOnce( $term );
                     break;
             }
         }
