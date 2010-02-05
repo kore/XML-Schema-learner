@@ -93,6 +93,16 @@ class slMainHiddenMarkovModelTests extends PHPUnit_Framework_TestCase
         );   
     }
 
+    public function testMapLabels()
+    {
+        $hmm = new slHiddenMarkovModel( 4, array( 1, 2, 3 ) );
+     
+        $this->assertSame(
+            array( 0, 1, 0, 2 ),
+            $hmm->mapLabels( array( 1, 2, 1, 3 ) )
+        );   
+    }
+
     public function testRandomize()
     {
         $hmm = new slHiddenMarkovModel( 4, array( 1, 2, 3 ) );

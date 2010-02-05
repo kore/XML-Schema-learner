@@ -184,6 +184,28 @@ class slHiddenMarkovModel implements Countable
     }
 
     /**
+     * Map labels to their indexes
+     * 
+     * @param array $labels 
+     * @return array
+     */
+    public function mapLabels( array $labels )
+    {
+        $indexes = array();
+        foreach ( $labels as $label )
+        {
+            if ( ( $key = array_search( $label, $this->labels ) ) === false )
+            {
+                throw new OutOfBoundsException();
+            }
+
+            $indexes[] = $key;
+        }
+
+        return $indexes;
+    }
+
+    /**
      * Get label of item
      * 
      * @param int $x 
@@ -200,7 +222,17 @@ class slHiddenMarkovModel implements Countable
     }
 
     /**
-     * Get number of lables, aka, the dimension of the HMM
+     * Get number of labels, aka, the dimension of the emissions of the HMM
+     * 
+     * @return int
+     */
+    public function countLabels()
+    {
+        return count( $this->labels );
+    }
+
+    /**
+     * Get number of states, aka, the internal dimension of the HMM
      * 
      * @return int
      */
