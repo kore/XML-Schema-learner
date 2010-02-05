@@ -155,7 +155,7 @@ class slHiddenMarkovModel implements Countable
      * 
      * @return void
      */
-    public function randomize( $count = null )
+    public function randomize()
     {
         $states = count( $this->transistion );
         for ( $i = 0; $i < $states; ++$i )

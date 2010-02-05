@@ -85,23 +85,5 @@ class slMainHiddenMarkovModelTests extends PHPUnit_Framework_TestCase
             $this->assertEquals( 1., $rowSum, null, .001 );
         }
     }
-
-    public function testRandomizeIntense()
-    {
-        $hmm = new slHiddenMarkovModel( 4, array( 1, 2, 3 ) );
-        $hmm->randomize( 100 );
-
-        $size = count( $hmm );
-        for ( $x = 0; $x < $size; ++$x )
-        {
-            $rowSum = 0;
-            for ( $y = 0; $y < $size; ++$y )
-            {
-                $rowSum += $hmm->getTransition( $x, $y );
-            }
-
-            $this->assertEquals( 1., $rowSum, null, .001 );
-        }
-    }
 }
 
