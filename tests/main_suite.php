@@ -26,6 +26,7 @@
  * Require tests
  */
 require 'main/automaton_tests.php';
+require 'main/hmm_tests.php';
 require 'main/single_occurence_automaton_tests.php';
 require 'main/weighted_single_occurence_automaton_tests.php';
 require 'main/counting_single_occurence_automaton_tests.php';
@@ -53,6 +54,7 @@ class slMainTestSuite extends PHPUnit_Framework_TestSuite
         $this->setName( 'SchemaLearner - Main' );
 
         $this->addTest( slMainAutomatonTests::suite() );
+        $this->addTest( slMainHiddenMarkovModelTests::suite() );
         $this->addTest( slMainSingleOccurenceAutomatonTests::suite() );
         $this->addTest( slMainWeightedSingleOccurenceAutomatonTests::suite() );
         $this->addTest( slMainCountingSingleOccurenceAutomatonTests::suite() );

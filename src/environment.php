@@ -27,6 +27,8 @@ require __DIR__ . '/automaton/single_occurence.php';
 require __DIR__ . '/automaton/weighted_single_occurence.php';
 require __DIR__ . '/automaton/counting_single_occurence.php';
 
+require __DIR__ . '/hidden_markov_model.php';
+
 require __DIR__ . '/automaton/visitor.php';
 require __DIR__ . '/automaton/visitor/dot.php';
 
