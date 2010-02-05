@@ -77,7 +77,7 @@ class slHiddenMarkovModel implements Countable
     }
 
     /**
-     * Get Transistion probability from item $x to item $y
+     * Get Transition probability from item $x to item $y
      * 
      * @param int $x 
      * @param int $y 
@@ -92,6 +92,95 @@ class slHiddenMarkovModel implements Countable
         }
 
         return $this->transistion[$x][$y];
+    }
+
+    /**
+     * Set Transition probability from item $x to item $y
+     * 
+     * @param int $x 
+     * @param int $y 
+     * @param float $p
+     * @return void
+     */
+    public function setTransition( $x, $y, $v )
+    {
+        if ( !isset( $this->transistion[$x] ) ||
+             !isset( $this->transistion[$x][$y] ) )
+        {
+            throw new OutOfBoundsException();
+        }
+
+        $this->transistion[$x][$y] = (float) $v; 
+    }
+
+    /**
+     * Get Emission probability from item $x to item $y
+     * 
+     * @param int $x 
+     * @param int $y 
+     * @return float
+     */
+    public function getEmission( $x, $y )
+    {
+        if ( !isset( $this->emission[$x] ) ||
+             !isset( $this->emission[$x][$y] ) )
+        {
+            throw new OutOfBoundsException();
+        }
+
+        return $this->emission[$x][$y];
+    }
+
+    /**
+     * Set Emission probability from item $x to item $y
+     * 
+     * @param int $x 
+     * @param int $y 
+     * @param float $p
+     * @return void
+     */
+    public function setEmission( $x, $y, $v )
+    {
+        if ( !isset( $this->emission[$x] ) ||
+             !isset( $this->emission[$x][$y] ) )
+        {
+            throw new OutOfBoundsException();
+        }
+
+        $this->emission[$x][$y] = (float) $v; 
+    }
+
+    /**
+     * Get Start probability for item $x
+     * 
+     * @param int $x 
+     * @return float
+     */
+    public function getStart( $x )
+    {
+        if ( !isset( $this->start[$x] ) )
+        {
+            throw new OutOfBoundsException();
+        }
+
+        return $this->start[$x];
+    }
+
+    /**
+     * Set Start probability for item $x
+     * 
+     * @param int $x 
+     * @param float $p
+     * @return void
+     */
+    public function setStart( $x, $v )
+    {
+        if ( !isset( $this->start[$x] ) )
+        {
+            throw new OutOfBoundsException();
+        }
+
+        $this->start[$x] = (float) $v; 
     }
 
     /**

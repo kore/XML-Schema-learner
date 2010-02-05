@@ -44,7 +44,7 @@ class slMainHiddenMarkovModelTests extends PHPUnit_Framework_TestCase
         $this->assertSame( 4, count( $hmm ) );
     }
 
-    public function testInitializationValues()
+    public function testTransitionInitializationValues()
     {
         $hmm = new slHiddenMarkovModel( 4, array( 1, 2, 3 ) );
         
@@ -53,12 +53,37 @@ class slMainHiddenMarkovModelTests extends PHPUnit_Framework_TestCase
         {
             for ( $y = 0; $y < $size; ++$y )
             {
-                $this->assertEquals( .25, $hmm->getTransition( $x, $y ), .001 );
+                $this->assertEquals( .25, $hmm->getTransition( $x, $y ), null, .001 );
             }
         }
     }
 
-    public function testGetLabels()
+    public function testEmissionInitializationValues()
+    {
+        $hmm = new slHiddenMarkovModel( 4, array( 1, 2, 3 ) );
+        
+        $size = count( $hmm );
+        for ( $x = 0; $x < $size; ++$x )
+        {
+            for ( $y = 0; $y < 3; ++$y )
+            {
+                $this->assertEquals( .33333, $hmm->getEmission( $x, $y ), null, .001 );
+            }
+        }
+    }
+
+    public function testStartInitializationValues()
+    {
+        $hmm = new slHiddenMarkovModel( 4, array( 1, 2, 3 ) );
+        
+        $size = count( $hmm );
+        for ( $x = 0; $x < $size; ++$x )
+        {
+            $this->assertEquals( .25, $hmm->getStart( $x ), null, .001 );
+        }
+    }
+
+    public function testGetLabel()
     {
         $hmm = new slHiddenMarkovModel( 4, array( 1, 2, 3 ) );
      
