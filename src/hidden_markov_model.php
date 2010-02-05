@@ -55,25 +55,25 @@ class slHiddenMarkovModel implements Countable
     protected $transistion = array();
 
     /**
-     * Construct Hidden Markov Model froms et of labels
+     * Array with the emission probabilities as an adjazence matrix.
      * 
+     * @var array
+     */
+    protected $emission = array();
+
+    /**
+     * Construct Hidden Markov Model froms set of labels
+     * 
+     * @param int $states 
      * @param array $labels 
-     * @param array $start 
-     * @param array $transistion 
      * @return void
      */
-    public function __construct( array $labels, array $start = null, array $transistion = null )
+    public function __construct( $states, array $labels )
     {
-        $this->labels = array_values( $labels );
-
-        $count = count( $labels );
-        $this->start  = $start === null ? array_fill( 0, $count, 1 / $count ) : $start;
-
-        $this->transistion = $transistion;
-        if ( $this->transistion === null )
-        {
-            $this->transistion = array_fill( 0, $count, array_fill( 0, $count, 1 / $count ) );
-        }
+        $this->labels      = array_values( $labels );
+        $this->start       = array_fill( 0, $states, 1 / $states );
+        $this->transistion = array_fill( 0, $states, array_fill( 0, $states, 1 / $states ) );
+        $this->emission    = array_fill( 0, $states, array_fill( 0, count( $labels ), 1 / count( $labels ) ) );
     }
 
     /**
@@ -117,7 +117,35 @@ class slHiddenMarkovModel implements Countable
      */
     public function count()
     {
-        return count( $this->labels );
+        return count( $this->transistion );
+    }
+
+    /**
+     * Get array of random values
+     *
+     * Returns an array of the specified size conatining random values, which 
+     * sum up to 1.
+     * 
+     * @param int $size 
+     * @return array
+     */
+    protected function getRandomArray( $size )
+    {
+        $return = array();
+        $left   = 1;
+        for ( $i = 0; $i < $size; ++$i )
+        {
+            if ( $i === ( $size - 1 ) )
+            {
+                $return[] = $left;
+                break;
+            }
+
+            $return[] = $v = mt_rand( 0, $left * 10000 ) / 10000;
+            $left    -= $v;
+        }
+
+        return $return;
     }
 
     /**
@@ -129,81 +157,14 @@ class slHiddenMarkovModel implements Countable
      */
     public function randomize( $count = null )
     {
-        $labels     = count( $this->labels );
-        $iterations = $count === null ? $labels : $count;
-        for ( $n = 0; $n < $iterations; ++$n )
+        $states = count( $this->transistion );
+        for ( $i = 0; $i < $states; ++$i )
         {
-            for ( $m = 0; $m < $iterations; ++$m )
-            {
-                // Poke
-                $x = mt_rand( 1, $labels - 2 );
-                $y = mt_rand( 1, $labels - 2 );
-
-                $diff = mt_rand(
-                    $min = max(
-                        -$this->transistion[$x][$y],
-                        -( 1 - $this->transistion[$x - 1][$y] ) * 2,
-                        -( 1 - $this->transistion[$x + 1][$y] ) * 2,
-                        -( 1 - $this->transistion[$x][$y - 1] ) * 2,
-                        -( 1 - $this->transistion[$x][$y + 1] ) * 2,
-                        -$this->transistion[$x - 1][$y - 1] * 4,
-                        -$this->transistion[$x - 1][$y + 1] * 4,
-                        -$this->transistion[$x + 1][$y - 1] * 4,
-                        -$this->transistion[$x + 1][$y + 1] * 4
-                    ) * 1000,
-                    $max = min(
-                        1 - $this->transistion[$x][$y],
-                        $this->transistion[$x - 1][$y] * 2,
-                        $this->transistion[$x + 1][$y] * 2,
-                        $this->transistion[$x][$y - 1] * 2,
-                        $this->transistion[$x][$y + 1] * 2,
-                        ( 1 - $this->transistion[$x - 1][$y - 1] ) * 4,
-                        ( 1 - $this->transistion[$x - 1][$y + 1] ) * 4,
-                        ( 1 - $this->transistion[$x + 1][$y - 1] ) * 4,
-                        ( 1 - $this->transistion[$x + 1][$y + 1] ) * 4
-                    ) * 1000
-                );
-                $diff /= 1000;
-                
-                $this->transistion[$x][$y] += $diff;
-                $this->transistion[$x - 1][$y] -= $diff / 2;
-                $this->transistion[$x + 1][$y] -= $diff / 2;
-                $this->transistion[$x][$y - 1] -= $diff / 2;
-                $this->transistion[$x][$y + 1] -= $diff / 2;
-                $this->transistion[$x - 1][$y - 1] += $diff / 4;
-                $this->transistion[$x - 1][$y + 1] += $diff / 4;
-                $this->transistion[$x + 1][$y - 1] += $diff / 4;
-                $this->transistion[$x + 1][$y + 1] += $diff / 4;
-            }
-
-            for ( $m = 0; $m < $iterations; ++$m )
-            {
-                // Switch column / rows
-                if ( $m % 2 )
-                {
-                    $x1 = mt_rand( 0, $labels - 1 );
-                    $x2 = mt_rand( 0, $labels - 1 );
-
-                    $tmp = $this->transistion[$x1];
-                    $this->transistion[$x1] = $this->transistion[$x2];
-                    $this->transistion[$x2] = $tmp;
-                }
-                else
-                {
-                    $y1 = mt_rand( 0, $labels - 1 );
-                    $y2 = mt_rand( 0, $labels - 1 );
-
-                    for ( $x = 0; $x < $labels; ++$x )
-                    {
-                        $tmp = $this->transistion[$x][$y1];
-                        $this->transistion[$x][$y1] = $this->transistion[$x][$y2];
-                        $this->transistion[$x][$y2] = $tmp;
-                    }
-                }
-            }
+            $this->transistion[$i] = $this->getRandomArray( $states );
+            $this->emission[$i]    = $this->getRandomArray( count( $this->labels ) );
         }
 
-        $this->start = $this->transistion[mt_rand( 0, $labels - 1 )];
+        $this->start = $this->getRandomArray( $states );
     }
 }
 

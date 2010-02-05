@@ -39,14 +39,14 @@ class slMainHiddenMarkovModelTests extends PHPUnit_Framework_TestCase
 
     public function testInitializationCount()
     {
-        $hmm = new slHiddenMarkovModel( array( 1, 2, 3, 4 ) );
+        $hmm = new slHiddenMarkovModel( 4, array( 1, 2, 3 ) );
         
         $this->assertSame( 4, count( $hmm ) );
     }
 
     public function testInitializationValues()
     {
-        $hmm = new slHiddenMarkovModel( array( 1, 2, 3, 4 ) );
+        $hmm = new slHiddenMarkovModel( 4, array( 1, 2, 3 ) );
         
         $size = count( $hmm );
         for ( $x = 0; $x < $size; ++$x )
@@ -60,7 +60,7 @@ class slMainHiddenMarkovModelTests extends PHPUnit_Framework_TestCase
 
     public function testGetLabels()
     {
-        $hmm = new slHiddenMarkovModel( array( 1, 2, 3, 4 ) );
+        $hmm = new slHiddenMarkovModel( 4, array( 1, 2, 3 ) );
      
         $this->assertSame(
             2,
@@ -70,53 +70,37 @@ class slMainHiddenMarkovModelTests extends PHPUnit_Framework_TestCase
 
     public function testRandomize()
     {
-        mt_srand( 23 );
-        $hmm = new slHiddenMarkovModel( array( 1, 2, 3, 4 ) );
+        $hmm = new slHiddenMarkovModel( 4, array( 1, 2, 3 ) );
         $hmm->randomize();
 
         $size = count( $hmm );
-        $colSum = array_fill( 0, $size, 0 );
         for ( $x = 0; $x < $size; ++$x )
         {
             $rowSum = 0;
             for ( $y = 0; $y < $size; ++$y )
             {
                 $rowSum += $hmm->getTransition( $x, $y );
-                $colSum[$y] += $hmm->getTransition( $x, $y );
             }
 
             $this->assertEquals( 1., $rowSum, null, .001 );
-        }
-
-        foreach ( $colSum as $sum )
-        {
-            $this->assertEquals( 1., $sum, null, .001 );
         }
     }
 
     public function testRandomizeIntense()
     {
-        mt_srand( 23 );
-        $hmm = new slHiddenMarkovModel( array( 1, 2, 3, 4 ) );
+        $hmm = new slHiddenMarkovModel( 4, array( 1, 2, 3 ) );
         $hmm->randomize( 100 );
 
         $size = count( $hmm );
-        $colSum = array_fill( 0, $size, 0 );
         for ( $x = 0; $x < $size; ++$x )
         {
             $rowSum = 0;
             for ( $y = 0; $y < $size; ++$y )
             {
                 $rowSum += $hmm->getTransition( $x, $y );
-                $colSum[$y] += $hmm->getTransition( $x, $y );
             }
 
             $this->assertEquals( 1., $rowSum, null, .001 );
-        }
-
-        foreach ( $colSum as $sum )
-        {
-            $this->assertEquals( 1., $sum, null, .001 );
         }
     }
 }
