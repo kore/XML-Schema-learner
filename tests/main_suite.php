@@ -27,6 +27,7 @@
  */
 require 'main/automaton_tests.php';
 require 'main/hmm_tests.php';
+require 'main/ko_hmm_tests.php';
 require 'main/baum_welch_tests.php';
 require 'main/single_occurence_automaton_tests.php';
 require 'main/weighted_single_occurence_automaton_tests.php';
@@ -56,6 +57,7 @@ class slMainTestSuite extends PHPUnit_Framework_TestSuite
 
         $this->addTest( slMainAutomatonTests::suite() );
         $this->addTest( slMainHiddenMarkovModelTests::suite() );
+        $this->addTest( slMainKOccurenceHiddenMarkovModelTests::suite() );
         $this->addTest( slMainBaumWelchTests::suite() );
         $this->addTest( slMainSingleOccurenceAutomatonTests::suite() );
         $this->addTest( slMainWeightedSingleOccurenceAutomatonTests::suite() );
