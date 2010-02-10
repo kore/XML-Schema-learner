@@ -87,7 +87,7 @@ class slBaumWelchTrainer
                     $numerator   += $gamma * ( $k == $sequence[$t] ? 1 : 0 );
                     $denominator += $gamma;
                 }
-                $hmm->setEmission( $i, $k, $this->divide($numerator, $denominator) );
+                $hmm->setEmission( $i, $k, $this->divide( $numerator, $denominator ) );
             }
         }
     }
