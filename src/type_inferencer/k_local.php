@@ -32,7 +32,7 @@
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-class slKLocalTypeInferencer extends slNameBasedTypeInferencer
+class slKLocalTypeInferencer extends slTypeInferencer
 {
     /**
      * K, the ancestor dependency of a type.
@@ -65,7 +65,7 @@ class slKLocalTypeInferencer extends slNameBasedTypeInferencer
         $elements = array();
         for ( $i = 0; $i <= $this->depth; ++$i )
         {
-            $elements[] = parent::inferenceType( $element );
+            $elements[] = $element->tagName;
             
             if ( $element->parentNode instanceof DOMDOcument )
             {

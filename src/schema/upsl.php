@@ -23,32 +23,16 @@
  */
 
 /**
- * Full path type inferencer
+ * Class representing a Upsl schema.
  *
- * Uses the full ancestor path to an element as the type identifier.
+ * Upsl schemas can only learn each element name as a single type, so that this 
+ * schema uses the simple element name based type inferencer.
  *
  * @package Core
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-class slFullPathTypeInferencer extends slTypeInferencer
+class slUpslSchema extends slXsdSchema
 {
-    /**
-     * Inference a type from element
-     *
-     * Inference a string type from the given DOMELement.
-     * 
-     * @param DOMELement $element 
-     * @return string
-     */
-    public function inferenceType( DOMELement $element )
-    {
-        $elements = array();
-        do {
-            $elements[] = $element->tagName;
-        } while( ( $element = $element->parentNode ) instanceof DOMElement );
-
-        return implode( '/', array_reverse( $elements ) );
-    }
 }
 

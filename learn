@@ -29,8 +29,8 @@ require __DIR__ . '/src/environment.php';
 $defaults = array(
     'help'     => null,
     'type'     => 'dtd',
-    'locality' => 'n',
-    'merger'   => 'exact',
+    'locality' => false,
+    'merger'   => 'none',
 );
 
 $mapping = array(
@@ -106,27 +106,13 @@ switch ( $options['type'] )
         $visitor = new slSchemaDtdVisitor();
         break;
 
+    case 'upsl':
+        $schema = new slUpslSchema();
+        $visitor = new slSchemaUpslVisitor();
+        break;
+
     case 'xsd':
         $schema = new slXsdSchema();
-
-        // Set type inferencer based on configuration options.
-        if ( $options['locality'] === 'n' )
-        {
-            $schema->setTypeInferencer( new slFullPathTypeInferencer() );
-        }
-        else
-        {
-            $schema->setTypeInferencer( new slKLocalTypeInferencer( (int) $options['locality'] ) );
-        }
-
-        // Set type merger based on configuration options.
-        if ( !isset( $typeMerger[$options['merger']] ) )
-        {
-            echo "Unknown type merger '{$options['merger']}'.\n";
-            exit( 2 );
-        }
-        $schema->setTypeMerger( $typeMerger[$options['merger']] );
-
         $visitor = new slSchemaXmlSchemaVisitor();
         break;
 
@@ -134,6 +120,24 @@ switch ( $options['type'] )
         echo "Unknown schema type '{$options['type']}'.\n";
         exit( 2 );
 }
+
+// Set type inferencer based on configuration options.
+if ( $options['locality'] === 'n' )
+{
+    $schema->setTypeInferencer( new slFullPathTypeInferencer() );
+}
+elseif ( is_numeric( $options['locality'] ) )
+{
+    $schema->setTypeInferencer( new slKLocalTypeInferencer( (int) $options['locality'] ) );
+}
+
+// Set type merger based on configuration options.
+if ( !isset( $typeMerger[$options['merger']] ) )
+{
+    echo "Unknown type merger '{$options['merger']}'.\n";
+    exit( 2 );
+}
+$schema->setTypeMerger( $typeMerger[$options['merger']] );
 
 // Learn from files
 $files = array_slice( $argv, 1 );

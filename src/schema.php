@@ -52,14 +52,30 @@ abstract class slSchema
     protected $rootElements = array();
 
     /**
+     * Use type inferencer
+     * 
+     * @var slTypeInferencer
+     */
+    protected $typeInferencer;
+
+    /**
+     * Use type merger
+     * 
+     * @var slTypeMerger
+     */
+    protected $typeMerger;
+
+    /**
      * Construct new schema class
      * 
      * @return void
      */
     public function __construct()
     {
-        $this->elements     = array();
-        $this->rootElements = array();
+        $this->elements       = array();
+        $this->rootElements   = array();
+        $this->typeInferencer = new slNameBasedTypeInferencer();
+        $this->typeMerger     = new slNoTypeMerger();
     }
 
     /**
@@ -68,7 +84,10 @@ abstract class slSchema
      * @param DOMElement $element 
      * @return void
      */
-    abstract protected function inferenceType( DOMElement $element );
+    protected function inferenceType( DOMElement $element )
+    {
+        return $this->typeInferencer->inferenceType( $element );
+    }
 
     /**
      * Get schema dependent simple type inferencer
@@ -76,6 +95,28 @@ abstract class slSchema
      * @return slSimpleTypeInferencer
      */
     abstract protected function getSimpleInferencer();
+
+    /**
+     * Set type inferencer
+     * 
+     * @param slTypeInferencer $typeInferencer 
+     * @return void
+     */
+    public function setTypeInferencer( slTypeInferencer $typeInferencer )
+    {
+        $this->typeInferencer = $typeInferencer;
+    }
+
+    /**
+     * Set type merger
+     * 
+     * @param slTypeMerger $typeMerger 
+     * @return void
+     */
+    public function setTypeMerger( slTypeMerger $typeMerger )
+    {
+        $this->typeMerger = $typeMerger;
+    }
 
     /**
      * Learn XML file
@@ -102,6 +143,8 @@ abstract class slSchema
      */
     public function getTypes()
     {
+        $this->elements = $this->typeMerger->groupTypes( $this->elements );
+
         $optimizer = new slRegularExpressionOptimizer();
 
         // Ensure the regular expressions in all elements are up to date

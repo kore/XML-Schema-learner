@@ -43,66 +43,6 @@
 class slXsdSchema extends slSchema
 {
     /**
-     * Use type inferencer
-     * 
-     * @var slTypeInferencer
-     */
-    protected $typeInferencer;
-
-    /**
-     * Use type merger
-     * 
-     * @var slTypeMerger
-     */
-    protected $typeMerger;
-
-    /**
-     * Construct new schema class
-     * 
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->typeInferencer = new slNameBasedTypeInferencer();
-        $this->typeMerger     = new slNoTypeMerger();
-    }
-
-    /**
-     * Set type inferencer
-     * 
-     * @param slTypeInferencer $typeInferencer 
-     * @return void
-     */
-    public function setTypeInferencer( slTypeInferencer $typeInferencer )
-    {
-        $this->typeInferencer = $typeInferencer;
-    }
-
-    /**
-     * Set type merger
-     * 
-     * @param slTypeMerger $typeMerger 
-     * @return void
-     */
-    public function setTypeMerger( slTypeMerger $typeMerger )
-    {
-        $this->typeMerger = $typeMerger;
-    }
-
-    /**
-     * Inference type from DOMElement
-     * 
-     * @param DOMElement $element 
-     * @return void
-     */
-    protected function inferenceType( DOMElement $element )
-    {
-        return $this->typeInferencer->inferenceType( $element );
-    }
-
-    /**
      * Get schema dependent simple type inferencer
      * 
      * @return slSimpleTypeInferencer
@@ -110,20 +50,6 @@ class slXsdSchema extends slSchema
     protected function getSimpleInferencer()
     {
         return new slPcdataSimpleTypeInferencer();
-    }
-
-    /**
-     * Get regular expressions for learned schema
-     *
-     * Get an array of type -> regular expression associations for the learned 
-     * schema.
-     * 
-     * @return array(slSchemaElement)
-     */
-    public function getTypes()
-    {
-        $this->elements = $this->typeMerger->groupTypes( $this->elements );
-        return parent::getTypes();
     }
 }
 
