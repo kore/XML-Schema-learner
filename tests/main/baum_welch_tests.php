@@ -37,18 +37,35 @@ class slMainBaumWelchTests extends PHPUnit_Framework_TestCase
 		return new PHPUnit_Framework_TestSuite( __CLASS__ );
 	}
 
+    /**
+     * Test example train
+     *
+     * As documented here:
+     * http://www.indiana.edu/~iulg/moss/hmmcalculations.pdf
+     * 
+     * @return void
+     */
     public function testSimpleTrain()
     {
-        $hmm = new slHiddenMarkovModel( 4, array( 1, 2, 3 ) );
-        $hmm->randomize();
+        $hmm = new slHiddenMarkovModel( 2, array( 'A', 'B' ) );
+
+        // Initialize the model
+        $hmm->setStart( 0, .85 );
+        $hmm->setStart( 1, .15 );
+
+        $hmm->setTransition( 0, 0, .3 );
+        $hmm->setTransition( 0, 1, .7 );
+        $hmm->setTransition( 1, 0, .1 );
+        $hmm->setTransition( 1, 1, .9 );
+
+        $hmm->setEmission( 0, 0, .4 );
+        $hmm->setEmission( 0, 1, .6 );
+        $hmm->setEmission( 1, 0, .5 );
+        $hmm->setEmission( 1, 1, .5 );
 
         $trainer = new slBaumWelchTrainer();
-        for ( $i = 0; $i < 10; ++$i )
-        {
-            $trainer->train( $hmm, array( 1, 1, 1, 1, 1 ) );
-        }
-        
-        var_dump( $hmm );
+        $trainer->trainCycle( $hmm, array( 'A', 'B', 'B', 'A' ), 1 );
+        $trainer->trainCycle( $hmm, array( 'B', 'A', 'B' ), 1 );
     }
 }
 

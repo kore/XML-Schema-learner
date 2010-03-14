@@ -33,14 +33,31 @@
 class slBaumWelchTrainer
 {
     /**
-     * Train the HMM with the given input sequence
+     * Train the given sequence multiple times
+     *
+     * Train the given Hidden Markov Model n times with the specified sequence.
      * 
      * @param slHiddenMarkovModel $hmm 
      * @param array $sequence 
      * @param int $steps 
      * @return void
      */
-    public function train( slHiddenMarkovModel $hmm, array $sequence, $steps = 1 )
+    public function trainCycle( slHiddenMarkovModel $hmm, array $sequence, $steps )
+    {
+        for ( $i = 0; $i < $steps; ++$i )
+        {
+            $this->train( $hmm, $sequence );
+        }
+    }
+
+    /**
+     * Train the HMM with the given input sequence
+     * 
+     * @param slHiddenMarkovModel $hmm 
+     * @param array $sequence 
+     * @return void
+     */
+    public function train( slHiddenMarkovModel $hmm, array $sequence )
     {
         $sequence       = $hmm->mapLabels( $sequence );
         $sequenceLength = count( $sequence );
