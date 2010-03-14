@@ -126,6 +126,10 @@ switch ( $options['type'] )
                 $schema->setTypeMerger( new slNodeBasedTypeMerger() );
                 break;
 
+            case 'attr-node-based':
+                $schema->setTypeMerger( new slAttributeNodeBasedTypeMerger() );
+                break;
+
             default:
                 echo "Unknown type merger '{$options['merger']}'.\n";
                 exit( 2 );
