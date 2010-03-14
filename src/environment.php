@@ -84,6 +84,7 @@ require __DIR__ . '/type_merger/no.php';
 require __DIR__ . '/type_merger/exact.php';
 require __DIR__ . '/type_merger/node_based.php';
 require __DIR__ . '/type_merger/attribute_node_based.php';
+require __DIR__ . '/type_merger/magic.php';
 
 require __DIR__ . '/type_inferencer.php';
 require __DIR__ . '/type_inferencer/name_based.php';

@@ -91,6 +91,14 @@ EOHELP;
     exit( 0 );
 }
 
+$typeMerger = array(
+    'none'            => new slNoTypeMerger(),
+    'exact'           => new slExactTypeMerger(),
+    'node-based'      => new slNodeBasedTypeMerger(),
+    'attr-node-based' => new slAttributeNodeBasedTypeMerger(),
+    'magic'           => new slMagicTypeMerger(),
+);
+
 switch ( $options['type'] )
 {
     case 'dtd':
@@ -112,28 +120,12 @@ switch ( $options['type'] )
         }
 
         // Set type merger based on configuration options.
-        switch ( $options['merger'] )
+        if ( !isset( $typeMerger[$options['merger']] ) )
         {
-            case 'none':
-                $schema->setTypeMerger( new slNoTypeMerger() );
-                break;
-
-            case 'exact':
-                $schema->setTypeMerger( new slExactTypeMerger() );
-                break;
-
-            case 'node-based':
-                $schema->setTypeMerger( new slNodeBasedTypeMerger() );
-                break;
-
-            case 'attr-node-based':
-                $schema->setTypeMerger( new slAttributeNodeBasedTypeMerger() );
-                break;
-
-            default:
-                echo "Unknown type merger '{$options['merger']}'.\n";
-                exit( 2 );
+            echo "Unknown type merger '{$options['merger']}'.\n";
+            exit( 2 );
         }
+        $schema->setTypeMerger( $typeMerger[$options['merger']] );
 
         $visitor = new slSchemaXmlSchemaVisitor();
         break;
