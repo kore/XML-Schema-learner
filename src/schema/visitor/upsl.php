@@ -125,7 +125,6 @@ class slSchemaUpslVisitor extends slSchemaVisitor
     {
         if ( $regExp instanceof slRegularExpressionElement )
         {
-            var_dump( $regExp );
             return array( $regExp->getContent() );
         }
 
