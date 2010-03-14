@@ -53,141 +53,193 @@ class slSchemaUpslVisitor extends slSchemaVisitor
      */
     public function visit( slSchema $schema )
     {
-        $doc = new DOMDocument();
-        $doc->formatOutput = true;
+        $doc = "namespace http://example.com/generated\n\n";
 
-        $root = $doc->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'schema' );
-        $root->setAttribute( 'targetNamespace', 'http://example.com/gegenrated' );
-        $root->setAttribute( 'elementFormDefault', 'qualified' );
-        $doc->appendChild( $root );
-
-        $rootElements = $schema->getRootElements();
+        $graph = $this->buildTypeGraph( $schema );
+        $patterns = $this->getPatterns( $schema, $graph );
 
         $visitedTypes = array();
+        $doc .= "grammar {\n";
         foreach ( ( $this->types = $schema->getTypes() ) as $type )
         {
-            if ( $elementName = array_search( $type->type, $rootElements ) )
-            {
-                $element = $doc->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'element' );
-                $element->setAttribute( 'name', $elementName );
-                $element->setAttribute( 'type', $type->type );
-                $root->appendChild( $element );
-            }
-
             if ( !isset( $visitedTypes[$type->type->name] ) )
             {
-                $this->visitType( $root, $type );
+                $doc .= $this->visitType( $type, $patterns[$type->type->name] );
                 $visitedTypes[$type->type->name] = true;
             }
         }
+        $doc .= "}\n";
 
-        return $doc->saveXml();
+        return $doc;
+    }
+
+    /**
+     * Build type graph
+     *
+     * Builds a type graph from the schema type definitions and child patterns 
+     * associated with the types.
+     *
+     * The type grapg represents a (information science) graph where each edge 
+     * indicates that the dst type occurs within the src type.
+     * 
+     * @param slSchema $schema 
+     * @return slTypeAutomaton
+     */
+    protected function buildTypeGraph( slSchema $schema )
+    {
+        $automaton = new slTypeAutomaton();
+
+        // Add edges for root nodes
+        foreach ( $schema->getRootElements() as $root )
+        {
+            $automaton->addEdge( '_start', $root, $root );
+        }
+
+        // Get contained children from each type and add edges for them to the 
+        // graph
+        foreach ( $schema->getTypes() as $element )
+        {
+            foreach ( $this->getChildElements( $element->type->regularExpression ) as $child )
+            {
+                // @todo: The child type name is not the correct name here, 
+                // since multiple types with different names may have been 
+                // merged.
+                $name = $element->name;
+                $automaton->addEdge( $element->type->name, $child, $name );
+            }
+        }
+
+        $visitor = new slAutomatonDotVisitor();
+        file_put_contents( 'debug/type_automaton.dot', $visitor->visit( $automaton ) );
+
+        return $automaton;
+    }
+
+    /**
+     * Get all elements occureing in a regular expression
+     * 
+     * @param slRegularExpression $regExp 
+     * @return array
+     */
+    protected function getChildElements( slRegularExpression $regExp )
+    {
+        if ( $regExp instanceof slRegularExpressionElement )
+        {
+            var_dump( $regExp );
+            return array( $regExp->getContent() );
+        }
+
+        if ( !$regExp instanceof slRegularExpressionContainer )
+        {
+            return array();
+        }
+
+        $children = array();
+        foreach ( $regExp->getChildren() as $child )
+        {
+            $children = array_merge( $children, $this->getChildElements( $child ) );
+        }
+        return $children;
+    }
+
+    /**
+     * Calculate patterns from type graph
+     *
+     * Calculates "nice" patterns from the specified type graph. Optimizations 
+     * of those patterns might be outsourced into another class in the future.
+     *
+     * Returns an array with type-name => pattern associations.
+     * 
+     * @param slSchema $schema 
+     * @param slTypeAutomaton $typeGraph 
+     * @return array
+     */
+    protected function getPatterns( slSchema $schema, slTypeAutomaton $typeGraph )
+    {
+        $patterns = $typeGraph->getAncestorPatterns( $schema->getTypes() );
+        return $patterns;
     }
 
     /**
      * Visit single type / element
      *
-     * Vist a single element and create proper XML Schema markup depending on 
-     * the elements contents.
+     * Vist a single element and create proper UPSL markup depending on the 
+     * elements contents.
      * 
-     * @param DOMElement $root 
      * @param slSchemaElement $element 
-     * @return void
+     * @param mixed $ancestorPattern 
+     * @return string
      */
-    protected function visitType( DOMElement $root, slSchemaElement $element )
+    protected function visitType( slSchemaElement $element, $ancestorPattern )
     {
-        $regExpVisitor = new slRegularExpressionXmlSchemaVisitor( $this, $root->ownerDocument );
+        $typeDef = "\t" . $this->visitAncestorPattern( $ancestorPattern ) . " = {\n";
 
-        switch ( true )
+        $typeDef .= $this->visitAttributeList( $element );
+
+        if ( $element->type->regularExpression instanceof slRegularExpressionEmpty )
         {
-            // For all non-empty regular expressions in the element, we can 
-            // create a complex type definition. This can optionally be mixed
-            // (for non-empty simple type definitions) and can always contain 
-            // attribute definitions, too.
-            case ( !$element->type->regularExpression instanceof slRegularExpressionEmpty ):
-                
-                $complexType = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'complexType' );
-                $complexType->setAttribute( 'name', $element->type->name );
-                $complexType->appendChild( $regExpVisitor->visit( $element->type->regularExpression ) );
-
-                if ( $element->type->simpleTypeInferencer->inferenceType() !== 'empty' )
-                {
-                    $complexType->setAttribute( 'mixed', 'true' );
-                }
-
-                $this->visitAttributeList( $complexType, $element );
-
-                $root->appendChild( $complexType );
-                return;
-
-            // For all following cases the regular expression can be considered 
-            // empty. If the simple type definition also contains attributes we 
-            // need to create a simple content node, this happens here:
-            case ( count( $element->type->attributes ) ) &&
-                 ( $element->type->simpleTypeInferencer->inferenceType( ) !== 'empty' ):
-
-                $complexType = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'complexType' );
-                $complexType->setAttribute( 'name', $element->type->name );
-                $root->appendChild( $complexType );
-
-                // Attach a simple content node to the complex type
-                $simpleContent = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'simpleContent' );
-                $complexType->appendChild( $simpleContent );
-
-                // Extend the defined simple type by the list of attributes
-                $extension = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'extension' );
-                $extension->setAttribute( 'base', $this->getXmlSchemaSimpleType( $element->type->simpleTypeInferencer ) );
-                $simpleContent->appendChild( $extension );
-
-                $this->visitAttributeList( $extension, $element );
-                return;
-
-            // If we have an empty regular expression, and an empty simple type 
-            // definition, we need to create a complext empty type, with 
-            // attributes.
-            case ( count( $element->type->attributes ) ):
-                
-                $complexType = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'complexType' );
-                $complexType->setAttribute( 'name', $element->type->name );
-                $this->visitAttributeList( $complexType, $element );
-                $root->appendChild( $complexType );
-                return;
-
-            // The other two cases, where no attributes and no regular 
-            // expression are provided for the element are handled by the 
-            // regular expression visitor.
-            default:
-                return;
+            $typeDef .= "\t\tEMPTY\n";
         }
+        else
+        {
+            $regExpVisitor = new slRegularExpressionStringVisitor( $this, $root->ownerDocument );
+            $typeDef .= "\t\t" . $regExpVisitor->visit( $element->type->regularExpression ) . "\n";
+        }
+
+        return $typeDef . "\t}\n\n";
     }
 
     /**
-     * Visit the attribute list of an element into the given root element.
+     * Visit the ancestor pattern of a type
      * 
-     * @param DOMElement $root 
-     * @param slSchemaElement $element 
-     * @return void
+     * @param array $ancestorPattern
+     * @return string
      */
-    protected function visitAttributeList( DOMElement $root, slSchemaElement $element )
+    protected function visitAncestorPattern( array $ancestorPattern )
     {
-        if ( !count( $element->type->attributes ) )
+        $stringPatterns = array();
+        foreach ( $ancestorPattern as $pattern )
         {
-            return;
-        }
-
-        foreach ( $element->type->attributes as $attribute )
-        {
-            $attributeNode = $root->ownerDocument->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'attribute' );
-            $attributeNode->setAttribute( 'name', $attribute->name );
-            $attributeNode->setAttribute( 'type', $this->getXmlSchemaSimpleType( $attribute->simpleTypeInferencer ) );
-            
-            if ( !$attribute->optional )
+            if ( reset( $pattern ) === '^' )
             {
-                $attributeNode->setAttribute( 'use', 'required' );
+                array_shift( $pattern );
+                $string = '/';
+            }
+            else
+            {
+                $string = '//';
             }
 
-            $root->appendChild( $attributeNode );
+            $stringPatterns[] = $string . implode( '/', $pattern );
         }
+
+        if ( count( $stringPatterns ) === 1 )
+        {
+            return reset( $stringPatterns );
+        }
+
+        return '( ' . implode( ' | ', $stringPatterns ) . ' )';
+    }
+
+    /**
+     * Visit the attribute list of an element.
+     * 
+     * @param slSchemaElement $element 
+     * @return string
+     */
+    protected function visitAttributeList( slSchemaElement $element )
+    {
+        $attributeList = '';
+        foreach ( $element->type->attributes as $attribute )
+        {
+            $attributeList .= sprintf( "\t\tattribute %s { %s }%s,\n",
+                $attribute->name,
+                $this->getUpslSimpleType( $attribute->simpleTypeInferencer ),
+                $attribute->optional ? '?' : ''
+            );
+        }
+
+        return $attributeList;
     }
 
     /**
@@ -199,7 +251,7 @@ class slSchemaUpslVisitor extends slSchemaVisitor
      * @param slSimpleTypeInferencer $typeInferencer 
      * @return string
      */
-    public function getXmlSchemaSimpleType( slSimpleTypeInferencer $typeInferencer )
+    public function getUpslSimpleType( slSimpleTypeInferencer $typeInferencer )
     {
         switch ( $type = $typeInferencer->inferenceType() )
         {

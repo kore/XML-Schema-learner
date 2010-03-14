@@ -86,6 +86,9 @@ class slRegularExpressionXmlSchemaVisitor extends slRegularExpressionVisitor
      */
     protected function visitElement( slRegularExpressionElement $element )
     {
+        // @todo: This is bullshit:
+        // Multiple elements with different names may have the same type, thus 
+        // this would use the wrong element name:
         $schemaElement = $this->schemaVisitor->getType( $element->getContent() );
         $node = $this->document->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'element' );
         $node->setAttribute( 'name', $schemaElement->name );

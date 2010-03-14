@@ -23,18 +23,10 @@
  */
 
 /**
- * Class representing a DTD schema.
+ * Class representing a XSD schema.
  *
- * DTD schemas can only learn each element name as a single type, so that this 
+ * XSD schemas can only learn each element name as a single type, so that this 
  * schema uses the simple element name based type inferencer.
- *
- * @todo:
- *      The elements will be merged in thy type merger, so that multiple elements 
- *      may refer to the same type.
- *
- *      It will still not be possible to backtrack the locality of a type, 
- *      because a type does not know the elements it occurs in, and the 
- *      elements do not know the regular expressions they occur in.
  *
  * @package Core
  * @version $Revision: 1236 $
