@@ -52,30 +52,32 @@ class slEChareConverter extends slChareConverter
     protected function buildRegularExpression( slCountingSingleOccurenceAutomaton $automaton, array $classes )
     {
         $terms = array();
+        $nodes = $automaton->getNodes();
         foreach ( $classes as $class )
         {
-            $term  = $nodes = $this->equivalenceClasses[$class];
-            $count = $automaton->getOccurenceSum( $nodes );
+            $term  = $classes = $this->equivalenceClasses[$class];
+            $count = $automaton->getOccurenceSum( $classes );
 
             // Handle singletons first
             if ( count( $term ) === 1 )
             {
                 $terms[] = $this->wrapCountingPattern(
                     $count,
-                    new slRegularExpressionElement( reset( $term ) )
+                    new slRegularExpressionElement( $nodes[reset( $term )] )
                 );
                 continue;
             }
 
             // Handle node equivalence classes with multiple elements
-            $generalCount = $automaton->getGeneralOccurences( $nodes );
+            $generalCount = $automaton->getGeneralOccurences( $classes );
             if ( ( $generalCount['max'] === 1 ) &&
                  ( $count['max'] > 1 ) )
             {
                 // Inference all
-                $term = new slRegularExpressionAll( array_map( function( $term )
+                $term = new slRegularExpressionAll( array_map(
+                    function( $term ) use ( $nodes )
                     {
-                        return new slRegularExpressionElement( $term );
+                        return new slRegularExpressionElement( $nodes[$term] );
                     },
                     $term 
                 ) );
@@ -84,9 +86,10 @@ class slEChareConverter extends slChareConverter
             }
             else
             {
-                $term = new slRegularExpressionChoice( array_map( function( $term )
+                $term = new slRegularExpressionChoice( array_map(
+                    function( $term ) use ( $nodes )
                     {
-                        return new slRegularExpressionElement( $term );
+                        return new slRegularExpressionElement( $nodes[$term] );
                     },
                     $term 
                 ) );

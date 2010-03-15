@@ -1,0 +1,12 @@
+<root>
+    <alpha/>
+    <beta>
+        <alpha/>
+        <gamma>
+            <delta/>
+        </gamma>
+    </beta>
+    <gamma>
+        <alpha/>
+    </gamma>
+</root>

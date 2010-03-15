@@ -53,8 +53,8 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
                 'alpha' => new slRegularExpressionEmpty(),
                 'beta' => new slRegularExpressionEmpty(),
                 'root' => new slRegularExpressionSequence( 
-                    new slRegularExpressionElement( 'alpha' ),
-                    new slRegularExpressionElement( 'beta' )
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'alpha', 'alpha' ) ),
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'beta', 'beta' ) )
                 ),
             ),
             $expressions
@@ -62,34 +62,6 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
     }
 
     public function testDtdSchemaLearnMultiple()
-    {
-        $xsd = new slXsdSchema();
-        $xsd->learnFile( __DIR__ . '/data/type_merging.xml' );
-
-        $expressions = array();
-        foreach ( $xsd->getTypes() as $element )
-        {
-            $expressions[$element->type->name] = $element->type->regularExpression;
-        }
-
-        $this->assertEquals(
-            array(
-                'alpha' => new slRegularExpressionEmpty(),
-                'beta' => new slRegularExpressionEmpty(),
-                'root' => new slRegularExpressionSequence(
-                    new slRegularExpressionElement( 'alpha' ),
-                    new slRegularExpressionOptional(
-                        new slRegularExpressionElement( 'optional' )
-                    ),
-                    new slRegularExpressionElement( 'beta' )
-                ),
-                'optional' => new slRegularExpressionEmpty()
-            ),
-            $expressions
-        );
-    }
-
-    public function testXSDSchemaTypeMerging()
     {
         $dtd = new slDtdSchema();
         $dtd->learnFile( __DIR__ . '/data/simple.xml' );
@@ -100,19 +72,41 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
         {
             $expressions[$element->type->name] = $element->type->regularExpression;
         }
+        ksort( $expressions );
 
         $this->assertEquals(
             array(
                 'alpha' => new slRegularExpressionEmpty(),
                 'beta' => new slRegularExpressionEmpty(),
+                'optional' => new slRegularExpressionEmpty(),
                 'root' => new slRegularExpressionSequence(
-                    new slRegularExpressionElement( 'alpha' ),
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'alpha', 'alpha' ) ),
                     new slRegularExpressionOptional(
-                        new slRegularExpressionElement( 'optional' )
+                        new slRegularExpressionElement( new slSchemaAutomatonNode( 'optional', 'optional' ) )
                     ),
-                    new slRegularExpressionElement( 'beta' )
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'beta', 'beta' ) )
                 ),
-                'optional' => new slRegularExpressionEmpty()
+            ),
+            $expressions
+        );
+    }
+
+    public function testXSDSchemaTypeMerging()
+    {
+        $xsd = new slXsdSchema();
+        $xsd->setTypeInferencer( new slFullPathTypeInferencer() );
+        $xsd->setTypeMerger( new slNodeBasedTypeMerger() );
+        $xsd->learnFile( __DIR__ . '/data/type_merging.xml' );
+
+        $expressions = array();
+        foreach ( $xsd->getTypes() as $element )
+        {
+            $expressions[$element->type->name] = $element->type->regularExpression;
+        }
+        ksort( $expressions );
+
+        $this->assertEquals(
+            array(
             ),
             $expressions
         );

@@ -56,7 +56,8 @@ class slSoreConverter extends slConverter
     public function convertAutomaton( slSingleOccurenceAutomaton $automaton )
     {
         $automaton = clone $automaton;
-        $states    = array_keys( $automaton->getNodes() );
+        $nodes     = $automaton->getNodes();
+        $states    = array_keys( $nodes );
         if ( ( $stateCount = count( $states ) ) < 1 )
         {
             return new slRegularExpressionEmpty();
@@ -65,7 +66,7 @@ class slSoreConverter extends slConverter
         $this->nodes = array();
         foreach ( $states as $state )
         {
-            $this->nodes[$state] = new slRegularExpressionElement( $state );
+            $this->nodes[$state] = new slRegularExpressionElement( $nodes[$state] );
         }
 
         $this->debugAutomaton( $automaton, $this->nodes, $i = 1, 'start' );

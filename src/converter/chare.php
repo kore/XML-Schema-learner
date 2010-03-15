@@ -233,25 +233,27 @@ class slChareConverter extends slConverter
     protected function buildRegularExpression( slCountingSingleOccurenceAutomaton $automaton, array $classes )
     {
         $terms = array();
+        $nodes = $automaton->getNodes();
         foreach ( $classes as $class )
         {
-            $term = $nodes = $this->equivalenceClasses[$class];
+            $term = $classes = $this->equivalenceClasses[$class];
             if ( count( $term ) > 1 )
             {
-                $term = new slRegularExpressionChoice( array_map( function( $term )
+                $term = new slRegularExpressionChoice( array_map(
+                    function( $term ) use ( $nodes )
                     {
-                        return new slRegularExpressionElement( $term );
+                        return new slRegularExpressionElement( $nodes[$term] );
                     },
                     $term 
                 ) );
             }
             else
             {
-                $term = new slRegularExpressionElement( reset( $term ) );
+                $term = new slRegularExpressionElement( $nodes[reset( $term )] );
             }
 
             $terms[] = $this->wrapCountingPattern(
-                $automaton->getOccurenceSum( $nodes ),
+                $automaton->getOccurenceSum( $classes ),
                 $term
             );
         }
