@@ -73,7 +73,7 @@ EOSTYLE;
         {
             $content .= sprintf( "    \"%s\" [label = \"%s\"]\n",
                 $node,
-                isset( $labels[$node] ) ? $labels[$node] : $node
+                isset( $labels[(string) $node] ) ? $labels[(string) $node] : $node
             );
         }
         $content .= "\n";

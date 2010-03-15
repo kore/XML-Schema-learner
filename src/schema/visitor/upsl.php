@@ -101,11 +101,7 @@ class slSchemaUpslVisitor extends slSchemaVisitor
         {
             foreach ( $this->getChildElements( $element->type->regularExpression ) as $child )
             {
-                // @todo: The child type name is not the correct name here, 
-                // since multiple types with different names may have been 
-                // merged.
-                $name = $element->name;
-                $automaton->addEdge( $element->type->name, $child, $name );
+                $automaton->addEdge( $element->type->name, $child->type, $child->name );
             }
         }
 
@@ -175,15 +171,8 @@ class slSchemaUpslVisitor extends slSchemaVisitor
 
         $typeDef .= $this->visitAttributeList( $element );
 
-        if ( $element->type->regularExpression instanceof slRegularExpressionEmpty )
-        {
-            $typeDef .= "\t\tEMPTY\n";
-        }
-        else
-        {
-            $regExpVisitor = new slRegularExpressionStringVisitor( $this, $root->ownerDocument );
-            $typeDef .= "\t\t" . $regExpVisitor->visit( $element->type->regularExpression ) . "\n";
-        }
+        $regExpVisitor = new slRegularExpressionUpslVisitor( $this, $root->ownerDocument );
+        $typeDef .= "\t\t" . $regExpVisitor->visit( $element->type->regularExpression ) . "\n";
 
         return $typeDef . "\t}\n\n";
     }

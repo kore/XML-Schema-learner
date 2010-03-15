@@ -65,6 +65,7 @@ require __DIR__ . '/regular_expression/visitor.php';
 require __DIR__ . '/regular_expression/visitor/string.php';
 require __DIR__ . '/regular_expression/visitor/dtd.php';
 require __DIR__ . '/regular_expression/visitor/xml_schema.php';
+require __DIR__ . '/regular_expression/visitor/upsl.php';
 
 require __DIR__ . '/schema.php';
 require __DIR__ . '/schema/automaton_node.php';
