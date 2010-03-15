@@ -100,13 +100,14 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
 
     public function testVisitAll()
     {
-        $visitor = new slRegularExpressionStringVisitor();
+        $visitor = new slRegularExpressionDtdVisitor();
         $this->assertEquals(
-            '( ( a, b | b, a ) )',
+            '( ( a, b, c ) | ( a, c, b ) | ( b, a, c ) | ( b, c, a ) | ( c, a, b ) | ( c, b, a ) )',
             $visitor->visit(
                 new slRegularExpressionAll(
                     new slRegularExpressionElement( new slSchemaAutomatonNode( 'a', 'a' ) ),
-                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'b', 'b' ) )
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'b', 'b' ) ),
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'c', 'c' ) )
                 )
             )
         );

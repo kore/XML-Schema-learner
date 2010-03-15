@@ -76,5 +76,58 @@ class slRegularExpressionDtdVisitor extends slRegularExpressionStringVisitor
             implode( ', ', array_map( array( $this, 'visit' ), $regularExpression->getChildren() ) ) .
         ' )';
     }
+
+    /**
+     * Visit all sub expression
+     *
+     * The return type of this method varies deping on the concrete visitor 
+     * implementation
+     * 
+     * @param slRegularExpressionSequence $regularExpression 
+     * @return mixed
+     */
+    protected function visitAll( slRegularExpressionAll $regularExpression )
+    {
+        $children = array_map( array( $this, 'visit' ), $regularExpression->getChildren() );
+
+        $ordered = $this->getAllCombinations( $children );
+        return '( ( ' . implode( ' ) | ( ', array_map(
+            function ( $children )
+            {
+                return implode( ', ', $children );
+            },
+            $ordered
+        ) ) . ' ) )';
+    }
+
+    /**
+     * Get all sorting combinations for passed array
+     *
+     * Returns an array with arrays, where each array contains one of the 
+     * possible sorting combinations of the iput array.
+     * 
+     * @param array $array 
+     * @return array
+     */
+    protected function getAllCombinations( array $array )
+    {
+        if ( count( $array ) === 1 )
+        {
+            return array( $array );
+        }
+
+        $combinations = array();
+        foreach ( $array as $index => $value )
+        {
+            $passed = $array;
+            unset( $passed[$index] );
+            foreach ( $this->getAllCombinations( $passed ) as $combination )
+            {
+                $combinations[] = array_merge( array( $value ), $combination );
+            }
+        }
+
+        return $combinations;
+    }
 }
 
