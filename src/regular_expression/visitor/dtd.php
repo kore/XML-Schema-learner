@@ -32,6 +32,20 @@
 class slRegularExpressionDtdVisitor extends slRegularExpressionStringVisitor
 {
     /**
+     * Visit single element in regular expression
+     *
+     * The return type of this method varies deping on the concrete visitor 
+     * implementation
+     * 
+     * @param slRegularExpressionElement $element 
+     * @return mixed
+     */
+    protected function visitElement( slRegularExpressionElement $element )
+    {
+        return (string) $element->getContent()->name;
+    }
+
+    /**
      * Visit choice sub expression
      *
      * The return type of this method varies deping on the concrete visitor 

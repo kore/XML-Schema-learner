@@ -54,7 +54,7 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
         $this->assertSame(
             'a',
             $visitor->visit(
-                new slRegularExpressionElement( 'a' )
+                new slRegularExpressionElement( new slSchemaAutomatonNode( 'a', 'a' ) )
             )
         );
     }
@@ -65,7 +65,7 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
         $this->assertSame(
             '23',
             $visitor->visit(
-                new slRegularExpressionElement( 23 )
+                new slRegularExpressionElement( new slSchemaAutomatonNode( 23, 23 ) )
             )
         );
     }
@@ -77,8 +77,8 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
             '( a, b )',
             $visitor->visit(
                 new slRegularExpressionSequence(
-                    new slRegularExpressionElement( 'a' ),
-                    new slRegularExpressionElement( 'b' )
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'a', 'a' ) ),
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'b', 'b' ) )
                 )
             )
         );
@@ -91,8 +91,8 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
             '( a | b )',
             $visitor->visit(
                 new slRegularExpressionChoice(
-                    new slRegularExpressionElement( 'a' ),
-                    new slRegularExpressionElement( 'b' )
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'a', 'a' ) ),
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'b', 'b' ) )
                 )
             )
         );
@@ -105,8 +105,8 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
             '( ( a, b | b, a ) )',
             $visitor->visit(
                 new slRegularExpressionAll(
-                    new slRegularExpressionElement( 'a' ),
-                    new slRegularExpressionElement( 'b' )
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'a', 'a' ) ),
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'b', 'b' ) )
                 )
             )
         );
@@ -119,7 +119,7 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
             'a?',
             $visitor->visit(
                 new slRegularExpressionOptional(
-                    new slRegularExpressionElement( 'a' )
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'a', 'a' ) )
                 )
             )
         );
@@ -132,7 +132,7 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
             'a*',
             $visitor->visit(
                 new slRegularExpressionRepeated(
-                    new slRegularExpressionElement( 'a' )
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'a', 'a' ) )
                 )
             )
         );
@@ -146,10 +146,10 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
             $visitor->visit(
                 new slRegularExpressionSequence(
                     new slRegularExpressionSequence(
-                        new slRegularExpressionElement( 'a' )
+                        new slRegularExpressionElement( new slSchemaAutomatonNode( 'a', 'a' ) )
                     ),
                     new slRegularExpressionSequence(
-                        new slRegularExpressionElement( 'b' )
+                        new slRegularExpressionElement( new slSchemaAutomatonNode( 'b', 'b' ) )
                     )
                 )
             )
@@ -164,11 +164,11 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
             $visitor->visit(
                 new slRegularExpressionSequence(
                     new slRegularExpressionSequence(
-                        new slRegularExpressionElement( 'a' )
+                        new slRegularExpressionElement( new slSchemaAutomatonNode( 'a', 'a' ) )
                     ),
                     new slRegularExpressionChoice(
-                        new slRegularExpressionElement( 'b1' ),
-                        new slRegularExpressionElement( 'b2' )
+                        new slRegularExpressionElement( new slSchemaAutomatonNode( 'b1', 'b1' ) ),
+                        new slRegularExpressionElement( new slSchemaAutomatonNode( 'b2', 'b2' ) )
                     )
                 )
             )
@@ -183,14 +183,14 @@ class slVisitorRegularExpressionDtdTests extends PHPUnit_Framework_TestCase
             $visitor->visit(
                 new slRegularExpressionChoice(
                     new slRegularExpressionSequence(
-                        new slRegularExpressionElement( 'a' )
+                        new slRegularExpressionElement( new slSchemaAutomatonNode( 'a', 'a' ) )
                     ),
                     new slRegularExpressionSequence(
                         new slRegularExpressionSequence(
-                            new slRegularExpressionElement( 'b' )
+                            new slRegularExpressionElement( new slSchemaAutomatonNode( 'b', 'b' ) )
                         ),
                         new slRegularExpressionSequence(
-                            new slRegularExpressionElement( 'c' )
+                            new slRegularExpressionElement( new slSchemaAutomatonNode( 'c', 'c' ) )
                         )
                     )
                 )
