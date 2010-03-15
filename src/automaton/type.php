@@ -44,14 +44,14 @@ class slTypeAutomaton extends slAutomaton
     /**
      * Add a directed edge to the graph
      * 
-     * @param string $start 
-     * @param string $end 
+     * @param string $src 
+     * @param string $dst 
      * @return void
      */
-    public function addEdge( $start, $end, $label = true )
+    public function addEdge( $src, $dst, $label = true )
     {
-        parent::addEdge( $start, $end );
-        $this->reverseEdges[$end][$start] = $label;
+        parent::addEdge( $src, $dst );
+        $this->reverseEdges[(string) $dst][(string) $src] = $label;
     }
 
     /**
@@ -69,7 +69,7 @@ class slTypeAutomaton extends slAutomaton
     {
         if ( parent::removeEdge( $src, $dst ) )
         {
-            unset( $this->reverseEdges[$dst][$src] );
+            unset( $this->reverseEdges[(string) $dst][(string) $src] );
             return true;
         }
 

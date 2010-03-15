@@ -47,7 +47,7 @@ class slSingleOccurenceAutomaton extends slAutomaton
                 return;
 
             case 1:
-                $this->nodes[reset( $tokens )] = true;
+                $this->nodes[(string) reset( $tokens )] = reset( $tokens );
                 return;
         }
 

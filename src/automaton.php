@@ -49,23 +49,23 @@ class slAutomaton
     /**
      * Add a directed edge to the graph
      * 
-     * @param string $start 
-     * @param string $end 
+     * @param string $src 
+     * @param string $dst 
      * @return void
      */
-    public function addEdge( $start, $end )
+    public function addEdge( $src, $dst )
     {
-        if ( !isset( $this->nodes[$start] ) )
+        if ( !isset( $this->nodes[(string) $src] ) )
         {
-            $this->nodes[$start] = true;
+            $this->nodes[(string) $src] = $src;
         }
 
-        if ( !isset( $this->nodes[$end] ) )
+        if ( !isset( $this->nodes[(string) $dst] ) )
         {
-            $this->nodes[$end] = true;
+            $this->nodes[(string) $dst] = $dst;
         }
 
-        $this->edges[$start][$end] = true;
+        $this->edges[(string) $src][(string) $dst] = true;
     }
 
     /**
@@ -76,8 +76,8 @@ class slAutomaton
      */
     public function addNode( $node )
     {
-        $this->nodes[$node] = true;
-        $this->edges[$node] = array();
+        $this->nodes[(string) $node] = $node;
+        $this->edges[(string) $node] = array();
     }
 
     /**
@@ -93,18 +93,18 @@ class slAutomaton
      */
     public function removeNode( $node )
     {
-        if ( !isset( $this->nodes[$node] ) )
+        if ( !isset( $this->nodes[(string) $node] ) )
         {
             return false;
         }
 
-        unset( $this->nodes[$node] );
-        unset( $this->edges[$node] );
+        unset( $this->nodes[(string) $node] );
+        unset( $this->edges[(string) $node] );
         foreach ( $this->edges as $source => $edge )
         {
-            if ( isset( $edge[$node] ) )
+            if ( isset( $edge[(string) $node] ) )
             {
-                unset( $this->edges[$source][$node] );
+                unset( $this->edges[$source][(string) $node] );
             }
         }
 
@@ -124,15 +124,15 @@ class slAutomaton
      */
     public function removeEdge( $src, $dst )
     {
-        if ( !isset( $this->nodes[$src] ) ||
-             !isset( $this->nodes[$dst] ) ||
-             !isset( $this->edges[$src] ) ||
-             !isset( $this->edges[$src][$dst] ) )
+        if ( !isset( $this->nodes[(string) $src] ) ||
+             !isset( $this->nodes[(string) $dst] ) ||
+             !isset( $this->edges[(string) $src] ) ||
+             !isset( $this->edges[(string) $src][(string) $dst] ) )
         {
             return false;
         }
 
-        unset( $this->edges[$src][$dst] );
+        unset( $this->edges[(string) $src][(string) $dst] );
         return true;
     }
 
@@ -143,7 +143,7 @@ class slAutomaton
      */
     public function getNodes()
     {
-        return array_keys( $this->nodes );
+        return $this->nodes;
     }
 
     /**
@@ -154,12 +154,12 @@ class slAutomaton
      */
     public function getOutgoing( $node )
     {
-        if ( !isset( $this->edges[$node] ) )
+        if ( !isset( $this->edges[(string) $node] ) )
         {
             return array();
         }
 
-        return array_keys( $this->edges[$node] );
+        return array_keys( $this->edges[(string) $node] );
     }
 
     /**
@@ -173,7 +173,7 @@ class slAutomaton
         $incoming = array();
         foreach ( $this->edges as $source => $edge )
         {
-            if ( isset( $edge[$node] ) )
+            if ( isset( $edge[(string) $node] ) )
             {
                 $incoming[$source] = true;
             }
@@ -190,16 +190,16 @@ class slAutomaton
      */
     public function merge( slAutomaton $automaton )
     {
-        foreach ( $automaton->getNodes() as $newNode )
+        foreach ( $automaton->getNodes() as $identifier => $node )
         {
-            if ( !isset( $this->nodes[$newNode] ) )
+            if ( !isset( $this->nodes[$identifier] ) )
             {
-                $this->addNode( $newNode );
+                $this->addNode( $node );
             }
 
-            foreach ( $automaton->getOutgoing( $newNode ) as $dst )
+            foreach ( $automaton->getOutgoing( $node ) as $dst )
             {
-                $this->addEdge( $newNode, $dst );
+                $this->addEdge( $node, $dst );
             }
         }
     }
@@ -216,30 +216,30 @@ class slAutomaton
      */
     public function renameNode( $old, $new )
     {
-        if ( !isset( $this->nodes[$old] ) )
+        if ( !isset( $this->nodes[(string) $old] ) )
         {
             return;
         }
 
-        if ( $isNew = !isset( $this->nodes[$new] ) )
+        if ( $isNew = !isset( $this->nodes[(string) $new] ) )
         {
-            $this->addNode( $new );
+            $this->addNode( (string) $new );
         }
 
-        foreach ( $this->getOutgoing( $old ) as $dst )
+        foreach ( $this->getOutgoing( (string) $old ) as $dst )
         {
-            $this->addEdge( $new, ( $dst === $old ) ? $new : $dst );
+            $this->addEdge( (string) $new, ( $dst === (string) $old ) ? (string) $new : $dst );
         }
 
-        foreach ( $this->getIncoming( $old ) as $src )
+        foreach ( $this->getIncoming( (string) $old ) as $src )
         {
-            if ( $src !== $old )
+            if ( $src !== (string) $old )
             {
-                $this->addEdge( $src, $new );
+                $this->addEdge( $src, (string) $new );
             }
         }
 
-        $this->removeNode( $old );
+        $this->removeNode( (string) $old );
     }
 
     /**
@@ -253,7 +253,7 @@ class slAutomaton
      */
     public function transitiveClosure( $node )
     {
-        $nodes = array( $node );
+        $nodes = array( (string) $node );
         do {
             $old = $nodes;
             $nodes = array_unique( 

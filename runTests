@@ -3,7 +3,8 @@
 
 // List of special test modules.
 $modules = array(
-//	'name' => array( 'class', 'tests/file.php' ),
+	'visitor' => array( 'slVisitorTests', 'tests/visitor_suite.php' ),
+	'main'    => array( 'slMainTests', 'tests/main_suite.php' ),
 );
 
 $argv[0] = 'phpunit';

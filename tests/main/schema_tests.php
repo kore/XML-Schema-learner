@@ -63,6 +63,34 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
 
     public function testDtdSchemaLearnMultiple()
     {
+        $xsd = new slXsdSchema();
+        $xsd->learnFile( __DIR__ . '/data/type_merging.xml' );
+
+        $expressions = array();
+        foreach ( $xsd->getTypes() as $element )
+        {
+            $expressions[$element->type->name] = $element->type->regularExpression;
+        }
+
+        $this->assertEquals(
+            array(
+                'alpha' => new slRegularExpressionEmpty(),
+                'beta' => new slRegularExpressionEmpty(),
+                'root' => new slRegularExpressionSequence(
+                    new slRegularExpressionElement( 'alpha' ),
+                    new slRegularExpressionOptional(
+                        new slRegularExpressionElement( 'optional' )
+                    ),
+                    new slRegularExpressionElement( 'beta' )
+                ),
+                'optional' => new slRegularExpressionEmpty()
+            ),
+            $expressions
+        );
+    }
+
+    public function testXSDSchemaTypeMerging()
+    {
         $dtd = new slDtdSchema();
         $dtd->learnFile( __DIR__ . '/data/simple.xml' );
         $dtd->learnFile( __DIR__ . '/data/simple_2.xml' );

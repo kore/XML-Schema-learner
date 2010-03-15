@@ -36,31 +36,31 @@ class slWeightedSingleOccurenceAutomaton extends slSingleOccurenceAutomaton
     /**
      * Add a directed edge to the graph
      * 
-     * @param string $start 
-     * @param string $end 
+     * @param string $src 
+     * @param string $dst 
      * @return void
      */
-    public function addEdge( $start, $end )
+    public function addEdge( $src, $dst )
     {
-        if ( !isset( $this->nodes[$start] ) )
+        if ( !isset( $this->nodes[(string) $src] ) )
         {
-            $this->nodes[$start] = true;
+            $this->nodes[(string) $src] = $src;
         }
 
-        if ( !isset( $this->nodes[$end] ) )
+        if ( !isset( $this->nodes[(string) $dst] ) )
         {
-            $this->nodes[$end] = true;
+            $this->nodes[(string) $dst] = $dst;
         }
 
         // Count number of edges
-        if ( !isset( $this->edges[$start] ) ||
-             !isset( $this->edges[$start][$end] ) )
+        if ( !isset( $this->edges[(string) $src] ) ||
+             !isset( $this->edges[(string) $src][(string) $dst] ) )
         {
-            $this->edges[$start][$end] = 1;
+            $this->edges[(string) $src][(string) $dst] = 1;
         }
         else
         {
-            $this->edges[$start][$end]++;
+            $this->edges[(string) $src][(string) $dst]++;
         }
     }
 
@@ -70,20 +70,20 @@ class slWeightedSingleOccurenceAutomaton extends slSingleOccurenceAutomaton
      * Return the weight of the requested edge. Will return a non-normalized integer number. 
      * If the edge does not exist, the method will return null.
      * 
-     * @param mixed $start 
-     * @param mixed $end 
+     * @param mixed $src 
+     * @param mixed $dst 
      * @return integer
      */
-    public function getEdgeWeight( $start, $end )
+    public function getEdgeWeight( $src, $dst )
     {
-        if ( !isset( $this->edges[$start] ) ||
-             !isset( $this->edges[$start][$end] ) )
+        if ( !isset( $this->edges[(string) $src] ) ||
+             !isset( $this->edges[(string) $src][(string) $dst] ) )
         {
             return null;
         }
         else
         {
-            return $this->edges[$start][$end];
+            return $this->edges[(string) $src][(string) $dst];
         }
     }
 }

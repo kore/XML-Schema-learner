@@ -90,7 +90,8 @@ class slChareConverter extends slConverter
      */
     protected function calculateEquivalencyAutomaton( slAutomaton $automaton )
     {
-        $nodes      = $automaton->getNodes();
+        $nodeValues = $automaton->getNodes();
+        $nodes      = array_keys( $nodeValues );
         $nodeCount  = count( $nodes );
         $equivalent = array();
         $skip       = array();

@@ -50,21 +50,38 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
     public function testFreshAutomaton()
     {
         $automaton = $this->getAutomaton();
-        $this->assertEquals( array(), $automaton->getNodes() );
+        $this->assertEquals( array(), array_values( $automaton->getNodes() ) );
     }
 
     public function testCreateNode()
     {
         $automaton = $this->getAutomaton();
         $automaton->addNode( 'a' );
-        $this->assertEquals( array( 'a' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'a' ), array_values( $automaton->getNodes() ) );
     }
 
     public function testCreateEdge()
     {
         $automaton = $this->getAutomaton();
         $automaton->addEdge( 'a', 'b' );
-        $this->assertEquals( array( 'a', 'b' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'a', 'b' ), array_values( $automaton->getNodes() ) );
+    }
+
+    public function testCreateNodeObject()
+    {
+        $automaton = $this->getAutomaton();
+        $automaton->addNode( $a = new slSchemaAutomatonNode( 'a', 'a' ) );
+        $this->assertEquals( array( $a ), array_values( $automaton->getNodes() ) );
+    }
+
+    public function testCreateEdgeObject()
+    {
+        $automaton = $this->getAutomaton();
+        $automaton->addEdge(
+            $a = new slSchemaAutomatonNode( 'a', 'a' ),
+            $b = new slSchemaAutomatonNode( 'b', 'b' )
+        );
+        $this->assertEquals( array( $a, $b ), array_values( $automaton->getNodes() ) );
     }
 
     public function testIncoming()
@@ -103,7 +120,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
         $automaton->addEdge( 'a', 'c' );
         $automaton->addEdge( 'b', 'c' );
 
-        $this->assertEquals( array( 'a', 'b', 'c' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'a', 'b', 'c' ), array_values( $automaton->getNodes() ) );
         $this->assertEquals( array( 'b', 'c' ), $automaton->getOutgoing( 'a' ) );
         $this->assertEquals( array( 'a', 'b' ), $automaton->getIncoming( 'c' ) );
     }
@@ -117,7 +134,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
         $automaton->addEdge( 'b', 'c' );
         $automaton->removeNode( 'b' );
 
-        $this->assertEquals( array( 'a', 'c' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'a', 'c' ), array_values( $automaton->getNodes() ) );
         $this->assertEquals( array( 'c' ), $automaton->getOutgoing( 'a' ) );
         $this->assertEquals( array( 'a' ), $automaton->getIncoming( 'c' ) );
     }
@@ -135,7 +152,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
         $automaton->addEdge( 'a', 'c' );
         $automaton->removeEdge( 'a', 'b' );
 
-        $this->assertEquals( array( 'a', 'b', 'c' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'a', 'b', 'c' ), array_values( $automaton->getNodes() ) );
         $this->assertEquals( array( 'c' ), $automaton->getOutgoing( 'a' ) );
         $this->assertEquals( array( 'a' ), $automaton->getIncoming( 'c' ) );
     }
@@ -154,6 +171,40 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
         $automaton->addEdge( 'a', 'b' );
 
         $this->assertFalse( $automaton->removeEdge( 'unknown', 'b' ) );
+    }
+
+    public function testRemoveNodeObject()
+    {
+        $a = new slSchemaAutomatonNode( 'a', 'a' );
+        $b = new slSchemaAutomatonNode( 'b', 'b' );
+        $c = new slSchemaAutomatonNode( 'c', 'c' );
+
+        $automaton = $this->getAutomaton();
+        $automaton->addEdge( $a, $b );
+        $automaton->addEdge( $a, $b );
+        $automaton->addEdge( $a, $c );
+        $automaton->addEdge( $b, $c );
+        $automaton->removeNode( $b );
+
+        $this->assertEquals( array( $a, $c ), array_values( $automaton->getNodes() ) );
+        $this->assertEquals( array( (string) $c ), $automaton->getOutgoing( $a ) );
+        $this->assertEquals( array( (string) $a ), $automaton->getIncoming( $c ) );
+    }
+
+    public function testRemoveEdgeObject()
+    {
+        $a = new slSchemaAutomatonNode( 'a', 'a' );
+        $b = new slSchemaAutomatonNode( 'b', 'b' );
+        $c = new slSchemaAutomatonNode( 'c', 'c' );
+
+        $automaton = $this->getAutomaton();
+        $automaton->addEdge( $a, $b );
+        $automaton->addEdge( $a, $c );
+        $automaton->removeEdge( $a, $b );
+
+        $this->assertEquals( array( $a, $b, $c ), array_values( $automaton->getNodes() ) );
+        $this->assertEquals( array( (string) $c ), $automaton->getOutgoing( $a ) );
+        $this->assertEquals( array( (string) $a ), $automaton->getIncoming( $c ) );
     }
 
     public function testTransitiveClosure1()
@@ -299,7 +350,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
         $a->merge( $b );
 
-        $this->assertEquals( array( 'a', 'b', 'c', 'd' ), $a->getNodes() );
+        $this->assertEquals( array( 'a', 'b', 'c', 'd' ), array_values( $a->getNodes() ) );
         $this->assertEquals( array( 'b' ), $a->getOutgoing( 'a' ) );
         $this->assertEquals( array( 'd' ), $a->getOutgoing( 'c' ) );
     }
@@ -314,7 +365,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
 
         $a->merge( $b );
 
-        $this->assertEquals( array( 'a', 'b', 'c' ), $a->getNodes() );
+        $this->assertEquals( array( 'a', 'b', 'c' ), array_values( $a->getNodes() ) );
         $this->assertEquals( array( 'b', 'c' ), $a->getOutgoing( 'a' ) );
     }
 
@@ -324,7 +375,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
         $automaton->addEdge( 'a', 'b' );
         $automaton->renameNode( 'c', 'b' );
 
-        $this->assertEquals( array( 'a', 'b' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'a', 'b' ), array_values( $automaton->getNodes() ) );
         $this->assertEquals( array( 'b' ), $automaton->getOutgoing( 'a' ) );
     }
 
@@ -334,7 +385,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
         $automaton->addEdge( 'a', 'b' );
         $automaton->renameNode( 'b', 'c' );
 
-        $this->assertEquals( array( 'a', 'c' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'a', 'c' ), array_values( $automaton->getNodes() ) );
         $this->assertEquals( array( 'c' ), $automaton->getOutgoing( 'a' ) );
     }
 
@@ -345,7 +396,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
         $automaton->addEdge( 'c', 'd' );
         $automaton->renameNode( 'c', 'a' );
 
-        $this->assertEquals( array( 'a', 'b', 'd' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'a', 'b', 'd' ), array_values( $automaton->getNodes() ) );
         $this->assertEquals( array( 'b', 'd' ), $automaton->getOutgoing( 'a' ) );
     }
 
@@ -356,7 +407,7 @@ class slMainAutomatonTests extends PHPUnit_Framework_TestCase
         $automaton->addEdge( 'b', 'c' );
         $automaton->renameNode( 'c', 'b' );
 
-        $this->assertEquals( array( 'a', 'b' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'a', 'b' ), array_values( $automaton->getNodes() ) );
         $this->assertEquals( array( 'a', 'b' ), $automaton->getIncoming( 'b' ) );
     }
 }

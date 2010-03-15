@@ -51,21 +51,21 @@ class slMainSingleOccurenceAutomatonTests extends slMainAutomatonTests
     {
         $automaton = $this->getAutomaton();
         $automaton->learn( array() );
-        $this->assertEquals( array(), $automaton->getNodes() );
+        $this->assertEquals( array(), array_values( $automaton->getNodes() ) );
     }
 
     public function testLearnSingle()
     {
         $automaton = $this->getAutomaton();
         $automaton->learn( array( 'a' ) );
-        $this->assertEquals( array( 'a' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'a' ), array_values( $automaton->getNodes() ) );
     }
 
     public function testLearnTriple()
     {
         $automaton = $this->getAutomaton();
         $automaton->learn( array( 'a', 'b', 'c' ) );
-        $this->assertEquals( array( 'a', 'b', 'c' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'a', 'b', 'c' ), array_values( $automaton->getNodes() ) );
         $this->assertEquals( array( 'b' ), $automaton->getOutgoing( 'a' ) );
         $this->assertEquals( array( 'c' ), $automaton->getOutgoing( 'b' ) );
         $this->assertEquals( array(), $automaton->getOutgoing( 'c' ) );
@@ -76,7 +76,7 @@ class slMainSingleOccurenceAutomatonTests extends slMainAutomatonTests
         $automaton = $this->getAutomaton();
         $automaton->learn( array( 'a', 'b' ) );
         $automaton->learn( array( 'b', 'c' ) );
-        $this->assertEquals( array( 'a', 'b', 'c' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'a', 'b', 'c' ), array_values( $automaton->getNodes() ) );
         $this->assertEquals( array( 'b' ), $automaton->getOutgoing( 'a' ) );
         $this->assertEquals( array( 'c' ), $automaton->getOutgoing( 'b' ) );
         $this->assertEquals( array(), $automaton->getOutgoing( 'c' ) );
@@ -88,7 +88,7 @@ class slMainSingleOccurenceAutomatonTests extends slMainAutomatonTests
         $automaton->learn( array( 'a', 'b' ) );
         $automaton->learn( array( 'b', 'c' ) );
         $automaton->learn( array( 'c', 'a' ) );
-        $this->assertEquals( array( 'a', 'b', 'c' ), $automaton->getNodes() );
+        $this->assertEquals( array( 'a', 'b', 'c' ), array_values( $automaton->getNodes() ) );
         $this->assertEquals( array( 'b' ), $automaton->getOutgoing( 'a' ) );
         $this->assertEquals( array( 'c' ), $automaton->getOutgoing( 'b' ) );
         $this->assertEquals( array( 'a' ), $automaton->getOutgoing( 'c' ) );

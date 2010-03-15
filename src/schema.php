@@ -198,7 +198,7 @@ abstract class slSchema
         $elements = array();
         foreach ( $children as $child )
         {
-            $elements[] = $this->inferenceType( $child );
+            $elements[] = new slSchemaAutomatonNode( $element->name, $this->inferenceType( $child ) );
         }
 
         $element->type->automaton->learn( $elements );

@@ -49,6 +49,14 @@ class slCountingSingleOccurenceAutomaton extends slWeightedSingleOccurenceAutoma
     {
         parent::learn( $tokens );
 
+        $tokens = array_map(
+            function ( $token )
+            {
+                return (string) $token;
+            },
+            $tokens
+        );
+
         $signature = $this->getTokenSignature( $tokens );
 
         $this->occurences[$signature] = $this->mergeCounts(
