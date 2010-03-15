@@ -60,6 +60,17 @@ class slRegularExpressionElement extends slRegularExpression
     }
 
     /**
+     * Set regular expression element content
+     * 
+     * @param mixed $content
+     * @return void
+     */
+    public function setContent( $content )
+    {
+        $this->content = $content;
+    }
+
+    /**
      * Return string representation of content.
      * 
      * @return string

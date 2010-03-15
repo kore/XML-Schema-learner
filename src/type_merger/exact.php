@@ -94,18 +94,53 @@ class slExactTypeMerger extends slTypeMerger
      */
     protected function equals( slSchemaElement $a, slSchemaElement $b )
     {
-        if ( ( $nodes = $a->type->automaton->getNodes() ) !== $b->type->automaton->getNodes() )
+        if ( !$this->equalsNodes( $a->type->automaton, $b->type->automaton ) )
         {
             return false;
         }
 
-        foreach ( $nodes as $node )
+        foreach ( $a->type->automaton->getNodes() as $node )
         {
             if ( ( $a->type->automaton->getOutgoing( $node ) !== $b->type->automaton->getOutgoing( $node ) ) ||
                  ( $a->type->automaton->getIncoming( $node ) !== $b->type->automaton->getIncoming( $node ) ) )
             {
                 return false;
             }
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if the nodes in the specified automatons are equals
+     * 
+     * @param slAutomaton $a 
+     * @param slAutomaton $b 
+     * @return bool
+     */
+    protected function equalsNodes( slAutomaton $a, slAutomaton $b )
+    {
+        $aNodes = array_values( $a->getNodes() );
+        $bNodes = array_values( $b->getNodes() );
+
+        if ( count( $aNodes ) !== count( $bNodes ) )
+        {
+            return false;
+        }
+
+        if ( count( $aNodes ) === 0 )
+        {
+            return true;
+        }
+
+        foreach ( $aNodes as $node )
+        {
+            if ( ( $index = array_search( $node, $bNodes ) ) === false )
+            {
+                return false;
+            }
+
+            unset( $bNodes[$index] );
         }
 
         return true;

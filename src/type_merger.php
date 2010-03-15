@@ -35,6 +35,13 @@
 abstract class slTypeMerger
 {
     /**
+     * Surjective mapping of merged types.
+     * 
+     * @var array
+     */
+    protected $typeMapping = array();
+
+    /**
      * Group equivalent elements
      *
      * Receives an array with elements => automaton pairs. Returns an identical 
@@ -66,8 +73,22 @@ abstract class slTypeMerger
         $mergedType = $elements[$a]->type;
         $mergedType->merge( $elements[$b]->type );
 
+        $this->typeMapping[$b] = $a;
+
         $elements[$a]->type = $mergedType;
         $elements[$b]->type = $mergedType;
+    }
+
+    /**
+     * Return type mapping
+     *
+     * Returns a surjective mapping of types, which has been merged.
+     * 
+     * @return array
+     */
+    public function getTypeMapping()
+    {
+        return $this->typeMapping;
     }
 }
 

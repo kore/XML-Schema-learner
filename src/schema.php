@@ -144,6 +144,7 @@ abstract class slSchema
     public function getTypes()
     {
         $this->elements = $this->typeMerger->groupTypes( $this->elements );
+        $typeMapping    = $this->typeMerger->getTypeMapping();
 
         $optimizer = new slRegularExpressionOptimizer();
 
@@ -161,10 +162,33 @@ abstract class slSchema
 
             // Optimize regular expression
             $optimizer->optimize( $regularExpression );
-            $element->type->regularExpression = $regularExpression;
+            $element->type->regularExpression = $this->applyTypeMapping( $regularExpression, $typeMapping );
         };
 
         return $this->elements;
+    }
+
+    protected function applyTypeMapping( slRegularExpression $regularExpression, array $typeMapping )
+    {
+        if ( $regularExpression instanceof slRegularExpressionElement )
+        {
+            $content = $regularExpression->getContent();
+            if ( isset( $typeMapping[$content->type] ) )
+            {
+                $content->type = $typeMapping[$content->type];
+                $regularExpression->setContent( $content );
+            }
+        }
+
+        if ( $regularExpression instanceof slRegularExpressionContainer )
+        {
+            foreach ( $regularExpression->getChildren() as $child )
+            {
+                $child = $this->applyTypeMapping( $child, $typeMapping );
+            }
+        }
+
+        return $regularExpression;
     }
 
     /**

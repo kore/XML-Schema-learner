@@ -95,7 +95,7 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
     {
         $xsd = new slXsdSchema();
         $xsd->setTypeInferencer( new slFullPathTypeInferencer() );
-        $xsd->setTypeMerger( new slNodeBasedTypeMerger() );
+        $xsd->setTypeMerger( new slExactTypeMerger() );
         $xsd->learnFile( __DIR__ . '/data/type_merging.xml' );
 
         $expressions = array();
@@ -107,6 +107,18 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             array(
+                'root' => new slRegularExpressionSequence(
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'alpha', 'root/alpha' ) ),
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'beta', 'root/beta' ) ),
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'gamma', 'root/gamma' ) )
+                ),
+                'root/alpha' => new slRegularExpressionEmpty(),
+                'root/beta' => new slRegularExpressionSequence(
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'alpha', 'root/alpha' ) ),
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'gamma', 'root/beta/gamma' ) )
+                ),
+                'root/beta/gamma' => new slRegularExpressionElement( new slSchemaAutomatonNode( 'delta', 'root/alpha' ) ),
+                'root/gamma' => new slRegularExpressionElement( new slSchemaAutomatonNode( 'alpha', 'root/alpha' ) ),
             ),
             $expressions
         );
