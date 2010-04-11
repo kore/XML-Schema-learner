@@ -203,6 +203,7 @@ class slSchemaXmlSchemaVisitor extends slSchemaVisitor
     {
         switch ( $type = $typeInferencer->inferenceType() )
         {
+            case 'empty':
             case 'PCDATA':
                 return 'string';
 

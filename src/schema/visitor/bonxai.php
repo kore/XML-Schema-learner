@@ -244,6 +244,7 @@ class slSchemaBonxaiVisitor extends slSchemaVisitor
         switch ( $type = $typeInferencer->inferenceType() )
         {
             case 'PCDATA':
+            case 'empty':
                 return 'string';
 
             default:
