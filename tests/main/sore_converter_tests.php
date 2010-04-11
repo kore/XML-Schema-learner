@@ -208,6 +208,26 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testCrossLinkedCycles()
+    {
+        $automaton = new slSingleOccurenceAutomaton();
+        $automaton->learn( array( 'a', 'c' ) );
+        $automaton->learn( array( 'b', 'c' ) );
+        $automaton->learn( array( 'c', 'c' ) );
+        $automaton->learn( array( 'c', 'd' ) );
+        $automaton->learn( array( 'd', 'c' ) );
+        $automaton->learn( array( 'c', 'e' ) );
+        $automaton->learn( array( 'e', 'c' ) );
+        $automaton->learn( array( 'e', 'e' ) );
+
+        $converter = new slSoreConverter();
+        $regexp    = $converter->convertAutomaton( $automaton );
+        $this->assertEquals(
+            false,
+            $regexp
+        );
+    }
+
     public function testFalseOnFail()
     {
         $automaton = new slSingleOccurenceAutomaton();

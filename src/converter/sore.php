@@ -105,7 +105,7 @@ class slSoreConverter extends slConverter
         // @codeCoverageIgnoreStart
         // This is pure debugging code, which is not required to be covered by 
         // unit tests.
-        return;
+        //return;
 
         $fileName         = sprintf( 'debug/%04d_%s.dot', $counter, $label );
         $regExpVisitor    = new slRegularExpressionStringVisitor();
@@ -239,9 +239,10 @@ class slSoreConverter extends slConverter
             // Collect nodes
             $nodes = array( $nodeNames[$i] );
             while ( ( count( $outgoing ) === 1 ) &&
-                    ( count( $automaton->getIncoming( $outgoing[0] ) ) === 1 ) )
+                    ( count( $incoming = $automaton->getIncoming( $outgoing[0] ) ) === 1 ) )
             {
-                if ( in_array( $outgoing[0], $nodes, true ) )
+                if ( in_array( $outgoing[0], $nodes, true ) ||
+                     in_array( $incoming[0], $nodes, true ) )
                 {
                     // Do not find (indirect) self-loops here
                     continue 2;
