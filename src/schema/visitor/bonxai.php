@@ -29,7 +29,7 @@
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-class slSchemaUpslVisitor extends slSchemaVisitor
+class slSchemaBonxaiVisitor extends slSchemaVisitor
 {
     /**
      * Types, defined in processed schema, to return references to the types 
@@ -171,7 +171,7 @@ class slSchemaUpslVisitor extends slSchemaVisitor
 
         $typeDef .= $this->visitAttributeList( $element );
 
-        $regExpVisitor = new slRegularExpressionUpslVisitor( $this, $root->ownerDocument );
+        $regExpVisitor = new slRegularExpressionBonxaiVisitor( $this, $root->ownerDocument );
         $typeDef .= "\t\t" . $regExpVisitor->visit( $element->type->regularExpression ) . "\n";
 
         return $typeDef . "\t}\n\n";
@@ -222,7 +222,7 @@ class slSchemaUpslVisitor extends slSchemaVisitor
         {
             $attributeList .= sprintf( "\t\tattribute %s { %s }%s,\n",
                 $attribute->name,
-                $this->getUpslSimpleType( $attribute->simpleTypeInferencer ),
+                $this->getBonxaiSimpleType( $attribute->simpleTypeInferencer ),
                 $attribute->optional ? '?' : ''
             );
         }
@@ -239,7 +239,7 @@ class slSchemaUpslVisitor extends slSchemaVisitor
      * @param slSimpleTypeInferencer $typeInferencer 
      * @return string
      */
-    public function getUpslSimpleType( slSimpleTypeInferencer $typeInferencer )
+    public function getBonxaiSimpleType( slSimpleTypeInferencer $typeInferencer )
     {
         switch ( $type = $typeInferencer->inferenceType() )
         {

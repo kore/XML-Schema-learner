@@ -65,17 +65,17 @@ require __DIR__ . '/regular_expression/visitor.php';
 require __DIR__ . '/regular_expression/visitor/string.php';
 require __DIR__ . '/regular_expression/visitor/dtd.php';
 require __DIR__ . '/regular_expression/visitor/xml_schema.php';
-require __DIR__ . '/regular_expression/visitor/upsl.php';
+require __DIR__ . '/regular_expression/visitor/bonxai.php';
 
 require __DIR__ . '/schema.php';
 require __DIR__ . '/schema/automaton_node.php';
 require __DIR__ . '/schema/dtd.php';
 require __DIR__ . '/schema/xsd.php';
-require __DIR__ . '/schema/upsl.php';
+require __DIR__ . '/schema/bonxai.php';
 require __DIR__ . '/schema/visitor.php';
 require __DIR__ . '/schema/visitor/dtd.php';
 require __DIR__ . '/schema/visitor/xml_schema.php';
-require __DIR__ . '/schema/visitor/upsl.php';
+require __DIR__ . '/schema/visitor/bonxai.php';
 
 require __DIR__ . '/schema/type.php';
 require __DIR__ . '/schema/element.php';

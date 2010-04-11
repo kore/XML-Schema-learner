@@ -70,16 +70,16 @@ if ( ( $options['help'] !== null ) ||
 Schema Learner
 by Kore Nordmann
 
-Usage: {$argv[0]} [-t <type>] (-r <root>)+ <xml-files>
+Usage: {$argv[0]} [-t <type>] <xml-files>
 
 General options:
 
 -t / --type     Type of the schema to generate. Currently implemented schema 
-                languages: dtd, xsd
+                languages: dtd, xsd, bonxai
 
 -h / --help     Display this help output
 
-XML Schema specific options:
+XML Schema / BonXai specific options:
 
 -l / --locality Locality of the types when inferencing XML Schema schemata.
                 Valid values are integer numbers, or "n".
@@ -106,9 +106,9 @@ switch ( $options['type'] )
         $visitor = new slSchemaDtdVisitor();
         break;
 
-    case 'upsl':
-        $schema = new slUpslSchema();
-        $visitor = new slSchemaUpslVisitor();
+    case 'bonxai':
+        $schema = new slBonxaiSchema();
+        $visitor = new slSchemaBonxaiVisitor();
         break;
 
     case 'xsd':

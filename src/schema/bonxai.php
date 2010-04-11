@@ -23,16 +23,16 @@
  */
 
 /**
- * Class representing a Upsl schema.
+ * Class representing a Bonxai schema.
  *
- * Upsl schemas can only learn each element name as a single type, so that this 
+ * Bonxai schemas can only learn each element name as a single type, so that this 
  * schema uses the simple element name based type inferencer.
  *
  * @package Core
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-class slUpslSchema extends slXsdSchema
+class slBonxaiSchema extends slXsdSchema
 {
 }
 
