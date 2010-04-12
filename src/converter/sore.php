@@ -242,7 +242,7 @@ class slSoreConverter extends slConverter
                     ( count( $incoming = $automaton->getIncoming( $outgoing[0] ) ) === 1 ) )
             {
                 if ( in_array( $outgoing[0], $nodes, true ) ||
-                     in_array( $incoming[0], $nodes, true ) )
+                     count( array_intersect( $nodes, $automaton->getOutgoing( $outgoing[0] ) ) ) )
                 {
                     // Do not find (indirect) self-loops here
                     continue 2;
