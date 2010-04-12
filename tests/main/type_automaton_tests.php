@@ -116,5 +116,38 @@ class slMainTypeAutomatonTests extends slMainAutomatonTests
             $automaton->getAncestorPatterns()
         );
     }
+
+    public function testGetAncestorPatterns3()
+    {
+        $automaton = $this->getAutomaton();
+
+        $automaton->addEdge( '_start', 'type_1', 'a' );
+        $automaton->addEdge( '_start', 'type_2', 'b' );
+        $automaton->addEdge( 'type_1', 'type_3', 'c' );
+        $automaton->addEdge( 'type_2', 'type_4', 'c' );
+        $automaton->addEdge( 'type_3', 'type_5', 'd' );
+        $automaton->addEdge( 'type_4', 'type_5', 'd' );
+
+        $this->assertSame(
+            array(
+                'type_1' => array(
+                    array( 'a' ),
+                ),
+                'type_2' => array(
+                    array( 'b' ),
+                ),
+                'type_3' => array(
+                    array( 'a', 'c' ),
+                ),
+                'type_4' => array(
+                    array( 'b', 'c' ),
+                ),
+                'type_5' => array(
+                    array( 'd' ),
+                ),
+            ),
+            $automaton->getAncestorPatterns()
+        );
+    }
 }
 
