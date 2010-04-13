@@ -53,6 +53,14 @@ class slVisitorSchemaDtdTests extends PHPUnit_Framework_TestCase
                 ),
                 'simple_2'
             ),
+            array(
+                array(
+                    __DIR__ . '/../main/data/simple.xml',
+                    __DIR__ . '/../main/data/simple_2.xml',
+                    __DIR__ . '/../main/data/simple_4.xml',
+                ),
+                'simple_3'
+            ),
         );
     }
 

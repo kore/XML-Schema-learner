@@ -1,0 +1,6 @@
+<!ELEMENT alpha EMPTY>
+<!ELEMENT beta (#PCDATA)>
+<!ELEMENT root ( #PCDATA | alpha | optional | beta )*>
+<!ELEMENT optional EMPTY>
+
+<!ATTLIST alpha attr CDATA #IMPLIED>

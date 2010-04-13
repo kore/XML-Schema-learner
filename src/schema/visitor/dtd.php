@@ -129,7 +129,13 @@ class slSchemaDtdVisitor extends slSchemaVisitor
             default:
                 return sprintf( "<!ELEMENT %s ( #PCDATA | %s )*>\n",
                     $element->name,
-                    implode( ' | ', $this->extractTypes( $element->type->regularExpression ) )
+                    implode( ' | ', array_map(
+                        function( $type )
+                        {
+                            return $type->name;
+                        },
+                        $this->extractTypes( $element->type->regularExpression ) )
+                    )
                 );
         }
     }
