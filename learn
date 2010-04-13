@@ -140,6 +140,7 @@ if ( !isset( $typeMerger[$options['merger']] ) )
 $schema->setTypeMerger( $typeMerger[$options['merger']] );
 
 // Learn from files
+libxml_use_internal_errors( true );
 $files = array_slice( $argv, 1 );
 foreach ( $files as $file )
 {
