@@ -168,6 +168,16 @@ abstract class slSchema
         return $this->elements;
     }
 
+    /**
+     * Apply type mapping
+     *
+     * Recursively replace types with replaced types in regular expression 
+     * structures.
+     * 
+     * @param slRegularExpression $regularExpression 
+     * @param array $typeMapping 
+     * @return slRegularExpression
+     */
     protected function applyTypeMapping( slRegularExpression $regularExpression, array $typeMapping )
     {
         if ( $regularExpression instanceof slRegularExpressionElement )
