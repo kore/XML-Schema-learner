@@ -153,19 +153,6 @@ abstract class slSchema
         {
             $regularExpression = $this->convertRegularExpression( $element->type->automaton );
 
-            // Optimize regular expression
-            $optimizer->optimize( $regularExpression );
-
-            // Remove first and last element from the outer sequence, since 
-            // those are the start and end markers.
-            if ( !$regularExpression instanceof slRegularExpressionEmpty )
-            {
-                $children = $regularExpression->getChildren();
-                array_pop( $children );
-                array_shift( $children );
-                $regularExpression->setChildren( array_values( $children ) );
-            }
-
             // If the element has been empty at least once, make the whole 
             // subpattern optional
             if ( $element->type->empty )
@@ -189,6 +176,9 @@ abstract class slSchema
      *
      * Recursively replace types with replaced types in regular expression 
      * structures.
+     *
+     * Also filters out the start end end nodes used to wrap sequences, which 
+     * do not have any type association.
      * 
      * @param slRegularExpression $regularExpression 
      * @param array $typeMapping 
@@ -208,8 +198,16 @@ abstract class slSchema
 
         if ( $regularExpression instanceof slRegularExpressionContainer )
         {
-            foreach ( $regularExpression->getChildren() as $child )
+            foreach ( $regularExpression->getChildren() as $nr => $child )
             {
+                if ( ( $child instanceof slRegularExpressionElement ) &&
+                     ( ( $child->getContent() === 0 ) ||
+                       ( $child->getContent() === 1 ) ) )
+                {
+                    unset( $regularExpression[$nr] );
+                    continue;
+                }
+
                 $child = $this->applyTypeMapping( $child, $typeMapping );
             }
         }
