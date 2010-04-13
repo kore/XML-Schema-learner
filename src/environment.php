@@ -92,6 +92,7 @@ require __DIR__ . '/schema/type/attribute_comparator.php';
 require __DIR__ . '/schema/type/attribute_comparator/same.php';
 require __DIR__ . '/schema/type/attribute_comparator/equals.php';
 require __DIR__ . '/schema/type/attribute_comparator/strict.php';
+require __DIR__ . '/schema/type/attribute_comparator/merge.php';
 
 require __DIR__ . '/schema/type/pattern_comparator.php';
 require __DIR__ . '/schema/type/pattern_comparator/equal.php';
