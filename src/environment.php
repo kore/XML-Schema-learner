@@ -91,6 +91,11 @@ require __DIR__ . '/type_merger/node_based.php';
 require __DIR__ . '/type_merger/attribute_node_based.php';
 require __DIR__ . '/type_merger/magic.php';
 
+require __DIR__ . '/schema/type/attribute_comparator.php';
+require __DIR__ . '/schema/type/attribute_comparator/same.php';
+require __DIR__ . '/schema/type/attribute_comparator/equals.php';
+require __DIR__ . '/schema/type/attribute_comparator/strict.php';
+
 require __DIR__ . '/type_inferencer.php';
 require __DIR__ . '/type_inferencer/name_based.php';
 require __DIR__ . '/type_inferencer/full_path.php';
