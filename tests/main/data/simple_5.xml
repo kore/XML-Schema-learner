@@ -1,0 +1,5 @@
+<root>
+    <alpha attr="foo">text</alpha>
+    <optional/>
+    <beta>text</beta>
+</root>
