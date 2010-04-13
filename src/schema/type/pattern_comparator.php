@@ -23,38 +23,27 @@
  */
 
 /**
- * "Magic" type merger.
+ * Pattern comparator
  *
- * Type merger, which merges all types, which contain the same child nodes in 
- * the child pattern and use either the same name, or use the same attributes.
+ * Abstract base class for implementations for comparing the child patterns / 
+ * element patterns of an element / type.
  *
  * @package Core
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-class slMagicTypeMerger extends slExactTypeMerger
+abstract class slSchemaTypePatternComparator
 {
     /**
-     * Compares two automatons
+     * Compare attributes
      *
-     * Compares two automatons and returns true, if they are equal by the 
-     * implemented comparision metric. Returns true, if equal, and false 
-     * otherwise.
+     * Returns true, if the attributes are the same, by definition of the used 
+     * comparision algorithm.
      * 
-     * @param slSchemaElement $a 
-     * @param slSchemaElement $b 
+     * @param slSchemaType $a 
+     * @param slSchemaType $b 
      * @return bool
      */
-    protected function equals( slSchemaElement $a, slSchemaElement $b )
-    {
-        if ( ( ( $nodes = $a->type->automaton->getNodes() ) === $b->type->automaton->getNodes() ) &&
-             ( ( array_keys( $a->type->attributes ) === array_keys( $b->type->attributes ) ) ||
-               ( $a->name === $b->name ) ) )
-        {
-            return true;
-        }
-
-        return false;
-    }
+    abstract public function compare( slSchemaType $a, slSchemaType $b );
 }
 

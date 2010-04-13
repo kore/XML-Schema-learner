@@ -32,8 +32,38 @@
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-class slExactTypeMerger extends slTypeMerger
+class slConfigurableTypeMerger extends slTypeMerger
 {
+    /**
+     * Comparator used to compare the pattern defined in a type.
+     * 
+     * @var slSchemaTypePatternComparator
+     */
+    protected $patternComparator;
+
+    /**
+     * Comparator used to compare the attributes defined in a type.
+     * 
+     * @var slSchemaTypeAttributeComparator
+     */
+    protected $attributeComparator;
+
+    /**
+     * Construct configurable type merger from comparators
+     *
+     * Construct the type merger from an instance of a pattern comparator and 
+     * an attribute comparator.
+     * 
+     * @param slSchemaTypePatternComparator $patternComparator 
+     * @param slSchemaTypeAttributeComparator $attributeComparator 
+     * @return void
+     */
+    public function __construct( slSchemaTypePatternComparator $patternComparator, slSchemaTypeAttributeComparator $attributeComparator )
+    {
+        $this->patternComparator   = $patternComparator;
+        $this->attributeComparator = $attributeComparator;
+    }
+
     /**
      * Group equivalent elements
      *
@@ -67,7 +97,8 @@ class slExactTypeMerger extends slTypeMerger
                         continue;
                     }
 
-                    if ( $this->equals( $elementI, $elementJ ) )
+                    if ( $this->patternComparator->compare( $elementI->type, $elementJ->type ) &&
+                         $this->attributeComparator->compare( $elementI->type, $elementJ->type ) )
                     {
                         $this->mergeTypes( $elements, $typeIndex[$i], $typeIndex[$j] );
                         $changed = true;
@@ -79,71 +110,6 @@ class slExactTypeMerger extends slTypeMerger
         } while ( $changed );
 
         return $elements;
-    }
-
-    /**
-     * Compares two automatons
-     *
-     * Compares two automatons and returns true, if they are equal by the 
-     * implemented comparision metric. Returns true, if equal, and false 
-     * otherwise.
-     * 
-     * @param slSchemaElement $a 
-     * @param slSchemaElement $b 
-     * @return bool
-     */
-    protected function equals( slSchemaElement $a, slSchemaElement $b )
-    {
-        if ( !$this->equalsNodes( $a->type->automaton, $b->type->automaton ) )
-        {
-            return false;
-        }
-
-        foreach ( $a->type->automaton->getNodes() as $node )
-        {
-            if ( ( $a->type->automaton->getOutgoing( $node ) !== $b->type->automaton->getOutgoing( $node ) ) ||
-                 ( $a->type->automaton->getIncoming( $node ) !== $b->type->automaton->getIncoming( $node ) ) )
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Check if the nodes in the specified automatons are equals
-     * 
-     * @param slAutomaton $a 
-     * @param slAutomaton $b 
-     * @return bool
-     */
-    protected function equalsNodes( slAutomaton $a, slAutomaton $b )
-    {
-        $aNodes = array_values( $a->getNodes() );
-        $bNodes = array_values( $b->getNodes() );
-
-        if ( count( $aNodes ) !== count( $bNodes ) )
-        {
-            return false;
-        }
-
-        if ( count( $aNodes ) === 0 )
-        {
-            return true;
-        }
-
-        foreach ( $aNodes as $node )
-        {
-            if ( ( $index = array_search( $node, $bNodes ) ) === false )
-            {
-                return false;
-            }
-
-            unset( $bNodes[$index] );
-        }
-
-        return true;
     }
 }
 

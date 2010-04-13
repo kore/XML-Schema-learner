@@ -95,7 +95,12 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
     {
         $xsd = new slXsdSchema();
         $xsd->setTypeInferencer( new slFullPathTypeInferencer() );
-        $xsd->setTypeMerger( new slExactTypeMerger() );
+        $xsd->setTypeMerger(
+            new slConfigurableTypeMerger(
+                new slSchemaTypeEqualPatternComparator(),
+                new slSchemaTypeStrictAttributeComparator()
+            )
+        );
         $xsd->learnFile( __DIR__ . '/data/type_merging.xml' );
 
         $expressions = array();

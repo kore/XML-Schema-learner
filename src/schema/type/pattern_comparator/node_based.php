@@ -23,32 +23,30 @@
  */
 
 /**
- * Type merger.
+ * Pattern comparator
  *
- * Type merger, which decides based on the used children elements and 
- * attributes, if two types are mergeable.
+ * Abstract base class for implementations for comparing the child patterns / 
+ * element patterns of an element / type.
  *
  * @package Core
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-class slAttributeNodeBasedTypeMerger extends slExactTypeMerger
+class slSchemaTypeNodeBasedPatternComparator extends slSchemaTypePatternComparator
 {
     /**
-     * Compares two automatons
+     * Compare attributes
      *
-     * Compares two automatons and returns true, if they are equal by the 
-     * implemented comparision metric. Returns true, if equal, and false 
-     * otherwise.
+     * Returns true, if the attributes are the same, by definition of the used 
+     * comparision algorithm.
      * 
-     * @param slSchemaElement $a 
-     * @param slSchemaElement $b 
+     * @param slSchemaType $a 
+     * @param slSchemaType $b 
      * @return bool
      */
-    protected function equals( slSchemaElement $a, slSchemaElement $b )
+    public function compare( slSchemaType $a, slSchemaType $b )
     {
-        if ( ( ( $nodes = $a->type->automaton->getNodes() ) !== $b->type->automaton->getNodes() ) ||
-             ( array_keys( $a->type->attributes ) !== array_keys( $b->type->attributes ) ) )
+        if ( ( $a->automaton->getNodes() ) !== $b->automaton->getNodes() )
         {
             return false;
         }

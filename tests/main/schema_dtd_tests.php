@@ -69,7 +69,12 @@ class slMainSchemaDtdTests extends PHPUnit_Framework_TestCase
 
         try
         {
-            $dtd->setTypeMerger( new slExactTypeMerger() );
+            $dtd->setTypeMerger(
+                new slConfigurableTypeMerger(
+                    new slSchemaTypeEqualPatternComparator(),
+                    new slSchemaTypeStrictAttributeComparator()
+                )
+            );
             $this->fail( 'Expected exception.' );
         } catch ( Exception $e )
         { /* Expected */ }
