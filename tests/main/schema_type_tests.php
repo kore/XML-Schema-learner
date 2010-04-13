@@ -131,5 +131,122 @@ class slMainSchemaTypeTests extends PHPUnit_Framework_TestCase
      
         $this->assertTrue( $type->attributes['att2']->optional );
     }
+
+    public function testMergeTypeAttributes1()
+    {
+        $t1 = new slSchemaType( 't1' );
+        $t1->learnAttributes( array(
+            'att1' => '23',
+            'att2' => '23',
+        ) );
+
+        $t2 = new slSchemaType( 't2' );
+        $t2->learnAttributes( array(
+            'att1' => '23',
+            'att2' => '23',
+        ) );
+     
+        $t1->merge( $t2 );
+        $this->assertSame( array( 'att1', 'att2' ), array_keys( $t1->attributes ) );
+        $this->assertFalse( $t1->attributes['att1']->optional );
+        $this->assertFalse( $t1->attributes['att2']->optional );
+    }
+
+    public function testMergeTypeAttributes2()
+    {
+        $t1 = new slSchemaType( 't1' );
+        $t1->learnAttributes( array(
+            'att1' => '23',
+            'att2' => '23',
+        ) );
+
+        $t2 = new slSchemaType( 't2' );
+        $t2->learnAttributes( array(
+        ) );
+     
+        $t1->merge( $t2 );
+        $this->assertSame( array( 'att1', 'att2' ), array_keys( $t1->attributes ) );
+        $this->assertTrue( $t1->attributes['att1']->optional );
+        $this->assertTrue( $t1->attributes['att2']->optional );
+    }
+
+    public function testMergeTypeAttributes3()
+    {
+        $t1 = new slSchemaType( 't1' );
+        $t1->learnAttributes( array(
+            'att1' => '23',
+        ) );
+
+        $t2 = new slSchemaType( 't2' );
+        $t2->learnAttributes( array(
+            'att2' => '23',
+        ) );
+     
+        $t1->merge( $t2 );
+        $this->assertSame( array( 'att1', 'att2' ), array_keys( $t1->attributes ) );
+        $this->assertTrue( $t1->attributes['att1']->optional );
+        $this->assertTrue( $t1->attributes['att2']->optional );
+    }
+
+    public function testMergeTypeAttributes4()
+    {
+        $t1 = new slSchemaType( 't1' );
+        $t1->learnAttributes( array(
+            'att1' => '23',
+            'att2' => '23',
+        ) );
+
+        $t2 = new slSchemaType( 't2' );
+        $t2->learnAttributes( array(
+            'att1' => '23',
+        ) );
+     
+        $t1->merge( $t2 );
+        $this->assertSame( array( 'att1', 'att2' ), array_keys( $t1->attributes ) );
+        $this->assertFalse( $t1->attributes['att1']->optional );
+        $this->assertTrue( $t1->attributes['att2']->optional );
+    }
+
+    public function testMergeTypeAttributes5()
+    {
+        $t1 = new slSchemaType( 't1' );
+        $t1->learnAttributes( array(
+            'att1' => '23',
+            'att2' => '23',
+        ) );
+        $t1->learnAttributes( array() );
+
+        $t2 = new slSchemaType( 't2' );
+        $t2->learnAttributes( array(
+            'att1' => '23',
+            'att2' => '23',
+        ) );
+     
+        $t1->merge( $t2 );
+        $this->assertSame( array( 'att1', 'att2' ), array_keys( $t1->attributes ) );
+        $this->assertTrue( $t1->attributes['att1']->optional );
+        $this->assertTrue( $t1->attributes['att2']->optional );
+    }
+
+    public function testMergeTypeAttributes6()
+    {
+        $t1 = new slSchemaType( 't1' );
+        $t1->learnAttributes( array(
+            'att1' => '23',
+            'att2' => '23',
+        ) );
+
+        $t2 = new slSchemaType( 't2' );
+        $t2->learnAttributes( array(
+            'att1' => '23',
+            'att2' => '23',
+        ) );
+        $t2->learnAttributes( array() );
+     
+        $t1->merge( $t2 );
+        $this->assertSame( array( 'att1', 'att2' ), array_keys( $t1->attributes ) );
+        $this->assertTrue( $t1->attributes['att1']->optional );
+        $this->assertTrue( $t1->attributes['att2']->optional );
+    }
 }
 

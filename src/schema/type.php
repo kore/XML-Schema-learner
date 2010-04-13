@@ -186,9 +186,24 @@ class slSchemaType
         // Merge attributes
         foreach ( $type->attributes as $name => $attribute )
         {
+            $optional = 
+                !isset( $this->attributes[$name] ) ||
+                $this->attributes[$name]->optional ||
+                $type->attributes[$name]->optional;
+
             if ( !isset( $this->attributes[$name] ) )
             {
                 $this->attributes[$name] = $attribute;
+            }
+            $this->attributes[$name]->optional = $optional;
+        }
+
+        // Make attributes optional, which do not not occur in the merged type
+        foreach ( $this->attributes as $name => $attribute )
+        {
+            if ( !isset( $type->attributes[$name] ) )
+            {
+                $this->attributes[$name]->optional = true;
             }
         }
 
