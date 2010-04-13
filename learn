@@ -145,13 +145,14 @@ elseif ( is_numeric( $options['locality'] ) )
 }
 
 // Set type merger based on configuration options.
-if ( !isset( $patternComparators[$options['ptrnComp']] ) )
+if ( isset( $patternComparators[$options['ptrnComp']] ) )
 {
-    $typeMerger = new slConfigurableTypeMerger(
-        $patternComparators[$options['ptrnComp']],
-        $attributeComparators[$options['attrComp']]
+    $schema->setTypeMerger(
+        new slConfigurableTypeMerger(
+            $patternComparators[$options['ptrnComp']],
+            $attributeComparators[$options['attrComp']]
+        )
     );
-    $schema->setTypeMerger( $typeMerger );
 }
 
 // Learn from files
