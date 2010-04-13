@@ -105,8 +105,10 @@ class slSchemaType
      */
     public function __construct( $name )
     {
-        $this->name      = $name;
-        $this->automaton = new slCountingSingleOccurenceAutomaton();
+        $this->name                    = $name;
+        $this->automaton               = new slCountingSingleOccurenceAutomaton();
+        $this->attributeTypeInferencer = new slPcdataSimpleTypeInferencer();
+        $this->simpleTypeInferencer    = new slPcdataSimpleTypeInferencer();
     }
 
     /**
