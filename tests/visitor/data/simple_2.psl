@@ -1,0 +1,20 @@
+namespace http://example.com/generated
+
+grammar {
+	//alpha = {
+		EMPTY
+	}
+
+	//beta = {
+		EMPTY
+	}
+
+	//root = {
+		( element alpha, element optional?, element beta )
+	}
+
+	//optional = {
+		EMPTY
+	}
+
+}
