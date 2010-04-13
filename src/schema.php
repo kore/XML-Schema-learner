@@ -66,6 +66,13 @@ abstract class slSchema
     protected $typeMerger;
 
     /**
+     * Flag indicating wheather the types already have been merged
+     * 
+     * @var bool
+     */
+    protected $typesMerged = false;
+
+    /**
      * Construct new schema class
      * 
      * @return void
@@ -143,6 +150,11 @@ abstract class slSchema
      */
     public function getTypes()
     {
+        if ( $this->typesMerged )
+        {
+            return $this->elements;
+        }
+
         $this->elements = $this->typeMerger->groupTypes( $this->elements );
         $typeMapping    = $this->typeMerger->getTypeMapping();
 
@@ -169,6 +181,7 @@ abstract class slSchema
             $element->type->regularExpression = $regularExpression;
         };
 
+        $this->typesMerged = true;
         return $this->elements;
     }
 
