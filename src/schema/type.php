@@ -65,7 +65,7 @@ class slSchemaType
      * 
      * @var array(slSchemaAttribute)
      */
-    protected $attributes = array();
+    protected $attributes = null;
 
     /**
      * The element occured without any child elements at elast once in the
@@ -134,8 +134,9 @@ class slSchemaType
     public function learnAttributes( array $attributes )
     {
         // First set of attributes, just add all
-        if ( !count( $this->attributes ) )
+        if ( $this->attributes === null )
         {
+            $this->attributes = array();
             foreach ( $attributes as $name => $value )
             {
                 $this->attributes[$name] = new slSchemaAttribute( $name, clone $this->attributeTypeInferencer );

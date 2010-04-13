@@ -117,6 +117,18 @@ class slMainSchemaTypeTests extends PHPUnit_Framework_TestCase
         $this->assertTrue( $type->attributes['att2']->optional );
     }
 
+    public function testLearnOptionalAttribute2()
+    {
+        $type = new slSchemaType( 't1' );
+
+        $type->learnAttributes( array() );
+        $type->learnAttributes( array(
+            'att1' => '23',
+        ) );
+     
+        $this->assertTrue( $type->attributes['att1']->optional );
+    }
+
     public function testLearnNewOptionalAttribute()
     {
         $type = new slSchemaType( 't1' );
