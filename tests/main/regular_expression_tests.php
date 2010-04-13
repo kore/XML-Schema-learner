@@ -189,5 +189,27 @@ class slMainRegularExpressionTests extends PHPUnit_Framework_TestCase
         } catch ( Exception $e )
         { /* Expected */ }
     }
+
+    public function testCreateElement()
+    {
+        $regexp = new slRegularExpressionElement( 'a' );
+
+        $this->assertSame( 'a', $regexp->getContent() );
+    }
+
+    public function testElementSetContent()
+    {
+        $regexp = new slRegularExpressionElement( 'a' );
+        $regexp->setContent( 'b' );
+
+        $this->assertSame( 'b', $regexp->getContent() );
+    }
+
+    public function testElementToString()
+    {
+        $regexp = new slRegularExpressionElement( 'a' );
+
+        $this->assertSame( 'a', (string) $regexp );
+    }
 }
 
