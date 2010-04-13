@@ -153,13 +153,6 @@ abstract class slSchema
         {
             $regularExpression = $this->convertRegularExpression( $element->type->automaton );
 
-            // If the element has been empty at least once, make the whole 
-            // subpattern optional
-            if ( $element->type->empty )
-            {
-                $regularExpression = new slRegularExpressionOptional( $regularExpression );
-            }
-
             // Optimize regular expression
             $optimizer->optimize( $regularExpression );
 
@@ -171,8 +164,17 @@ abstract class slSchema
                 array_pop( $children );
                 array_shift( $children );
                 $regularExpression->setChildren( array_values( $children ) );
-                $optimizer->optimize( $regularExpression );
             }
+
+            // If the element has been empty at least once, make the whole 
+            // subpattern optional
+            if ( $element->type->empty )
+            {
+                $regularExpression = new slRegularExpressionOptional( $regularExpression );
+            }
+
+            // Second optimizing step
+            $optimizer->optimize( $regularExpression );
 
             // Apply type mapping from type merger recursively to regular 
             // expression.
