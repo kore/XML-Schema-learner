@@ -8,13 +8,13 @@
          syntaxCheck="false">
 
     <filter>
-      <whitelist>
-        <directory suffix=".php">src</directory>
-        <!--
-        <exclude>
-          <directory suffix=".php">src/libraries</directory>
-        </exclude>
-        -->
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+            <!--
+            <exclude>
+              <directory suffix=".php">src/libraries</directory>
+            </exclude>
+            -->
       </whitelist>
     </filter>
 </phpunit>
