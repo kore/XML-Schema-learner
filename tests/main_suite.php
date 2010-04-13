@@ -48,6 +48,7 @@ require 'main/regular_expression_optimizer_manager_tests.php';
 require 'main/schema_tests.php';
 require 'main/schema_type_tests.php';
 require 'main/schema_element_tests.php';
+require 'main/schema_dtd_tests.php';
 
 /**
  * General root test suite
@@ -82,6 +83,7 @@ class slMainTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTest( slMainSchemaTests::suite() );
         $this->addTest( slMainSchemaTypeTests::suite() );
         $this->addTest( slMainSchemaElementTests::suite() );
+        $this->addTest( slMainSchemaDtdTests::suite() );
     }
 
     /**

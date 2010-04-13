@@ -23,9 +23,9 @@
  */
 
 /**
- * Class representing a XSD schema.
+ * Class representing a DTD schema.
  *
- * XSD schemas can only learn each element name as a single type, so that this 
+ * DTD schemas can only learn each element name as a single type, so that this 
  * schema uses the simple element name based type inferencer.
  *
  * @package Core
@@ -44,7 +44,7 @@ class slDtdSchema extends slSchema
     {
         if ( !$typeInferencer instanceof slNameBasedTypeInferencer )
         {
-            throw new RuntimeException( 'XSD only works with the slNameBasedTypeInferencer.' );
+            throw new RuntimeException( 'DTD only works with the slNameBasedTypeInferencer.' );
         }
 
         $this->typeInferencer = $typeInferencer;
@@ -60,7 +60,7 @@ class slDtdSchema extends slSchema
     {
         if ( !$typeMerger instanceof slNoTypeMerger )
         {
-            throw new RuntimeException( 'XSD only works with the slNoTypeMerger.' );
+            throw new RuntimeException( 'DTD only works with the slNoTypeMerger.' );
         }
 
         $this->typeMerger = $typeMerger;
