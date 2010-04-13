@@ -37,6 +37,7 @@ class slMainSchemaTypeEqualPatternComparatorTests extends PHPUnit_Framework_Test
      */
     protected $results = array(
         'testTypePatternsSame'                => true,
+        'testTypeEmptyPatternsSame'           => true,
         'testTypePatternsSameOptional'        => false,
         'testTypePatternsSameNodes'           => false,
         'testTypePatternsDifferentNodes'      => false,
@@ -57,6 +58,18 @@ class slMainSchemaTypeEqualPatternComparatorTests extends PHPUnit_Framework_Test
     protected function getComparator()
     {
         return new slSchemaTypeEqualPatternComparator();
+    }
+
+    public function testTypeEmptyPatternsSame()
+    {
+        $t1 = new slSchemaType( 't1' );
+        $t1->automaton->learn( array( '_s', '_e' ) );
+
+        $t2 = new slSchemaType( 't2' );
+        $t2->automaton->learn( array( '_s', '_e' ) );
+
+        $comparator = $this->getComparator();
+        $this->assertSame( $this->results[__FUNCTION__],  $comparator->compare( $t1, $t2 ) );
     }
 
     public function testTypePatternsSame()

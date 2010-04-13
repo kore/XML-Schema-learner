@@ -37,6 +37,7 @@ class slMainSchemaTypeNodeBasedPatternComparatorTests extends slMainSchemaTypeEq
      */
     protected $results = array(
         'testTypePatternsSame'                => true,
+        'testTypeEmptyPatternsSame'           => true,
         'testTypePatternsSameOptional'        => true,
         'testTypePatternsSameNodes'           => true,
         'testTypePatternsDifferentNodes'      => false,
