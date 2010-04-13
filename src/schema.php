@@ -152,6 +152,7 @@ abstract class slSchema
         foreach ( $this->elements as $type => $element )
         {
             $regularExpression = $this->convertRegularExpression( $element->type->automaton );
+            $regularExpression = $this->applyTypeMapping( $regularExpression, $typeMapping );
 
             // If the element has been empty at least once, make the whole 
             // subpattern optional
@@ -165,7 +166,7 @@ abstract class slSchema
 
             // Apply type mapping from type merger recursively to regular 
             // expression.
-            $element->type->regularExpression = $this->applyTypeMapping( $regularExpression, $typeMapping );
+            $element->type->regularExpression = $regularExpression;
         };
 
         return $this->elements;
@@ -198,6 +199,7 @@ abstract class slSchema
 
         if ( $regularExpression instanceof slRegularExpressionContainer )
         {
+            $modified = false;
             foreach ( $regularExpression->getChildren() as $nr => $child )
             {
                 if ( ( $child instanceof slRegularExpressionElement ) &&
@@ -205,10 +207,16 @@ abstract class slSchema
                        ( $child->getContent() === 1 ) ) )
                 {
                     unset( $regularExpression[$nr] );
+                    $modified = true;
                     continue;
                 }
 
                 $child = $this->applyTypeMapping( $child, $typeMapping );
+            }
+
+            if ( $modified )
+            {
+                $regularExpression->setChildren( array_values( $regularExpression->getChildren() ) );
             }
         }
 
