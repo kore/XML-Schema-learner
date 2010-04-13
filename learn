@@ -30,23 +30,26 @@ $defaults = array(
     'help'     => null,
     'type'     => 'dtd',
     'locality' => false,
-    'merger'   => 'none',
+    'attrComp' => 'strict',
+    'ptrnComp' => null,
 );
 
 $mapping = array(
     'h' => 'help',
     't' => 'type',
     'l' => 'locality',
-    'm' => 'merger',
+    'a' => 'attrComp',
+    'p' => 'ptrnComp',
 );
 
 $options = getopt(
-    'ht:l:m:',
+    'ht:l:a:p:',
     array(
         'help',
         'type:',
         'locality:',
-        'merger:',
+        'attrComp:',
+        'ptrnComp:',
     )
 );
 
@@ -84,19 +87,29 @@ XML Schema / BonXai specific options:
 -l / --locality Locality of the types when inferencing XML Schema schemata.
                 Valid values are integer numbers, or "n".
 
--m / --merger   Algorithm used for type merging, available options are "none",
-                "exact", "node-based".
+-a / --attrComp Algorithm used to compare attributes in the type merger.
+                Available algorithms are "strict", "same", "equals", "merge".
+                Defaults to "equals".
+
+-p / --ptrnComp Algorithm used to compare patterns in the type merger. Available
+                algorithms are "exact", "node-based" and "subsumed". If not 
+                specified, no types will be merged.
 
 EOHELP;
     exit( 0 );
 }
 
-$typeMerger = array(
-    'none'            => new slNoTypeMerger(),
-    'exact'           => new slExactTypeMerger(),
-    'node-based'      => new slNodeBasedTypeMerger(),
-    'attr-node-based' => new slAttributeNodeBasedTypeMerger(),
-    'magic'           => new slMagicTypeMerger(),
+$attributeComparators = array(
+    'strict' => new slSchemaTypeStrictAttributeComparator(),
+    'same'   => new slSchemaTypeSameAttributeComparator(),
+    'equals' => new slSchemaTypeEqualAttributeComparator(),
+    'merge'  => new slSchemaTypeMergeAttributeComparator(),
+);
+
+$patternComparators = array(
+    'exact'      => new slSchemaTypeEqualPatternComparator(),
+    'node-based' => new slSchemaTypeNodeBasedPatternComparator(),
+    'subsumed'   => new slSchemaTypeSubsumingPatternComparator(),
 );
 
 switch ( $options['type'] )
@@ -132,12 +145,14 @@ elseif ( is_numeric( $options['locality'] ) )
 }
 
 // Set type merger based on configuration options.
-if ( !isset( $typeMerger[$options['merger']] ) )
+if ( !isset( $patternComparators[$options['ptrnComp']] ) )
 {
-    echo "Unknown type merger '{$options['merger']}'.\n";
-    exit( 2 );
+    $typeMerger = new slConfigurableTypeMerger(
+        $patternComparators[$options['ptrnComp']],
+        $attributeComparators[$options['attrComp']]
+    );
+    $schema->setTypeMerger( $typeMerger );
 }
-$schema->setTypeMerger( $typeMerger[$options['merger']] );
 
 // Learn from files
 libxml_use_internal_errors( true );
