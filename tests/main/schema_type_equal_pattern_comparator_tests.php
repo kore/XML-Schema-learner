@@ -37,7 +37,7 @@ class slMainSchemaTypeEqualPatternComparatorTests extends PHPUnit_Framework_Test
      */
     protected $results = array(
         'testTypePatternsSame'                => true,
-        'testTypePatternsSameOptional'        => true,
+        'testTypePatternsSameOptional'        => false,
         'testTypePatternsSameNodes'           => false,
         'testTypePatternsDifferentNodes'      => false,
         'testTypePatternsSingleDifferentNode' => false,
@@ -62,10 +62,10 @@ class slMainSchemaTypeEqualPatternComparatorTests extends PHPUnit_Framework_Test
     public function testTypePatternsSame()
     {
         $t1 = new slSchemaType( 't1' );
-        $t1->automaton->learn( array( 'a', 'b' ) );
+        $t1->automaton->learn( array( '_s', 'a', 'b', '_e' ) );
 
         $t2 = new slSchemaType( 't2' );
-        $t2->automaton->learn( array( 'a', 'b' ) );
+        $t2->automaton->learn( array( '_s', 'a', 'b', '_e' ) );
 
         $comparator = $this->getComparator();
         $this->assertSame( $this->results[__FUNCTION__],  $comparator->compare( $t1, $t2 ) );
@@ -74,11 +74,11 @@ class slMainSchemaTypeEqualPatternComparatorTests extends PHPUnit_Framework_Test
     public function testTypePatternsSameOptional()
     {
         $t1 = new slSchemaType( 't1' );
-        $t1->automaton->learn( array() );
-        $t1->automaton->learn( array( 'a', 'b' ) );
+        $t1->automaton->learn( array( '_s', '_e' ) );
+        $t1->automaton->learn( array( '_s', 'a', 'b', '_e' ) );
 
         $t2 = new slSchemaType( 't2' );
-        $t2->automaton->learn( array( 'a', 'b' ) );
+        $t2->automaton->learn( array( '_s', 'a', 'b', '_e' ) );
 
         $comparator = $this->getComparator();
         $this->assertSame( $this->results[__FUNCTION__],  $comparator->compare( $t1, $t2 ) );
@@ -87,11 +87,11 @@ class slMainSchemaTypeEqualPatternComparatorTests extends PHPUnit_Framework_Test
     public function testTypePatternsSameNodes()
     {
         $t1 = new slSchemaType( 't1' );
-        $t1->automaton->learn( array() );
-        $t1->automaton->learn( array( 'a', 'b' ) );
+        $t1->automaton->learn( array( '_s', '_e' ) );
+        $t1->automaton->learn( array( '_s', 'a', 'b', '_e' ) );
 
         $t2 = new slSchemaType( 't2' );
-        $t2->automaton->learn( array( 'b', 'a' ) );
+        $t2->automaton->learn( array( '_s', 'b', 'a', '_e' ) );
 
         $comparator = $this->getComparator();
         $this->assertSame( $this->results[__FUNCTION__],  $comparator->compare( $t1, $t2 ) );
@@ -100,11 +100,11 @@ class slMainSchemaTypeEqualPatternComparatorTests extends PHPUnit_Framework_Test
     public function testTypePatternsDifferentNodes()
     {
         $t1 = new slSchemaType( 't1' );
-        $t1->automaton->learn( array() );
-        $t1->automaton->learn( array( 'a', 'b' ) );
+        $t1->automaton->learn( array( '_s', '_e' ) );
+        $t1->automaton->learn( array( '_s', 'a', 'b', '_e' ) );
 
         $t2 = new slSchemaType( 't2' );
-        $t2->automaton->learn( array( 'c' ) );
+        $t2->automaton->learn( array( '_s', 'c', '_e' ) );
 
         $comparator = $this->getComparator();
         $this->assertSame( $this->results[__FUNCTION__],  $comparator->compare( $t1, $t2 ) );
@@ -113,10 +113,10 @@ class slMainSchemaTypeEqualPatternComparatorTests extends PHPUnit_Framework_Test
     public function testTypePatternsSingleDifferentNode()
     {
         $t1 = new slSchemaType( 't1' );
-        $t1->automaton->learn( array() );
+        $t1->automaton->learn( array( '_s', '_e' ) );
 
         $t2 = new slSchemaType( 't2' );
-        $t2->automaton->learn( array( 'a' ) );
+        $t2->automaton->learn( array( '_s', 'a', '_e' ) );
 
         $comparator = $this->getComparator();
         $this->assertSame( $this->results[__FUNCTION__],  $comparator->compare( $t1, $t2 ) );
@@ -125,12 +125,12 @@ class slMainSchemaTypeEqualPatternComparatorTests extends PHPUnit_Framework_Test
     public function testTypePatternSubsumption()
     {
         $t1 = new slSchemaType( 't1' );
-        $t1->automaton->learn( array() );
-        $t1->automaton->learn( array( 'a' ) );
-        $t1->automaton->learn( array( 'a', 'b' ) );
+        $t1->automaton->learn( array( '_s', '_e' ) );
+        $t1->automaton->learn( array( '_s', 'a', '_e' ) );
+        $t1->automaton->learn( array( '_s', 'a', 'b', '_e' ) );
 
         $t2 = new slSchemaType( 't2' );
-        $t2->automaton->learn( array( 'a' ) );
+        $t2->automaton->learn( array( '_s', 'a', '_e' ) );
 
         $comparator = $this->getComparator();
         $this->assertSame( $this->results[__FUNCTION__],  $comparator->compare( $t1, $t2 ) );
