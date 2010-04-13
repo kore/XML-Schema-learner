@@ -46,7 +46,7 @@ class slSchemaTypeEqualPatternComparator extends slSchemaTypePatternComparator
      */
     public function compare( slSchemaType $a, slSchemaType $b )
     {
-        if ( ( $a->automaton->getNodes() ) !== $b->automaton->getNodes() )
+        if ( !$this->compareNodes( $a, $b ) )
         {
             return false;
         }
@@ -61,6 +61,25 @@ class slSchemaTypeEqualPatternComparator extends slSchemaTypePatternComparator
         }
 
         return true;
+    }
+
+    /**
+     * Compare automaton nodes
+     *
+     * Compare if both type automatons refer to the same nodes.
+     * 
+     * @param slSchemaType $a 
+     * @param slSchemaType $b 
+     * @return bool
+     */
+    protected function compareNodes( slSchemaType $a, slSchemaType $b )
+    {
+        $diff = array_merge(
+            array_diff( $a->automaton->getNodes(), $b->automaton->getNodes() ),
+            array_diff( $b->automaton->getNodes(), $a->automaton->getNodes() )
+        );
+        
+        return !count( $diff );
     }
 }
 

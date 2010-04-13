@@ -32,7 +32,7 @@
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-class slSchemaTypeNodeBasedPatternComparator extends slSchemaTypePatternComparator
+class slSchemaTypeNodeBasedPatternComparator extends slSchemaTypeEqualPatternComparator
 {
     /**
      * Compare attributes
@@ -46,12 +46,7 @@ class slSchemaTypeNodeBasedPatternComparator extends slSchemaTypePatternComparat
      */
     public function compare( slSchemaType $a, slSchemaType $b )
     {
-        if ( ( $a->automaton->getNodes() ) !== $b->automaton->getNodes() )
-        {
-            return false;
-        }
-
-        return true;
+        return $this->compareNodes( $a, $b );
     }
 }
 
