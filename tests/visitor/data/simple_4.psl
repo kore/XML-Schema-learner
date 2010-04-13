@@ -11,7 +11,7 @@ grammar {
 	}
 
 	//root = {
-		( element alpha, element optional?, element beta, element optional2 )
+		( element alpha, element optional?, element beta, element optional2? )
 	}
 
 	//optional = {

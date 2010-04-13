@@ -162,6 +162,20 @@ abstract class slSchema
 
             // Optimize regular expression
             $optimizer->optimize( $regularExpression );
+
+            // Remove first and last element from the outer sequence, since 
+            // those are the start and end markers.
+            if ( !$regularExpression instanceof slRegularExpressionEmpty )
+            {
+                $children = $regularExpression->getChildren();
+                array_pop( $children );
+                array_shift( $children );
+                $regularExpression->setChildren( array_values( $children ) );
+                $optimizer->optimize( $regularExpression );
+            }
+
+            // Apply type mapping from type merger recursively to regular 
+            // expression.
             $element->type->regularExpression = $this->applyTypeMapping( $regularExpression, $typeMapping );
         };
 
@@ -229,11 +243,12 @@ abstract class slSchema
             return;
         }
 
-        $elements = array();
+        $elements = array( 0 );
         foreach ( $children as $child )
         {
             $elements[] = new slSchemaAutomatonNode( $child->tagName, $this->inferenceType( $child ) );
         }
+        array_push( $elements, 1 );
 
         $element->type->automaton->learn( $elements );
     }

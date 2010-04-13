@@ -11,7 +11,9 @@
         <element name="optional"/>
       </sequence>
       <element name="beta" type="string"/>
-      <element name="optional2" type="optional2"/>
+      <sequence minOccurs="0" maxOccurs="1">
+        <element name="optional2" type="optional2"/>
+      </sequence>
     </sequence>
   </complexType>
   <complexType name="optional2">
