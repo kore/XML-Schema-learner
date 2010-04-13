@@ -11,6 +11,10 @@
         <element name="optional"/>
       </sequence>
       <element name="beta" type="string"/>
+      <element name="optional2" type="optional2"/>
     </sequence>
+  </complexType>
+  <complexType name="optional2">
+    <attribute name="nonoptional" type="string" use="required"/>
   </complexType>
 </schema>

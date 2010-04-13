@@ -3,4 +3,5 @@
     <optional/>
     text
     <beta>text</beta>
+    <optional2 nonoptional="bar"/>
 </root>

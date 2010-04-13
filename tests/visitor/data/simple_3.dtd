@@ -1,6 +1,8 @@
 <!ELEMENT alpha EMPTY>
 <!ELEMENT beta (#PCDATA)>
-<!ELEMENT root ( #PCDATA | alpha | optional | beta )*>
+<!ELEMENT root ( #PCDATA | alpha | optional | beta | optional2 )*>
 <!ELEMENT optional EMPTY>
+<!ELEMENT optional2 EMPTY>
 
 <!ATTLIST alpha attr CDATA #IMPLIED>
+<!ATTLIST optional2 nonoptional CDATA #REQUIRED>
