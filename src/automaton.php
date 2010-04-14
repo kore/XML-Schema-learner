@@ -196,7 +196,10 @@ class slAutomaton
             {
                 $this->addNode( $node );
             }
+        }
 
+        foreach ( $automaton->getNodes() as $identifier => $node )
+        {
             foreach ( $automaton->getOutgoing( $node ) as $dst )
             {
                 $this->addEdge( $node, $dst );
