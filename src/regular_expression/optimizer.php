@@ -64,6 +64,7 @@ class slRegularExpressionOptimizer
             new slRegularExpressionRepetitionOptimizer(),
             new slRegularExpressionSingletonOptimizer(),
             new slRegularExpressionEmptyOptimizer(),
+            new slRegularExpressionEmptyChildOptimizer(),
         );
     }
 

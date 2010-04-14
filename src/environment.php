@@ -60,6 +60,7 @@ require __DIR__ . '/regular_expression/optimizer/empty.php';
 require __DIR__ . '/regular_expression/optimizer/repetition.php';
 require __DIR__ . '/regular_expression/optimizer/sequence.php';
 require __DIR__ . '/regular_expression/optimizer/singleton.php';
+require __DIR__ . '/regular_expression/optimizer/empty_child.php';
 
 require __DIR__ . '/regular_expression/visitor.php';
 require __DIR__ . '/regular_expression/visitor/string.php';

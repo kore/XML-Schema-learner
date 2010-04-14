@@ -29,7 +29,7 @@
  * @version $Revision: 1236 $
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GPL
  */
-class slRegularExpressionSequenceOptimizer extends slRegularExpressionOptimizerBase
+class slRegularExpressionEmptyChildOptimizer extends slRegularExpressionOptimizerBase
 {
     /**
      * Optimize regular expression
@@ -42,23 +42,26 @@ class slRegularExpressionSequenceOptimizer extends slRegularExpressionOptimizerB
      */
     public function optimize( slRegularExpression &$regularExpression )
     {
-        if ( !$regularExpression instanceof slRegularExpressionSequence )
+        if ( !$regularExpression instanceof slRegularExpressionMultiple )
         {
             return $this->recurse( $regularExpression );
         }
 
+        $modified = false;
         $children = $regularExpression->getChildren();
         foreach ( $children as $nr => &$child )
         {
-            if ( $child instanceof slRegularExpressionSequence )
+            if ( $child instanceof slRegularExpressionEmpty )
             {
-                $regularExpression->setChildren( array_merge(
-                    array_slice( $children, 0, $nr ),
-                    $child->getChildren(),
-                    array_slice( $children, $nr + 1 )
-                ) );
-                return true;
+                unset( $children[$nr] );
+                $modified = true;
             }
+        }
+
+        if ( $modified )
+        {
+            $regularExpression->setChildren( array_values( $children ) );
+            return true;
         }
 
         return $this->recurse( $regularExpression );

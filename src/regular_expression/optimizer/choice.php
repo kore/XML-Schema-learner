@@ -44,7 +44,7 @@ class slRegularExpressionChoiceOptimizer extends slRegularExpressionOptimizerBas
     {
         if ( !$regularExpression instanceof slRegularExpressionChoice )
         {
-            return false;
+            return $this->recurse( $regularExpression );
         }
 
         $children = $regularExpression->getChildren();
