@@ -221,9 +221,9 @@ class slAutomaton
             return;
         }
 
-        if ( $isNew = !isset( $this->nodes[(string) $new] ) )
+        if ( !isset( $this->nodes[(string) $new] ) )
         {
-            $this->addNode( (string) $new );
+            $this->addNode( $new );
         }
 
         foreach ( $this->getOutgoing( (string) $old ) as $dst )

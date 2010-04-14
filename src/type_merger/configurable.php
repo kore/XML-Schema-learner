@@ -101,6 +101,7 @@ class slConfigurableTypeMerger extends slTypeMerger
                          $this->attributeComparator->compare( $elementI->type, $elementJ->type ) )
                     {
                         $this->mergeTypes( $elements, $typeIndex[$i], $typeIndex[$j] );
+                        $elements = $this->applyTypeMapping( $elements );
                         $changed = true;
                         break 2;
                     }
@@ -108,6 +109,48 @@ class slConfigurableTypeMerger extends slTypeMerger
             }
 
         } while ( $changed );
+
+        return $elements;
+    }
+
+    /**
+     * Apply type mapping to type automatons
+     *
+     * When ytpes are merged, all references to those types must be updated in 
+     * the type automatons. This method takes care of that.
+     *
+     * It returns an array with updated elements, and also removes types from 
+     * the array, which are no longer used.
+     * 
+     * @param array $elements 
+     * @return array
+     */
+    protected function applyTypeMapping( array $elements )
+    {
+        // Map all type references in automatons
+        foreach ( $elements as $element )
+        {
+            foreach ( $element->type->automaton->getNodes() as $node )
+            {
+                if ( ( $node instanceof slSchemaAutomatonNode ) &&
+                     isset( $this->typeMapping[$node->type] ) )
+                {
+                    $newNode = clone $node;
+                    $newNode->type = $this->typeMapping[$node->type];
+                    $element->type->automaton->renameNode( $node, $newNode );
+                }
+            }
+        }
+
+        // Remove the old type, since it shouldn't be referenced anywhere 
+        // anymore.
+        foreach ( $this->typeMapping as $removedType => $newType )
+        {
+            if ( isset( $elements[$removedType] ) )
+            {
+                unset( $elements[$removedType] );
+            }
+        }
 
         return $elements;
     }

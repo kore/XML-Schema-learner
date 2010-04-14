@@ -165,7 +165,6 @@ abstract class slSchema
         {
             $regularExpression = $this->convertRegularExpression( $element->type->automaton );
             $regularExpression = $this->filterStartEndMarkers( $regularExpression );
-            $regularExpression = $this->applyTypeMapping( $regularExpression, $typeMapping );
 
             // If the element has been empty at least once, make the whole 
             // subpattern optional
@@ -227,39 +226,6 @@ abstract class slSchema
             else
             {
                 $this->filterStartEndMarkers( $child );
-            }
-        }
-
-        return $regularExpression;
-    }
-
-    /**
-     * Apply type mapping
-     *
-     * Recursively replace types with replaced types in regular expression 
-     * structures.
-     * 
-     * @param slRegularExpression $regularExpression 
-     * @param array $typeMapping 
-     * @return slRegularExpression
-     */
-    protected function applyTypeMapping( slRegularExpression $regularExpression, array $typeMapping )
-    {
-        if ( $regularExpression instanceof slRegularExpressionElement )
-        {
-            $content = $regularExpression->getContent();
-            if ( isset( $typeMapping[$content->type] ) )
-            {
-                $content->type = $typeMapping[$content->type];
-                $regularExpression->setContent( $content );
-            }
-        }
-
-        if ( $regularExpression instanceof slRegularExpressionContainer )
-        {
-            foreach ( $regularExpression->getChildren() as $nr => $child )
-            {
-                $child = $this->applyTypeMapping( $child, $typeMapping );
             }
         }
 

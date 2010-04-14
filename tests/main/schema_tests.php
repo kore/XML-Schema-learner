@@ -129,6 +129,43 @@ class slMainSchemaTests extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testXSDSchemaMagicTypeMerging()
+    {
+        $xsd = new slXsdSchema();
+        $xsd->setTypeInferencer( new slFullPathTypeInferencer() );
+        $xsd->setTypeMerger(
+            new slConfigurableTypeMerger(
+                new slSchemaTypeSubsumingPatternComparator(),
+                new slSchemaTypeEqualAttributeComparator()
+            )
+        );
+        $xsd->learnFile( __DIR__ . '/data/type_merging.xml' );
+
+        $expressions = array();
+        foreach ( $xsd->getTypes() as $element )
+        {
+            $expressions[$element->type->name] = $element->type->regularExpression;
+        }
+        ksort( $expressions );
+
+        $this->assertEquals(
+            array(
+                'root' => new slRegularExpressionSequence(
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'alpha', 'root/alpha' ) ),
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'beta', 'root/beta' ) ),
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'gamma', 'root/gamma' ) )
+                ),
+                'root/alpha' => new slRegularExpressionElement( new slSchemaAutomatonNode( 'delta', 'root/alpha' ) ),
+                'root/beta' => new slRegularExpressionSequence(
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'alpha', 'root/alpha' ) ),
+                    new slRegularExpressionElement( new slSchemaAutomatonNode( 'gamma', 'root/alpha' ) )
+                ),
+                'root/gamma' => new slRegularExpressionElement( new slSchemaAutomatonNode( 'alpha', 'root/alpha' ) ),
+            ),
+            $expressions
+        );
+    }
+
     public function testDtdSchemaRootElements()
     {
         $dtd = new slDtdSchema();

@@ -39,6 +39,7 @@ require 'main/weighted_single_occurence_automaton_tests.php';
 require 'main/counting_single_occurence_automaton_tests.php';
 require 'main/type_automaton_tests.php';
 require 'main/type_inferencer_tests.php';
+require 'main/type_merger_tests.php';
 require 'main/sore_converter_tests.php';
 require 'main/chare_converter_tests.php';
 require 'main/e_chare_converter_tests.php';
@@ -82,6 +83,7 @@ class slMainTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTest( slMainCountingSingleOccurenceAutomatonTests::suite() );
         $this->addTest( slMainTypeAutomatonTests::suite() );
         $this->addTest( slMainTypeInferencerTests::suite() );
+        $this->addTest( slMainTypeMergerTests::suite() );
         $this->addTest( slMainSoreConverterTests::suite() );
         $this->addTest( slMainChareConverterTests::suite() );
         $this->addTest( slMainEChareConverterTests::suite() );
