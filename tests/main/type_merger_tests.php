@@ -73,8 +73,20 @@ class slMainTypeMergerTests extends PHPUnit_Framework_TestCase
                 'root_type' => new slSchemaElement( 'root', $rootType ),
                 'a_type'    => new slSchemaElement( 'a', $aType ),
             ),
-            $merger->groupTypes( $elements )
+            $elements = $merger->groupTypes( $elements )
         );
+
+        foreach ( $elements as $element )
+        {
+            foreach ( $element->type->automaton->getNodes() as $node )
+            {
+                $this->assertTrue(
+                    $node === 0 ||
+                    $node === 1 ||
+                    $node instanceof slSchemaAutomatonNode
+                );
+            }
+        }
 
         $this->assertEquals(
             array(
@@ -135,8 +147,20 @@ class slMainTypeMergerTests extends PHPUnit_Framework_TestCase
                 'a_type'    => new slSchemaElement( 'a', $aType ),
                 'c1_type'    => new slSchemaElement( 'c', $c1Type ),
             ),
-            $merger->groupTypes( $elements )
+            $elements = $merger->groupTypes( $elements )
         );
+
+        foreach ( $elements as $element )
+        {
+            foreach ( $element->type->automaton->getNodes() as $node )
+            {
+                $this->assertTrue(
+                    $node === 0 ||
+                    $node === 1 ||
+                    $node instanceof slSchemaAutomatonNode
+                );
+            }
+        }
 
         $this->assertEquals(
             array(
@@ -183,8 +207,20 @@ class slMainTypeMergerTests extends PHPUnit_Framework_TestCase
                 'root_type' => new slSchemaElement( 'root', $rootType ),
                 'a_type'    => new slSchemaElement( 'a', $aType ),
             ),
-            $merger->groupTypes( $elements )
+            $elements = $merger->groupTypes( $elements )
         );
+
+        foreach ( $elements as $element )
+        {
+            foreach ( $element->type->automaton->getNodes() as $node )
+            {
+                $this->assertTrue(
+                    $node === 0 ||
+                    $node === 1 ||
+                    $node instanceof slSchemaAutomatonNode
+                );
+            }
+        }
 
         $this->assertEquals(
             array(
@@ -268,8 +304,20 @@ class slMainTypeMergerTests extends PHPUnit_Framework_TestCase
                 'rbc_type' => new slSchemaElement( 'c', $rbcType ),
                 'rc_type'  => new slSchemaElement( 'c', $rcType ),
             ),
-            $merger->groupTypes( $elements )
+            $elements = $merger->groupTypes( $elements )
         );
+
+        foreach ( $elements as $element )
+        {
+            foreach ( $element->type->automaton->getNodes() as $node )
+            {
+                $this->assertTrue(
+                    $node === 0 ||
+                    $node === 1 ||
+                    $node instanceof slSchemaAutomatonNode
+                );
+            }
+        }
 
         $this->assertEquals(
             array(
