@@ -164,6 +164,7 @@ abstract class slSchema
         foreach ( $this->elements as $type => $element )
         {
             $regularExpression = $this->convertRegularExpression( $element->type->automaton );
+            $regularExpression = $this->filterStartEndMarkers( $regularExpression );
             $regularExpression = $this->applyTypeMapping( $regularExpression, $typeMapping );
 
             // If the element has been empty at least once, make the whole 
@@ -186,13 +187,57 @@ abstract class slSchema
     }
 
     /**
+     * Recursively filters out start and end markers
+     *
+     * Recursively filter out start and end markers from the regular expression 
+     * structure, since they do not have any real meaning, but were required to 
+     * create correct automatons.
+     * 
+     * @param slRegularExpression $regularExpression 
+     * @return slRegularExpression
+     */
+    protected function filterStartEndMarkers( slRegularExpression $regularExpression )
+    {
+        if ( $regularExpression instanceof slRegularExpressionMultiple )
+        {
+            foreach ( $regularExpression->getChildren() as $nr => $child )
+            {
+                if ( ( $child instanceof slRegularExpressionElement ) &&
+                     ( ( $child->getContent() === 0 ) ||
+                       ( $child->getContent() === 1 ) ) )
+                {
+                    $regularExpression[$nr] = new slRegularExpressionEmpty();
+                }
+                else
+                {
+                    $this->filterStartEndMarkers( $child );
+                }
+            }
+        }
+
+        if ( $regularExpression instanceof slRegularExpressionSingular )
+        {
+            $child = $regularExpression->getChild();
+            if ( ( $child instanceof slRegularExpressionElement ) &&
+                 ( ( $child->getContent() === 0 ) ||
+                   ( $child->getContent() === 1 ) ) )
+            {
+                $regularExpression->setChild( new slRegularExpressionEmpty() );
+            }
+            else
+            {
+                $this->filterStartEndMarkers( $child );
+            }
+        }
+
+        return $regularExpression;
+    }
+
+    /**
      * Apply type mapping
      *
      * Recursively replace types with replaced types in regular expression 
      * structures.
-     *
-     * Also filters out the start end end nodes used to wrap sequences, which 
-     * do not have any type association.
      * 
      * @param slRegularExpression $regularExpression 
      * @param array $typeMapping 
@@ -212,24 +257,9 @@ abstract class slSchema
 
         if ( $regularExpression instanceof slRegularExpressionContainer )
         {
-            $modified = false;
             foreach ( $regularExpression->getChildren() as $nr => $child )
             {
-                if ( ( $child instanceof slRegularExpressionElement ) &&
-                     ( ( $child->getContent() === 0 ) ||
-                       ( $child->getContent() === 1 ) ) )
-                {
-                    unset( $regularExpression[$nr] );
-                    $modified = true;
-                    continue;
-                }
-
                 $child = $this->applyTypeMapping( $child, $typeMapping );
-            }
-
-            if ( $modified )
-            {
-                $regularExpression->setChildren( array_values( $regularExpression->getChildren() ) );
             }
         }
 
