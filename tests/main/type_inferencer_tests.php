@@ -39,74 +39,162 @@ class slMainTypeInferencerTests extends PHPUnit_Framework_TestCase
 
     public function testInferenceNameBasedType()
     {
-        $doc = new DOMDocument();
-        $doc->loadXml( '<xml><element/></xml>' );
-
         $typeInferencer = new slNameBasedTypeInferencer();
-        $this->assertEquals( 'element', $typeInferencer->inferenceType( $doc->getElementsByTagName( 'element' )->item( 0 ) ) );
+        $this->assertEquals(
+            'element',
+            $typeInferencer->inferenceType( array(
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'xml',
+                ),
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'element',
+                ),
+            ) )
+        );
     }
 
     public function testInferenceNameBasedType2()
     {
-        $doc = new DOMDocument();
-        $doc->loadXml( '<xml><element/></xml>' );
-
         $typeInferencer = new slNameBasedTypeInferencer();
-        $this->assertEquals( 'xml', $typeInferencer->inferenceType( $doc->getElementsByTagName( 'xml' )->item( 0 ) ) );
+        $this->assertEquals(
+            'xml',
+            $typeInferencer->inferenceType( array(
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'xml',
+                ),
+            ) )
+        );
     }
 
     public function testInferenceKLocalType0()
     {
-        $doc = new DOMDocument();
-        $doc->loadXml( '<xml><root><element/></root></xml>' );
-
         $typeInferencer = new slKLocalTypeInferencer( 0 );
-        $this->assertEquals( 'element', $typeInferencer->inferenceType( $doc->getElementsByTagName( 'element' )->item( 0 ) ) );
+        $this->assertEquals(
+            'element',
+            $typeInferencer->inferenceType( array(
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'xml',
+                ),
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'root',
+                ),
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'element',
+                ),
+            ) )
+        );
     }
 
     public function testInferenceKLocalType1()
     {
-        $doc = new DOMDocument();
-        $doc->loadXml( '<xml><root><element/></root></xml>' );
-
         $typeInferencer = new slKLocalTypeInferencer( 1 );
-        $this->assertEquals( 'root/element', $typeInferencer->inferenceType( $doc->getElementsByTagName( 'element' )->item( 0 ) ) );
+        $this->assertEquals(
+            'root/element',
+            $typeInferencer->inferenceType( array(
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'xml',
+                ),
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'root',
+                ),
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'element',
+                ),
+            ) )
+        );
     }
 
     public function testInferenceKLocalType2()
     {
-        $doc = new DOMDocument();
-        $doc->loadXml( '<xml><root><element/></root></xml>' );
-
         $typeInferencer = new slKLocalTypeInferencer( 2 );
-        $this->assertEquals( 'xml/root/element', $typeInferencer->inferenceType( $doc->getElementsByTagName( 'element' )->item( 0 ) ) );
+        $this->assertEquals(
+            'xml/root/element',
+            $typeInferencer->inferenceType( array(
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'xml',
+                ),
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'root',
+                ),
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'element',
+                ),
+            ) )
+        );
     }
 
     public function testInferenceKLocalType3()
     {
-        $doc = new DOMDocument();
-        $doc->loadXml( '<xml><root><element/></root></xml>' );
-
         $typeInferencer = new slKLocalTypeInferencer( 3 );
-        $this->assertEquals( 'xml/root/element', $typeInferencer->inferenceType( $doc->getElementsByTagName( 'element' )->item( 0 ) ) );
+        $this->assertEquals(
+            'xml/root/element',
+            $typeInferencer->inferenceType( array(
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'xml',
+                ),
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'root',
+                ),
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'element',
+                ),
+            ) )
+        );
     }
 
     public function testInferenceFullPathType1()
     {
-        $doc = new DOMDocument();
-        $doc->loadXml( '<xml><root><element/></root></xml>' );
-
         $typeInferencer = new slFullPathTypeInferencer();
-        $this->assertEquals( 'xml/root/element', $typeInferencer->inferenceType( $doc->getElementsByTagName( 'element' )->item( 0 ) ) );
+        $this->assertEquals(
+            'xml/root/element',
+            $typeInferencer->inferenceType( array(
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'xml',
+                ),
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'root',
+                ),
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'element',
+                ),
+            ) )
+        );
     }
 
     public function testInferenceFullPathType2()
     {
-        $doc = new DOMDocument();
-        $doc->loadXml( '<xml><root><element/></root></xml>' );
-
         $typeInferencer = new slFullPathTypeInferencer();
-        $this->assertEquals( 'xml/root', $typeInferencer->inferenceType( $doc->getElementsByTagName( 'root' )->item( 0 ) ) );
+        $this->assertEquals(
+            'xml/root',
+            $typeInferencer->inferenceType( array(
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'xml',
+                ),
+                array(
+                    'namespace' => 'http://example.com/ns1',
+                    'name'      => 'root',
+                ),
+            ) )
+        );
     }
 }
 

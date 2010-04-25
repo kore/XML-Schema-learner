@@ -37,11 +37,11 @@ abstract class slTypeInferencer
     /**
      * Inference a type from element
      *
-     * Inference a string type from the given DOMELement.
+     * Inference a string type from the path to the element in the XML tree.
      * 
-     * @param DOMELement $element 
+     * @param array $path
      * @return string
      */
-    abstract public function inferenceType( DOMELement $element );
+    abstract public function inferenceType( array $path );
 }
 

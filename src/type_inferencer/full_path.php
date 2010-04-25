@@ -36,19 +36,20 @@ class slFullPathTypeInferencer extends slTypeInferencer
     /**
      * Inference a type from element
      *
-     * Inference a string type from the given DOMELement.
+     * Inference a string type from the path to the element in the XML tree.
      * 
-     * @param DOMELement $element 
+     * @param array $path
      * @return string
      */
-    public function inferenceType( DOMELement $element )
+    public function inferenceType( array $path )
     {
-        $elements = array();
-        do {
-            $elements[] = $element->tagName;
-        } while( ( $element = $element->parentNode ) instanceof DOMElement );
-
-        return implode( '/', array_reverse( $elements ) );
+        return implode( '/', array_map(
+            function ( $pathElement )
+            {
+                return $pathElement['name'];
+            },
+            $path
+        ) );
     }
 }
 

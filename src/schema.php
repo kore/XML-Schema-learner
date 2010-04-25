@@ -88,12 +88,12 @@ abstract class slSchema
     /**
      * Inference type from DOMElement
      * 
-     * @param DOMElement $element 
+     * @param array $path
      * @return void
      */
-    protected function inferenceType( DOMElement $element )
+    protected function inferenceType( array $path )
     {
-        return $this->typeInferencer->inferenceType( $element );
+        return $this->typeInferencer->inferenceType( $path );
     }
 
     /**
@@ -135,9 +135,90 @@ abstract class slSchema
      */
     public function learnFile( $file )
     {
-        $doc = new DOMDocument();
-        $doc->load( $file );
-        $this->traverse( $doc );
+        $reader = new XmlReader();
+        $reader->open( $file );
+        
+        $this->traverse( $reader );
+
+        $reader->close();
+        unset( $reader );
+    }
+
+    /**
+     * Traverse XML tree
+     *
+     * Traverses the XML tree and calls the learnAutomaton() method for each 
+     * element, with its child element nodes.
+     * 
+     * @param DOMNode $root 
+     * @return void
+     */
+    protected function traverse( XMLReader $reader, $path = array() )
+    {
+        $contents   = array();
+        $children   = array();
+        $attributes = array();
+
+        // Learn attributes for this element
+        while ( $reader->moveToNextAttribute() )
+        {
+            $attributes[$reader->name] = $reader->value;
+        }
+
+        // If this is an empty element, do not traverse, but return 
+        // immediately.
+        if ( ( $reader->nodeType === XMLReader::ELEMENT ) &&
+             ( $reader->isEmptyElement ) )
+        {
+            $element = $this->getType( $path );
+
+            $this->learnAutomaton( $element, $children );
+            $this->learnSimpleType( $element, $contents );
+            $this->learnAttributes( $element, $attributes );
+            return;
+        }
+
+        // Traverse child elements.
+        while ( $reader->read() )
+        {
+            switch ( $reader->nodeType )
+            {
+                case XMLReader::ELEMENT:
+                    // Opening tag
+                    $child = array(
+                        'namespace' => $reader->namespaceURI,
+                        'name'      => $reader->localName,
+                        'parents'   => $path,
+                    );
+                    $children[] = $child;
+                    $childPath  = array_merge( $path, array( $child ) );
+
+                    // If we are in the document root, add the child as root 
+                    // element.
+                    if ( count( $path ) === 0 )
+                    {
+                        $this->rootElements[$child['name']] = $this->inferenceType( $childPath );
+                    }
+
+                    $this->traverse( $reader, $childPath );
+                    break;
+
+                case XMLReader::END_ELEMENT:
+                    // Closing tag
+                    $element = $this->getType( $path );
+
+                    $this->learnAutomaton( $element, $children );
+                    $this->learnSimpleType( $element, $contents );
+                    $this->learnAttributes( $element, $attributes );
+                    return;
+
+                case XMLReader::TEXT:
+                case XMLReader::CDATA:
+                    // Text content
+                    $contents[] = $reader->value;
+                    break;
+            }
+        }
     }
 
     /**
@@ -263,7 +344,10 @@ abstract class slSchema
         $elements = array( 0 );
         foreach ( $children as $child )
         {
-            $elements[] = new slSchemaAutomatonNode( $child->tagName, $this->inferenceType( $child ) );
+            $elements[] = new slSchemaAutomatonNode(
+                $child['name'],
+                $this->inferenceType( array_merge( $child['parents'], array( $child ) ) )
+            );
         }
         array_push( $elements, 1 );
 
@@ -274,14 +358,14 @@ abstract class slSchema
      * Lear simple type for element
      * 
      * @param slSchemaElement $element
-     * @param array $children 
+     * @param array $contents 
      * @return void
      */
-    protected function learnSimpleType( slSchemaElement $element, array $children )
+    protected function learnSimpleType( slSchemaElement $element, array $contents )
     {
-        foreach ( $children as $textNode )
+        foreach ( $contents as $string )
         {
-            $element->type->simpleTypeInferencer->learnString( trim( $textNode->wholeText ) );
+            $element->type->simpleTypeInferencer->learnString( trim( $string ) );
         }
     }
 
@@ -289,17 +373,11 @@ abstract class slSchema
      * Lear attributes for element
      * 
      * @param slSchemaElement $element
-     * @param array $children 
+     * @param array $attributes 
      * @return void
      */
-    protected function learnAttributes( slSchemaElement $element, array $children )
+    protected function learnAttributes( slSchemaElement $element, array $attributes )
     {
-        $attributes = array();
-        foreach ( $children as $attrNode )
-        {
-            $attributes[$attrNode->name] = $attrNode->value;
-        }
-
         $element->type->learnAttributes( $attributes );
     }
 
@@ -312,79 +390,26 @@ abstract class slSchema
      * The slSchemaElement contains information about the elements simple,
      * type, attriubutes and its regular expression.
      * 
-     * @param string $type 
+     * @param array $path
      * @return slSchemaElement
      */
-    protected function getType( DOMElement $node )
+    protected function getType( array $path )
     {
-        $elementTypeName = $this->inferenceType( $node );
+        $elementTypeName = $this->inferenceType( $path );
 
         if ( isset( $this->elements[$elementTypeName] ) )
         {
             return $this->elements[$elementTypeName];
         }
 
+        $current = end( $path );
         $this->elements[$elementTypeName] = $element = new slSchemaElement(
-            $node->tagName,
+            $current['name'],
             new slSchemaType( $elementTypeName )
         );
         $element->type->simpleTypeInferencer    = $this->getSimpleInferencer();
         $element->type->attributeTypeInferencer = $this->getSimpleInferencer();
         return $element;
-    }
-
-    /**
-     * Traverse XML tree
-     *
-     * Traverses the XML tree and calls the learnAutomaton() method for each 
-     * element, with its child element nodes.
-     * 
-     * @param DOMNode $root 
-     * @return void
-     */
-    protected function traverse( DOMNode $root )
-    {
-        if ( $root->parentNode instanceof DOMDocument )
-        {
-            $this->rootElements[$root->tagName] = $this->inferenceType( $root );
-        }
-
-        $elements = array();
-        $contents = array();
-        foreach ( $root->childNodes as $node )
-        {
-            switch ( $node->nodeType )
-            {
-                case XML_ELEMENT_NODE:
-                    $elements[] = $node;
-                    $this->traverse( $node );
-                    break;
-
-                case XML_TEXT_NODE:
-                    $contents[] = $node;
-                    break;
-            }
-        }
-
-        // How inconsistent: Attributes are not available as child nodes. Build 
-        // an extra loop just for them.
-        $attributes = array();
-        if ( $root->attributes )
-        {
-            foreach ( $root->attributes as $attribute )
-            {
-                $attributes[] = $attribute;
-            }
-        }
-
-        if ( $root->nodeType === XML_ELEMENT_NODE )
-        {
-            $element = $this->getType( $root );
-
-            $this->learnAutomaton( $element, $elements );
-            $this->learnSimpleType( $element, $contents );
-            $this->learnAttributes( $element, $attributes );
-        }
     }
 
     /**

@@ -55,27 +55,20 @@ class slKLocalTypeInferencer extends slTypeInferencer
     /**
      * Inference a type from element
      *
-     * Inference a string type from the given DOMELement.
+     * Inference a string type from the path to the element in the XML tree.
      * 
-     * @param DOMELement $element 
+     * @param array $path
      * @return string
      */
-    public function inferenceType( DOMELement $element )
+    public function inferenceType( array $path )
     {
-        $elements = array();
-        for ( $i = 0; $i <= $this->depth; ++$i )
-        {
-            $elements[] = $element->tagName;
-            
-            if ( $element->parentNode instanceof DOMDOcument )
+        return implode( '/', array_map(
+            function ( $pathElement )
             {
-                break;
-            }
-
-            $element = $element->parentNode;
-        }
-
-        return implode( '/', array_reverse( $elements ) );
+                return $pathElement['name'];
+            },
+            array_slice( $path, -( $this->depth + 1 ) )
+        ) );
     }
 }
 

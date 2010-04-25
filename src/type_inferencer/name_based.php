@@ -37,14 +37,15 @@ class slNameBasedTypeInferencer extends slTypeInferencer
     /**
      * Inference a type from element
      *
-     * Inference a string type from the given DOMELement.
+     * Inference a string type from the path to the element in the XML tree.
      * 
-     * @param DOMELement $element 
+     * @param array $path
      * @return string
      */
-    public function inferenceType( DOMELement $element )
+    public function inferenceType( array $path )
     {
-        return $element->tagName;
+        $last = end( $path );
+        return $last['name'];
     }
 }
 
