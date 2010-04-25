@@ -1,0 +1,27 @@
+#!/bin/bash
+
+TYPE="dtd"
+LOCALITY="0"
+ATTR="none"
+PTRN="none"
+./learn -t $TYPE "data/arbit_html/*.xml" > "inferenced/arbit_${PTRN}_${ATTR}_${LOCALITY}.${TYPE}"
+./learn -t $TYPE "data/dblp/dblp20040213.xml" > "inferenced/dblp_${PTRN}_${ATTR}_${LOCALITY}.${TYPE}"
+./learn -t $TYPE "data/mhgta/*.xml" > "inferenced/mhgta_${PTRN}_${ATTR}_${LOCALITY}.${TYPE}"
+./learn -t $TYPE "data/webfrap/*.bdl" > "inferenced/webfrap_${PTRN}_${ATTR}_${LOCALITY}.${TYPE}"
+
+for TYPE in xsd bonxai
+do
+    for LOCALITY in 0 1 3 n
+    do
+        for ATTR in strict same equals merge
+        do
+            for PTRN in exact node-based subsumed
+            do
+                ./learn -t $TYPE -l $LOCALITY -a $ATTR -p $PTRN "data/arbit_html/*.xml" > "inferenced/arbit_${PTRN}_${ATTR}_${LOCALITY}.${TYPE}"
+                ./learn -t $TYPE -l $LOCALITY -a $ATTR -p $PTRN "data/dblp/dblp20040213.xml" > "inferenced/dblp_${PTRN}_${ATTR}_${LOCALITY}.${TYPE}"
+                ./learn -t $TYPE -l $LOCALITY -a $ATTR -p $PTRN "data/mhgta/*.xml" > "inferenced/mhgta_${PTRN}_${ATTR}_${LOCALITY}.${TYPE}"
+                ./learn -t $TYPE -l $LOCALITY -a $ATTR -p $PTRN "data/webfrap/*.bdl" > "inferenced/webfrap_${PTRN}_${ATTR}_${LOCALITY}.${TYPE}"
+            done
+        done
+    done
+done
