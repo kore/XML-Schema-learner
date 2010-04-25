@@ -164,6 +164,7 @@ abstract class slSchema
         {
             $attributes[$reader->name] = $reader->value;
         }
+        $reader->moveToElement();
 
         // If this is an empty element, do not traverse, but return 
         // immediately.
