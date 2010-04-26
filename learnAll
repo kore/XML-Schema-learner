@@ -10,8 +10,8 @@ $jobs = array();
 // Data sets we know of
 $datasets = array(
     'arbit'   => 'data/arbit_html/*.xml',
-    'dblp'    => 'data/dblp/dblp20040213.xml',
-    'mhgta'   => 'data/mhgta/*.xml',
+    'dblp'    => 'data/dblp/dblp20040213_fixed.xml',
+    'mhgta'   => 'data/mhgta/*.xml.fixed.fixed',
     'webfrap' => 'data/webfrap/*.bdl',
 );
 
