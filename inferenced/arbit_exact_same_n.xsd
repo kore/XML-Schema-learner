@@ -1,0 +1,528 @@
+<?xml version="1.0"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/gegenrated" elementFormDefault="qualified">
+  <complexType name="html/head/meta">
+    <attribute name="http-equiv" type="string" use="required"/>
+    <attribute name="content" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/head/link">
+    <attribute name="rel" type="string" use="required"/>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="href" type="string" use="required"/>
+    <attribute name="media" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/head/script">
+    <attribute name="src" type="string" use="required"/>
+    <attribute name="type" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/head/title">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="href" type="string"/>
+        <attribute name="title" type="string"/>
+        <attribute name="class" type="string"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="html/head">
+    <sequence>
+      <element name="meta" type="html/head/meta"/>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="link" type="html/head/link"/>
+      </sequence>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="script" type="html/head/script"/>
+      </sequence>
+      <element name="title" type="html/head/title"/>
+    </sequence>
+  </complexType>
+  <complexType name="html/body/h1">
+    <element name="a" type="html/head/title"/>
+  </complexType>
+  <complexType name="html/body/h2">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="class" type="string"/>
+        <attribute name="type" type="string"/>
+        <attribute name="name" type="string"/>
+        <attribute name="value" type="string"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="html/body/ul">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="li" type="html/body/h1"/>
+    </sequence>
+    <attribute name="class" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/ul/li">
+    <choice>
+      <element name="a" type="html/head/title"/>
+      <sequence>
+        <element name="h3" type="html/body/h2"/>
+        <element name="h4" type="html/body/div/h2"/>
+        <element name="p" type="html/body/div/h2"/>
+      </sequence>
+    </choice>
+  </complexType>
+  <complexType name="html/body/div/ul">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="li" type="html/body/div/ul/li"/>
+    </sequence>
+    <attribute name="class" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/ul/li" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="h4" type="html/body/div/div/ul/li/h4"/>
+          <element name="ul" type="html/body/div/div/ul/li/ul"/>
+          <element name="img" type="html/body/div/div/ul/li/img"/>
+          <element name="a" type="html/head/title"/>
+          <element name="p" type="html/body/div/div/h3"/>
+          <element name="h3" type="html/body/div/div/ul/li/h4"/>
+          <element name="strong" type="html/body/div/div/ul/li/h4"/>
+          <element name="span" type="html/body/div/div/table/tbody/tr/td/a/strong"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="class" type="string"/>
+    <attribute name="id" type="string"/>
+  </complexType>
+  <complexType name="html/body/div/div/ul">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="li" type="html/body/div/div/ul/li"/>
+    </sequence>
+    <attribute name="class" type="string"/>
+    <attribute name="id" type="string"/>
+  </complexType>
+  <complexType name="html/body/div/div/h2">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="href" type="string"/>
+        <attribute name="class" type="string"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="html/body/div/div/p" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="a" type="html/body/div/div/h2"/>
+        <element name="br" type="html/body/div/div/h3"/>
+      </choice>
+    </sequence>
+    <attribute name="class" type="string"/>
+  </complexType>
+  <complexType name="html/body/div/div">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="ul" type="html/body/div/div/ul"/>
+          <element name="h2" type="html/body/div/div/h2"/>
+          <element name="p" type="html/body/div/div/p"/>
+          <element name="form" type="html/body/div/div/form"/>
+          <element name="h3" type="html/body/div/div/h3"/>
+          <element name="table" type="html/body/div/div/table"/>
+          <element name="div" type="html/body/div/div/div"/>
+          <element name="dl" type="html/body/div/div/dl"/>
+          <element name="pre" type="html/body/div/div/h2"/>
+          <element name="script" type="html/body/div/div/table/thead/th"/>
+          <element name="code" type="html/body/div/div/div/ul/li/ul/li/ul/li/ul/li/ul/li"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="class" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="ul" type="html/body/div/ul"/>
+        <element name="div" type="html/body/div/div"/>
+        <element name="p" type="html/body/div/p"/>
+        <element name="h2" type="html/body/div/h2"/>
+      </choice>
+    </sequence>
+    <attribute name="class" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/p" mixed="true">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="a" type="html/body/div/div/h2"/>
+    </sequence>
+  </complexType>
+  <complexType name="html/body/div/h2">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="value" type="string"/>
+        <attribute name="selected" type="string"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="html/body">
+    <sequence>
+      <element name="h1" type="html/body/h1"/>
+      <sequence minOccurs="0" maxOccurs="1">
+        <sequence>
+          <element name="h2" type="html/body/h2"/>
+          <element name="ul" type="html/body/ul"/>
+        </sequence>
+      </sequence>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="div" type="html/body/div"/>
+      </sequence>
+    </sequence>
+    <attribute name="class" type="string" use="required"/>
+    <attribute name="id" type="string"/>
+  </complexType>
+  <element name="html" type="html"/>
+  <complexType name="html">
+    <sequence>
+      <element name="head" type="html/head"/>
+      <element name="body" type="html/body"/>
+    </sequence>
+    <attribute name="xmlns" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/form/fieldset/table/thead/tr/th" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="input" type="html/body/div/div/form/fieldset/input"/>
+    </sequence>
+    <attribute name="title" type="string"/>
+  </complexType>
+  <complexType name="html/body/div/div/form/fieldset/table/thead/tr">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="th" type="html/body/div/div/form/fieldset/table/thead/tr/th"/>
+    </sequence>
+  </complexType>
+  <complexType name="html/body/div/div/form/fieldset/table/thead">
+    <element name="tr" type="html/body/div/div/form/fieldset/table/thead/tr"/>
+  </complexType>
+  <complexType name="html/body/div/div/form/fieldset/table/tbody/tr/td/select">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="option" type="html/body/div/h2"/>
+    </sequence>
+    <attribute name="size" type="string" use="required"/>
+    <attribute name="multiple" type="string"/>
+    <attribute name="name" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/form/fieldset/table/tbody/tr/td">
+    <choice>
+      <element name="select" type="html/body/div/div/form/fieldset/table/tbody/tr/td/select"/>
+      <element name="input" type="html/body/div/div/form/fieldset/input"/>
+    </choice>
+    <attribute name="width" type="string"/>
+  </complexType>
+  <complexType name="html/body/div/div/form/fieldset/table/tbody/tr">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="td" type="html/body/div/div/form/fieldset/table/tbody/tr/td"/>
+        <element name="th" type="html/body/div/div/div/ul/li/ul/li/ul/li/ul/li/ul/li"/>
+      </choice>
+    </sequence>
+    <attribute name="class" type="string"/>
+  </complexType>
+  <complexType name="html/body/div/div/form/fieldset/table/tbody">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="tr" type="html/body/div/div/form/fieldset/table/tbody/tr"/>
+    </sequence>
+  </complexType>
+  <complexType name="html/body/div/div/form/fieldset/table">
+    <sequence>
+      <element name="thead" type="html/body/div/div/form/fieldset/table/thead"/>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="tbody" type="html/body/div/div/form/fieldset/table/tbody"/>
+      </sequence>
+    </sequence>
+  </complexType>
+  <complexType name="html/body/div/div/form/fieldset/label" mixed="true">
+    <element name="input" type="html/body/h2"/>
+  </complexType>
+  <complexType name="html/body/div/div/form/fieldset/input">
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="value" type="string" use="required"/>
+    <attribute name="disabled" type="string"/>
+    <attribute name="checked" type="string"/>
+  </complexType>
+  <complexType name="html/body/div/div/form/fieldset">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="table" type="html/body/div/div/form/fieldset/table"/>
+        <element name="label" type="html/body/div/div/form/fieldset/label"/>
+        <element name="input" type="html/body/div/div/form/fieldset/input"/>
+        <element name="div" type="html/body/div/div/form/fieldset/div"/>
+        <element name="legend" type="html/body/div/h2"/>
+      </choice>
+    </sequence>
+  </complexType>
+  <complexType name="html/body/div/div/form">
+    <choice>
+      <element name="fieldset" type="html/body/div/div/form/fieldset"/>
+      <sequence>
+        <element name="select" type="html/body/div/div/form/select"/>
+        <element name="input" type="html/body/div/div/h3"/>
+      </sequence>
+    </choice>
+    <attribute name="method" type="string" use="required"/>
+    <attribute name="action" type="string" use="required"/>
+    <attribute name="onsubmit" type="string"/>
+    <attribute name="class" type="string"/>
+  </complexType>
+  <complexType name="html/body/div/div/form/fieldset/div">
+    <attribute name="class" type="string"/>
+    <attribute name="src" type="string"/>
+    <attribute name="width" type="string"/>
+    <attribute name="height" type="string"/>
+    <attribute name="alt" type="string"/>
+    <attribute name="title" type="string"/>
+  </complexType>
+  <complexType name="html/body/div/div/h3">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="value" type="string"/>
+        <attribute name="type" type="string"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="html/body/div/div/ul/li/h4">
+    <element name="a" type="html/body/div/div/h2"/>
+  </complexType>
+  <complexType name="html/body/div/div/form/select">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="option" type="html/body/div/div/h3"/>
+    </sequence>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="size" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/table/thead/th">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="type" type="string"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="html/body/div/div/table/thead">
+    <choice>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="th" type="html/body/div/div/table/thead/th"/>
+      </sequence>
+      <element name="tr" type="html/body/div/div/table/thead/tr"/>
+    </choice>
+  </complexType>
+  <complexType name="html/body/div/div/table/tbody/tr/td/a" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="strong" type="html/body/div/div/table/tbody/tr/td/a/strong"/>
+    </sequence>
+    <attribute name="onclick" type="string"/>
+    <attribute name="href" type="string"/>
+  </complexType>
+  <complexType name="html/body/div/div/table/tbody/tr/td" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="a" type="html/body/div/div/table/tbody/tr/td/a"/>
+          <element name="img" type="html/body/div/div/form/fieldset/div"/>
+          <element name="code" type="html/body/div/div/table/thead/th"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="class" type="string"/>
+    <attribute name="style" type="string"/>
+  </complexType>
+  <complexType name="html/body/div/div/table/tbody/tr">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="td" type="html/body/div/div/table/tbody/tr/td"/>
+    </sequence>
+    <attribute name="class" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/table/tbody">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="tr" type="html/body/div/div/table/tbody/tr"/>
+    </sequence>
+  </complexType>
+  <complexType name="html/body/div/div/table">
+    <sequence>
+      <element name="thead" type="html/body/div/div/table/thead"/>
+      <element name="tbody" type="html/body/div/div/table/tbody"/>
+    </sequence>
+    <attribute name="class" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/table/thead/tr/th/a" mixed="true">
+    <element name="img" type="html/body/div/div/table/thead/tr/th/a/img"/>
+    <attribute name="href" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/table/thead/tr/th" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="a" type="html/body/div/div/table/thead/tr/th/a"/>
+    </sequence>
+  </complexType>
+  <complexType name="html/body/div/div/table/thead/tr/th/a/img">
+    <attribute name="width" type="string" use="required"/>
+    <attribute name="height" type="string" use="required"/>
+    <attribute name="src" type="string" use="required"/>
+    <attribute name="alt" type="string" use="required"/>
+    <attribute name="class" type="string"/>
+  </complexType>
+  <complexType name="html/body/div/div/table/thead/tr">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="th" type="html/body/div/div/table/thead/tr/th"/>
+    </sequence>
+  </complexType>
+  <complexType name="html/body/div/div/table/tbody/tr/td/a/strong">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="class" type="string"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="html/body/div/div/div/ul/li" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="ul" type="html/body/div/div/div/ul/li/ul"/>
+        <element name="span" type="html/body/div/div/table/tbody/tr/td/a/strong"/>
+      </choice>
+    </sequence>
+  </complexType>
+  <complexType name="html/body/div/div/div/ul/li/ul/li" mixed="true">
+    <choice>
+      <element name="ul" type="html/body/div/div/div/ul/li/ul/li/ul"/>
+      <element name="span" type="html/body/div/div/table/tbody/tr/td/a/strong"/>
+    </choice>
+  </complexType>
+  <complexType name="html/body/div/div/div/ul/li/ul/li/ul/li" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="ul" type="html/body/div/div/div/ul/li/ul/li/ul/li/ul"/>
+        <element name="span" type="html/body/div/div/table/tbody/tr/td/a/strong"/>
+      </choice>
+    </sequence>
+  </complexType>
+  <complexType name="html/body/div/div/div/ul/li/ul/li/ul/li/ul/li/ul/li">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="colspan" type="string"/>
+        <attribute name="title" type="string"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="html/body/div/div/div/ul/li/ul/li/ul/li/ul/li/ul">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="li" type="html/body/div/div/div/ul/li/ul/li/ul/li/ul/li/ul/li"/>
+    </sequence>
+    <attribute name="class" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/div/ul/li/ul/li/ul/li/ul/li" mixed="true">
+    <choice>
+      <element name="ul" type="html/body/div/div/div/ul/li/ul/li/ul/li/ul/li/ul"/>
+      <element name="span" type="html/body/div/div/table/tbody/tr/td/a/strong"/>
+    </choice>
+  </complexType>
+  <complexType name="html/body/div/div/div/ul/li/ul/li/ul/li/ul">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="li" type="html/body/div/div/div/ul/li/ul/li/ul/li/ul/li"/>
+    </sequence>
+    <attribute name="class" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/div/ul/li/ul/li/ul">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="li" type="html/body/div/div/div/ul/li/ul/li/ul/li"/>
+    </sequence>
+    <attribute name="class" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/div/ul/li/ul">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="li" type="html/body/div/div/div/ul/li/ul/li"/>
+    </sequence>
+    <attribute name="class" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/div/ul">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="li" type="html/body/div/div/div/ul/li"/>
+    </sequence>
+    <attribute name="class" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/div">
+    <choice>
+      <element name="ul" type="html/body/div/div/div/ul"/>
+      <sequence>
+        <choice>
+          <element name="h4" type="html/body/div/div/div/h4"/>
+          <element name="dl" type="html/body/div/div/table/tbody/tr/td/a/strong"/>
+        </choice>
+        <element name="div" type="html/body/div/div/div/div"/>
+        <sequence minOccurs="0" maxOccurs="1">
+          <element name="a" type="html/body/div/div/div/h4"/>
+        </sequence>
+      </sequence>
+    </choice>
+    <attribute name="class" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/ul/li/ul/li" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence>
+        <element name="img" type="html/body/div/div/table/thead/tr/th/a/img"/>
+        <element name="a" type="html/body/div/div/table/thead/tr/th/a"/>
+      </sequence>
+    </sequence>
+  </complexType>
+  <complexType name="html/body/div/div/ul/li/ul">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="li" type="html/body/div/div/ul/li/ul/li"/>
+    </sequence>
+  </complexType>
+  <complexType name="html/body/div/div/div/h4">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="onclick" type="string"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="html/body/div/div/div/div/div">
+    <element name="span" type="html/body/div/div/table/tbody/tr/td/a/strong"/>
+    <attribute name="class" type="string" use="required"/>
+    <attribute name="style" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/div/div">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="div" type="html/body/div/div/div/div/div"/>
+        <element name="h2" type="html/body/div/div/div/div/h2"/>
+        <element name="ul" type="html/body/div/div/div/div/ul"/>
+        <element name="p" type="html/body/div/div/ul/li/h4"/>
+        <element name="h3" type="html/body/div/div/div/div/h2"/>
+      </choice>
+    </sequence>
+    <attribute name="class" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/ul/li/img">
+    <attribute name="src" type="string" use="required"/>
+    <attribute name="width" type="string" use="required"/>
+    <attribute name="height" type="string" use="required"/>
+    <attribute name="alt" type="string" use="required"/>
+    <attribute name="title" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/dl/dt">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="name" type="string"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="html/body/div/div/dl">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="dt" type="html/body/div/div/dl/dt"/>
+        <element name="dd" type="html/body/div/div/dl/dt"/>
+      </choice>
+    </sequence>
+    <attribute name="class" type="string" use="required"/>
+  </complexType>
+  <complexType name="html/body/div/div/div/div/h2" mixed="true">
+    <element name="a" type="html/body/div/div/dl/dt"/>
+  </complexType>
+  <complexType name="html/body/div/div/div/div/ul/li">
+    <element name="p" type="html/body/div/div/ul/li/h4"/>
+  </complexType>
+  <complexType name="html/body/div/div/div/div/ul">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="li" type="html/body/div/div/div/div/ul/li"/>
+    </sequence>
+  </complexType>
+</schema>

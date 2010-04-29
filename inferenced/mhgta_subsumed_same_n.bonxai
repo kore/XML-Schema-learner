@@ -1,0 +1,925 @@
+namespace http://example.com/generated
+
+grammar {
+	( //title/idno | //date/idno | //language/idno | //seriesStmt/p/idno | //projectDesc/p/idno | //fileDesc/publicationStmt/idno | //w/publicationStmt/idno | //refsDecl/p/idno | //div1/lb/idno | //foreign/lb/idno | //p/pb/idno | //div2/pb/idno | //name/lb/idno | //w/lb/idno | //seg/pb/idno | //sic/lb/publicationStmt/idno | //item/lb/publicationStmt/idno | //abbr/lb/publicationStmt/idno | //fw/lb/publicationStmt/idno | //l/lb/publicationStmt/idno | //lg2/pb/publicationStmt/idno | //p/pb/publicationStmt/idno | //orig/pb/publicationStmt/idno | //editorialDecl/p/lb/idno | //div3/p/lb/idno | //orig/hi/lb/publicationStmt/idno | //corr/lb/lb/publicationStmt/idno | //seg/orig/lb/publicationStmt/idno | //name/hi/lb/publicationStmt/idno | //q/orig/lb/publicationStmt/idno | //l/orig/lb/publicationStmt/idno | //ref/w/orig/lb/idno | //orig/name/orig/lb/idno | //div2/p/hi/lb/idno | //p/w/hi/lb/idno | //hi/w/hi/lb/idno | //p/orig/hi/lb/idno | //orig/hi/hi/lb/idno | //orig/hi/orig/lb/idno | //div2/p/orig/lb/idno | //div3/p/hi/lb/idno | //div3/p/orig/lb/idno | //orig/w/orig/lb/idno | //head/hi/lb/lb/publicationStmt/idno | //div1/lg/lb/lb/publicationStmt/idno | //fw/hi/lb/lb/publicationStmt/idno | //notesStmt/orig/lb/lb/publicationStmt/idno | //l/orig/lb/lb/publicationStmt/idno | //div2/lg/lb/lb/publicationStmt/idno | //lg2/fw/hi/lb/publicationStmt/idno | //seg/hi/lb/lb/publicationStmt/idno | //seg/hi/orig/lb/publicationStmt/idno | //div1/p/name/orig/lb/idno | //orig/hi/w/orig/lb/idno | //div2/p/hi/hi/lb/idno | //p/w/hi/hi/lb/idno | //hi/w/hi/hi/lb/idno | //div2/p/hi/orig/lb/idno | //p/w/hi/orig/lb/idno | //hi/w/hi/orig/lb/idno | //p/hi/name/orig/lb/idno | //orig/hi/name/orig/lb/idno | //div3/p/name/orig/lb/idno | //head/fw/hi/orig/lb/idno | //w/w/w/orig/lb/idno | //div3/p/hi/orig/lb/idno | //hi/hi/hi/orig/lb/idno | //orig/w/w/orig/lb/idno | //l/w/w/orig/lb/idno | //div2/p/w/orig/lb/idno | //div3/p/w/orig/lb/idno | //div3/p/hi/hi/lb/idno | //orig/hi/hi/orig/lb/idno | //l/hi/w/orig/lb/idno | //div1/p/w/orig/lb/idno | //hi/w/orig/hi/lb/idno | //p/w/orig/hi/lb/idno | //orig/w/orig/hi/lb/idno | //fw/hi/hi/lb/lb/publicationStmt/idno | //div1/lg/fw/hi/lb/publicationStmt/idno | //head/hi/hi/lb/lb/publicationStmt/idno | //hi/hi/hi/lb/lb/publicationStmt/idno | //notesStmt/w/hi/lb/lb/publicationStmt/idno | //hi/w/hi/lb/lb/publicationStmt/idno | //l/w/hi/lb/lb/publicationStmt/idno | //hi/hi/orig/lb/lb/publicationStmt/idno | //add/fw/hi/orig/lb/publicationStmt/idno | //div2/lg/fw/hi/lb/publicationStmt/idno | //seg/hi/orig/lb/lb/publicationStmt/idno | //div2/p/hi/w/orig/lb/idno | //p/w/hi/w/orig/lb/idno | //hi/w/hi/w/orig/lb/idno | //div1/p/hi/w/orig/lb/idno | //p/w/hi/name/orig/lb/idno | //hi/w/hi/name/orig/lb/idno | //hi/w/fw/hi/orig/lb/idno | //p/w/fw/hi/orig/lb/idno | //orig/w/fw/hi/orig/lb/idno | //orig/hi/w/w/orig/lb/idno | //div2/p/w/w/orig/lb/idno | //div3/p/hi/hi/orig/lb/idno | //l/hi/w/w/orig/lb/idno | //div1/p/w/w/orig/lb/idno | //div3/p/w/w/orig/lb/idno | //div3/p/hi/w/orig/lb/idno | //orig/hi/hi/w/orig/lb/idno | //div2/p/hi/hi/orig/lb/idno | //p/w/hi/hi/orig/lb/idno | //hi/w/hi/hi/orig/lb/idno | //biblFull/notesStmt/hi/w/orig/lb/idno | //fileDesc/notesStmt/hi/w/orig/lb/idno | //w/notesStmt/hi/w/orig/lb/idno | //p/orig/fw/hi/orig/lb/publicationStmt/idno | //orig/orig/fw/hi/orig/lb/publicationStmt/idno | //div2/p/hi/w/w/orig/lb/idno | //p/w/hi/w/w/orig/lb/idno | //hi/w/hi/w/w/orig/lb/idno | //biblFull/notesStmt/hi/w/w/orig/lb/idno | //fileDesc/notesStmt/hi/w/w/orig/lb/idno | //w/notesStmt/hi/w/w/orig/lb/idno | //div3/p/hi/w/w/orig/lb/idno | //orig/hi/hi/w/w/orig/lb/idno | //p/hi/hi/hi/w/orig/lb/idno | //div2/p/hi/hi/w/orig/lb/idno | //p/w/hi/hi/w/orig/lb/idno | //hi/w/hi/hi/w/orig/lb/idno | //div3/p/hi/hi/w/orig/lb/idno | //sic/lb/notesStmt/hi/w/orig/lb/idno | //item/lb/notesStmt/hi/w/orig/lb/idno | //abbr/lb/notesStmt/hi/w/orig/lb/idno | //fw/lb/notesStmt/hi/w/orig/lb/idno | //l/lb/notesStmt/hi/w/orig/lb/idno | //lg2/pb/notesStmt/hi/w/orig/lb/idno | //p/pb/notesStmt/hi/w/orig/lb/idno | //orig/pb/notesStmt/hi/w/orig/lb/idno | //l/hi/w/w/hi/lb/lb/publicationStmt/idno | //hi/hi/w/w/hi/lb/lb/publicationStmt/idno | //hi/w/orig/fw/hi/orig/lb/publicationStmt/idno | //p/w/orig/fw/hi/orig/lb/publicationStmt/idno | //orig/w/orig/fw/hi/orig/lb/publicationStmt/idno | //sic/lb/notesStmt/hi/w/w/orig/lb/idno | //item/lb/notesStmt/hi/w/w/orig/lb/idno | //abbr/lb/notesStmt/hi/w/w/orig/lb/idno | //fw/lb/notesStmt/hi/w/w/orig/lb/idno | //l/lb/notesStmt/hi/w/w/orig/lb/idno | //lg2/pb/notesStmt/hi/w/w/orig/lb/idno | //p/pb/notesStmt/hi/w/w/orig/lb/idno | //orig/pb/notesStmt/hi/w/w/orig/lb/idno | //p/hi/hi/hi/w/w/orig/lb/idno | //div3/p/hi/hi/w/w/orig/lb/idno | //div2/p/hi/hi/w/w/orig/lb/idno | //p/w/hi/hi/w/w/orig/lb/idno | //hi/w/hi/hi/w/w/orig/lb/idno | //orig/hi/lb/notesStmt/hi/w/orig/lb/idno | //seg/orig/lb/notesStmt/hi/w/orig/lb/idno | //name/hi/lb/notesStmt/hi/w/orig/lb/idno | //orig/lb/lb/notesStmt/hi/w/orig/lb/idno | //q/orig/lb/notesStmt/hi/w/orig/lb/idno | //l/orig/lb/notesStmt/hi/w/orig/lb/idno | //orig/hi/lb/notesStmt/hi/w/w/orig/lb/idno | //seg/orig/lb/notesStmt/hi/w/w/orig/lb/idno | //name/hi/lb/notesStmt/hi/w/w/orig/lb/idno | //orig/lb/lb/notesStmt/hi/w/w/orig/lb/idno | //q/orig/lb/notesStmt/hi/w/w/orig/lb/idno | //l/orig/lb/notesStmt/hi/w/w/orig/lb/idno | //head/hi/lb/lb/notesStmt/hi/w/orig/lb/idno | //div1/lg/lb/lb/notesStmt/hi/w/orig/lb/idno | //fw/hi/lb/lb/notesStmt/hi/w/orig/lb/idno | //div2/lg/lb/lb/notesStmt/hi/w/orig/lb/idno | //fw/hi/orig/lb/notesStmt/hi/w/orig/lb/idno | //lg2/fw/hi/lb/notesStmt/hi/w/orig/lb/idno | //seg/hi/orig/lb/notesStmt/hi/w/orig/lb/idno | //head/hi/lb/lb/notesStmt/hi/w/w/orig/lb/idno | //div1/lg/lb/lb/notesStmt/hi/w/w/orig/lb/idno | //fw/hi/lb/lb/notesStmt/hi/w/w/orig/lb/idno | //div2/lg/lb/lb/notesStmt/hi/w/w/orig/lb/idno | //lg2/fw/hi/lb/notesStmt/hi/w/w/orig/lb/idno | //seg/hi/orig/lb/notesStmt/hi/w/w/orig/lb/idno | //fw/hi/hi/lb/lb/notesStmt/hi/w/orig/lb/idno | //div1/lg/fw/hi/lb/notesStmt/hi/w/orig/lb/idno | //head/hi/hi/lb/lb/notesStmt/hi/w/orig/lb/idno | //hi/hi/hi/lb/lb/notesStmt/hi/w/orig/lb/idno | //div2/lg/fw/hi/lb/notesStmt/hi/w/orig/lb/idno | //fw/hi/hi/lb/lb/notesStmt/hi/w/w/orig/lb/idno | //div1/lg/fw/hi/lb/notesStmt/hi/w/w/orig/lb/idno | //head/hi/hi/lb/lb/notesStmt/hi/w/w/orig/lb/idno | //hi/hi/hi/lb/lb/notesStmt/hi/w/w/orig/lb/idno | //orig/fw/hi/orig/lb/notesStmt/hi/w/w/orig/lb/idno | //add/fw/hi/orig/lb/notesStmt/hi/w/w/orig/lb/idno | //div2/lg/fw/hi/lb/notesStmt/hi/w/w/orig/lb/idno | //l/hi/w/w/hi/lb/lb/notesStmt/hi/w/orig/lb/idno | //hi/hi/w/w/hi/lb/lb/notesStmt/hi/w/orig/lb/idno | //l/hi/w/w/hi/lb/lb/notesStmt/hi/w/w/orig/lb/idno | //hi/hi/w/w/hi/lb/lb/notesStmt/hi/w/w/orig/lb/idno ) = {
+		attribute type { string }?,
+		attribute TEIform { string }?,
+		attribute level { string }?,
+		EMPTY
+	}
+
+	//editor = {
+		attribute TEIform { string }?,
+		attribute role { string }?,
+		EMPTY
+	}
+
+	( //add/lb | //div1/p/lb | //orig/orig/lb | //div1/p/orig/lb | //div1/p/hi/lb ) = {
+		attribute TEIform { string }?,
+		attribute n { string }?,
+		attribute id { string }?,
+		attribute rend { string }?,
+		( element resp | element name )+
+	}
+
+	( //fileDesc/titleStmt | //w/titleStmt | //sic/lb/titleStmt | //item/lb/titleStmt | //abbr/lb/titleStmt | //fw/lb/titleStmt | //l/lb/titleStmt | //lg2/pb/titleStmt | //p/pb/titleStmt | //orig/pb/titleStmt | //orig/hi/lb/titleStmt | //corr/lb/lb/titleStmt | //seg/orig/lb/titleStmt | //name/hi/lb/titleStmt | //q/orig/lb/titleStmt | //l/orig/lb/titleStmt | //head/hi/lb/lb/titleStmt | //div1/lg/lb/lb/titleStmt | //fw/hi/lb/lb/titleStmt | //notesStmt/orig/lb/lb/titleStmt | //l/orig/lb/lb/titleStmt | //div2/lg/lb/lb/titleStmt | //lg2/fw/hi/lb/titleStmt | //seg/hi/lb/lb/titleStmt | //seg/hi/orig/lb/titleStmt | //fw/hi/hi/lb/lb/titleStmt | //div1/lg/fw/hi/lb/titleStmt | //head/hi/hi/lb/lb/titleStmt | //hi/hi/hi/lb/lb/titleStmt | //notesStmt/w/hi/lb/lb/titleStmt | //hi/w/hi/lb/lb/titleStmt | //l/w/hi/lb/lb/titleStmt | //hi/hi/orig/lb/lb/titleStmt | //add/fw/hi/orig/lb/titleStmt | //div2/lg/fw/hi/lb/titleStmt | //seg/hi/orig/lb/lb/titleStmt | //p/orig/fw/hi/orig/lb/titleStmt | //orig/orig/fw/hi/orig/lb/titleStmt | //l/hi/w/w/hi/lb/lb/titleStmt | //hi/hi/w/w/hi/lb/lb/titleStmt | //hi/w/orig/fw/hi/orig/lb/titleStmt | //p/w/orig/fw/hi/orig/lb/titleStmt | //orig/w/orig/fw/hi/orig/lb/titleStmt ) = {
+		attribute TEIform { string }?,
+		attribute place { string }?,
+		attribute anchored { string }?,
+		attribute type { string }?,
+		attribute resp { string }?,
+		( element title*, element author, element editor*, element respStmt )
+	}
+
+	( //hi/orig/w | //l/orig/w | //biblFull/notesStmt/orig/w | //fileDesc/notesStmt/orig/w | //w/notesStmt/orig/w | //sic/lb/notesStmt/orig/w | //item/lb/notesStmt/orig/w | //abbr/lb/notesStmt/orig/w | //fw/lb/notesStmt/orig/w | //l/lb/notesStmt/orig/w | //lg2/pb/notesStmt/orig/w | //p/pb/notesStmt/orig/w | //orig/pb/notesStmt/orig/w | //orig/hi/hi/hi/w | //l/hi/hi/hi/w | //orig/hi/lb/notesStmt/orig/w | //seg/orig/lb/notesStmt/orig/w | //orig/lb/lb/notesStmt/orig/w | //q/orig/lb/notesStmt/orig/w | //l/orig/lb/notesStmt/orig/w | //div2/p/hi/hi/hi/w | //p/w/hi/hi/hi/w | //hi/w/hi/hi/hi/w | //head/hi/lb/lb/notesStmt/orig/w | //div1/lg/lb/lb/notesStmt/orig/w | //fw/hi/lb/lb/notesStmt/orig/w | //div2/lg/lb/lb/notesStmt/orig/w | //lg2/fw/hi/lb/notesStmt/orig/w | //seg/hi/orig/lb/notesStmt/orig/w | //fw/hi/hi/lb/lb/notesStmt/orig/w | //div1/lg/fw/hi/lb/notesStmt/orig/w | //head/hi/hi/lb/lb/notesStmt/orig/w | //hi/hi/hi/lb/lb/notesStmt/orig/w | //add/fw/hi/orig/lb/notesStmt/orig/w | //div2/lg/fw/hi/lb/notesStmt/orig/w | //p/orig/fw/hi/orig/lb/notesStmt/orig/w | //orig/orig/fw/hi/orig/lb/notesStmt/orig/w | //l/hi/w/w/hi/lb/lb/notesStmt/orig/w | //hi/hi/w/w/hi/lb/lb/notesStmt/orig/w | //p/w/orig/fw/hi/orig/lb/notesStmt/orig/w | //orig/w/orig/fw/hi/orig/lb/notesStmt/orig/w ) = {
+		attribute TEIform { string }?,
+		attribute type { string }?,
+		attribute part { string }?,
+		element p*
+	}
+
+	( //fileDesc/publicationStmt | //w/publicationStmt | //sic/lb/publicationStmt | //item/lb/publicationStmt | //abbr/lb/publicationStmt | //fw/lb/publicationStmt | //l/lb/publicationStmt | //lg2/pb/publicationStmt | //p/pb/publicationStmt | //orig/pb/publicationStmt | //orig/hi/lb/publicationStmt | //corr/lb/lb/publicationStmt | //seg/orig/lb/publicationStmt | //name/hi/lb/publicationStmt | //q/orig/lb/publicationStmt | //l/orig/lb/publicationStmt | //head/hi/lb/lb/publicationStmt | //div1/lg/lb/lb/publicationStmt | //fw/hi/lb/lb/publicationStmt | //notesStmt/orig/lb/lb/publicationStmt | //l/orig/lb/lb/publicationStmt | //div2/lg/lb/lb/publicationStmt | //lg2/fw/hi/lb/publicationStmt | //seg/hi/lb/lb/publicationStmt | //seg/hi/orig/lb/publicationStmt | //fw/hi/hi/lb/lb/publicationStmt | //div1/lg/fw/hi/lb/publicationStmt | //head/hi/hi/lb/lb/publicationStmt | //hi/hi/hi/lb/lb/publicationStmt | //notesStmt/w/hi/lb/lb/publicationStmt | //hi/w/hi/lb/lb/publicationStmt | //l/w/hi/lb/lb/publicationStmt | //hi/hi/orig/lb/lb/publicationStmt | //add/fw/hi/orig/lb/publicationStmt | //div2/lg/fw/hi/lb/publicationStmt | //seg/hi/orig/lb/lb/publicationStmt | //p/orig/fw/hi/orig/lb/publicationStmt | //orig/orig/fw/hi/orig/lb/publicationStmt | //l/hi/w/w/hi/lb/lb/publicationStmt | //hi/hi/w/w/hi/lb/lb/publicationStmt | //hi/w/orig/fw/hi/orig/lb/publicationStmt | //p/w/orig/fw/hi/orig/lb/publicationStmt | //orig/w/orig/fw/hi/orig/lb/publicationStmt | //language ) = {
+		attribute TEIform { string }?,
+		attribute id { string }?,
+		attribute n { string }?,
+		( element availability | element idno | element publisher | element pubPlace | element date )+
+	}
+
+	( //head/note | //foreign/note | //div1/p/note | //orig/hi/note | //div2/p/note | //div3/p/note | //biblFull/notesStmt/hi/note | //fileDesc/notesStmt/hi/note | //w/notesStmt/hi/note | //div2/p/hi/note | //p/w/hi/note | //hi/w/hi/note | //orig/hi/hi/note | //div2/lg/l/note | //l/hi/hi/note | //div3/p/hi/note | //sic/lb/notesStmt/hi/note | //item/lb/notesStmt/hi/note | //abbr/lb/notesStmt/hi/note | //fw/lb/notesStmt/hi/note | //l/lb/notesStmt/hi/note | //lg2/pb/notesStmt/hi/note | //p/pb/notesStmt/hi/note | //orig/pb/notesStmt/hi/note | //div1/lg/l/hi/note | //div2/p/hi/hi/note | //p/w/hi/hi/note | //hi/w/hi/hi/note | //div2/lg/l/hi/note | //p/hi/hi/hi/note | //orig/hi/hi/hi/note | //l/hi/hi/hi/note | //div3/p/hi/hi/note | //orig/hi/lb/notesStmt/hi/note | //seg/orig/lb/notesStmt/hi/note | //name/hi/lb/notesStmt/hi/note | //orig/lb/lb/notesStmt/hi/note | //q/orig/lb/notesStmt/hi/note | //l/orig/lb/notesStmt/hi/note | //p/w/hi/hi/hi/note | //hi/w/hi/hi/hi/note | //head/hi/lb/lb/notesStmt/hi/note | //div1/lg/lb/lb/notesStmt/hi/note | //fw/hi/lb/lb/notesStmt/hi/note | //div2/lg/lb/lb/notesStmt/hi/note | //lg2/fw/hi/lb/notesStmt/hi/note | //seg/hi/orig/lb/notesStmt/hi/note | //fw/hi/hi/lb/lb/notesStmt/hi/note | //div1/lg/fw/hi/lb/notesStmt/hi/note | //head/hi/hi/lb/lb/notesStmt/hi/note | //hi/hi/hi/lb/lb/notesStmt/hi/note | //add/fw/hi/orig/lb/notesStmt/hi/note | //div2/lg/fw/hi/lb/notesStmt/hi/note | //p/orig/fw/hi/orig/lb/notesStmt/hi/note | //orig/orig/fw/hi/orig/lb/notesStmt/hi/note | //w/orig/fw/hi/orig/lb/notesStmt/hi/note | //l/hi/w/w/hi/lb/lb/notesStmt/hi/note | //hi/hi/w/w/hi/lb/lb/notesStmt/hi/note | //term ) = {
+		attribute TEIform { string }?,
+		attribute type { string }?,
+		attribute place { string }?,
+		attribute anchored { string }?,
+		element note?
+	}
+
+	//titlePage/docAuthor = {
+		attribute TEIform { string }?,
+		attribute unit { string }?,
+		attribute rend { string }?,
+		attribute ed { string }?,
+		attribute n { string }?,
+		element p
+	}
+
+	//div1/lg/l = {
+		attribute TEIform { string }?,
+		attribute rend { string }?,
+		attribute id { string }?,
+		attribute n { string }?,
+		attribute part { string }?,
+		( element note | element fw | element hi | element name | element w | element foreign | element seg | element milestone | element gap | element lb | element pb | element corr | element orig )
+	}
+
+	( //lg/gap | //biblFull/notesStmt/gap | //fileDesc/notesStmt/gap | //w/notesStmt/gap | //hi/hi/gap | //lg2/l/gap | //sic/lb/notesStmt/gap | //item/lb/notesStmt/gap | //abbr/lb/notesStmt/gap | //fw/lb/notesStmt/gap | //l/lb/notesStmt/gap | //lg2/pb/notesStmt/gap | //p/pb/notesStmt/gap | //orig/pb/notesStmt/gap | //div1/lg/l/gap | //orig/hi/lb/notesStmt/gap | //seg/orig/lb/notesStmt/gap | //name/hi/lb/notesStmt/gap | //orig/lb/lb/notesStmt/gap | //q/orig/lb/notesStmt/gap | //l/orig/lb/notesStmt/gap | //head/hi/lb/lb/notesStmt/gap | //div1/lg/lb/lb/notesStmt/gap | //fw/hi/lb/lb/notesStmt/gap | //div2/lg/lb/lb/notesStmt/gap | //lg2/fw/hi/lb/notesStmt/gap | //seg/hi/orig/lb/notesStmt/gap | //fw/hi/hi/lb/lb/notesStmt/gap | //div1/lg/fw/hi/lb/notesStmt/gap | //head/hi/hi/lb/lb/notesStmt/gap | //hi/hi/hi/lb/lb/notesStmt/gap | //add/fw/hi/orig/lb/notesStmt/gap | //div2/lg/fw/hi/lb/notesStmt/gap | //p/orig/fw/hi/orig/lb/notesStmt/gap | //orig/orig/fw/hi/orig/lb/notesStmt/gap | //l/hi/w/w/hi/lb/lb/notesStmt/gap | //hi/hi/w/w/hi/lb/lb/notesStmt/gap | //p/w/orig/fw/hi/orig/lb/notesStmt/gap | //orig/w/orig/fw/hi/orig/lb/notesStmt/gap ) = {
+		attribute TEIform { string }?,
+		attribute rend { string }?,
+		attribute extent { string }?,
+		( element title*, element author, element editor* )
+	}
+
+	( //l/w/add | //biblFull/notesStmt/w/add | //fileDesc/notesStmt/w/add | //w/notesStmt/w/add | //l/hi/w/add | //div1/p/w/add | //p/hi/w/add | //orig/hi/w/add | //sic/lb/notesStmt/w/add | //item/lb/notesStmt/w/add | //abbr/lb/notesStmt/w/add | //fw/lb/notesStmt/w/add | //l/lb/notesStmt/w/add | //lg2/pb/notesStmt/w/add | //p/pb/notesStmt/w/add | //orig/pb/notesStmt/w/add | //biblFull/notesStmt/hi/w/add | //fileDesc/notesStmt/hi/w/add | //w/notesStmt/hi/w/add | //p/w/hi/w/add | //hi/w/hi/w/add | //orig/hi/w/w/add | //div2/p/w/w/add | //seg/orig/lb/notesStmt/w/add | //name/hi/lb/notesStmt/w/add | //orig/lb/lb/notesStmt/w/add | //q/orig/lb/notesStmt/w/add | //l/orig/lb/notesStmt/w/add | //l/hi/hi/w/w/add | //sic/lb/notesStmt/hi/w/add | //item/lb/notesStmt/hi/w/add | //abbr/lb/notesStmt/hi/w/add | //fw/lb/notesStmt/hi/w/add | //l/lb/notesStmt/hi/w/add | //lg2/pb/notesStmt/hi/w/add | //p/pb/notesStmt/hi/w/add | //orig/pb/notesStmt/hi/w/add | //div2/p/hi/w/w/add | //p/w/hi/w/w/add | //hi/w/hi/w/w/add | //head/hi/lb/lb/notesStmt/w/add | //div1/lg/lb/lb/notesStmt/w/add | //fw/hi/lb/lb/notesStmt/w/add | //div2/lg/lb/lb/notesStmt/w/add | //lg2/fw/hi/lb/notesStmt/w/add | //seg/hi/orig/lb/notesStmt/w/add | //div2/lg/l/hi/w/w/add | //orig/hi/lb/notesStmt/hi/w/add | //seg/orig/lb/notesStmt/hi/w/add | //name/hi/lb/notesStmt/hi/w/add | //orig/lb/lb/notesStmt/hi/w/add | //q/orig/lb/notesStmt/hi/w/add | //l/orig/lb/notesStmt/hi/w/add | //p/hi/hi/w/w/w/add | //orig/hi/hi/w/w/w/add | //fw/hi/hi/lb/lb/notesStmt/w/add | //div1/lg/fw/hi/lb/notesStmt/w/add | //head/hi/hi/lb/lb/notesStmt/w/add | //hi/hi/hi/lb/lb/notesStmt/w/add | //add/fw/hi/orig/lb/notesStmt/w/add | //div2/lg/fw/hi/lb/notesStmt/w/add | //head/hi/lb/lb/notesStmt/hi/w/add | //div1/lg/lb/lb/notesStmt/hi/w/add | //fw/hi/lb/lb/notesStmt/hi/w/add | //div2/lg/lb/lb/notesStmt/hi/w/add | //lg2/fw/hi/lb/notesStmt/hi/w/add | //seg/hi/orig/lb/notesStmt/hi/w/add | //p/w/hi/hi/w/w/w/add | //hi/w/hi/hi/w/w/w/add | //p/orig/fw/hi/orig/lb/notesStmt/w/add | //orig/orig/fw/hi/orig/lb/notesStmt/w/add | //fw/hi/hi/lb/lb/notesStmt/hi/w/add | //div1/lg/fw/hi/lb/notesStmt/hi/w/add | //head/hi/hi/lb/lb/notesStmt/hi/w/add | //hi/hi/hi/lb/lb/notesStmt/hi/w/add | //orig/fw/hi/orig/lb/notesStmt/hi/w/add | //add/fw/hi/orig/lb/notesStmt/hi/w/add | //div2/lg/fw/hi/lb/notesStmt/hi/w/add | //p/w/orig/fw/hi/orig/lb/notesStmt/w/add | //orig/w/orig/fw/hi/orig/lb/notesStmt/w/add | //l/hi/w/w/hi/lb/lb/notesStmt/hi/w/add | //hi/hi/w/w/hi/lb/lb/notesStmt/hi/w/add ) = {
+		attribute TEIform { string }?,
+		attribute rend { string }?,
+		attribute unit { string }?,
+		attribute ed { string }?,
+		element p
+	}
+
+	//biblFull/publicationStmt = {
+		attribute TEIform { string }?,
+		attribute place { string }?,
+		attribute anchored { string }?,
+		( element publisher, element pubPlace, element date, element idno )
+	}
+
+	( //biblFull/seriesStmt | //projectDesc ) = {
+		attribute TEIform { string }?,
+		attribute default { string }?,
+		element p
+	}
+
+	//biblFull = {
+		attribute default { string }?,
+		attribute TEIform { string }?,
+		( element titleStmt, element editionStmt, element extent, element publicationStmt, element seriesStmt, element notesStmt )
+	}
+
+	//sourceDesc = {
+		attribute default { string }?,
+		attribute TEIform { string }?,
+		element biblFull
+	}
+
+	( //hi/ref/w | //fileDesc ) = {
+		attribute TEIform { string }?,
+		attribute n { string }?,
+		attribute lemma { string }?,
+		attribute part { string }?,
+		( element titleStmt, element extent, element publicationStmt, element seriesStmt, element notesStmt, element sourceDesc )
+	}
+
+	//editorialDecl/p = {
+		attribute id { string }?,
+		attribute TEIform { string }?,
+		( element note | element seg | element lb | element cb | element name | element hi | element sic )?
+	}
+
+	//editorialDecl = {
+		attribute default { string }?,
+		attribute TEIform { string }?,
+		element p*
+	}
+
+	//refsDecl = {
+		attribute doctype { string }?,
+		attribute TEIform { string }?,
+		element p
+	}
+
+	//bibl = {
+		attribute default { string }?,
+		attribute TEIform { string }?,
+		element title
+	}
+
+	//taxonomy = {
+		attribute id { string },
+		attribute TEIform { string }?,
+		element bibl
+	}
+
+	( //p/corr | //seg/corr | //head/hi/corr | //lg2/l/corr | //p/hi/corr | //orig/hi/corr | //fw/hi/hi/corr | //head/fw/hi/corr | //lg2/l/hi/corr | //l/fw/hi/corr | //p/w/hi/corr | //lg/l/hi/corr | //p/hi/w/hi/corr | //orig/hi/w/hi/corr | //hi/hi/w/hi/corr | //p/w/hi/w/hi/corr | //hi/w/hi/w/hi/corr | //classDecl ) = {
+		attribute TEIform { string }?,
+		attribute sic { string }?,
+		attribute resp { string }?,
+		element taxonomy
+	}
+
+	( //body/milestone | //encodingDesc ) = {
+		attribute TEIform { string }?,
+		attribute n { string }?,
+		attribute unit { string }?,
+		attribute rend { string }?,
+		( element projectDesc, element editorialDecl, element refsDecl, element classDecl )
+	}
+
+	( //div2/p/w/add | //div3/p/w/add | //orig/hi/hi/w/w/add | //p/hi/hi/hi/w/add | //div2/p/hi/hi/w/w/add | //p/w/hi/hi/w/w/add | //hi/w/hi/hi/w/w/add | //creation ) = {
+		attribute TEIform { string }?,
+		attribute rend { string }?,
+		attribute reg { string }?,
+		element date
+	}
+
+	//langUsage = {
+		attribute default { string }?,
+		attribute TEIform { string }?,
+		element language*
+	}
+
+	//keywords = {
+		attribute TEIform { string }?,
+		attribute scheme { string }?,
+		element term*
+	}
+
+	//textClass = {
+		attribute default { string }?,
+		attribute TEIform { string }?,
+		element keywords*
+	}
+
+	( //hi/add | //orig/w/w/add | //div1/p/w/w/add | //div3/p/w/w/add | //hi/w/orig/w/add | //p/w/orig/w/add | //orig/w/orig/w/add | //biblFull/notesStmt/w/w/add | //fileDesc/notesStmt/w/w/add | //w/notesStmt/w/w/add | //biblFull/notesStmt/hi/w/w/add | //fileDesc/notesStmt/hi/w/w/add | //w/notesStmt/hi/w/w/add | //div2/lg/l/w/w/add | //div3/p/hi/w/w/add | //sic/lb/notesStmt/w/w/add | //item/lb/notesStmt/w/w/add | //abbr/lb/notesStmt/w/w/add | //fw/lb/notesStmt/w/w/add | //l/lb/notesStmt/w/w/add | //lg2/pb/notesStmt/w/w/add | //p/pb/notesStmt/w/w/add | //orig/pb/notesStmt/w/w/add | //div1/lg/l/w/w/add | //l/hi/w/w/w/add | //sic/lb/notesStmt/hi/w/w/add | //item/lb/notesStmt/hi/w/w/add | //abbr/lb/notesStmt/hi/w/w/add | //fw/lb/notesStmt/hi/w/w/add | //l/lb/notesStmt/hi/w/w/add | //lg2/pb/notesStmt/hi/w/w/add | //p/pb/notesStmt/hi/w/w/add | //orig/pb/notesStmt/hi/w/w/add | //div1/lg/l/hi/w/w/add | //p/hi/hi/hi/w/w/add | //div3/p/hi/hi/w/w/add | //seg/orig/lb/notesStmt/w/w/add | //name/hi/lb/notesStmt/w/w/add | //orig/lb/lb/notesStmt/w/w/add | //q/orig/lb/notesStmt/w/w/add | //l/orig/lb/notesStmt/w/w/add | //l/hi/hi/w/w/w/add | //orig/hi/lb/notesStmt/hi/w/w/add | //seg/orig/lb/notesStmt/hi/w/w/add | //name/hi/lb/notesStmt/hi/w/w/add | //orig/lb/lb/notesStmt/hi/w/w/add | //q/orig/lb/notesStmt/hi/w/w/add | //l/orig/lb/notesStmt/hi/w/w/add | //head/hi/lb/lb/notesStmt/w/w/add | //div1/lg/lb/lb/notesStmt/w/w/add | //fw/hi/lb/lb/notesStmt/w/w/add | //div2/lg/lb/lb/notesStmt/w/w/add | //lg2/fw/hi/lb/notesStmt/w/w/add | //seg/hi/orig/lb/notesStmt/w/w/add | //head/hi/lb/lb/notesStmt/hi/w/w/add | //div1/lg/lb/lb/notesStmt/hi/w/w/add | //fw/hi/lb/lb/notesStmt/hi/w/w/add | //div2/lg/lb/lb/notesStmt/hi/w/w/add | //lg2/fw/hi/lb/notesStmt/hi/w/w/add | //seg/hi/orig/lb/notesStmt/hi/w/w/add | //fw/hi/hi/lb/lb/notesStmt/w/w/add | //div1/lg/fw/hi/lb/notesStmt/w/w/add | //head/hi/hi/lb/lb/notesStmt/w/w/add | //hi/hi/hi/lb/lb/notesStmt/w/w/add | //add/fw/hi/orig/lb/notesStmt/w/w/add | //div2/lg/fw/hi/lb/notesStmt/w/w/add | //fw/hi/hi/lb/lb/notesStmt/hi/w/w/add | //div1/lg/fw/hi/lb/notesStmt/hi/w/w/add | //head/hi/hi/lb/lb/notesStmt/hi/w/w/add | //hi/hi/hi/lb/lb/notesStmt/hi/w/w/add | //orig/fw/hi/orig/lb/notesStmt/hi/w/w/add | //add/fw/hi/orig/lb/notesStmt/hi/w/w/add | //div2/lg/fw/hi/lb/notesStmt/hi/w/w/add | //p/orig/fw/hi/orig/lb/notesStmt/w/w/add | //orig/orig/fw/hi/orig/lb/notesStmt/w/w/add | //p/w/orig/fw/hi/orig/lb/notesStmt/w/w/add | //orig/w/orig/fw/hi/orig/lb/notesStmt/w/w/add | //l/hi/w/w/hi/lb/lb/notesStmt/hi/w/w/add | //hi/hi/w/w/hi/lb/lb/notesStmt/hi/w/w/add | //profileDesc | //caesura ) = {
+		attribute TEIform { string }?,
+		attribute rend { string }?,
+		( element creation, element langUsage, element textClass )
+	}
+
+	( //byline/docAuthor | //link ) = {
+		attribute TEIform { string }?,
+		attribute targets { string }?,
+		attribute targOrder { string }?,
+		( element resp, element name )
+	}
+
+	( //q/orig | //seg/seg/orig | //add/fw/hi/orig | //head/seg/hi/orig | //p/orig/fw/hi/orig | //orig/orig/fw/hi/orig | //hi/w/orig/fw/hi/orig | //p/w/orig/fw/hi/orig | //orig/w/orig/fw/hi/orig | //sic | //item | //abbr ) = {
+		attribute TEIform { string }?,
+		attribute reg { string }?,
+		( element lb | element gap )?
+	}
+
+	( //epigraph/l | //change ) = {
+		attribute TEIform { string }?,
+		attribute part { string }?,
+		( element date, element respStmt, element item )
+	}
+
+	( //head/hi/orig/hi | //fw/hi/hi/orig/hi | //div2/lg/l/orig/hi | //div2/lg/l/corr/hi | //revisionDesc | //imprimatur ) = {
+		attribute TEIform { string }?,
+		element change*
+	}
+
+	//teiHeader = {
+		attribute type { string },
+		attribute status { string }?,
+		attribute TEIform { string }?,
+		( element fileDesc, element encodingDesc, element profileDesc, element revisionDesc )
+	}
+
+	//titlePart = {
+		attribute type { string },
+		attribute TEIform { string }?,
+		element lb*
+	}
+
+	//docTitle = {
+		attribute TEIform { string }?,
+		( element titlePart | element lb )+
+	}
+
+	//docEdition = {
+		attribute TEIform { string }?,
+		( element name | element lb )
+	}
+
+	//docImprint = {
+		attribute TEIform { string }?,
+		( element pubPlace | element publisher | element date | element lb )
+	}
+
+	//titlePage = {
+		attribute TEIform { string }?,
+		( element docTitle | element docEdition | element docImprint | element byline | element epigraph | element docAuthor | element imprimatur )+
+	}
+
+	//front = {
+		attribute TEIform { string }?,
+		element titlePage
+	}
+
+	( //div1/head/hi | //lg2/l/fw/hi/hi ) = {
+		attribute rend { string }?,
+		attribute TEIform { string }?,
+		( element hi | element orig | element corr | element lb )+?
+	}
+
+	//div1/head = {
+		attribute TEIform { string }?,
+		attribute type { string }?,
+		attribute rend { string }?,
+		attribute id { string }?,
+		attribute n { string }?,
+		( element hi | element note | element milestone | element lb | element fw )+?
+	}
+
+	( //biblFull/notesStmt/fw/hi | //fileDesc/notesStmt/fw/hi | //w/notesStmt/fw/hi | //sic/lb/notesStmt/fw/hi | //item/lb/notesStmt/fw/hi | //abbr/lb/notesStmt/fw/hi | //fw/lb/notesStmt/fw/hi | //l/lb/notesStmt/fw/hi | //lg2/pb/notesStmt/fw/hi | //p/pb/notesStmt/fw/hi | //orig/pb/notesStmt/fw/hi | //div1/lg/l/fw/hi | //orig/hi/lb/notesStmt/fw/hi | //seg/orig/lb/notesStmt/fw/hi | //name/hi/lb/notesStmt/fw/hi | //orig/lb/lb/notesStmt/fw/hi | //q/orig/lb/notesStmt/fw/hi | //l/orig/lb/notesStmt/fw/hi | //head/hi/lb/lb/notesStmt/fw/hi | //div1/lg/lb/lb/notesStmt/fw/hi | //fw/hi/lb/lb/notesStmt/fw/hi | //div2/lg/lb/lb/notesStmt/fw/hi | //lg2/fw/hi/lb/notesStmt/fw/hi | //seg/hi/orig/lb/notesStmt/fw/hi | //fw/hi/hi/lb/lb/notesStmt/fw/hi | //div1/lg/fw/hi/lb/notesStmt/fw/hi | //head/hi/hi/lb/lb/notesStmt/fw/hi | //hi/hi/hi/lb/lb/notesStmt/fw/hi | //add/fw/hi/orig/lb/notesStmt/fw/hi | //div2/lg/fw/hi/lb/notesStmt/fw/hi | //p/orig/fw/hi/orig/lb/notesStmt/fw/hi | //orig/orig/fw/hi/orig/lb/notesStmt/fw/hi | //l/hi/w/w/hi/lb/lb/notesStmt/fw/hi | //hi/hi/w/w/hi/lb/lb/notesStmt/fw/hi | //p/w/orig/fw/hi/orig/lb/notesStmt/fw/hi | //orig/w/orig/fw/hi/orig/lb/notesStmt/fw/hi ) = {
+		attribute TEIform { string }?,
+		attribute rend { string }?,
+		element hi?
+	}
+
+	( //biblFull/notesStmt/fw | //fileDesc/notesStmt/fw | //w/notesStmt/fw | //sic/lb/notesStmt/fw | //item/lb/notesStmt/fw | //abbr/lb/notesStmt/fw | //fw/lb/notesStmt/fw | //l/lb/notesStmt/fw | //lg2/pb/notesStmt/fw | //p/pb/notesStmt/fw | //orig/pb/notesStmt/fw | //div1/lg/l/fw | //orig/hi/lb/notesStmt/fw | //seg/orig/lb/notesStmt/fw | //name/hi/lb/notesStmt/fw | //orig/lb/lb/notesStmt/fw | //q/orig/lb/notesStmt/fw | //l/orig/lb/notesStmt/fw | //head/hi/lb/lb/notesStmt/fw | //div1/lg/lb/lb/notesStmt/fw | //fw/hi/lb/lb/notesStmt/fw | //div2/lg/lb/lb/notesStmt/fw | //lg2/fw/hi/lb/notesStmt/fw | //seg/hi/orig/lb/notesStmt/fw | //fw/hi/hi/lb/lb/notesStmt/fw | //div1/lg/fw/hi/lb/notesStmt/fw | //head/hi/hi/lb/lb/notesStmt/fw | //hi/hi/hi/lb/lb/notesStmt/fw | //add/fw/hi/orig/lb/notesStmt/fw | //div2/lg/fw/hi/lb/notesStmt/fw | //p/orig/fw/hi/orig/lb/notesStmt/fw | //orig/orig/fw/hi/orig/lb/notesStmt/fw | //l/hi/w/w/hi/lb/lb/notesStmt/fw | //hi/hi/w/w/hi/lb/lb/notesStmt/fw | //p/w/orig/fw/hi/orig/lb/notesStmt/fw | //orig/w/orig/fw/hi/orig/lb/notesStmt/fw ) = {
+		attribute type { string }?,
+		attribute TEIform { string }?,
+		attribute n { string }?,
+		element hi*
+	}
+
+	( //biblFull/notesStmt/hi | //fileDesc/notesStmt/hi | //w/notesStmt/hi | //sic/lb/notesStmt/hi | //item/lb/notesStmt/hi | //abbr/lb/notesStmt/hi | //fw/lb/notesStmt/hi | //l/lb/notesStmt/hi | //lg2/pb/notesStmt/hi | //p/pb/notesStmt/hi | //orig/pb/notesStmt/hi | //div1/lg/l/hi | //orig/hi/lb/notesStmt/hi | //seg/orig/lb/notesStmt/hi | //name/hi/lb/notesStmt/hi | //orig/lb/lb/notesStmt/hi | //q/orig/lb/notesStmt/hi | //l/orig/lb/notesStmt/hi | //head/hi/lb/lb/notesStmt/hi | //div1/lg/lb/lb/notesStmt/hi | //fw/hi/lb/lb/notesStmt/hi | //div2/lg/lb/lb/notesStmt/hi | //lg2/fw/hi/lb/notesStmt/hi | //seg/hi/orig/lb/notesStmt/hi | //fw/hi/hi/lb/lb/notesStmt/hi | //div1/lg/fw/hi/lb/notesStmt/hi | //head/hi/hi/lb/lb/notesStmt/hi | //hi/hi/hi/lb/lb/notesStmt/hi | //add/fw/hi/orig/lb/notesStmt/hi | //div2/lg/fw/hi/lb/notesStmt/hi | //p/orig/fw/hi/orig/lb/notesStmt/hi | //orig/orig/fw/hi/orig/lb/notesStmt/hi | //w/orig/fw/hi/orig/lb/notesStmt/hi | //l/hi/w/w/hi/lb/lb/notesStmt/hi | //hi/hi/w/w/hi/lb/lb/notesStmt/hi ) = {
+		attribute rend { string }?,
+		attribute TEIform { string }?,
+		( element note | element hi | element caesura | element lb | element w )?
+	}
+
+	( //l/w/orig | //biblFull/notesStmt/w/orig | //fileDesc/notesStmt/w/orig | //w/notesStmt/w/orig | //sic/lb/notesStmt/w/orig | //item/lb/notesStmt/w/orig | //abbr/lb/notesStmt/w/orig | //fw/lb/notesStmt/w/orig | //hi/lb/notesStmt/w/orig | //l/lb/notesStmt/w/orig | //lg2/pb/notesStmt/w/orig | //p/pb/notesStmt/w/orig | //orig/pb/notesStmt/w/orig | //seg/orig/lb/notesStmt/w/orig | //orig/lb/lb/notesStmt/w/orig | //q/orig/lb/notesStmt/w/orig | //l/orig/lb/notesStmt/w/orig | //l/hi/hi/w/w/orig | //head/hi/lb/lb/notesStmt/w/orig | //div1/lg/lb/lb/notesStmt/w/orig | //fw/hi/lb/lb/notesStmt/w/orig | //div2/lg/lb/lb/notesStmt/w/orig | //seg/hi/orig/lb/notesStmt/w/orig | //div2/lg/l/hi/w/w/orig | //fw/hi/hi/lb/lb/notesStmt/w/orig | //head/hi/hi/lb/lb/notesStmt/w/orig | //hi/hi/hi/lb/lb/notesStmt/w/orig | //add/fw/hi/orig/lb/notesStmt/w/orig | //p/orig/fw/hi/orig/lb/notesStmt/w/orig | //orig/orig/fw/hi/orig/lb/notesStmt/w/orig | //p/w/orig/fw/hi/orig/lb/notesStmt/w/orig | //orig/w/orig/fw/hi/orig/lb/notesStmt/w/orig ) = {
+		attribute TEIform { string }?,
+		attribute reg { string }?,
+		attribute rend { string }?,
+		element hi*
+	}
+
+	//div1/lg = {
+		attribute type { string }?,
+		attribute sample { string }?,
+		attribute part { string }?,
+		attribute org { string }?,
+		attribute TEIform { string }?,
+		attribute n { string }?,
+		( element fw | element pb | element milestone | element l | element gap | element lb )+
+	}
+
+	//div1 = {
+		attribute id { string }?,
+		attribute n { string }?,
+		attribute sample { string }?,
+		attribute part { string }?,
+		attribute org { string }?,
+		attribute TEIform { string }?,
+		attribute type { string }?,
+		attribute rend { string }?,
+		( element head | element lg | element lg1 | element p | element div2 | element pb | element lb | element milestone | element fw )+
+	}
+
+	//body = {
+		attribute TEIform { string }?,
+		( element div1 | element pb | element milestone )+
+	}
+
+	//text = {
+		attribute id { string }?,
+		attribute TEIform { string }?,
+		( element front?, element body )
+	}
+
+	//TEI.2 = {
+		attribute id { string },
+		attribute TEIform { string }?,
+		( element teiHeader, element text )
+	}
+
+	( //biblFull/notesStmt/corr | //fileDesc/notesStmt/corr | //w/notesStmt/corr | //sic/lb/notesStmt/corr | //item/lb/notesStmt/corr | //abbr/lb/notesStmt/corr | //fw/lb/notesStmt/corr | //l/lb/notesStmt/corr | //lg2/pb/notesStmt/corr | //p/pb/notesStmt/corr | //orig/pb/notesStmt/corr | //div1/lg/l/corr | //orig/hi/lb/notesStmt/corr | //seg/orig/lb/notesStmt/corr | //name/hi/lb/notesStmt/corr | //orig/lb/lb/notesStmt/corr | //q/orig/lb/notesStmt/corr | //l/orig/lb/notesStmt/corr | //head/hi/lb/lb/notesStmt/corr | //hi/hi/lb/lb/notesStmt/corr | //div1/lg/lb/lb/notesStmt/corr | //div2/lg/lb/lb/notesStmt/corr | //lg2/fw/hi/lb/notesStmt/corr | //seg/hi/orig/lb/notesStmt/corr | //div1/lg/fw/hi/lb/notesStmt/corr | //add/fw/hi/orig/lb/notesStmt/corr | //div2/lg/fw/hi/lb/notesStmt/corr | //p/orig/fw/hi/orig/lb/notesStmt/corr | //orig/orig/fw/hi/orig/lb/notesStmt/corr | //p/w/orig/fw/hi/orig/lb/notesStmt/corr | //orig/w/orig/fw/hi/orig/lb/notesStmt/corr ) = {
+		attribute rend { string }?,
+		attribute TEIform { string }?,
+		attribute sic { string }?,
+		attribute resp { string }?,
+		( element hi | element lb )?
+	}
+
+	( //biblFull/notesStmt/orig | //fileDesc/notesStmt/orig | //w/notesStmt/orig | //sic/lb/notesStmt/orig | //item/lb/notesStmt/orig | //abbr/lb/notesStmt/orig | //fw/lb/notesStmt/orig | //l/lb/notesStmt/orig | //lg2/pb/notesStmt/orig | //p/pb/notesStmt/orig | //orig/pb/notesStmt/orig | //div1/lg/l/orig | //orig/hi/lb/notesStmt/orig | //seg/orig/lb/notesStmt/orig | //orig/lb/lb/notesStmt/orig | //q/orig/lb/notesStmt/orig | //l/orig/lb/notesStmt/orig | //head/hi/lb/lb/notesStmt/orig | //div1/lg/lb/lb/notesStmt/orig | //fw/hi/lb/lb/notesStmt/orig | //div2/lg/lb/lb/notesStmt/orig | //lg2/fw/hi/lb/notesStmt/orig | //seg/hi/orig/lb/notesStmt/orig | //fw/hi/hi/lb/lb/notesStmt/orig | //div1/lg/fw/hi/lb/notesStmt/orig | //head/hi/hi/lb/lb/notesStmt/orig | //hi/hi/hi/lb/lb/notesStmt/orig | //add/fw/hi/orig/lb/notesStmt/orig | //div2/lg/fw/hi/lb/notesStmt/orig | //p/orig/fw/hi/orig/lb/notesStmt/orig | //orig/orig/fw/hi/orig/lb/notesStmt/orig | //l/hi/w/w/hi/lb/lb/notesStmt/orig | //hi/hi/w/w/hi/lb/lb/notesStmt/orig | //p/w/orig/fw/hi/orig/lb/notesStmt/orig | //orig/w/orig/fw/hi/orig/lb/notesStmt/orig ) = {
+		attribute TEIform { string }?,
+		attribute reg { string }?,
+		attribute rend { string }?,
+		( element hi | element w | element lb | element name )?
+	}
+
+	( //biblFull/notesStmt/w | //fileDesc/notesStmt/w | //w/notesStmt/w | //sic/lb/notesStmt/w | //item/lb/notesStmt/w | //abbr/lb/notesStmt/w | //fw/lb/notesStmt/w | //l/lb/notesStmt/w | //lg2/pb/notesStmt/w | //p/pb/notesStmt/w | //orig/pb/notesStmt/w | //div1/lg/l/w | //seg/orig/lb/notesStmt/w | //name/hi/lb/notesStmt/w | //orig/lb/lb/notesStmt/w | //q/orig/lb/notesStmt/w | //l/orig/lb/notesStmt/w | //l/hi/hi/w/w | //head/hi/lb/lb/notesStmt/w | //div1/lg/lb/lb/notesStmt/w | //fw/hi/lb/lb/notesStmt/w | //div2/lg/lb/lb/notesStmt/w | //lg2/fw/hi/lb/notesStmt/w | //seg/hi/orig/lb/notesStmt/w | //div2/lg/l/hi/w/w | //fw/hi/hi/lb/lb/notesStmt/w | //div1/lg/fw/hi/lb/notesStmt/w | //head/hi/hi/lb/lb/notesStmt/w | //hi/hi/hi/lb/lb/notesStmt/w | //add/fw/hi/orig/lb/notesStmt/w | //div2/lg/fw/hi/lb/notesStmt/w | //p/orig/fw/hi/orig/lb/notesStmt/w | //orig/orig/fw/hi/orig/lb/notesStmt/w | //p/w/orig/fw/hi/orig/lb/notesStmt/w | //orig/w/orig/fw/hi/orig/lb/notesStmt/w ) = {
+		attribute type { string },
+		attribute part { string }?,
+		attribute TEIform { string }?,
+		( element w | element add | element gap | element orig | element hi )+
+	}
+
+	( //biblFull/notesStmt/foreign | //fileDesc/notesStmt/foreign | //w/notesStmt/foreign | //hi/hi/foreign | //sic/lb/notesStmt/foreign | //item/lb/notesStmt/foreign | //abbr/lb/notesStmt/foreign | //fw/lb/notesStmt/foreign | //l/lb/notesStmt/foreign | //lg2/pb/notesStmt/foreign | //p/pb/notesStmt/foreign | //orig/pb/notesStmt/foreign | //div1/lg/l/foreign | //orig/hi/lb/notesStmt/foreign | //seg/orig/lb/notesStmt/foreign | //name/hi/lb/notesStmt/foreign | //orig/lb/lb/notesStmt/foreign | //q/orig/lb/notesStmt/foreign | //l/orig/lb/notesStmt/foreign | //head/hi/lb/lb/notesStmt/foreign | //div1/lg/lb/lb/notesStmt/foreign | //fw/hi/lb/lb/notesStmt/foreign | //div2/lg/lb/lb/notesStmt/foreign | //lg2/fw/hi/lb/notesStmt/foreign | //seg/hi/orig/lb/notesStmt/foreign | //fw/hi/hi/lb/lb/notesStmt/foreign | //div1/lg/fw/hi/lb/notesStmt/foreign | //head/hi/hi/lb/lb/notesStmt/foreign | //hi/hi/hi/lb/lb/notesStmt/foreign | //add/fw/hi/orig/lb/notesStmt/foreign | //div2/lg/fw/hi/lb/notesStmt/foreign | //p/orig/fw/hi/orig/lb/notesStmt/foreign | //orig/orig/fw/hi/orig/lb/notesStmt/foreign | //l/hi/w/w/hi/lb/lb/notesStmt/foreign | //hi/hi/w/w/hi/lb/lb/notesStmt/foreign | //p/w/orig/fw/hi/orig/lb/notesStmt/foreign | //orig/w/orig/fw/hi/orig/lb/notesStmt/foreign ) = {
+		attribute lang { string },
+		attribute TEIform { string }?,
+		element note?
+	}
+
+	//byline = {
+		attribute TEIform { string }?,
+		element docAuthor?
+	}
+
+	( //lg2/l/hi | //lg1/head/fw/hi | //orig/hi/w/hi | //div2/p/hi/w/hi | //p/w/hi/w/hi | //hi/w/hi/w/hi ) = {
+		attribute TEIform { string },
+		attribute rend { string }?,
+		( element hi | element orig | element lb | element corr )?
+	}
+
+	//lg1/head/fw = {
+		attribute type { string },
+		attribute TEIform { string },
+		element hi*
+	}
+
+	//lg1/head = {
+		attribute TEIform { string },
+		element fw
+	}
+
+	//lg2/l/fw/hi = {
+		attribute TEIform { string },
+		( element corr?, element hi* )
+	}
+
+	//lg2/l/fw = {
+		attribute type { string },
+		attribute TEIform { string },
+		element hi
+	}
+
+	//lg2/l = {
+		attribute id { string },
+		attribute n { string },
+		attribute part { string },
+		attribute TEIform { string },
+		attribute rend { string }?,
+		( element fw | element orig | element gap | element lb | element corr | element hi )+?
+	}
+
+	//lg2/l/orig = {
+		attribute reg { string },
+		attribute TEIform { string },
+		( element lb | element hi )
+	}
+
+	//lg2 = {
+		attribute sample { string },
+		attribute part { string },
+		attribute org { string },
+		attribute TEIform { string },
+		( element l | element fw | element milestone | element pb )+
+	}
+
+	( //l/hi/orig | //lg1/head/fw/hi/orig | //p/hi/w/hi/orig | //orig/hi/w/hi/orig | //p/w/hi/w/hi/orig | //hi/w/hi/w/hi/orig ) = {
+		attribute reg { string },
+		attribute TEIform { string },
+		( element hi?, element lb )
+	}
+
+	//lg1 = {
+		attribute sample { string },
+		attribute part { string },
+		attribute org { string },
+		attribute TEIform { string },
+		( ( element head, element milestone* )?, element lg2* )
+	}
+
+	( //p/foreign | //orig/foreign ) = {
+		attribute lang { string },
+		attribute TEIform { string },
+		( element pb?, element lb )?
+	}
+
+	//div1/p/name = {
+		attribute TEIform { string },
+		( element orig | element hi )?
+	}
+
+	( //p/ref/w | //orig/ref/w ) = {
+		attribute lemma { string },
+		attribute n { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element orig | element w | element hi )?
+	}
+
+	( //p/ref | //orig/ref ) = {
+		attribute n { string },
+		attribute targOrder { string },
+		attribute TEIform { string },
+		element w
+	}
+
+	//ref/w/orig = {
+		attribute reg { string },
+		attribute TEIform { string },
+		attribute rend { string }?,
+		( element hi* | ( element pb?, element lb ) )?
+	}
+
+	//div1/p = {
+		attribute TEIform { string }?,
+		attribute reg { string }?,
+		( element foreign | element name | element ref | element w | element hi | element fw | element lb | element note | element milestone | element pb | element orig )+
+	}
+
+	( //orig/name/orig | //div1/p/name/orig | //orig/hi/w/orig | //div2/p/hi/w/orig | //p/w/hi/w/orig | //hi/w/hi/w/orig ) = {
+		attribute reg { string },
+		attribute TEIform { string },
+		attribute rend { string }?,
+		( element lb | element hi | element pb )
+	}
+
+	//ref/w/w/add = {
+		attribute rend { string }?,
+		attribute TEIform { string },
+		attribute reg { string }?,
+		( element hi | element fw | element lb | element pb )?
+	}
+
+	//ref/w/w = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element add, element orig? )
+	}
+
+	( //div1/p/w | //biblFull/notesStmt/hi/w | //fileDesc/notesStmt/hi/w | //w/notesStmt/hi/w | //sic/lb/notesStmt/hi/w | //item/lb/notesStmt/hi/w | //abbr/lb/notesStmt/hi/w | //fw/lb/notesStmt/hi/w | //l/lb/notesStmt/hi/w | //lg2/pb/notesStmt/hi/w | //p/pb/notesStmt/hi/w | //orig/pb/notesStmt/hi/w | //div1/lg/l/hi/w | //orig/hi/lb/notesStmt/hi/w | //seg/orig/lb/notesStmt/hi/w | //name/hi/lb/notesStmt/hi/w | //orig/lb/lb/notesStmt/hi/w | //q/orig/lb/notesStmt/hi/w | //l/orig/lb/notesStmt/hi/w | //head/hi/lb/lb/notesStmt/hi/w | //div1/lg/lb/lb/notesStmt/hi/w | //fw/hi/lb/lb/notesStmt/hi/w | //div2/lg/lb/lb/notesStmt/hi/w | //lg2/fw/hi/lb/notesStmt/hi/w | //seg/hi/orig/lb/notesStmt/hi/w | //fw/hi/hi/lb/lb/notesStmt/hi/w | //div1/lg/fw/hi/lb/notesStmt/hi/w | //head/hi/hi/lb/lb/notesStmt/hi/w | //hi/hi/hi/lb/lb/notesStmt/hi/w | //orig/fw/hi/orig/lb/notesStmt/hi/w | //add/fw/hi/orig/lb/notesStmt/hi/w | //div2/lg/fw/hi/lb/notesStmt/hi/w | //l/hi/w/w/hi/lb/lb/notesStmt/hi/w | //hi/hi/w/w/hi/lb/lb/notesStmt/hi/w ) = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element hi* | element orig | element fw | element add | element w )?
+	}
+
+	//hi/ref = {
+		attribute n { string },
+		attribute targOrder { string },
+		attribute TEIform { string },
+		element w
+	}
+
+	//div1/p/hi = {
+		attribute TEIform { string }?,
+		attribute rend { string }?,
+		( element ref | element lb | element hi | element note | element orig | element w )+?
+	}
+
+	//ref/w/w/orig = {
+		attribute reg { string },
+		attribute TEIform { string },
+		element hi
+	}
+
+	//div1/p/fw = {
+		attribute TEIform { string },
+		attribute type { string }?,
+		element hi*
+	}
+
+	//div2/head = {
+		attribute TEIform { string }?,
+		attribute rend { string }?,
+		( element seg | element milestone | element hi | element abbr | element lb )+?
+	}
+
+	( //p/hi/foreign | //orig/hi/foreign | //p/w/hi/foreign | //hi/w/hi/foreign ) = {
+		attribute lang { string },
+		attribute TEIform { string },
+		element name?
+	}
+
+	( //orig/hi/w | //div2/p/hi/w | //p/w/hi/w | //hi/w/hi/w ) = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element w | element add | element hi | element orig )?
+	}
+
+	( //div2/p/hi | //div3/p/w/hi | //div3/p/orig/hi | //p/hi/hi/hi/w/hi ) = {
+		attribute TEIform { string },
+		attribute rend { string }?,
+		( element foreign | element w | element hi | element name | element orig | element lb | element note | element corr | element pb | element gap )+?
+	}
+
+	//div2/p = {
+		attribute TEIform { string },
+		attribute n { string }?,
+		( element hi | element w | element name | element seg | element lb | element pb | element note | element fw | element orig )+?
+	}
+
+	//div2 = {
+		attribute id { string },
+		attribute type { string },
+		attribute sample { string }?,
+		attribute part { string }?,
+		attribute org { string }?,
+		attribute TEIform { string }?,
+		attribute n { string }?,
+		( element head | element p | element lg | element div3 | element linkGrp | element lb | element pb | element milestone )+
+	}
+
+	( //orig/hi/hi | //div2/p/hi/hi | //p/w/hi/hi | //hi/hi/hi/w/hi/hi ) = {
+		attribute TEIform { string },
+		attribute rend { string }?,
+		( element w | element hi | element orig | element lb | element note | element name )+?
+	}
+
+	( //div1/head/fw/hi | //hi/w/fw/hi | //p/w/fw/hi | //orig/w/fw/hi ) = {
+		attribute TEIform { string }?,
+		attribute type { string }?,
+		attribute part { string }?,
+		( element hi | element orig )
+	}
+
+	( //orig/hi/orig | //div2/p/orig | //div2/p/hi/orig | //p/w/hi/orig | //p/hi/name/orig | //orig/hi/name/orig | //div3/p/name/orig | //w/w/w/orig | //div3/p/hi/orig | //hi/hi/hi/orig | //orig/w/w/orig | //l/w/w/orig | //hi/hi/w/hi/orig | //div1/p/hi/w/orig | //p/w/hi/name/orig | //hi/w/hi/name/orig | //div1/head/fw/hi/orig | //hi/w/fw/hi/orig | //p/w/fw/hi/orig | //orig/w/fw/hi/orig | //orig/hi/w/w/orig | //div2/p/w/w/orig | //div3/p/hi/hi/orig | //div1/p/w/w/orig | //div3/p/w/w/orig | //div2/p/hi/w/w/orig | //p/w/hi/w/w/orig | //hi/w/hi/w/w/orig | //biblFull/notesStmt/hi/w/w/orig | //fileDesc/notesStmt/hi/w/w/orig | //w/notesStmt/hi/w/w/orig | //div3/p/hi/w/w/orig | //sic/lb/notesStmt/hi/w/w/orig | //item/lb/notesStmt/hi/w/w/orig | //abbr/lb/notesStmt/hi/w/w/orig | //fw/lb/notesStmt/hi/w/w/orig | //l/lb/notesStmt/hi/w/w/orig | //lg2/pb/notesStmt/hi/w/w/orig | //p/pb/notesStmt/hi/w/w/orig | //orig/pb/notesStmt/hi/w/w/orig | //div1/lg/l/hi/w/w/orig | //p/hi/hi/hi/w/w/orig | //div3/p/hi/hi/w/w/orig | //orig/hi/lb/notesStmt/hi/w/w/orig | //seg/orig/lb/notesStmt/hi/w/w/orig | //name/hi/lb/notesStmt/hi/w/w/orig | //orig/lb/lb/notesStmt/hi/w/w/orig | //q/orig/lb/notesStmt/hi/w/w/orig | //l/orig/lb/notesStmt/hi/w/w/orig | //head/hi/lb/lb/notesStmt/hi/w/w/orig | //div1/lg/lb/lb/notesStmt/hi/w/w/orig | //fw/hi/lb/lb/notesStmt/hi/w/w/orig | //div2/lg/lb/lb/notesStmt/hi/w/w/orig | //lg2/fw/hi/lb/notesStmt/hi/w/w/orig | //seg/hi/orig/lb/notesStmt/hi/w/w/orig | //fw/hi/hi/lb/lb/notesStmt/hi/w/w/orig | //div1/lg/fw/hi/lb/notesStmt/hi/w/w/orig | //head/hi/hi/lb/lb/notesStmt/hi/w/w/orig | //hi/hi/hi/lb/lb/notesStmt/hi/w/w/orig | //orig/fw/hi/orig/lb/notesStmt/hi/w/w/orig | //add/fw/hi/orig/lb/notesStmt/hi/w/w/orig | //div2/lg/fw/hi/lb/notesStmt/hi/w/w/orig | //l/hi/w/w/hi/lb/lb/notesStmt/hi/w/w/orig | //hi/hi/w/w/hi/lb/lb/notesStmt/hi/w/w/orig ) = {
+		attribute reg { string },
+		attribute TEIform { string },
+		( element name | ( element pb?, element lb ) )
+	}
+
+	( //orig/hi/w/w | //div2/p/w/w | //div2/p/hi/w/w | //p/w/hi/w/w | //hi/w/hi/w/w | //p/hi/hi/w/w/w | //orig/hi/hi/w/w/w | //p/w/hi/hi/w/w/w | //hi/w/hi/hi/w/w/w ) = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element add, element orig? )
+	}
+
+	( //div2/p/w/orig | //orig/hi/hi/w/w/orig | //div2/p/hi/hi/w/w/orig | //p/w/hi/hi/w/w/orig | //hi/w/hi/hi/w/w/orig ) = {
+		attribute TEIform { string },
+		attribute reg { string }?,
+		attribute rend { string }?,
+		( element lb, element hi? )
+	}
+
+	//div2/lg/l/hi/w = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element hi | element orig | element w )?
+	}
+
+	//div2/lg/l/hi = {
+		attribute rend { string }?,
+		attribute TEIform { string }?,
+		( element w | element hi | element note | element corr | element name )+?
+	}
+
+	//div2/lg/l/w = {
+		attribute type { string },
+		attribute part { string }?,
+		attribute TEIform { string }?,
+		( element hi | element w )?
+	}
+
+	//div2/lg/l = {
+		attribute id { string }?,
+		attribute n { string }?,
+		attribute part { string }?,
+		attribute TEIform { string }?,
+		attribute rend { string }?,
+		( element hi | element w | element fw | element corr | element note | element pb | element gap | element lb | element name | element foreign | element orig )+?
+	}
+
+	//div2/lg/l/hi/hi = {
+		attribute rend { string }?,
+		attribute TEIform { string }?,
+		( element w | element note | element pb | element name | element hi )+?
+	}
+
+	//l/hi/hi/w = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element hi* | element w )?
+	}
+
+	//div2/lg = {
+		attribute type { string }?,
+		attribute sample { string }?,
+		attribute part { string }?,
+		attribute org { string }?,
+		attribute TEIform { string }?,
+		( element l | element milestone | element pb | element lb | element fw )+
+	}
+
+	( //div2/p/w | //orig/hi/hi/w/w | //div2/p/hi/hi/w/w | //p/w/hi/hi/w/w | //hi/w/hi/hi/w/w ) = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element hi* | element add | element w | element orig )
+	}
+
+	( //orig/hi/hi/w | //div2/p/hi/hi/w | //p/w/hi/hi/w | //hi/w/hi/hi/w ) = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element orig | element hi | element w )?
+	}
+
+	( //orig/hi/hi/hi | //l/hi/hi/hi | //div2/p/hi/hi/hi | //p/w/hi/hi/hi | //hi/w/hi/hi/hi ) = {
+		attribute rend { string },
+		attribute TEIform { string },
+		( element w*, element note? )?
+	}
+
+	//div2/p/name = {
+		attribute TEIform { string },
+		element hi?
+	}
+
+	//div3/head = {
+		attribute TEIform { string },
+		element lb?
+	}
+
+	//div3/p/hi = {
+		attribute TEIform { string },
+		attribute rend { string }?,
+		( element w | element hi | element lb | element note | element pb | element name | element orig )+?
+	}
+
+	( //div3/p/w | //div3/p/hi/hi/hi/w ) = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element w | element add | element hi | element orig )?
+	}
+
+	//div3/p/orig = {
+		attribute reg { string },
+		attribute TEIform { string },
+		( element lb | element pb | element hi )
+	}
+
+	//div3/p = {
+		attribute n { string }?,
+		attribute TEIform { string },
+		( element hi | element w | element orig | element lb | element note | element corr | element pb | element name )+
+	}
+
+	( //div3/p/w/orig | //div3/p/hi/w/orig | //p/hi/hi/hi/w/orig ) = {
+		attribute reg { string },
+		attribute TEIform { string },
+		attribute rend { string }?,
+		( element lb | element hi | element note )?
+	}
+
+	//div3/p/hi/w = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element orig | element hi | element w )?
+	}
+
+	//div3/p/hi/hi = {
+		attribute rend { string }?,
+		attribute TEIform { string },
+		( element w | element hi | element lb | element note | element orig )+?
+	}
+
+	//div3 = {
+		attribute type { string }?,
+		attribute sample { string },
+		attribute part { string },
+		attribute org { string },
+		attribute TEIform { string },
+		attribute id { string }?,
+		attribute rend { string }?,
+		( element head | element p | element milestone | element pb )+
+	}
+
+	( //orig/hi/hi/w/orig | //div2/p/hi/hi/w/orig | //p/w/hi/hi/w/orig | //hi/w/hi/hi/w/orig ) = {
+		attribute reg { string },
+		attribute TEIform { string },
+		( element hi?, element lb )
+	}
+
+	( //orig/hi/hi/orig | //div2/p/hi/hi/orig | //p/w/hi/hi/orig | //hi/w/hi/hi/orig | //div3/p/hi/hi/w/orig ) = {
+		attribute reg { string },
+		attribute TEIform { string },
+		( element lb, element hi? )
+	}
+
+	//div3/p/hi/hi/w = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element orig | element w )?
+	}
+
+	//div3/p/hi/hi/hi = {
+		attribute rend { string },
+		attribute TEIform { string },
+		( element orig | element w )?
+	}
+
+	( //orig/w/w | //div1/p/w/w | //div3/p/w/w | //biblFull/notesStmt/hi/w/w | //fileDesc/notesStmt/hi/w/w | //w/notesStmt/hi/w/w | //div2/lg/l/w/w | //div3/p/hi/w/w | //sic/lb/notesStmt/hi/w/w | //item/lb/notesStmt/hi/w/w | //abbr/lb/notesStmt/hi/w/w | //fw/lb/notesStmt/hi/w/w | //l/lb/notesStmt/hi/w/w | //lg2/pb/notesStmt/hi/w/w | //p/pb/notesStmt/hi/w/w | //orig/pb/notesStmt/hi/w/w | //div1/lg/l/hi/w/w | //p/hi/hi/hi/w/w | //div3/p/hi/hi/w/w | //orig/hi/lb/notesStmt/hi/w/w | //seg/orig/lb/notesStmt/hi/w/w | //name/hi/lb/notesStmt/hi/w/w | //orig/lb/lb/notesStmt/hi/w/w | //q/orig/lb/notesStmt/hi/w/w | //l/orig/lb/notesStmt/hi/w/w | //head/hi/lb/lb/notesStmt/hi/w/w | //div1/lg/lb/lb/notesStmt/hi/w/w | //fw/hi/lb/lb/notesStmt/hi/w/w | //div2/lg/lb/lb/notesStmt/hi/w/w | //lg2/fw/hi/lb/notesStmt/hi/w/w | //seg/hi/orig/lb/notesStmt/hi/w/w | //fw/hi/hi/lb/lb/notesStmt/hi/w/w | //div1/lg/fw/hi/lb/notesStmt/hi/w/w | //head/hi/hi/lb/lb/notesStmt/hi/w/w | //hi/hi/hi/lb/lb/notesStmt/hi/w/w | //orig/fw/hi/orig/lb/notesStmt/hi/w/w | //add/fw/hi/orig/lb/notesStmt/hi/w/w | //div2/lg/fw/hi/lb/notesStmt/hi/w/w | //l/hi/w/w/hi/lb/lb/notesStmt/hi/w/w | //hi/hi/w/w/hi/lb/lb/notesStmt/hi/w/w ) = {
+		attribute type { string },
+		attribute part { string }?,
+		attribute TEIform { string }?,
+		( element add, element orig? )
+	}
+
+	//p/fw/hi = {
+		attribute TEIform { string },
+		attribute rend { string }?,
+		element hi*
+	}
+
+	( //add/fw/hi | //p/orig/fw/hi | //orig/orig/fw/hi | //hi/w/orig/fw/hi | //p/w/orig/fw/hi | //orig/w/orig/fw/hi ) = {
+		attribute TEIform { string },
+		attribute id { string }?,
+		attribute n { string }?,
+		attribute part { string }?,
+		( element hi | element orig | element fw )
+	}
+
+	( //add/fw | //p/orig/fw | //orig/orig/fw | //hi/w/orig/fw | //p/w/orig/fw | //orig/w/orig/fw ) = {
+		attribute TEIform { string },
+		attribute type { string }?,
+		element hi
+	}
+
+	( //orig/w/orig | //div1/p/w/orig | //biblFull/notesStmt/hi/w/orig | //fileDesc/notesStmt/hi/w/orig | //w/notesStmt/hi/w/orig | //sic/lb/notesStmt/hi/w/orig | //item/lb/notesStmt/hi/w/orig | //abbr/lb/notesStmt/hi/w/orig | //fw/lb/notesStmt/hi/w/orig | //l/lb/notesStmt/hi/w/orig | //lg2/pb/notesStmt/hi/w/orig | //p/pb/notesStmt/hi/w/orig | //orig/pb/notesStmt/hi/w/orig | //div1/lg/l/hi/w/orig | //orig/hi/lb/notesStmt/hi/w/orig | //seg/orig/lb/notesStmt/hi/w/orig | //name/hi/lb/notesStmt/hi/w/orig | //orig/lb/lb/notesStmt/hi/w/orig | //q/orig/lb/notesStmt/hi/w/orig | //l/orig/lb/notesStmt/hi/w/orig | //head/hi/lb/lb/notesStmt/hi/w/orig | //div1/lg/lb/lb/notesStmt/hi/w/orig | //fw/hi/lb/lb/notesStmt/hi/w/orig | //div2/lg/lb/lb/notesStmt/hi/w/orig | //fw/hi/orig/lb/notesStmt/hi/w/orig | //lg2/fw/hi/lb/notesStmt/hi/w/orig | //seg/hi/orig/lb/notesStmt/hi/w/orig | //fw/hi/hi/lb/lb/notesStmt/hi/w/orig | //div1/lg/fw/hi/lb/notesStmt/hi/w/orig | //head/hi/hi/lb/lb/notesStmt/hi/w/orig | //hi/hi/hi/lb/lb/notesStmt/hi/w/orig | //div2/lg/fw/hi/lb/notesStmt/hi/w/orig | //l/hi/w/w/hi/lb/lb/notesStmt/hi/w/orig | //hi/hi/w/w/hi/lb/lb/notesStmt/hi/w/orig ) = {
+		attribute reg { string },
+		attribute rend { string }?,
+		attribute TEIform { string },
+		( element w | element hi | element lb | element pb | element fw )+?
+	}
+
+	( //hi/w/orig/w | //p/w/orig/w | //orig/w/orig/w ) = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element add, element lb )
+	}
+
+	( //orig/w/orig/hi | //l/hi/w/orig/hi | //div1/p/w/orig/hi | //biblFull/notesStmt/hi/w/orig/hi | //fileDesc/notesStmt/hi/w/orig/hi | //w/notesStmt/hi/w/orig/hi | //sic/lb/notesStmt/hi/w/orig/hi | //item/lb/notesStmt/hi/w/orig/hi | //abbr/lb/notesStmt/hi/w/orig/hi | //fw/lb/notesStmt/hi/w/orig/hi | //l/lb/notesStmt/hi/w/orig/hi | //lg2/pb/notesStmt/hi/w/orig/hi | //p/pb/notesStmt/hi/w/orig/hi | //orig/pb/notesStmt/hi/w/orig/hi | //orig/hi/lb/notesStmt/hi/w/orig/hi | //seg/orig/lb/notesStmt/hi/w/orig/hi | //name/hi/lb/notesStmt/hi/w/orig/hi | //orig/lb/lb/notesStmt/hi/w/orig/hi | //q/orig/lb/notesStmt/hi/w/orig/hi | //l/orig/lb/notesStmt/hi/w/orig/hi | //head/hi/lb/lb/notesStmt/hi/w/orig/hi | //div1/lg/lb/lb/notesStmt/hi/w/orig/hi | //fw/hi/lb/lb/notesStmt/hi/w/orig/hi | //div2/lg/lb/lb/notesStmt/hi/w/orig/hi | //fw/hi/orig/lb/notesStmt/hi/w/orig/hi | //lg2/fw/hi/lb/notesStmt/hi/w/orig/hi | //seg/hi/orig/lb/notesStmt/hi/w/orig/hi | //fw/hi/hi/lb/lb/notesStmt/hi/w/orig/hi | //div1/lg/fw/hi/lb/notesStmt/hi/w/orig/hi | //head/hi/hi/lb/lb/notesStmt/hi/w/orig/hi | //hi/hi/hi/lb/lb/notesStmt/hi/w/orig/hi | //div2/lg/fw/hi/lb/notesStmt/hi/w/orig/hi | //l/hi/w/w/hi/lb/lb/notesStmt/hi/w/orig/hi | //hi/hi/w/w/hi/lb/lb/notesStmt/hi/w/orig/hi ) = {
+		attribute TEIform { string },
+		element lb?
+	}
+
+	( //div1/head/fw | //hi/w/fw | //p/w/fw | //orig/w/fw ) = {
+		attribute type { string },
+		attribute TEIform { string }?,
+		element hi
+	}
+
+	( //biblFull/notesStmt/w/w | //fileDesc/notesStmt/w/w | //w/notesStmt/w/w | //sic/lb/notesStmt/w/w | //item/lb/notesStmt/w/w | //abbr/lb/notesStmt/w/w | //fw/lb/notesStmt/w/w | //l/lb/notesStmt/w/w | //lg2/pb/notesStmt/w/w | //p/pb/notesStmt/w/w | //orig/pb/notesStmt/w/w | //div1/lg/l/w/w | //l/hi/w/w/w | //seg/orig/lb/notesStmt/w/w | //name/hi/lb/notesStmt/w/w | //orig/lb/lb/notesStmt/w/w | //q/orig/lb/notesStmt/w/w | //l/orig/lb/notesStmt/w/w | //l/hi/hi/w/w/w | //head/hi/lb/lb/notesStmt/w/w | //div1/lg/lb/lb/notesStmt/w/w | //fw/hi/lb/lb/notesStmt/w/w | //div2/lg/lb/lb/notesStmt/w/w | //lg2/fw/hi/lb/notesStmt/w/w | //seg/hi/orig/lb/notesStmt/w/w | //fw/hi/hi/lb/lb/notesStmt/w/w | //div1/lg/fw/hi/lb/notesStmt/w/w | //head/hi/hi/lb/lb/notesStmt/w/w | //hi/hi/hi/lb/lb/notesStmt/w/w | //add/fw/hi/orig/lb/notesStmt/w/w | //div2/lg/fw/hi/lb/notesStmt/w/w | //p/orig/fw/hi/orig/lb/notesStmt/w/w | //orig/orig/fw/hi/orig/lb/notesStmt/w/w | //p/w/orig/fw/hi/orig/lb/notesStmt/w/w | //orig/w/orig/fw/hi/orig/lb/notesStmt/w/w ) = {
+		attribute type { string },
+		attribute part { string }?,
+		attribute TEIform { string }?,
+		( element hi | element add )+
+	}
+
+	//div2/lg/l/fw = {
+		attribute type { string },
+		attribute TEIform { string }?,
+		element hi
+	}
+
+	//linkGrp = {
+		attribute targOrder { string },
+		attribute TEIform { string },
+		element link*
+	}
+
+	( //lg2/fw | //div2/lg/fw ) = {
+		attribute TEIform { string }?,
+		element hi*
+	}
+
+	//div2/lg/l/foreign = {
+		attribute lang { string }?,
+		EMPTY
+	}
+
+	( //hi/seg/hi/orig | //l/seg/hi/orig | //biblFull/notesStmt/seg/hi/orig | //fileDesc/notesStmt/seg/hi/orig | //w/notesStmt/seg/hi/orig | //sic/lb/notesStmt/seg/hi/orig | //item/lb/notesStmt/seg/hi/orig | //abbr/lb/notesStmt/seg/hi/orig | //fw/lb/notesStmt/seg/hi/orig | //l/lb/notesStmt/seg/hi/orig | //lg2/pb/notesStmt/seg/hi/orig | //p/pb/notesStmt/seg/hi/orig | //orig/pb/notesStmt/seg/hi/orig | //orig/hi/lb/notesStmt/seg/hi/orig | //seg/orig/lb/notesStmt/seg/hi/orig | //name/hi/lb/notesStmt/seg/hi/orig | //q/orig/lb/notesStmt/seg/hi/orig | //l/orig/lb/notesStmt/seg/hi/orig | //head/hi/lb/lb/notesStmt/seg/hi/orig | //div1/lg/lb/lb/notesStmt/seg/hi/orig | //fw/hi/lb/lb/notesStmt/seg/hi/orig | //div2/lg/lb/lb/notesStmt/seg/hi/orig | //lg2/fw/hi/lb/notesStmt/seg/hi/orig | //seg/hi/orig/lb/notesStmt/seg/hi/orig | //fw/hi/hi/lb/lb/notesStmt/seg/hi/orig | //div1/lg/fw/hi/lb/notesStmt/seg/hi/orig | //head/hi/hi/lb/lb/notesStmt/seg/hi/orig | //hi/hi/hi/lb/lb/notesStmt/seg/hi/orig | //add/fw/hi/orig/lb/notesStmt/seg/hi/orig | //div2/lg/fw/hi/lb/notesStmt/seg/hi/orig | //p/orig/fw/hi/orig/lb/notesStmt/seg/hi/orig | //orig/orig/fw/hi/orig/lb/notesStmt/seg/hi/orig | //l/hi/w/w/hi/lb/lb/notesStmt/seg/hi/orig | //hi/hi/w/w/hi/lb/lb/notesStmt/seg/hi/orig | //p/w/orig/fw/hi/orig/lb/notesStmt/seg/hi/orig | //orig/w/orig/fw/hi/orig/lb/notesStmt/seg/hi/orig ) = {
+		attribute reg { string },
+		attribute TEIform { string },
+		element lb
+	}
+
+	( //hi/seg/hi | //l/seg/hi | //biblFull/notesStmt/seg/hi | //fileDesc/notesStmt/seg/hi | //w/notesStmt/seg/hi | //sic/lb/notesStmt/seg/hi | //item/lb/notesStmt/seg/hi | //abbr/lb/notesStmt/seg/hi | //fw/lb/notesStmt/seg/hi | //l/lb/notesStmt/seg/hi | //lg2/pb/notesStmt/seg/hi | //p/pb/notesStmt/seg/hi | //orig/pb/notesStmt/seg/hi | //orig/hi/lb/notesStmt/seg/hi | //seg/orig/lb/notesStmt/seg/hi | //name/hi/lb/notesStmt/seg/hi | //q/orig/lb/notesStmt/seg/hi | //l/orig/lb/notesStmt/seg/hi | //head/hi/lb/lb/notesStmt/seg/hi | //div1/lg/lb/lb/notesStmt/seg/hi | //fw/hi/lb/lb/notesStmt/seg/hi | //div2/lg/lb/lb/notesStmt/seg/hi | //lg2/fw/hi/lb/notesStmt/seg/hi | //seg/hi/orig/lb/notesStmt/seg/hi | //fw/hi/hi/lb/lb/notesStmt/seg/hi | //div1/lg/fw/hi/lb/notesStmt/seg/hi | //head/hi/hi/lb/lb/notesStmt/seg/hi | //hi/hi/hi/lb/lb/notesStmt/seg/hi | //add/fw/hi/orig/lb/notesStmt/seg/hi | //div2/lg/fw/hi/lb/notesStmt/seg/hi | //p/orig/fw/hi/orig/lb/notesStmt/seg/hi | //orig/orig/fw/hi/orig/lb/notesStmt/seg/hi | //l/hi/w/w/hi/lb/lb/notesStmt/seg/hi | //hi/hi/w/w/hi/lb/lb/notesStmt/seg/hi | //p/w/orig/fw/hi/orig/lb/notesStmt/seg/hi | //orig/w/orig/fw/hi/orig/lb/notesStmt/seg/hi ) = {
+		attribute rend { string },
+		attribute TEIform { string },
+		( element orig | element lb )+?
+	}
+
+	( //hi/seg | //l/seg | //biblFull/notesStmt/seg | //fileDesc/notesStmt/seg | //w/notesStmt/seg | //sic/lb/notesStmt/seg | //item/lb/notesStmt/seg | //abbr/lb/notesStmt/seg | //fw/lb/notesStmt/seg | //l/lb/notesStmt/seg | //lg2/pb/notesStmt/seg | //p/pb/notesStmt/seg | //orig/pb/notesStmt/seg | //orig/hi/lb/notesStmt/seg | //seg/orig/lb/notesStmt/seg | //name/hi/lb/notesStmt/seg | //orig/lb/lb/notesStmt/seg | //q/orig/lb/notesStmt/seg | //l/orig/lb/notesStmt/seg | //head/hi/lb/lb/notesStmt/seg | //div1/lg/lb/lb/notesStmt/seg | //fw/hi/lb/lb/notesStmt/seg | //div2/lg/lb/lb/notesStmt/seg | //lg2/fw/hi/lb/notesStmt/seg | //seg/hi/orig/lb/notesStmt/seg | //fw/hi/hi/lb/lb/notesStmt/seg | //div1/lg/fw/hi/lb/notesStmt/seg | //head/hi/hi/lb/lb/notesStmt/seg | //hi/hi/hi/lb/lb/notesStmt/seg | //add/fw/hi/orig/lb/notesStmt/seg | //div2/lg/fw/hi/lb/notesStmt/seg | //p/orig/fw/hi/orig/lb/notesStmt/seg | //orig/orig/fw/hi/orig/lb/notesStmt/seg | //l/hi/w/w/hi/lb/lb/notesStmt/seg | //hi/hi/w/w/hi/lb/lb/notesStmt/seg | //p/w/orig/fw/hi/orig/lb/notesStmt/seg | //orig/w/orig/fw/hi/orig/lb/notesStmt/seg ) = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		element hi
+	}
+
+	( //l/w/w/hi | //biblFull/notesStmt/w/w/hi | //fileDesc/notesStmt/w/w/hi | //w/notesStmt/w/w/hi | //sic/lb/notesStmt/w/w/hi | //item/lb/notesStmt/w/w/hi | //abbr/lb/notesStmt/w/w/hi | //fw/lb/notesStmt/w/w/hi | //l/lb/notesStmt/w/w/hi | //lg2/pb/notesStmt/w/w/hi | //p/pb/notesStmt/w/w/hi | //orig/pb/notesStmt/w/w/hi | //l/hi/w/w/w/hi | //hi/hi/w/w/w/hi | //seg/orig/lb/notesStmt/w/w/hi | //name/hi/lb/notesStmt/w/w/hi | //orig/lb/lb/notesStmt/w/w/hi | //q/orig/lb/notesStmt/w/w/hi | //l/orig/lb/notesStmt/w/w/hi | //head/hi/lb/lb/notesStmt/w/w/hi | //div1/lg/lb/lb/notesStmt/w/w/hi | //fw/hi/lb/lb/notesStmt/w/w/hi | //div2/lg/lb/lb/notesStmt/w/w/hi | //lg2/fw/hi/lb/notesStmt/w/w/hi | //seg/hi/orig/lb/notesStmt/w/w/hi | //fw/hi/hi/lb/lb/notesStmt/w/w/hi | //div1/lg/fw/hi/lb/notesStmt/w/w/hi | //head/hi/hi/lb/lb/notesStmt/w/w/hi | //hi/hi/hi/lb/lb/notesStmt/w/w/hi | //add/fw/hi/orig/lb/notesStmt/w/w/hi | //div2/lg/fw/hi/lb/notesStmt/w/w/hi | //p/orig/fw/hi/orig/lb/notesStmt/w/w/hi | //orig/orig/fw/hi/orig/lb/notesStmt/w/w/hi | //p/w/orig/fw/hi/orig/lb/notesStmt/w/w/hi | //orig/w/orig/fw/hi/orig/lb/notesStmt/w/w/hi ) = {
+		attribute TEIform { string },
+		element add?
+	}
+
+	( //head/seg/hi | //q ) = {
+		attribute rend { string }?,
+		attribute TEIform { string },
+		attribute direct { string }?,
+		( element orig | element hi )?
+	}
+
+	//div2/p/seg = {
+		attribute id { string },
+		attribute n { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element hi | element orig | element fw | element pb | element corr | element lb | element seg | element q )+?
+	}
+
+	//head/seg = {
+		attribute id { string },
+		attribute n { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element milestone | element lb | element hi | element fw )?
+	}
+
+	//p/seg/orig = {
+		attribute reg { string }?,
+		attribute TEIform { string },
+		( element hi* | element fw )?
+	}
+
+	( //seg/seg/fw | //p/seg/fw | //head/seg/fw | //seg/orig/fw | //add/fw/hi/fw | //p/orig/fw/hi/fw | //orig/orig/fw/hi/fw | //hi/w/orig/fw/hi/fw | //p/w/orig/fw/hi/fw | //orig/w/orig/fw/hi/fw ) = {
+		attribute TEIform { string },
+		attribute type { string }?,
+		element hi
+	}
+
+	//epigraph = {
+		attribute TEIform { string },
+		element l
+	}
+
+	( //head/hi/orig | //fw/hi/hi/orig | //div2/lg/l/orig ) = {
+		attribute reg { string }?,
+		attribute TEIform { string },
+		( element lb | element hi )
+	}
+
+	//div2/lg/l/corr = {
+		attribute sic { string },
+		attribute resp { string },
+		attribute TEIform { string },
+		element hi?
+	}
+
+}

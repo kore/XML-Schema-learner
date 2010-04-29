@@ -1,0 +1,502 @@
+namespace http://example.com/generated
+
+grammar {
+	//parent/uiElement = {
+		attribute lang { string }?,
+		attribute value { string }?,
+		attribute key { string }?,
+		attribute special { string }?,
+		attribute name { string }?,
+		attribute id { string }?,
+		attribute alias { string }?,
+		attribute refId { string }?,
+		attribute src { string }?,
+		attribute field { string }?,
+		attribute type { string }?,
+		attribute position { string }?,
+		attribute size { string }?,
+		attribute useRef { string }?,
+		attribute valign { string }?,
+		attribute width { string }?,
+		attribute label { string }?,
+		attribute target { string }?,
+		attribute main { string }?,
+		attribute targetId { string }?,
+		attribute is { string }?,
+		attribute max_lower { string }?,
+		attribute max_higher { string }?,
+		attribute height { string }?,
+		attribute minWidth { string }?,
+		attribute minHeight { string }?,
+		attribute maxWidth { string }?,
+		attribute maxHeight { string }?,
+		attribute mode { string }?,
+		attribute page { string }?,
+		attribute slice { string }?,
+		attribute align { string }?,
+		attribute srcId { string }?,
+		attribute window { string }?,
+		attribute nam { string }?,
+		attribute category { string }?,
+		attribute is_a { string }?,
+		EMPTY
+	}
+
+	( //entity/attributes/attribute/label | //connection/attributes/attribute/label | //entity/references/ref/label | //entities/references/ref/label | //management/references/ref/label | //title | //lable | //caption ) = {
+		attribute key { string }?,
+		element text*
+	}
+
+	//equal = {
+		( element user, element entity )
+	}
+
+	//block/check = {
+		element equal
+	}
+
+	//block = {
+		( element check, element text* )
+	}
+
+	//message/content = {
+		element block
+	}
+
+	//message = {
+		attribute name { string },
+		( element title, element content )
+	}
+
+	//messages = {
+		element message
+	}
+
+	//bdl = {
+		attribute version { string }?,
+		( element messages | element entities | element components | element processes | element managements )+
+	}
+
+	( //entity/attributes/attribute | //connection/attributes/attribute ) = {
+		attribute is_a { string }?,
+		attribute name { string }?,
+		attribute type { string }?,
+		attribute size { string }?,
+		attribute target { string }?,
+		attribute required { string }?,
+		attribute validator { string }?,
+		attribute equired { string }?,
+		( element display | element uiElement | element identField | element events | element sequence | element emebd | element name | element embed | element search | element ref | element groups | element tableField | element hidden | element comment | element fk | element categories | element optional | element link | element searchField | element groupBy | element typed | element category | element description | element label | element concepts )+?
+	}
+
+	//entity/attributes = {
+		( element attribute | element categories | element semantic | element condition | element attribut )+?
+	}
+
+	( //entity/references/ref/target | //entities/references/ref/target | //management/references/ref/target ) = {
+		attribute name { string },
+		attribute id { string },
+		attribute alias { string }?,
+		attribute inherit { string }?,
+		element filters?
+	}
+
+	//ref = {
+		attribute name { string },
+		attribute binding { string }?,
+		attribute relation { string }?,
+		attribute target { string }?,
+		attribute base { string }?,
+		( element target | element connection | element src | element comment | element description | element label )+?
+	}
+
+	//entity/references = {
+		element ref*
+	}
+
+	//entities/entity = {
+		attribute name { string },
+		( element attributes | element references | element concepts | element properties | element semantic | element access | element categories | element keys | element comment | element description | element label | element lable )+
+	}
+
+	//entities = {
+		( element entity*, element references? )
+	}
+
+	//display = {
+		attribute field { string }?,
+		attribute type { string }?,
+		( element table | element text | element overview )?
+	}
+
+	//fields = {
+		attribute value { string }?,
+		attribute id { string }?,
+		attribute order { string }?,
+		attribute join { string }?,
+		attribute srcId { string }?,
+		( element id, element value, element order )?
+	}
+
+	//components/component = {
+		attribute name { string }?,
+		attribute src { string },
+		attribute type { string },
+		( ( element source?, element head, element body? ) | ( ( element label*, element description? )?, element fields, element filters? ) )
+	}
+
+	//components = {
+		( element component | element component_ex )+
+	}
+
+	//concepts = {
+		element concept
+	}
+
+	//connection = {
+		attribute name { string },
+		element attributes?
+	}
+
+	//connection/attributes = {
+		element attribute*
+	}
+
+	( //attributes/categories/category | //entity/categories/category ) = {
+		attribute name { string }?,
+		attribute label { string }?,
+		attribute main { string }?,
+		attribute type { string }?,
+		( ( element layout | element access )?, element label )?
+	}
+
+	//attributes/categories = {
+		( element category* | element group )
+	}
+
+	( //entity/attributes/attribute/uiElement | //connection/attributes/attribute/uiElement ) = {
+		attribute type { string },
+		attribute class { string }?,
+		attribute size { string }?,
+		attribute src { string }?,
+		attribute readonly { string }?,
+		attribute hardcoded { string }?,
+		attribute filter { string }?,
+		( element field* | element filters | ( element layout, element size ) )?
+	}
+
+	//identField = {
+		attribute src { string }?,
+		attribute field { string }?,
+		element paths?
+	}
+
+	//attributes/semantic = {
+		element group*
+	}
+
+	//properties/component = {
+		attribute type { string },
+		element fields
+	}
+
+	//entity/properties = {
+		element component?
+	}
+
+	//tags = {
+		element tag*
+	}
+
+	//entity/semantic = {
+		( element concepts | ( element parent?, element tags ) )?
+	}
+
+	( //entity/access/acl | //attributes/categories/category/access/acl | //entity/categories/category/access/acl ) = {
+		attribute type { string }?,
+		( element role, element owner, element responsible, element user )?
+	}
+
+	//access = {
+		element acl
+	}
+
+	( //attributes/categories/category/label | //entity/categories/category/label ) = {
+		element text
+	}
+
+	//entities/references = {
+		element ref
+	}
+
+	//filter = {
+		attribute srcField { string }?,
+		attribute targetField { string }?,
+		attribute srcId { string }?,
+		attribute targetId { string }?,
+		( element description | element paths )?
+	}
+
+	//filters = {
+		attribute name { string }?,
+		element filter
+	}
+
+	//onUpdate = {
+		element update?
+	}
+
+	( //entity/attributes/attribute/events | //connection/attributes/attribute/events ) = {
+		element onUpdate
+	}
+
+	//process/status = {
+		attribute src { string },
+		attribute id { string },
+		element reference
+	}
+
+	//onArrive = {
+		element acl?
+	}
+
+	//node/events = {
+		( element onArrive, ( element onDeadline, element onFallback )?, element onLeave )
+	}
+
+	( //node/paths/path/acl | //identField/paths/path/acl | //filter/paths/path/acl ) = {
+		element owner?
+	}
+
+	//param = {
+		( element owner | element group )?
+	}
+
+	//always/action = {
+		attribute name { string },
+		element param*
+	}
+
+	//always = {
+		element action*
+	}
+
+	( //node/paths/path | //identField/paths/path | //filter/paths/path ) = {
+		attribute target { string }?,
+		attribute name { string }?,
+		attribute alias { string }?,
+		attribute srcId { string }?,
+		attribute targetId { string }?,
+		attribute field { string }?,
+		( element label, element description?, element acl, ( ( element check, element success, element fail )?, element always )? )?
+	}
+
+	//check/field = {
+		attribute field { string },
+		attribute src { string },
+		element required
+	}
+
+	( //node/paths/path/check | //identField/paths/path/check | //filter/paths/path/check ) = {
+		element field
+	}
+
+	//node/paths = {
+		element path*
+	}
+
+	//node = {
+		attribute name { string },
+		attribute target { string }?,
+		( element events | element paths | element activ | element startpoint | element endpoint | element label )+
+	}
+
+	//onArrive/acl = {
+		element group
+	}
+
+	//activ = {
+		element target*
+	}
+
+	//process = {
+		attribute name { string },
+		attribute src { string },
+		( element status, element node* )
+	}
+
+	//processes = {
+		element process
+	}
+
+	( //identField/paths | //filter/paths ) = {
+		element path
+	}
+
+	//entity/categories = {
+		attribute main { string },
+		element category?
+	}
+
+	( //component/head/properties | //tab/head/properties ) = {
+		( ( element close, element max ) | ( element closable, element readonly, element disabled, element reload, element hidden ) )
+	}
+
+	//menus = {
+		( element left, element right )
+	}
+
+	( //head/bars/status | //component_ex/bars/status ) = {
+		( element menus, element text )
+	}
+
+	//bars = {
+		( element title, element status, element info, element action )
+	}
+
+	//component/head = {
+		attribute unit { string }?,
+		( element field* | ( element size, element properties, element bars, element access, element events ) )
+	}
+
+	//tab/head = {
+		( element properties, element label, element tooltip, element access, element constraint, element events )
+	}
+
+	( //body/row/col | //tab/row/col ) = {
+		attribute size { string }?,
+		attribute type { string }?,
+		attribute key { string }?,
+		( element text* | element entity )?
+	}
+
+	//body/row = {
+		attribute name { string },
+		attribute type { string },
+		( element caption, element col* )
+	}
+
+	//tab/body = {
+		element row
+	}
+
+	//body/tab = {
+		attribute name { string },
+		( element head, element body )
+	}
+
+	//component/body = {
+		element tab
+	}
+
+	//component_ex/properties = {
+		( element close, element max )
+	}
+
+	//tab/properties = {
+		( element closable, element readonly, element disabled, element reload, element hidden )
+	}
+
+	//tab/row = {
+		attribute name { string }?,
+		attribute type { string }?,
+		( element cms* | element html | element template | element ref | element entity | element text | ( element access, element constraint, element category ) | ( element caption?, element col* ) )
+	}
+
+	//content/tab = {
+		attribute name { string },
+		( element properties, element label, element tooltip, element access, element constraint, element events, element row* )
+	}
+
+	//component_ex/content = {
+		element tab
+	}
+
+	//component_ex = {
+		attribute type { string },
+		attribute name { string },
+		attribute src { string },
+		( element size, element properties, element bars, element access, element events, element content )
+	}
+
+	//layout = {
+		element col*
+	}
+
+	//genders = {
+		element gender*
+	}
+
+	//management/semantic = {
+		element genders
+	}
+
+	//management/events = {
+		( element onInsert, element onUpdate )
+	}
+
+	//if = {
+		attribute exists { string }?,
+		( element attribute* | element entity | element group_role )
+	}
+
+	//then = {
+		element form_edit
+	}
+
+	//view/condition = {
+		( element if*, element then )
+	}
+
+	//view = {
+		( element insert, element update, element table, element overview, element form_insert, element form_edit, element condition )
+	}
+
+	//management/references = {
+		element ref*
+	}
+
+	//management = {
+		attribute name { string },
+		attribute src { string },
+		( element label, element description, element semantic, element events, element view, element references )
+	}
+
+	//managements = {
+		element management*
+	}
+
+	//primaryKey = {
+		element key
+	}
+
+	//keys = {
+		element primaryKey
+	}
+
+	//source = {
+		attribute name { string },
+		element path
+	}
+
+	//head/field = {
+		attribute name { string },
+		attribute src { string }?,
+		attribute type { string }?,
+		( element size | element color | element label | element sum )
+	}
+
+	//else = {
+		element attribute*
+	}
+
+	//attributes/condition = {
+		( element if, element else )
+	}
+
+	//parent = {
+		attribute target { string },
+		element uiElement
+	}
+
+}

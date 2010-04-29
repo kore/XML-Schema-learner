@@ -1,0 +1,257 @@
+<?xml version="1.0"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/gegenrated" elementFormDefault="qualified">
+  <complexType name="dblp/mastersthesis/author" mixed="true">
+    <sequence>
+      <element name="author" type="dblp/mastersthesis/author"/>
+      <element name="title" type="dblp/mastersthesis/author"/>
+      <element name="year" type="dblp/mastersthesis/author"/>
+      <element name="school" type="dblp/mastersthesis/author"/>
+    </sequence>
+    <attribute name="mdate" type="string"/>
+    <attribute name="key" type="string"/>
+  </complexType>
+  <complexType name="dblp/article/editor" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="sub" type="dblp/article/title/sub"/>
+          <element name="i" type="dblp/article/title/i"/>
+          <element name="tt" type="dblp/proceedings/title"/>
+          <element name="sup" type="dblp/article/title/sub"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="href" type="string"/>
+  </complexType>
+  <complexType name="dblp/article">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="editor" type="dblp/article/editor"/>
+        <element name="title" type="dblp/article/editor"/>
+        <element name="journal" type="dblp/article/editor"/>
+        <element name="volume" type="dblp/article/editor"/>
+        <element name="year" type="dblp/article/editor"/>
+        <element name="ee" type="dblp/article/editor"/>
+        <element name="cdrom" type="dblp/article/editor"/>
+        <element name="author" type="dblp/article/editor"/>
+        <element name="month" type="dblp/article/editor"/>
+        <element name="url" type="dblp/article/editor"/>
+        <element name="publisher" type="dblp/article/editor"/>
+        <element name="cite" type="dblp/article/title/sub"/>
+        <element name="pages" type="dblp/proceedings/title"/>
+        <element name="number" type="dblp/proceedings/title"/>
+      </choice>
+    </sequence>
+    <attribute name="mdate" type="string" use="required"/>
+    <attribute name="key" type="string" use="required"/>
+    <attribute name="reviewid" type="string"/>
+    <attribute name="rating" type="string"/>
+  </complexType>
+  <complexType name="dblp/article/title/sub" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="i" type="dblp/proceedings/title"/>
+        <element name="sub" type="dblp/proceedings/title"/>
+        <element name="sup" type="dblp/inproceedings/title/sub"/>
+      </choice>
+    </sequence>
+    <attribute name="label" type="string"/>
+  </complexType>
+  <complexType name="dblp/proceedings/title" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          <element name="sup" type="dblp/article/title/sub"/>
+        </sequence>
+        <element name="sub" type="dblp/proceedings/title"/>
+      </choice>
+    </sequence>
+  </complexType>
+  <complexType name="dblp/proceedings">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="title" type="dblp/proceedings/title"/>
+        <element name="editor" type="dblp/article/editor"/>
+        <element name="booktitle" type="dblp/article/editor"/>
+        <element name="series" type="dblp/article/editor"/>
+        <element name="publisher" type="dblp/article/editor"/>
+        <element name="volume" type="dblp/article/title/sub"/>
+        <element name="year" type="dblp/article/title/sub"/>
+        <element name="url" type="dblp/article/title/sub"/>
+        <element name="isbn" type="dblp/article/title/sub"/>
+        <element name="author" type="dblp/article/title/sub"/>
+        <element name="address" type="dblp/proceedings/title"/>
+        <element name="crossref" type="dblp/proceedings/title"/>
+        <element name="month" type="dblp/proceedings/title"/>
+        <element name="note" type="dblp/proceedings/title"/>
+        <element name="ee" type="dblp/proceedings/title"/>
+        <element name="journal" type="dblp/proceedings/title"/>
+        <element name="number" type="dblp/article/title/sub"/>
+        <element name="cite" type="dblp/article/title/sub"/>
+      </choice>
+    </sequence>
+    <attribute name="mdate" type="string" use="required"/>
+    <attribute name="key" type="string" use="required"/>
+  </complexType>
+  <complexType name="dblp/phdthesis">
+    <choice>
+      <element name="author" type="dblp/article/title/sub"/>
+      <element name="title" type="dblp/article/title/sub"/>
+      <element name="year" type="dblp/article/title/sub"/>
+      <element name="school" type="dblp/article/title/sub"/>
+      <element name="series" type="dblp/article/title/sub"/>
+      <element name="number" type="dblp/article/title/sub"/>
+      <element name="publisher" type="dblp/article/title/sub"/>
+      <element name="month" type="dblp/article/title/sub"/>
+      <element name="isbn" type="dblp/article/title/sub"/>
+      <element name="ee" type="dblp/article/title/sub"/>
+    </choice>
+    <attribute name="mdate" type="string" use="required"/>
+    <attribute name="key" type="string" use="required"/>
+  </complexType>
+  <complexType name="dblp/www">
+    <sequence>
+      <choice>
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          <element name="author" type="dblp/article/title/sub"/>
+        </sequence>
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          <element name="editor" type="dblp/article/title/sub"/>
+        </sequence>
+      </choice>
+      <element name="title" type="dblp/article/title/sub"/>
+      <sequence minOccurs="0" maxOccurs="1">
+        <sequence>
+          <sequence minOccurs="0" maxOccurs="1">
+            <element name="booktitle" type="dblp/article/title/sub"/>
+          </sequence>
+          <element name="year" type="dblp/article/title/sub"/>
+        </sequence>
+      </sequence>
+      <element name="url" type="dblp/article/title/sub"/>
+    </sequence>
+    <attribute name="mdate" type="string" use="required"/>
+    <attribute name="key" type="string" use="required"/>
+  </complexType>
+  <complexType name="dblp/inproceedings/title" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="sub" type="dblp/inproceedings/title/sub"/>
+          <element name="sup" type="dblp/inproceedings/title/sup"/>
+          <element name="i" type="dblp/inproceedings/title/i"/>
+          <element name="tt" type="dblp/proceedings/title"/>
+        </choice>
+      </sequence>
+    </sequence>
+  </complexType>
+  <complexType name="dblp/inproceedings">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="title" type="dblp/inproceedings/title"/>
+        <element name="author" type="dblp/article/title/sub"/>
+        <element name="pages" type="dblp/article/title/sub"/>
+        <element name="year" type="dblp/article/title/sub"/>
+        <element name="crossref" type="dblp/article/title/sub"/>
+        <element name="booktitle" type="dblp/article/title/sub"/>
+        <element name="ee" type="dblp/article/title/sub"/>
+        <element name="url" type="dblp/article/title/sub"/>
+        <element name="cdrom" type="dblp/article/title/sub"/>
+        <element name="cite" type="dblp/article/title/sub"/>
+        <element name="number" type="dblp/proceedings/title"/>
+        <element name="note" type="dblp/proceedings/title"/>
+        <element name="month" type="dblp/proceedings/title"/>
+      </choice>
+    </sequence>
+    <attribute name="mdate" type="string" use="required"/>
+    <attribute name="key" type="string" use="required"/>
+  </complexType>
+  <complexType name="dblp/inproceedings/title/sub" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="sup" type="dblp/proceedings/title"/>
+        <element name="i" type="dblp/proceedings/title"/>
+      </choice>
+    </sequence>
+  </complexType>
+  <complexType name="dblp/inproceedings/title/sup" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="sup" type="dblp/proceedings/title"/>
+        <element name="i" type="dblp/article/title/sub"/>
+      </choice>
+    </sequence>
+  </complexType>
+  <complexType name="dblp/inproceedings/title/i" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="sub" type="dblp/article/title/sub"/>
+        <element name="sup" type="dblp/article/title/sub"/>
+      </choice>
+    </sequence>
+  </complexType>
+  <complexType name="dblp/book">
+    <choice>
+      <element name="publisher" type="dblp/article/editor"/>
+      <element name="series" type="dblp/article/editor"/>
+      <element name="cite" type="dblp/article/title/sub"/>
+      <element name="author" type="dblp/proceedings/title"/>
+      <element name="title" type="dblp/proceedings/title"/>
+      <element name="year" type="dblp/proceedings/title"/>
+      <element name="isbn" type="dblp/proceedings/title"/>
+      <element name="editor" type="dblp/proceedings/title"/>
+      <element name="url" type="dblp/proceedings/title"/>
+      <element name="cdrom" type="dblp/proceedings/title"/>
+      <element name="booktitle" type="dblp/proceedings/title"/>
+      <element name="volume" type="dblp/proceedings/title"/>
+      <element name="month" type="dblp/proceedings/title"/>
+      <element name="ee" type="dblp/proceedings/title"/>
+    </choice>
+    <attribute name="mdate" type="string" use="required"/>
+    <attribute name="key" type="string" use="required"/>
+  </complexType>
+  <complexType name="dblp/incollection">
+    <choice>
+      <element name="publisher" type="dblp/article/editor"/>
+      <element name="cite" type="dblp/article/title/sub"/>
+      <element name="author" type="dblp/proceedings/title"/>
+      <element name="pages" type="dblp/proceedings/title"/>
+      <element name="year" type="dblp/proceedings/title"/>
+      <element name="booktitle" type="dblp/proceedings/title"/>
+      <element name="url" type="dblp/proceedings/title"/>
+      <element name="ee" type="dblp/proceedings/title"/>
+      <element name="cdrom" type="dblp/proceedings/title"/>
+      <element name="crossref" type="dblp/proceedings/title"/>
+      <element name="isbn" type="dblp/proceedings/title"/>
+      <element name="chapter" type="dblp/proceedings/title"/>
+      <element name="title" type="dblp/inproceedings/title/sub"/>
+    </choice>
+    <attribute name="mdate" type="string" use="required"/>
+    <attribute name="key" type="string" use="required"/>
+  </complexType>
+  <complexType name="dblp/article/title/i" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="sup" type="dblp/proceedings/title"/>
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          <element name="sub" type="dblp/proceedings/title"/>
+        </sequence>
+      </choice>
+    </sequence>
+  </complexType>
+  <element name="dblp" type="dblp"/>
+  <complexType name="dblp">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="article" type="dblp/article"/>
+        <element name="proceedings" type="dblp/proceedings"/>
+        <element name="phdthesis" type="dblp/phdthesis"/>
+        <element name="www" type="dblp/www"/>
+        <element name="inproceedings" type="dblp/inproceedings"/>
+        <element name="book" type="dblp/book"/>
+        <element name="incollection" type="dblp/incollection"/>
+        <element name="mastersthesis" type="dblp/mastersthesis/author"/>
+      </choice>
+    </sequence>
+  </complexType>
+</schema>

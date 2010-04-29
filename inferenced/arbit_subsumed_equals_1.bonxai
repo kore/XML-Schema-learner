@@ -1,0 +1,147 @@
+namespace http://example.com/generated
+
+grammar {
+	//meta = {
+		attribute http-equiv { string },
+		attribute content { string },
+		EMPTY
+	}
+
+	//link = {
+		attribute rel { string },
+		attribute type { string },
+		attribute href { string },
+		attribute media { string },
+		EMPTY
+	}
+
+	( //a/strong | //dd ) = {
+		attribute src { string }?,
+		attribute type { string }?,
+		attribute href { string }?,
+		attribute class { string }?,
+		attribute value { string }?,
+		attribute selected { string }?,
+		attribute name { string }?,
+		attribute width { string }?,
+		attribute height { string }?,
+		attribute alt { string }?,
+		attribute title { string }?,
+		attribute disabled { string }?,
+		attribute checked { string }?,
+		attribute onclick { string }?,
+		( element meta, element link*, element script*, element title )
+	}
+
+	( //li/strong | //h3 | //p | //h1 ) = {
+		attribute class { string }?,
+		( element a | element br )
+	}
+
+	( //li/a | //label/a | //thead/tr/th/a | //tbody/tr/th/a ) = {
+		attribute href { string },
+		attribute title { string }?,
+		attribute class { string }?,
+		element img?
+	}
+
+	//li = {
+		attribute class { string }?,
+		attribute id { string }?,
+		( element a | element span | element img | element h3 | element h4 | element p | element strong | element ul )+?
+	}
+
+	//ul = {
+		attribute class { string }?,
+		attribute id { string }?,
+		element li*
+	}
+
+	( //div/div | //div/div ) = {
+		attribute class { string },
+		attribute style { string }?,
+		( element form | element div | element dl | element pre | element script | element code | element h4 | element span | element a | element h2 | element p | element h3 | element ul | element table )+?
+	}
+
+	//body/div = {
+		attribute class { string },
+		( element div | element h2 | element p | element ul )+
+	}
+
+	//body = {
+		attribute class { string },
+		attribute id { string }?,
+		( element h1, ( element h2, element ul )?, element div* )
+	}
+
+	//html = {
+		attribute xmlns { string },
+		( element head, element body )
+	}
+
+	( //thead/tr/th | //tbody/tr/th | //label ) = {
+		attribute title { string }?,
+		attribute colspan { string }?,
+		( element input | element a )
+	}
+
+	//thead/tr = {
+		element th*
+	}
+
+	//thead = {
+		( element tr | element th* )
+	}
+
+	//select = {
+		attribute size { string },
+		attribute multiple { string }?,
+		attribute name { string },
+		element option*
+	}
+
+	//td = {
+		attribute width { string }?,
+		attribute class { string }?,
+		attribute style { string }?,
+		( element select | element a | element img | element code | element input )+?
+	}
+
+	//tbody/tr = {
+		attribute class { string }?,
+		( element td | element th )+
+	}
+
+	//tbody = {
+		element tr*
+	}
+
+	//table = {
+		attribute class { string }?,
+		( element thead, element tbody* )
+	}
+
+	//fieldset = {
+		( element table | element legend | element input | element div | element label )+
+	}
+
+	//form = {
+		attribute method { string },
+		attribute action { string },
+		attribute onsubmit { string }?,
+		attribute class { string }?,
+		( element fieldset | ( element select, element input ) )
+	}
+
+	//td/a = {
+		attribute onclick { string }?,
+		attribute href { string }?,
+		element strong?
+	}
+
+	//dl = {
+		attribute class { string },
+		( element dt | element dd )?
+	}
+
+}

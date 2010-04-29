@@ -1,0 +1,307 @@
+namespace http://example.com/generated
+
+grammar {
+	//meta = {
+		attribute http-equiv { string },
+		attribute content { string },
+		EMPTY
+	}
+
+	//link = {
+		attribute rel { string },
+		attribute type { string },
+		attribute href { string },
+		attribute media { string },
+		EMPTY
+	}
+
+	( //head/script | //h2/a/script | //pre/a/script | //input/li/a/script | //div/a/a/script | //img/a/a/script | //h2/a/a/script | //option/a/a/script | //legend/a/a/script | //strong/a/a/script | //dl/ul/li/a/script | //body/ul/li/a/script | //li/p/a/a/script | //div/div/ul/li/a/script | //dl/div/ul/li/a/script | //span/div/ul/li/a/script | //a/img/ul/li/a/script | //li/img/ul/li/a/script | //body/div/ul/li/a/script | //div/span/ul/li/a/script | //h2/span/p/a/a/script | //dl/div/p/a/a/script | //span/div/p/a/a/script | //a/img/p/a/a/script | //li/img/p/a/a/script | //body/div/div/p/a/a/script | //div/div/div/p/a/a/script | //h2/span/div/div/p/a/a/script | //a/img/div/div/p/a/a/script | //li/img/div/div/p/a/a/script | //li/ul/li/ul/li/ul/li/span/ul/li/a/script | //li/ul/li/ul/li/ul/li/span/p/a/a/script | //ul/li/ul/li/ul/li/span/div/div/p/a/a/script ) = {
+		attribute src { string },
+		attribute type { string },
+		EMPTY
+	}
+
+	( //pre/a | //body/h2/a | //input/li/a | //div/a/a | //img/a/a | //h2/a/a | //option/a/a | //legend/a/a | //strong/a/a | //dl/ul/li/a | //body/ul/li/a | //li/p/a/a | //div/div/ul/li/a | //dl/div/ul/li/a | //span/div/ul/li/a | //a/img/ul/li/a | //li/img/ul/li/a | //body/div/ul/li/a | //div/span/ul/li/a | //h2/span/p/a/a | //dl/div/p/a/a | //span/div/p/a/a | //a/img/p/a/a | //li/img/p/a/a | //body/div/div/p/a/a | //div/div/div/p/a/a | //h2/span/div/div/p/a/a | //a/img/div/div/p/a/a | //li/img/div/div/p/a/a | //li/ul/li/ul/li/ul/li/span/ul/li/a | //li/ul/li/ul/li/ul/li/span/p/a/a | //ul/li/ul/li/ul/li/span/div/div/p/a/a | //head ) = {
+		attribute href { string }?,
+		attribute title { string }?,
+		attribute class { string }?,
+		( element meta, element link*, element script*, element title )
+	}
+
+	( //dl/div/ul/li | //a/img/ul/li | //li/img/ul/li | //body/div/div/ul/li | //div/span/div/ul/li | //li/ul/li/ul/li/ul/li/span/ul/li ) = {
+		attribute class { string }?,
+		attribute id { string }?,
+		( element a | element h4 | element ul | element span | element p | element img | element h3 | element strong )
+	}
+
+	( //input/li | //dl/ul/li | //body/ul/li | //body/div/ul/li | //div/span/ul/li | //pre ) = {
+		attribute href { string }?,
+		attribute class { string }?,
+		( element a | ( element h3, element h4, element p ) )
+	}
+
+	( //label/input | //dd/input | //a/input ) = {
+		attribute class { string }?,
+		attribute type { string }?,
+		attribute name { string }?,
+		attribute value { string }?,
+		element li*
+	}
+
+	( //h2/span/ul | //dl/div/ul | //a/img/ul | //li/img/ul | //body/div/div/ul | //div/span/div/ul | //li/ul/li/ul/li/ul/li/span/ul ) = {
+		attribute class { string }?,
+		attribute id { string }?,
+		element li*
+	}
+
+	//td/img = {
+		attribute class { string }?,
+		attribute src { string }?,
+		attribute width { string }?,
+		attribute height { string }?,
+		attribute alt { string }?,
+		attribute title { string }?,
+		( element a | element br )?
+	}
+
+	( //li/a/img | //li/ul/li/img | //h2/ul/li/img ) = {
+		attribute class { string },
+		attribute src { string }?,
+		attribute width { string }?,
+		attribute height { string }?,
+		attribute alt { string }?,
+		( element ul | element p | element form | element table | element div | element dl | element h2 | element pre | element h3 | element script | element code )+?
+	}
+
+	( //h2/span/div/dl | //a/img/div/dl | //li/img/div/dl | //ul/li/ul/li/ul/li/span/div/dl ) = {
+		attribute class { string },
+		( element div | element p | element ul | element h2 )+
+	}
+
+	( //div/h2 | //dl/h2 | //span/h2 | //legend ) = {
+		attribute value { string }?,
+		attribute selected { string }?,
+		element a*
+	}
+
+	//body = {
+		attribute class { string },
+		attribute id { string }?,
+		( element h1, ( element h2, element ul )?, element div* )
+	}
+
+	//html = {
+		attribute xmlns { string },
+		( element head, element body )
+	}
+
+	( //p/tr/th | //br/tr/th | //h3/tr/th | //input/tr/th | //option/tr/th | //td/input/th | //fieldset/input/th | //script/tr/th | //tbody/tr/th | //th/tr/th | //code/tr/th | //code/thead/tr/th | //strong/thead/tr/th | //li/thead/tr/th | //a/thead/tr/th | //li/img/input/th | //h2/img/input/th | //a/img/input/th | //fieldset/table/thead/tr/th ) = {
+		attribute title { string }?,
+		attribute colspan { string }?,
+		element input?
+	}
+
+	( //p/tr | //br/tr | //h3/tr | //input/tr | //option/tr | //code/thead/tr | //strong/thead/tr | //li/thead/tr | //a/thead/tr | //fieldset/table/thead/tr ) = {
+		attribute type { string }?,
+		attribute name { string }?,
+		attribute value { string }?,
+		attribute disabled { string }?,
+		attribute checked { string }?,
+		element th*
+	}
+
+	//form/select/option = {
+		attribute value { string }?,
+		attribute type { string }?,
+		element tr
+	}
+
+	( //td/select | //li/img/select | //h2/img/select | //a/img/select ) = {
+		attribute size { string },
+		attribute multiple { string }?,
+		attribute name { string },
+		element option*
+	}
+
+	( //script/tr/td | //th/tr/td | //code/tr/td | //code/tbody/tr/td | //strong/tbody/tr/td | //li/tbody/tr/td | //a/tbody/tr/td | //fieldset/table/tbody/tr/td ) = {
+		attribute width { string }?,
+		attribute height { string }?,
+		attribute src { string }?,
+		attribute alt { string }?,
+		attribute title { string }?,
+		( element select | element input )
+	}
+
+	( //script/tr | //th/tr | //code/tr | //code/tbody/tr | //strong/tbody/tr | //li/tbody/tr | //a/tbody/tr | //fieldset/table/tbody/tr ) = {
+		attribute class { string }?,
+		( element td | element th )+
+	}
+
+	//td/code = {
+		attribute type { string }?,
+		element tr*
+	}
+
+	( //div/code | //h2/span/code | //a/img/code | //li/img/code | //li/ul/li/ul/li/ul/li/span/code ) = {
+		attribute onclick { string }?,
+		( element thead, element tbody* )
+	}
+
+	( //h3/a | //label | //dd ) = {
+		attribute name { string }?,
+		element input
+	}
+
+	//fieldset = {
+		( element table | element label | element div | element legend | element input )+
+	}
+
+	//form = {
+		attribute method { string },
+		attribute action { string },
+		attribute onsubmit { string }?,
+		attribute class { string }?,
+		( element fieldset | ( element select, element input ) )
+	}
+
+	( //div/div/div/p | //h2/span/div/div/p | //a/img/div/div/p | //li/img/div/div/p | //div/div/div/ul/li/p | //h2/span/div/div/ul/li/p | //a/img/div/div/ul/li/p | //li/img/div/div/ul/li/p | //ul/li/ul/li/ul/li/span/div/div/p | //ul/li/ul/li/ul/li/span/div/div/ul/li/p ) = {
+		element a
+	}
+
+	//form/select = {
+		attribute name { string },
+		attribute size { string },
+		element option*
+	}
+
+	( //div/table/thead | //h2/span/table/thead | //a/img/table/thead | //li/img/table/thead | //li/ul/li/ul/li/ul/li/span/table/thead ) = {
+		( element tr | element th* )
+	}
+
+	//td/a = {
+		attribute onclick { string }?,
+		attribute href { string }?,
+		element strong?
+	}
+
+	( //div/table/tbody/tr/td | //h2/span/table/tbody/tr/td | //a/img/table/tbody/tr/td | //li/img/table/tbody/tr/td | //li/ul/li/ul/li/ul/li/span/table/tbody/tr/td ) = {
+		attribute class { string }?,
+		attribute style { string }?,
+		( element a | element img | element code )+?
+	}
+
+	( //div/table/tbody/tr | //h2/span/table/tbody/tr | //a/img/table/tbody/tr | //li/img/table/tbody/tr | //li/ul/li/ul/li/ul/li/span/table/tbody/tr ) = {
+		attribute class { string },
+		element td*
+	}
+
+	( //div/table/tbody | //h2/span/table/tbody | //a/img/table/tbody | //li/img/table/tbody | //li/ul/li/ul/li/ul/li/span/table/tbody ) = {
+		element tr*
+	}
+
+	( //div/table | //h2/span/table | //a/img/table | //li/img/table | //li/ul/li/ul/li/ul/li/span/table ) = {
+		attribute class { string },
+		( element thead, element tbody )
+	}
+
+	//th/a = {
+		attribute href { string },
+		element img?
+	}
+
+	( //div/table/thead/tr/th | //h2/span/table/thead/tr/th | //a/img/table/thead/tr/th | //li/img/table/thead/tr/th | //li/ul/li/ul/li/ul/li/span/table/thead/tr/th ) = {
+		element a?
+	}
+
+	( //div/table/thead/tr | //h2/span/table/thead/tr | //a/img/table/thead/tr | //li/img/table/thead/tr | //li/ul/li/ul/li/ul/li/span/table/thead/tr ) = {
+		element th*
+	}
+
+	( //h2/span/div/ul/li | //a/img/div/ul/li | //li/img/div/ul/li | //body/div/div/div/ul/li | //div/span/div/div/ul/li | //ul/li/ul/li/span/div/ul/li ) = {
+		( element ul | element span )?
+	}
+
+	( //h2/span/div/ul/li/ul/li | //div/div/div/ul/li/ul/li | //span/div/div/ul/li/ul/li | //a/img/div/ul/li/ul/li | //li/img/div/ul/li/ul/li | //ul/li/span/div/ul/li/ul/li ) = {
+		( element ul | element span )
+	}
+
+	//div/ul/li/ul/li/ul/li = {
+		( element ul | element span )?
+	}
+
+	//li/ul/li/ul/li/ul/li/ul = {
+		attribute class { string },
+		element li*
+	}
+
+	//div/ul/li/ul/li/ul/li/ul/li = {
+		( element ul | element span )
+	}
+
+	//div/ul/li/ul/li/ul/li/ul = {
+		attribute class { string },
+		element li*
+	}
+
+	//div/ul/li/ul/li/ul = {
+		attribute class { string },
+		element li*
+	}
+
+	( //h2/span/div/ul/li/ul | //div/div/div/ul/li/ul | //span/div/div/ul/li/ul | //a/img/div/ul/li/ul | //li/img/div/ul/li/ul | //li/ul/li/span/div/ul/li/ul ) = {
+		attribute class { string },
+		element li*
+	}
+
+	( //h2/span/div/ul | //a/img/div/ul | //li/img/div/ul | //body/div/div/div/ul | //div/span/div/div/ul | //li/ul/li/ul/li/span/div/ul ) = {
+		attribute class { string },
+		element li*
+	}
+
+	( //h2/span/div | //a/img/div | //li/img/div | //body/div/div/div | //div/span/div/div | //ul/li/ul/li/ul/li/span/div ) = {
+		attribute class { string },
+		( element ul | ( ( element dl | element h4 ), element div, element a? ) )
+	}
+
+	( //li/ul/li/a | //h2/ul/li/a ) = {
+		attribute href { string },
+		element img
+	}
+
+	( //h2/ul/li | //img/ul/li/ul/li | //dl/div/ul/li/ul/li | //body/div/div/ul/li/ul/li | //div/span/div/ul/li/ul/li | //li/ul/li/ul/li/ul/li/span/ul/li/ul/li ) = {
+		( element img, element a )?
+	}
+
+	( //h2/ul | //dl/div/ul/li/ul | //a/img/ul/li/ul | //body/div/div/ul/li/ul | //div/span/div/ul/li/ul | //li/ul/li/ul/li/ul/li/span/ul/li/ul ) = {
+		element li*
+	}
+
+	( //h2/span/div/div/div | //div/div/div/div/div | //a/img/div/div/div | //li/img/div/div/div | //ul/li/ul/li/ul/li/span/div/div/div ) = {
+		attribute class { string },
+		attribute style { string },
+		element span
+	}
+
+	( //h2/span/div/div | //a/img/div/div | //li/img/div/div | //body/div/div/div/div | //ul/li/ul/li/ul/li/span/div/div ) = {
+		attribute class { string },
+		( element div | element h2 | element ul | element p | element h3 )+
+	}
+
+	( //h2/span/dl | //div/div/dl | //dl/div/dl | //a/img/dl | //li/img/dl | //div/span/div/dl | //li/ul/li/ul/li/ul/li/span/dl ) = {
+		attribute class { string },
+		( element dt | element dd )
+	}
+
+	( //div/div/div/h3 | //h2/span/div/div/h3 | //a/img/div/div/h3 | //li/img/div/div/h3 | //ul/li/ul/li/ul/li/span/div/div/h3 ) = {
+		element a
+	}
+
+	( //h2/span/div/div/ul/li | //div/div/div/div/ul/li | //span/div/div/div/ul/li | //a/img/div/div/ul/li | //li/img/div/div/ul/li | //ul/li/ul/li/ul/li/span/div/div/ul/li ) = {
+		element p
+	}
+
+	( //h2/span/div/div/ul | //div/div/div/div/ul | //span/div/div/div/ul | //a/img/div/div/ul | //li/img/div/div/ul | //ul/li/ul/li/ul/li/span/div/div/ul ) = {
+		element li*
+	}
+
+}

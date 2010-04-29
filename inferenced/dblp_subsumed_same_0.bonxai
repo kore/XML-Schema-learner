@@ -1,0 +1,60 @@
+namespace http://example.com/generated
+
+grammar {
+	( //series | //publisher | //url ) = {
+		attribute href { string }?,
+		( element sub | element i | element sup | element tt )+?
+	}
+
+	//phdthesis = {
+		attribute mdate { string },
+		attribute key { string },
+		( element author | element title | element year | element school | element ee | element month | element publisher | element series | element number | element isbn )+
+	}
+
+	//article = {
+		attribute mdate { string },
+		attribute key { string },
+		attribute reviewid { string }?,
+		attribute rating { string }?,
+		( element author | element title | element year | element editor | element journal | element volume | element ee | element cdrom | element month | element url | element publisher | element number | element pages | element cite )+
+	}
+
+	( //sup | //isbn | //cite ) = {
+		attribute label { string }?,
+		( element i | element sub | element sup )+?
+	}
+
+	//www = {
+		attribute mdate { string },
+		attribute key { string },
+		( element author | element title | element year | element editor | element journal | element volume | element ee | element month | element url | element publisher | element series | element booktitle | element number | element isbn | element crossref | element cite | element address | element note )+
+	}
+
+	//inproceedings = {
+		attribute mdate { string },
+		attribute key { string },
+		( element author | element title | element year | element ee | element cdrom | element month | element url | element booktitle | element number | element pages | element crossref | element cite | element note )+
+	}
+
+	( //tt | //i | //note | //chapter ) = {
+		( element sub | element sup )+?
+	}
+
+	//book = {
+		attribute mdate { string },
+		attribute key { string },
+		( element author | element title | element year | element editor | element volume | element ee | element cdrom | element month | element url | element publisher | element series | element booktitle | element isbn | element cite )+
+	}
+
+	//incollection = {
+		attribute mdate { string },
+		attribute key { string },
+		( element author | element title | element year | element ee | element cdrom | element url | element publisher | element booktitle | element isbn | element pages | element crossref | element cite | element chapter )+
+	}
+
+	//dblp = {
+		( element mastersthesis | element article | element proceedings | element inproceedings | element book | element incollection | element phdthesis | element www )+
+	}
+
+}

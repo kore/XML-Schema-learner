@@ -1,0 +1,582 @@
+namespace http://example.com/generated
+
+grammar {
+	( //title/text | //block/text | //embed/text | //text/text | //concept/text | //equal/entity/text | //src/entity/text | //optional/attribute/text | //attributes/attribute/text | //acl/attribute/text | //label/attribute/text | //gender/attribute/text | //if/attribute/text | //else/attribute/text | //attribute/description/text | //ref/label/text | //entity/description/text | //target/description/text | //uiElement/size/text | //head/size/text | //component_ex/size/text | //entity/label/text | //target/label/text | //component/description/text | //category/label/text | //categories/category/text | //col/entity/text | //row/category/text | //lable/text/attribute/text | //col/text/attribute/text | //status/text/attribute/text | //caption/text/attribute/text | //tag ) = {
+		attribute lang { string }?,
+		attribute value { string }?,
+		attribute key { string }?,
+		EMPTY
+	}
+
+	( //equal/entity | //src/entity | //title ) = {
+		attribute special { string }?,
+		element text*
+	}
+
+	( //equal | //src ) = {
+		attribute name { string }?,
+		attribute id { string }?,
+		attribute alias { string }?,
+		attribute refId { string }?,
+		( element user, element entity )
+	}
+
+	( //block/check | //embed/check | //text/check | //concept/check | //optional/attribute/check | //attributes/attribute/check | //acl/attribute/check | //label/attribute/check | //gender/attribute/check | //if/attribute/check | //else/attribute/check | //lable/text/attribute/check | //col/text/attribute/check | //status/text/attribute/check | //caption/text/attribute/check | //table ) = {
+		attribute src { string }?,
+		attribute field { string }?,
+		element equal
+	}
+
+	( //optional/attribute | //acl/attribute | //label/attribute | //gender/attribute | //if/attribute | //else/attribute | //attribute/attributes/attribute | //lable/text/attribute | //col/text/attribute | //status/text/attribute | //caption/text/attribute | //hidden/ref/connection/attributes/attribute | //entity/references/ref/connection/attributes/attribute | //target/references/ref/connection/attributes/attribute | //link/group/ref/connection/attributes/attribute | //categories/group/ref/connection/attributes/attribute | //description/group/ref/connection/attributes/attribute | //group/group/ref/connection/attributes/attribute | //target/group/ref/connection/attributes/attribute | //semantic/group/ref/connection/attributes/attribute | //reference/group/ref/connection/attributes/attribute ) = {
+		attribute name { string }?,
+		attribute target { string }?,
+		attribute type { string }?,
+		( element check, element text* )
+	}
+
+	//row/ref = {
+		attribute type { string }?,
+		attribute name { string }?,
+		element block
+	}
+
+	( //message | //groups ) = {
+		attribute name { string }?,
+		attribute position { string }?,
+		attribute size { string }?,
+		( element title, element content )
+	}
+
+	( //messages | //tableField | //overview ) = {
+		attribute src { string }?,
+		attribute useRef { string }?,
+		element message
+	}
+
+	//bdl = {
+		attribute version { string }?,
+		( element messages | element entities | element components | element processes | element managements )+
+	}
+
+	( //layout/attribute | //entity/attributes/attribute | //target/attributes/attribute ) = {
+		attribute is_a { string }?,
+		attribute name { string }?,
+		attribute type { string }?,
+		attribute size { string }?,
+		attribute target { string }?,
+		attribute required { string }?,
+		attribute validator { string }?,
+		attribute equired { string }?,
+		( element display | element uiElement | element identField | element events | element sequence | element emebd | element embed | element name | element search | element searchField | element ref | element groups | element tableField | element description | element hidden | element comment | element fk | element categories | element optional | element link | element groupBy | element category | element typed | element concepts | element label )+?
+	}
+
+	//uiElement/layout = {
+		attribute valign { string }?,
+		( element attribute | element categories | element semantic | element condition | element attribut )+?
+	}
+
+	( //uiElement/size | //head/size | //component_ex/size ) = {
+		attribute width { string }?,
+		attribute height { string }?,
+		attribute minWidth { string }?,
+		attribute minHeight { string }?,
+		attribute maxWidth { string }?,
+		attribute maxHeight { string }?,
+		element text*
+	}
+
+	( //hidden/ref/target | //entity/references/ref/target | //target/references/ref/target | //link/group/ref/target | //categories/group/ref/target | //description/group/ref/target | //group/group/ref/target | //target/group/ref/target | //semantic/group/ref/target | //reference/group/ref/target ) = {
+		attribute name { string },
+		attribute id { string },
+		attribute alias { string }?,
+		attribute inherit { string }?,
+		element filters?
+	}
+
+	( //hidden/ref | //entity/references/ref | //target/references/ref | //link/group/ref | //categories/group/ref | //description/group/ref | //group/group/ref | //target/group/ref | //semantic/group/ref | //reference/group/ref ) = {
+		attribute name { string },
+		attribute binding { string }?,
+		attribute relation { string },
+		attribute target { string }?,
+		attribute base { string }?,
+		( element label | element target | element connection | element src | element comment | element description )+?
+	}
+
+	( //link/group | //categories/group | //description/group | //group/group | //target/group | //semantic/group | //reference/group ) = {
+		attribute name { string }?,
+		attribute label { string }?,
+		element ref*
+	}
+
+	( //typed/ref/target | //description/ref/target | //user/ref/target | //onUpdate/ref/target | //update/ref/target | //entities/references/ref/target | //fields/references/ref/target ) = {
+		attribute name { string },
+		attribute id { string }?,
+		( element attributes | element references | element concepts | element properties | element semantic | element access | element lable | element categories | element keys | element comment | element description | element label )+
+	}
+
+	( //col/fields | //properties/component/fields | //onLeave/component/fields | //owner/component/fields | //fail/component/fields | //label/component/fields | //path/component/fields ) = {
+		attribute value { string }?,
+		attribute id { string }?,
+		attribute order { string }?,
+		( element entity*, element references? )
+	}
+
+	//display = {
+		attribute field { string }?,
+		attribute type { string }?,
+		( element table | element text | element overview )?
+	}
+
+	( //components/component/fields | //fk/component/fields | //update/component/fields ) = {
+		attribute value { string }?,
+		attribute id { string }?,
+		attribute join { string }?,
+		attribute srcId { string }?,
+		( element id, element value, element order )?
+	}
+
+	( //components/component | //fk/component | //update/component ) = {
+		attribute name { string }?,
+		attribute src { string },
+		attribute type { string },
+		( ( element source?, element head, element body? ) | ( ( element label*, element description? )?, element fields, element filters? ) )
+	}
+
+	( //onUpdate/update | //text/update ) = {
+		attribute target { string }?,
+		attribute targetId { string }?,
+		attribute src { string }?,
+		( element component | element component_ex )+
+	}
+
+	( //entity/concepts | //target/concepts ) = {
+		attribute main { string }?,
+		attribute position { string }?,
+		element concept
+	}
+
+	( //hidden/ref/connection | //entity/references/ref/connection | //target/references/ref/connection | //link/group/ref/connection | //categories/group/ref/connection | //description/group/ref/connection | //group/group/ref/connection | //target/group/ref/connection | //semantic/group/ref/connection | //reference/group/ref/connection ) = {
+		attribute name { string },
+		attribute is_a { string }?,
+		element attributes?
+	}
+
+	( //template/acl | //entity/access/acl | //target/access/acl | //gender ) = {
+		attribute lang { string }?,
+		attribute key { string }?,
+		element attribute
+	}
+
+	( //link/category | //description/category | //group/category | //target/category | //attributes/categories/category | //layout/categories/category ) = {
+		attribute name { string }?,
+		attribute label { string }?,
+		attribute main { string }?,
+		attribute type { string }?,
+		( ( element layout | element access )?, element label )?
+	}
+
+	//activ/target = {
+		attribute name { string }?,
+		attribute is { string }?,
+		attribute max_lower { string }?,
+		attribute max_higher { string }?,
+		( element category* | element group )
+	}
+
+	//attribute/uiElement = {
+		attribute type { string },
+		attribute class { string }?,
+		attribute size { string }?,
+		attribute src { string }?,
+		attribute readonly { string }?,
+		attribute hardcoded { string }?,
+		attribute filter { string }?,
+		( element filters | element field* | ( element layout, element size ) )?
+	}
+
+	//identField = {
+		attribute src { string }?,
+		attribute field { string }?,
+		element paths?
+	}
+
+	( //attributes/semantic | //layout/semantic | //reference ) = {
+		attribute src { string }?,
+		attribute id { string }?,
+		element group*
+	}
+
+	( //properties/component | //onLeave/component | //owner/component | //fail/component | //label/component | //path/component ) = {
+		attribute type { string },
+		attribute align { string }?,
+		element fields
+	}
+
+	( //entity/properties | //target/properties | //onLeave | //owner | //fail ) = {
+		attribute name { string }?,
+		attribute alias { string }?,
+		attribute srcId { string }?,
+		attribute targetId { string }?,
+		element component?
+	}
+
+	( //row/category | //entity/categories/category | //target/categories/category ) = {
+		attribute name { string }?,
+		attribute mode { string }?,
+		attribute nam { string }?,
+		attribute category { string }?,
+		element text*
+	}
+
+	//component/filters/filter = {
+		attribute srcId { string }?,
+		attribute targetId { string }?,
+		element tag*
+	}
+
+	( //head/bars/action | //component_ex/bars/action | //constraint ) = {
+		attribute lang { string }?,
+		( element concepts | ( element parent?, element tags ) )?
+	}
+
+	( //entity/access | //target/access | //template ) = {
+		attribute page { string }?,
+		attribute slice { string }?,
+		element acl
+	}
+
+	( //category/attributes | //field/attributes | //group_role/attributes | //ref/attributes | //typed/ref/connection/attributes | //description/ref/connection/attributes | //user/ref/connection/attributes | //onUpdate/ref/connection/attributes | //update/ref/connection/attributes | //entities/references/ref/connection/attributes | //fields/references/ref/connection/attributes ) = {
+		attribute name { string }?,
+		attribute field { string }?,
+		element attribute*
+	}
+
+	( //typed/ref/connection | //description/ref/connection | //user/ref/connection | //onUpdate/ref/connection | //update/ref/connection | //entities/references/ref/connection | //fields/references/ref/connection | //group_role ) = {
+		attribute name { string },
+		attribute position { string }?,
+		element attributes
+	}
+
+	( //typed/ref | //description/ref | //user/ref | //onUpdate/ref | //update/ref | //entities/references/ref | //fields/references/ref ) = {
+		attribute name { string },
+		attribute binding { string },
+		attribute relation { string },
+		( element label, element src, element connection, element target )
+	}
+
+	//management/events/onUpdate = {
+		attribute window { string }?,
+		element ref
+	}
+
+	//body/row/col = {
+		attribute key { string }?,
+		attribute size { string }?,
+		attribute type { string }?,
+		element text*
+	}
+
+	( //target/filters/filter | //then/form_edit/filter | //view/form_edit/filter ) = {
+		attribute srcField { string },
+		attribute targetField { string },
+		element description
+	}
+
+	( //target/filters | //form_edit ) = {
+		attribute src { string }?,
+		element filter
+	}
+
+	( //path/onUpdate | //attribute/events/onUpdate ) = {
+		attribute key { string }?,
+		element update
+	}
+
+	//filter/paths/path = {
+		attribute field { string }?,
+		element onUpdate
+	}
+
+	//process/status = {
+		attribute src { string },
+		attribute id { string },
+		element reference
+	}
+
+	( //source/path | //onArrive | //key ) = {
+		attribute srcId { string }?,
+		attribute target { string }?,
+		element acl?
+	}
+
+	//field/size = {
+		attribute width { string }?,
+		( element onArrive, ( element onDeadline, element onFallback )?, element onLeave )
+	}
+
+	( //onArrive/acl | //key/acl | //source/path/acl | //paths/path/acl | //param | //color ) = {
+		attribute value { string }?,
+		( element owner | element group )
+	}
+
+	( //attribut/action | //always/action | //sum/action ) = {
+		attribute name { string },
+		element param*
+	}
+
+	( //attribut | //always | //sum ) = {
+		attribute is_a { string }?,
+		element action*
+	}
+
+	//node/paths/path = {
+		attribute target { string },
+		( element label, element description?, element acl, ( ( element check, element success, element fail )?, element always )? )
+	}
+
+	( //check/field | //parent/uiElement/field ) = {
+		attribute field { string },
+		attribute src { string },
+		element required
+	}
+
+	//parent/uiElement = {
+		attribute type { string }?,
+		element field
+	}
+
+	//node/paths = {
+		element path*
+	}
+
+	//node = {
+		attribute name { string },
+		attribute target { string }?,
+		( element events | element paths | element activ | element endpoint | element startpoint | element label )+
+	}
+
+	//activ = {
+		element target*
+	}
+
+	//process = {
+		attribute name { string },
+		attribute src { string },
+		( element status, element node* )
+	}
+
+	//processes = {
+		element process
+	}
+
+	//identField/paths = {
+		element path
+	}
+
+	( //entity/categories | //target/categories ) = {
+		attribute main { string },
+		element category?
+	}
+
+	//component/filters = {
+		element filter
+	}
+
+	( //component_ex/properties | //component/head/properties ) = {
+		( element close, element max )
+	}
+
+	//menus = {
+		( element left, element right )
+	}
+
+	( //head/bars/status | //component_ex/bars/status ) = {
+		( element menus, element text )
+	}
+
+	//bars = {
+		( element title, element status, element info, element action )
+	}
+
+	//component/head = {
+		attribute unit { string }?,
+		( element field* | ( element size, element properties, element bars, element access, element events ) )
+	}
+
+	( //tab/properties | //tab/head/properties ) = {
+		( element closable, element readonly, element disabled, element reload, element hidden )
+	}
+
+	//tab/head = {
+		( element properties, element label, element tooltip, element access, element constraint, element events )
+	}
+
+	//body/row = {
+		attribute name { string },
+		attribute type { string },
+		( element caption, element col* )
+	}
+
+	//tab/body = {
+		element row
+	}
+
+	//body/tab = {
+		attribute name { string },
+		( element head, element body )
+	}
+
+	//component/body = {
+		element tab
+	}
+
+	//caption = {
+		element text
+	}
+
+	//tab/row/col = {
+		attribute size { string }?,
+		attribute type { string }?,
+		attribute key { string }?,
+		( element entity | element text )?
+	}
+
+	//tab/row = {
+		attribute name { string }?,
+		attribute type { string }?,
+		( element cms* | element ref | element entity | element html | element template | element text | ( element access, element constraint, element category ) | ( element caption?, element col* ) )
+	}
+
+	//content/tab = {
+		attribute name { string },
+		( element properties, element label, element tooltip, element access, element constraint, element events, element row* )
+	}
+
+	//component_ex/content = {
+		element tab
+	}
+
+	//component_ex = {
+		attribute type { string },
+		attribute name { string },
+		attribute src { string },
+		( element size, element properties, element bars, element access, element events, element content )
+	}
+
+	( //attribute/concepts | //semantic/concepts | //max/concepts | //right/concepts | //action/concepts | //hidden/concepts | //constraint/concepts | //col/text/concepts | //tab/events/concepts | //component_ex/events/concepts | //label/text/concepts | //description/text/concepts | //component/head/events/concepts | //tab/head/events/concepts ) = {
+		element concept
+	}
+
+	//category/layout = {
+		element col*
+	}
+
+	//category/access/acl = {
+		attribute type { string },
+		( element role, element owner, element responsible, element user )
+	}
+
+	//category/access = {
+		element acl
+	}
+
+	//attribute/label = {
+		element text*
+	}
+
+	//genders = {
+		element gender*
+	}
+
+	//management/semantic = {
+		element genders
+	}
+
+	//management/events = {
+		( element onInsert, element onUpdate )
+	}
+
+	//view/condition/if = {
+		( element entity | element group_role )
+	}
+
+	//then = {
+		element form_edit
+	}
+
+	//view/condition = {
+		( element if*, element then )
+	}
+
+	//view = {
+		( element insert, element update, element table, element overview, element form_insert, element form_edit, element condition )
+	}
+
+	//management/references = {
+		element ref*
+	}
+
+	//management = {
+		attribute name { string },
+		attribute src { string },
+		( element label, element description, element semantic, element events, element view, element references )
+	}
+
+	//managements = {
+		element management*
+	}
+
+	//filter/paths = {
+		element path
+	}
+
+	//uiElement/filters/filter = {
+		attribute srcId { string },
+		attribute targetId { string },
+		element paths?
+	}
+
+	//uiElement/filters = {
+		attribute name { string }?,
+		element filter
+	}
+
+	//primaryKey = {
+		element key
+	}
+
+	//keys = {
+		element primaryKey
+	}
+
+	//source = {
+		attribute name { string },
+		element path
+	}
+
+	//head/field = {
+		attribute name { string },
+		attribute src { string }?,
+		attribute type { string }?,
+		( element size | element color | element label | element sum )
+	}
+
+	( //attributes/condition/if | //layout/condition/if ) = {
+		attribute exists { string },
+		element attribute*
+	}
+
+	//else = {
+		element attribute*
+	}
+
+	( //attributes/condition | //layout/condition ) = {
+		( element if, element else )
+	}
+
+	//parent = {
+		attribute target { string },
+		element uiElement
+	}
+
+}

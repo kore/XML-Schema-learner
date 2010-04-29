@@ -1,0 +1,621 @@
+namespace http://example.com/generated
+
+grammar {
+	//epigraph/l = {
+		attribute type { string }?,
+		attribute TEIform { string }?,
+		attribute level { string }?,
+		attribute role { string }?,
+		attribute n { string }?,
+		attribute place { string }?,
+		attribute anchored { string }?,
+		attribute part { string }?,
+		attribute id { string }?,
+		attribute unit { string }?,
+		attribute rend { string }?,
+		attribute ed { string }?,
+		attribute extent { string }?,
+		attribute resp { string }?,
+		attribute sic { string }?,
+		attribute lemma { string }?,
+		attribute reg { string }?,
+		attribute targets { string }?,
+		attribute targOrder { string }?,
+		attribute lang { string }?,
+		( element resp | element name )+
+	}
+
+	//fileDesc/titleStmt = {
+		attribute TEIform { string }?,
+		( element title*, element author, element editor*, element respStmt )
+	}
+
+	( //biblFull/seriesStmt | //refsDecl ) = {
+		attribute TEIform { string }?,
+		attribute default { string }?,
+		attribute doctype { string }?,
+		element p*
+	}
+
+	//fileDesc/publicationStmt = {
+		attribute TEIform { string }?,
+		( element availability | element idno | element publisher | element pubPlace | element date )+
+	}
+
+	( //l/seg | //orig/w/seg | //corr/w/seg | //q/w/seg | //lg1/head/seg | //l/fw/seg | //ref/name/w/seg | //hi/name/w/seg | //lg2/fw/w/seg | //p/name/w/seg | //orig/fw/w/seg | //seg/fw/w/seg | //p/w/fw/seg | //l/w/fw/seg | //hi/w/fw/seg | //hi/hi/w/seg | //hi/w/hi/w/seg | //div1/lg/fw/name/w/seg | //l/hi/orig/name/w/seg | //lg2/l/orig/name/w/seg | //hi/hi/orig/name/w/seg | //lg/l/orig/name/w/seg | //div2/lg/fw/name/w/seg | //p/w/orig/name/w/seg | //l/w/w/hi/w/seg | //l/w/w/orig/name/w/seg | //p/hi/w/orig/name/w/seg | //hi/hi/w/orig/name/w/seg | //div1/p/w/w/hi/w/seg | //l/hi/w/w/hi/w/seg | //div3/p/w/w/hi/w/seg | //div1/p/w/w/orig/name/w/seg | //l/hi/w/w/orig/name/w/seg | //div3/p/w/w/orig/name/w/seg | //l/hi/hi/w/w/hi/w/seg | //p/hi/hi/w/w/hi/w/seg | //l/hi/hi/w/w/orig/name/w/seg | //p/hi/hi/w/w/orig/name/w/seg ) = {
+		attribute TEIform { string }?,
+		attribute type { string }?,
+		attribute rend { string }?,
+		attribute id { string }?,
+		attribute n { string }?,
+		attribute lang { string }?,
+		attribute reg { string }?,
+		attribute part { string }?,
+		( element note | element hi | element lb | element milestone | element fw )
+	}
+
+	//fileDesc/seriesStmt = {
+		attribute TEIform { string }?,
+		element p
+	}
+
+	//biblFull/titleStmt = {
+		attribute TEIform { string }?,
+		( element title*, element author, element editor* )
+	}
+
+	//biblFull/publicationStmt = {
+		attribute TEIform { string }?,
+		( element publisher, element pubPlace, element date, element idno )
+	}
+
+	//biblFull = {
+		attribute default { string }?,
+		attribute TEIform { string }?,
+		( element titleStmt, element editionStmt, element extent, element publicationStmt, element seriesStmt, element notesStmt )
+	}
+
+	//sourceDesc = {
+		attribute default { string }?,
+		attribute TEIform { string }?,
+		element biblFull
+	}
+
+	//fileDesc = {
+		attribute TEIform { string }?,
+		( element titleStmt, element extent, element publicationStmt, element seriesStmt, element notesStmt, element sourceDesc )
+	}
+
+	( //editorialDecl/p | //titlePart ) = {
+		attribute id { string }?,
+		attribute TEIform { string }?,
+		attribute type { string }?,
+		( element seg | element lb | element note | element cb | element name | element hi | element sic )?
+	}
+
+	//editorialDecl = {
+		attribute default { string }?,
+		attribute TEIform { string }?,
+		element p*
+	}
+
+	//bibl = {
+		attribute default { string }?,
+		attribute TEIform { string }?,
+		element title
+	}
+
+	//taxonomy = {
+		attribute id { string },
+		attribute TEIform { string }?,
+		element bibl
+	}
+
+	//classDecl = {
+		attribute TEIform { string }?,
+		element taxonomy
+	}
+
+	//encodingDesc = {
+		attribute TEIform { string }?,
+		( element projectDesc, element editorialDecl, element refsDecl, element classDecl )
+	}
+
+	( //creation | //docImprint ) = {
+		attribute TEIform { string }?,
+		( element date | element pubPlace | element publisher | element lb )
+	}
+
+	//langUsage = {
+		attribute default { string }?,
+		attribute TEIform { string }?,
+		element language*
+	}
+
+	//keywords = {
+		attribute TEIform { string }?,
+		attribute scheme { string }?,
+		element term*
+	}
+
+	//textClass = {
+		attribute default { string }?,
+		attribute TEIform { string }?,
+		element keywords*
+	}
+
+	//profileDesc = {
+		attribute TEIform { string }?,
+		( element creation, element langUsage, element textClass )
+	}
+
+	//item = {
+		attribute TEIform { string }?,
+		( element lb | element gap )?
+	}
+
+	//change = {
+		attribute TEIform { string }?,
+		( element date, element respStmt, element item )
+	}
+
+	//revisionDesc = {
+		attribute TEIform { string }?,
+		element change*
+	}
+
+	//teiHeader = {
+		attribute type { string },
+		attribute status { string }?,
+		attribute TEIform { string }?,
+		( element fileDesc, element encodingDesc, element profileDesc, element revisionDesc )
+	}
+
+	//docTitle = {
+		attribute TEIform { string }?,
+		( element lb | element titlePart )
+	}
+
+	//hi/foreign = {
+		attribute TEIform { string }?,
+		attribute lang { string }?,
+		( element lb | element name )
+	}
+
+	//titlePage = {
+		attribute TEIform { string }?,
+		( element docTitle | element docEdition | element byline | element epigraph | element docAuthor | element imprimatur | element docImprint )+
+	}
+
+	//front = {
+		attribute TEIform { string }?,
+		element titlePage
+	}
+
+	( //seg/hi | //seriesStmt/p/hi | //biblFull/notesStmt/hi | //fileDesc/notesStmt/hi | //div1/head/hi | //orig/name/hi | //div3/head/hi | //fw/hi/hi | //p/w/hi | //p/name/orig/hi | //hi/name/orig/hi | //p/hi/orig/hi | //p/orig/hi/hi | //hi/hi/orig/hi | //p/w/w/orig/hi | //p/w/orig/hi/hi | //l/w/orig/hi/hi | //hi/w/orig/hi/hi | //div2/p/hi/w/w/orig/hi | //div3/p/hi/w/w/orig/hi ) = {
+		attribute rend { string }?,
+		attribute TEIform { string }?,
+		attribute type { string }?,
+		attribute part { string }?,
+		( element hi | element corr | element lb | element orig )+?
+	}
+
+	( //ref/w/w/orig | //q ) = {
+		attribute TEIform { string }?,
+		attribute rend { string }?,
+		attribute reg { string }?,
+		attribute sic { string }?,
+		attribute resp { string }?,
+		attribute type { string }?,
+		attribute direct { string }?,
+		( element hi | element note | element lb | element caesura | element w )
+	}
+
+	//lg1/head = {
+		attribute type { string }?,
+		attribute TEIform { string }?,
+		attribute n { string }?,
+		attribute id { string }?,
+		attribute part { string }?,
+		attribute rend { string }?,
+		( element hi | element fw | element w | element gap | element note | element lb | element milestone | element pb | element foreign | element seg | element name | element corr | element orig )+
+	}
+
+	//hi/ref = {
+		attribute TEIform { string }?,
+		attribute reg { string }?,
+		attribute rend { string }?,
+		attribute n { string }?,
+		attribute targOrder { string }?,
+		( element hi | element lb | element w | element name )
+	}
+
+	//div1/lg = {
+		attribute type { string }?,
+		attribute sample { string }?,
+		attribute part { string }?,
+		attribute org { string }?,
+		attribute TEIform { string }?,
+		attribute n { string }?,
+		( element fw | element pb | element milestone | element lb | element gap | element l )+
+	}
+
+	//div1 = {
+		attribute id { string }?,
+		attribute n { string }?,
+		attribute sample { string }?,
+		attribute part { string }?,
+		attribute org { string }?,
+		attribute TEIform { string }?,
+		attribute type { string }?,
+		attribute rend { string }?,
+		( element lg | element lg1 | element p | element div2 | element pb | element milestone | element fw | element lb | element head )+
+	}
+
+	//body = {
+		attribute TEIform { string }?,
+		( element div1 | element pb | element milestone )+
+	}
+
+	//text = {
+		attribute id { string }?,
+		attribute TEIform { string }?,
+		( element front?, element body )
+	}
+
+	//TEI.2 = {
+		attribute id { string },
+		attribute TEIform { string }?,
+		( element teiHeader, element text )
+	}
+
+	( //seg/hi/hi | //name/hi/hi | //w/hi/hi | //seriesStmt/p/hi/hi | //biblFull/notesStmt/hi/hi | //fileDesc/notesStmt/hi/hi | //div1/head/hi/hi | //div3/head/hi/hi | //fw/hi/hi/hi | //div3/p/name/hi | //p/name/orig/hi/hi | //hi/name/orig/hi/hi | //p/hi/orig/hi/hi | //p/orig/hi/hi/hi | //hi/hi/orig/hi/hi | //div1/p/hi/w/hi | //p/w/w/orig/hi/hi | //p/w/orig/hi/hi/hi | //l/w/orig/hi/hi/hi | //hi/w/orig/hi/hi/hi | //div2/p/hi/w/w/orig/hi/hi | //div3/p/hi/w/w/orig/hi/hi ) = {
+		attribute rend { string }?,
+		attribute TEIform { string }?,
+		( element hi | element lb )?
+	}
+
+	( //head/w | //p/fw/w | //name/fw/w | //hi/fw/w | //orig/w/w | //corr/w/w | //q/w/w | //l/fw/w | //biblFull/notesStmt/fw/w | //fileDesc/notesStmt/fw/w | //div1/head/fw/w | //div3/head/fw/w | //ref/name/w/w | //hi/name/w/w | //lg2/fw/w/w | //w/hi/w/w | //p/name/w/w | //seg/fw/w/w | //div1/lg/l/w | //p/w/fw/w | //l/w/fw/w | //hi/w/fw/w | //div1/p/w/w | //l/hi/w/w | //div3/p/w/w | //hi/w/orig/fw/w | //w/hi/orig/fw/w | //hi/name/orig/fw/w | //p/hi/orig/fw/w | //seg/orig/fw/w/w | //div2/lg/l/w/w | //l/hi/hi/w/w | //fw/hi/hi/orig/fw/w | //div3/p/name/orig/fw/w | //div1/p/name/orig/fw/w | //p/w/w/orig/fw/w | //p/hi/hi/orig/fw/w | //div1/lg/fw/name/w/w | //l/hi/orig/name/w/w | //lg2/l/orig/name/w/w | //hi/hi/orig/name/w/w | //lg/l/orig/name/w/w | //div2/lg/fw/name/w/w | //p/w/orig/name/w/w | //div3/p/hi/hi/w/w | //div2/p/hi/hi/w/w | //p/hi/w/orig/name/w/w | //hi/hi/w/orig/name/w/w | //div2/p/hi/w/w/orig/fw/w | //div3/p/hi/w/w/orig/fw/w ) = {
+		attribute type { string },
+		attribute part { string }?,
+		attribute TEIform { string }?,
+		( element w | element add | element gap | element hi | element orig )+
+	}
+
+	//byline = {
+		attribute TEIform { string }?,
+		element docAuthor?
+	}
+
+	//l/fw/hi = {
+		attribute TEIform { string },
+		( element corr?, element hi* )
+	}
+
+	//lg2/l/fw = {
+		attribute type { string },
+		attribute TEIform { string },
+		element hi
+	}
+
+	//lg2/l/hi = {
+		attribute rend { string }?,
+		attribute TEIform { string },
+		( element hi | element lb | element corr | element orig )?
+	}
+
+	//lg2/l = {
+		attribute id { string },
+		attribute n { string },
+		attribute part { string },
+		attribute TEIform { string },
+		attribute rend { string }?,
+		( element fw | element hi | element lb | element corr | element gap | element orig )+?
+	}
+
+	//lg2 = {
+		attribute sample { string },
+		attribute part { string },
+		attribute org { string },
+		attribute TEIform { string },
+		( element l | element milestone | element pb | element fw )+
+	}
+
+	//lg1 = {
+		attribute sample { string },
+		attribute part { string },
+		attribute org { string },
+		attribute TEIform { string },
+		( ( element head, element milestone* )?, element lg2* )
+	}
+
+	//p/foreign = {
+		attribute lang { string },
+		attribute TEIform { string },
+		( element pb?, element lb )?
+	}
+
+	( //div1/p/name | //div2/p/hi/name ) = {
+		attribute TEIform { string },
+		( element hi | element orig )?
+	}
+
+	//p/ref/w = {
+		attribute lemma { string },
+		attribute n { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element orig | element w | element hi )?
+	}
+
+	//p/ref = {
+		attribute n { string },
+		attribute targOrder { string },
+		attribute TEIform { string },
+		element w
+	}
+
+	( //ref/w/orig | //div2/p/orig | //div3/p/hi/orig ) = {
+		attribute reg { string },
+		attribute TEIform { string },
+		attribute rend { string }?,
+		( element hi* | ( element pb?, element lb ) )
+	}
+
+	//div1/p = {
+		attribute TEIform { string }?,
+		( element foreign | element name | element ref | element w | element hi | element orig | element fw | element lb | element note | element pb | element milestone )+
+	}
+
+	//ref/w/w = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element add, element orig? )
+	}
+
+	( //div1/p/w | //div2/lg/l/w | //l/hi/hi/w ) = {
+		attribute type { string },
+		attribute part { string }?,
+		attribute TEIform { string }?,
+		( element hi* | element add | element fw | element w | element orig )?
+	}
+
+	//div1/p/hi = {
+		attribute TEIform { string }?,
+		attribute rend { string }?,
+		( element hi | element lb | element note | element orig | element w | element ref )?
+	}
+
+	( //div1/p/orig | //div2/p/hi/w/orig ) = {
+		attribute reg { string },
+		attribute rend { string }?,
+		attribute TEIform { string },
+		( element lb | element hi | element pb | element fw )?
+	}
+
+	( //div1/p/fw | //div1/p/orig/fw | //p/w/orig/fw | //l/w/orig/fw | //div3/p/orig/fw | //hi/hi/w/orig/fw | //div2/p/hi/w/orig/fw ) = {
+		attribute TEIform { string },
+		attribute type { string }?,
+		element hi*
+	}
+
+	//div2/head = {
+		attribute TEIform { string }?,
+		attribute rend { string }?,
+		( element seg | element hi | element abbr | element milestone | element lb )+?
+	}
+
+	//div2/p/hi/w = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element w | element add | element hi | element orig )?
+	}
+
+	//div2/p/hi = {
+		attribute TEIform { string },
+		attribute rend { string }?,
+		( element w | element hi | element orig | element lb | element note | element pb | element corr | element gap | element foreign | element name )+?
+	}
+
+	//div2/p = {
+		attribute TEIform { string },
+		attribute n { string }?,
+		( element hi | element w | element seg | element lb | element note | element pb | element fw | element name | element orig )+?
+	}
+
+	//div2 = {
+		attribute id { string },
+		attribute type { string },
+		attribute sample { string }?,
+		attribute part { string }?,
+		attribute org { string }?,
+		attribute TEIform { string }?,
+		attribute n { string }?,
+		( element head | element p | element lg | element div3 | element linkGrp | element milestone | element lb | element pb )+
+	}
+
+	//div2/p/hi/hi = {
+		attribute TEIform { string },
+		attribute rend { string }?,
+		( element w | element hi | element note | element name | element lb | element orig )+?
+	}
+
+	//div2/p/hi/orig = {
+		attribute reg { string },
+		attribute TEIform { string },
+		( element name | ( element pb?, element lb ) )
+	}
+
+	( //div2/p/w/w | //div2/p/hi/w/w | //div3/p/hi/w/w ) = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element add, element orig? )
+	}
+
+	//l/hi/w = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element hi | element orig | element w )?
+	}
+
+	//lg/l/hi = {
+		attribute rend { string }?,
+		attribute TEIform { string }?,
+		( element w | element hi | element note | element name | element corr )+?
+	}
+
+	//div2/lg/l = {
+		attribute id { string }?,
+		attribute n { string }?,
+		attribute part { string }?,
+		attribute TEIform { string }?,
+		attribute rend { string }?,
+		( element hi | element note | element pb | element gap | element name | element foreign | element lb | element corr | element fw | element orig | element w )+?
+	}
+
+	//l/hi/hi = {
+		attribute rend { string }?,
+		attribute TEIform { string }?,
+		( element note | element name | element pb | element w | element hi )?
+	}
+
+	//div2/lg = {
+		attribute type { string }?,
+		attribute sample { string }?,
+		attribute part { string }?,
+		attribute org { string }?,
+		attribute TEIform { string }?,
+		( element l | element pb | element milestone | element lb | element fw )+
+	}
+
+	( //div2/p/w | //div3/p/hi/w ) = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element hi* | element add | element orig | element w )?
+	}
+
+	//div2/p/hi/hi/w = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element hi | element orig | element w )?
+	}
+
+	( //p/hi/hi/hi | //l/hi/hi/hi ) = {
+		attribute rend { string },
+		attribute TEIform { string },
+		( element w*, element note? )?
+	}
+
+	//div3/p/hi = {
+		attribute TEIform { string },
+		attribute rend { string }?,
+		( element hi | element lb | element pb | element note | element name | element orig | element w )+?
+	}
+
+	//div3/p/w = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element orig | element add | element hi | element w )?
+	}
+
+	( //div3/p/orig | //div1/p/w/orig | //div2/lg/l/w/orig | //l/hi/hi/w/orig ) = {
+		attribute reg { string },
+		attribute TEIform { string },
+		attribute rend { string }?,
+		( element lb | element pb | element hi | element w | element fw )
+	}
+
+	//div3/p = {
+		attribute n { string }?,
+		attribute TEIform { string },
+		( element hi | element w | element orig | element lb | element note | element pb | element corr | element name )+
+	}
+
+	( //hi/hi | //div3/p/hi/hi ) = {
+		attribute rend { string }?,
+		attribute TEIform { string },
+		( element lb | element note | element orig | element w | element hi )?
+	}
+
+	//div3/p/w/orig = {
+		attribute reg { string },
+		attribute TEIform { string },
+		attribute rend { string }?,
+		( element lb | element hi | element note )?
+	}
+
+	//div3 = {
+		attribute type { string }?,
+		attribute sample { string },
+		attribute part { string },
+		attribute org { string },
+		attribute TEIform { string },
+		attribute id { string }?,
+		attribute rend { string }?,
+		( element p | element milestone | element pb | element head )+
+	}
+
+	( //p/orig/w | //div1/p/w/orig/w | //div2/lg/l/w/orig/w | //l/hi/hi/w/orig/w ) = {
+		attribute type { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element add, element lb )
+	}
+
+	( //head/w/w | //p/fw/w/w | //name/fw/w/w | //hi/fw/w/w | //orig/w/w/w | //corr/w/w/w | //q/w/w/w | //l/fw/w/w | //l/w/w/w | //biblFull/notesStmt/fw/w/w | //fileDesc/notesStmt/fw/w/w | //div1/head/fw/w/w | //div3/head/fw/w/w | //ref/name/w/w/w | //hi/name/w/w/w | //lg2/fw/w/w/w | //w/hi/w/w/w | //p/name/w/w/w | //orig/fw/w/w/w | //seg/fw/w/w/w | //div1/lg/l/w/w | //p/w/fw/w/w | //l/w/fw/w/w | //hi/w/fw/w/w | //div1/p/w/w/w | //l/hi/w/w/w | //div3/p/w/w/w | //hi/w/orig/fw/w/w | //w/hi/orig/fw/w/w | //hi/name/orig/fw/w/w | //p/hi/orig/fw/w/w | //l/hi/hi/w/w/w | //fw/hi/hi/orig/fw/w/w | //div3/p/name/orig/fw/w/w | //div1/p/name/orig/fw/w/w | //p/w/w/orig/fw/w/w | //p/hi/hi/orig/fw/w/w | //div1/lg/fw/name/w/w/w | //l/hi/orig/name/w/w/w | //lg2/l/orig/name/w/w/w | //hi/hi/orig/name/w/w/w | //lg/l/orig/name/w/w/w | //div2/lg/fw/name/w/w/w | //p/w/orig/name/w/w/w | //div3/p/hi/hi/w/w/w | //div2/p/hi/hi/w/w/w | //p/hi/w/orig/name/w/w/w | //hi/hi/w/orig/name/w/w/w | //div2/p/hi/w/w/orig/fw/w/w | //div3/p/hi/w/w/orig/fw/w/w ) = {
+		attribute type { string },
+		attribute part { string }?,
+		attribute TEIform { string }?,
+		( element hi | element add )+
+	}
+
+	//linkGrp = {
+		attribute targOrder { string },
+		attribute TEIform { string },
+		element link*
+	}
+
+	( //head/w/w/hi | //p/fw/w/w/hi | //name/fw/w/w/hi | //hi/fw/w/w/hi | //orig/w/w/w/hi | //corr/w/w/w/hi | //q/w/w/w/hi | //l/fw/w/w/hi | //l/w/w/w/hi | //biblFull/notesStmt/fw/w/w/hi | //fileDesc/notesStmt/fw/w/w/hi | //div1/head/fw/w/w/hi | //div3/head/fw/w/w/hi | //ref/name/w/w/w/hi | //hi/name/w/w/w/hi | //lg2/fw/w/w/w/hi | //w/hi/w/w/w/hi | //p/name/w/w/w/hi | //orig/fw/w/w/w/hi | //seg/fw/w/w/w/hi | //div1/lg/l/w/w/hi | //p/w/fw/w/w/hi | //l/w/fw/w/w/hi | //hi/w/fw/w/w/hi | //div1/p/w/w/w/hi | //l/hi/w/w/w/hi | //div3/p/w/w/w/hi | //hi/w/orig/fw/w/w/hi | //w/hi/orig/fw/w/w/hi | //hi/name/orig/fw/w/w/hi | //p/hi/orig/fw/w/w/hi | //l/hi/hi/w/w/w/hi | //fw/hi/hi/orig/fw/w/w/hi | //div3/p/name/orig/fw/w/w/hi | //div1/p/name/orig/fw/w/w/hi | //p/w/w/orig/fw/w/w/hi | //p/hi/hi/orig/fw/w/w/hi | //div1/lg/fw/name/w/w/w/hi | //l/hi/orig/name/w/w/w/hi | //lg2/l/orig/name/w/w/w/hi | //hi/hi/orig/name/w/w/w/hi | //lg/l/orig/name/w/w/w/hi | //div2/lg/fw/name/w/w/w/hi | //p/w/orig/name/w/w/w/hi | //div3/p/hi/hi/w/w/w/hi | //div2/p/hi/hi/w/w/w/hi | //p/hi/w/orig/name/w/w/w/hi | //hi/hi/w/orig/name/w/w/w/hi | //div2/p/hi/w/w/orig/fw/w/w/hi | //div3/p/hi/w/w/orig/fw/w/w/hi ) = {
+		attribute TEIform { string },
+		element add?
+	}
+
+	//seg/orig = {
+		attribute rend { string }?,
+		attribute TEIform { string },
+		attribute id { string }?,
+		attribute n { string }?,
+		attribute part { string }?,
+		attribute reg { string }?,
+		( element orig | element hi | element fw )?
+	}
+
+	//p/seg = {
+		attribute id { string },
+		attribute n { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element hi | element pb | element lb | element corr | element fw | element q | element seg | element orig )+?
+	}
+
+	//div2/head/seg = {
+		attribute id { string },
+		attribute n { string },
+		attribute part { string },
+		attribute TEIform { string },
+		( element milestone | element lb | element hi | element fw )?
+	}
+
+	//epigraph = {
+		attribute TEIform { string },
+		element l
+	}
+
+}

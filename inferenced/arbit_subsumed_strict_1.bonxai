@@ -1,0 +1,234 @@
+namespace http://example.com/generated
+
+grammar {
+	//meta = {
+		attribute http-equiv { string },
+		attribute content { string },
+		EMPTY
+	}
+
+	//link = {
+		attribute rel { string },
+		attribute type { string },
+		attribute href { string },
+		attribute media { string },
+		EMPTY
+	}
+
+	( //head/script | //h2/a/script | //img/a/script | //input/a/a/script | //br/a/a/script | //div/h3/a/script | //strong/a/a/script | //dd/a/a/script | //h4/a/a/a/script | //input/a/a/a/script | //span/li/h3/a/script | //div/li/h3/a/script | //pre/a/a/a/script | //h2/a/a/a/script | //legend/a/a/a/script | //div/div/p/a/a/script | //body/div/p/a/a/script | //span/li/p/a/a/script | //div/li/p/a/a/script | //body/ul/li/h3/a/script | //body/ul/li/p/a/a/script | //div/div/ul/li/h3/a/script | //body/div/ul/li/h3/a/script | //td/select/option/a/a/a/script | //form/select/option/a/a/a/script | //div/div/ul/li/p/a/a/script | //body/div/ul/li/p/a/a/script ) = {
+		attribute src { string },
+		attribute type { string },
+		EMPTY
+	}
+
+	( //img/a | //br/a/a | //body/h2/a | //div/h3/a | //strong/a/a | //dd/a/a | //input/input/a/a | //label/input/a/a | //h4/a/a/a | //input/a/a/a | //span/li/h3/a | //div/li/h3/a | //pre/a/a/a | //h2/a/a/a | //legend/a/a/a | //div/div/p/a/a | //body/div/p/a/a | //span/li/p/a/a | //div/li/p/a/a | //body/ul/li/h3/a | //body/ul/li/p/a/a | //div/div/ul/li/h3/a | //body/div/ul/li/h3/a | //td/select/option/a/a/a | //form/select/option/a/a/a | //div/div/ul/li/p/a/a | //body/div/ul/li/p/a/a | //head ) = {
+		attribute href { string }?,
+		attribute name { string }?,
+		( element meta, element link*, element script*, element title )
+	}
+
+	//body/h2 = {
+		attribute class { string }?,
+		attribute href { string }?,
+		element a
+	}
+
+	( //span/li/a | //div/li/a | //body/ul/li/a | //div/div/ul/li/a | //body/div/ul/li/a ) = {
+		attribute href { string },
+		attribute title { string }?,
+		attribute class { string }?,
+		element img?
+	}
+
+	//li = {
+		attribute class { string }?,
+		attribute id { string }?,
+		( element a | element h3 | element h4 | element p | element ul | element strong | element span | element img )+?
+	}
+
+	( //a/div | //fieldset/div ) = {
+		attribute class { string },
+		element li*
+	}
+
+	( //div/div/ul | //body/div/ul ) = {
+		attribute class { string }?,
+		attribute id { string }?,
+		element li*
+	}
+
+	( //div/h2 | //pre | //option | //legend ) = {
+		attribute value { string }?,
+		attribute selected { string }?,
+		element a?
+	}
+
+	( //div/div/p | //body/div/p ) = {
+		attribute class { string }?,
+		attribute type { string }?,
+		attribute name { string }?,
+		attribute value { string }?,
+		( element a | element br )?
+	}
+
+	( //div/div | //div/div ) = {
+		attribute class { string },
+		attribute style { string }?,
+		( element ul | element h2 | element p | element form | element h3 | element div | element dl | element span | element pre | element script | element code | element table | element h4 | element a )+?
+	}
+
+	//body/div = {
+		attribute class { string },
+		( element ul | element div | element p | element h2 )+
+	}
+
+	( //span/li/h3 | //div/li/h3 | //body/ul/li/h3 | //div/div/ul/li/h3 | //body/div/ul/li/h3 ) = {
+		attribute class { string }?,
+		attribute src { string }?,
+		attribute width { string }?,
+		attribute height { string }?,
+		attribute alt { string }?,
+		attribute title { string }?,
+		element a?
+	}
+
+	( //a/input | //fieldset/input ) = {
+		attribute type { string }?,
+		attribute name { string }?,
+		attribute value { string }?,
+		element a?
+	}
+
+	( //span/li/p | //div/li/p | //body/ul/li/p | //div/div/ul/li/p | //body/div/ul/li/p | //br ) = {
+		attribute href { string }?,
+		element a?
+	}
+
+	//body = {
+		attribute class { string },
+		attribute id { string }?,
+		( element h1, ( element h2, element ul )?, element div* )
+	}
+
+	//html = {
+		attribute xmlns { string },
+		( element head, element body )
+	}
+
+	( //input/th | //script/tr/th | //thead/tr/th | //a/img/th | //tbody/tr/th | //strong/tr/th | //td/code/tr/th | //div/code/tr/th ) = {
+		attribute title { string }?,
+		attribute colspan { string }?,
+		( element a | element input )?
+	}
+
+	//form/input = {
+		attribute type { string }?,
+		attribute value { string }?,
+		element th*
+	}
+
+	( //td/code | //thead ) = {
+		attribute type { string }?,
+		( element tr | element th* )
+	}
+
+	//td/select = {
+		attribute size { string },
+		attribute multiple { string }?,
+		attribute name { string },
+		element option*
+	}
+
+	//td = {
+		attribute width { string }?,
+		attribute class { string }?,
+		attribute style { string }?,
+		( element select | element a | element img | element code | element input )+?
+	}
+
+	( //input/tr | //tbody/tr | //strong/tr | //div/code/tr ) = {
+		attribute class { string }?,
+		attribute width { string }?,
+		attribute height { string }?,
+		attribute src { string }?,
+		attribute alt { string }?,
+		( element td | element th )+
+	}
+
+	( //div/code | //tbody ) = {
+		attribute type { string }?,
+		attribute name { string }?,
+		attribute value { string }?,
+		element tr*
+	}
+
+	( //span/li/img | //div/li/img | //body/ul/li/img | //div/div/ul/li/img | //body/div/ul/li/img | //table ) = {
+		attribute class { string }?,
+		attribute src { string }?,
+		attribute width { string }?,
+		attribute height { string }?,
+		attribute alt { string }?,
+		attribute title { string }?,
+		( element thead, element tbody* )
+	}
+
+	( //td/input | //label ) = {
+		attribute type { string }?,
+		attribute name { string }?,
+		attribute value { string }?,
+		attribute disabled { string }?,
+		attribute checked { string }?,
+		element input
+	}
+
+	( //div/a | //fieldset ) = {
+		attribute onclick { string }?,
+		( element table | element label | element div | element legend | element input )+
+	}
+
+	//form = {
+		attribute method { string },
+		attribute action { string },
+		attribute onsubmit { string }?,
+		attribute class { string }?,
+		( element fieldset | ( element select, element input ) )
+	}
+
+	//div/h3 = {
+		attribute href { string }?,
+		element a?
+	}
+
+	//form/select = {
+		attribute name { string },
+		attribute size { string },
+		element option*
+	}
+
+	//td/a = {
+		attribute onclick { string }?,
+		attribute href { string }?,
+		element strong?
+	}
+
+	( //input/th/a | //img/th/a | //script/tr/th/a | //thead/tr/th/a | //tbody/tr/th/a | //strong/tr/th/a | //td/code/tr/th/a | //div/code/tr/th/a ) = {
+		attribute href { string },
+		element img?
+	}
+
+	( //span/li/ul | //div/li/ul | //body/ul/li/ul | //div/div/ul/li/ul | //body/div/ul/li/ul ) = {
+		attribute class { string }?,
+		element li*
+	}
+
+	( //span/li/strong | //div/li/strong | //body/ul/li/strong | //div/div/ul/li/strong | //body/div/ul/li/strong | //dd ) = {
+		attribute name { string }?,
+		element a
+	}
+
+	//dl = {
+		attribute class { string },
+		( element dt | element dd )?
+	}
+
+}

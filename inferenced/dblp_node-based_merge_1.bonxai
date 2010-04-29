@@ -1,0 +1,92 @@
+namespace http://example.com/generated
+
+grammar {
+	//sup/i = {
+		attribute href { string }?,
+		attribute label { string }?,
+		EMPTY
+	}
+
+	//mastersthesis = {
+		attribute mdate { string },
+		attribute key { string },
+		( element author, element title, element year, element school )
+	}
+
+	( //article/title | //inproceedings/title ) = {
+		( element sub | element i | element tt | element sup )+?
+	}
+
+	//article = {
+		attribute mdate { string },
+		attribute key { string },
+		attribute reviewid { string }?,
+		attribute rating { string }?,
+		( element title | element editor | element journal | element volume | element year | element ee | element cdrom | element author | element month | element url | element publisher | element pages | element number | element cite )+
+	}
+
+	( //article/title/sup | //inproceedings/title/sup | //proceedings/title/sup | //incollection/title/sup ) = {
+		( element sup | element i | element sub )+?
+	}
+
+	//proceedings/title = {
+		( element sub | element sup* )?
+	}
+
+	//proceedings = {
+		attribute mdate { string },
+		attribute key { string },
+		( element title | element editor | element booktitle | element series | element volume | element year | element url | element publisher | element isbn | element author | element number | element cite | element address | element crossref | element month | element note | element ee | element journal )+
+	}
+
+	//phdthesis = {
+		attribute mdate { string },
+		attribute key { string },
+		( element author | element title | element year | element school | element series | element number | element publisher | element month | element isbn | element ee )
+	}
+
+	//www = {
+		attribute mdate { string },
+		attribute key { string },
+		( ( element author* | element editor* ), element title, ( element booktitle?, element year )?, element url )
+	}
+
+	//inproceedings = {
+		attribute mdate { string },
+		attribute key { string },
+		( element author | element pages | element year | element crossref | element booktitle | element ee | element url | element cdrom | element cite | element number | element note | element month | element title )
+	}
+
+	( //article/title/i | //inproceedings/title/i ) = {
+		( element sub | element sup )+?
+	}
+
+	//i/sub = {
+		element sub?
+	}
+
+	( //article/title/sup/sup | //inproceedings/title/sup/sup | //proceedings/title/sup/sup | //incollection/title/sup/sup ) = {
+		element i?
+	}
+
+	//book = {
+		attribute mdate { string },
+		attribute key { string },
+		( element author | element title | element publisher | element year | element isbn | element editor | element url | element cite | element cdrom | element booktitle | element series | element volume | element month | element ee )
+	}
+
+	//incollection/title = {
+		element sup?
+	}
+
+	//incollection = {
+		attribute mdate { string },
+		attribute key { string },
+		( element title | element author | element pages | element year | element booktitle | element url | element ee | element cdrom | element publisher | element crossref | element isbn | element chapter | element cite )+
+	}
+
+	//dblp = {
+		( element mastersthesis | element article | element proceedings | element phdthesis | element www | element inproceedings | element book | element incollection )+
+	}
+
+}

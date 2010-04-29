@@ -1,0 +1,135 @@
+namespace http://example.com/generated
+
+grammar {
+	//meta = {
+		attribute http-equiv { string },
+		attribute content { string },
+		EMPTY
+	}
+
+	//link = {
+		attribute rel { string },
+		attribute type { string },
+		attribute href { string },
+		attribute media { string },
+		EMPTY
+	}
+
+	( //script | //input ) = {
+		attribute src { string }?,
+		attribute type { string },
+		attribute name { string }?,
+		attribute value { string }?,
+		attribute disabled { string }?,
+		attribute checked { string }?,
+		attribute class { string }?,
+		EMPTY
+	}
+
+	( //title | //img | //span | //br | //head | //code | //option | //legend | //dd ) = {
+		attribute value { string }?,
+		attribute selected { string }?,
+		attribute class { string }?,
+		attribute src { string }?,
+		attribute width { string }?,
+		attribute height { string }?,
+		attribute alt { string }?,
+		attribute title { string }?,
+		( element meta, element link*, element script*, element title )
+	}
+
+	//a = {
+		attribute href { string }?,
+		attribute title { string }?,
+		attribute class { string }?,
+		attribute onclick { string }?,
+		attribute name { string }?,
+		( element img | element strong )?
+	}
+
+	( //strong | //li | //h4 | //h2 ) = {
+		attribute class { string }?,
+		attribute id { string }?,
+		( element a | element p | element ul | element img | element span | element h3 | element h4 | element strong )+
+	}
+
+	//ul = {
+		attribute class { string }?,
+		attribute id { string }?,
+		element li*
+	}
+
+	//p = {
+		attribute class { string }?,
+		( element a | element br )+?
+	}
+
+	//div = {
+		attribute class { string },
+		attribute style { string }?,
+		( element ul | element p | element div | element form | element table | element script | element a | element dl | element pre | element code | element span | element h2 | element h3 | element h4 )+?
+	}
+
+	//body = {
+		attribute class { string },
+		attribute id { string }?,
+		( element h1, ( element h2, element ul )?, element div* )
+	}
+
+	//html = {
+		attribute xmlns { string },
+		( element head, element body )
+	}
+
+	( //td | //th | //label ) = {
+		attribute title { string }?,
+		attribute colspan { string }?,
+		attribute width { string }?,
+		attribute class { string }?,
+		attribute style { string }?,
+		( element a | element input | element select | element img | element code )+
+	}
+
+	//tr = {
+		attribute class { string }?,
+		( element th | element td )+
+	}
+
+	//thead = {
+		( element tr | element th* )
+	}
+
+	//select = {
+		attribute size { string },
+		attribute multiple { string }?,
+		attribute name { string },
+		element option*
+	}
+
+	//tbody = {
+		element tr*
+	}
+
+	//table = {
+		attribute class { string }?,
+		( element thead, element tbody* )
+	}
+
+	//fieldset = {
+		( element table | element div | element input | element legend | element label )+
+	}
+
+	//form = {
+		attribute method { string },
+		attribute action { string },
+		attribute onsubmit { string }?,
+		attribute class { string }?,
+		( element fieldset | ( element select, element input ) )
+	}
+
+	//dl = {
+		attribute class { string },
+		( element dt | element dd )?
+	}
+
+}

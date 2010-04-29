@@ -1,0 +1,237 @@
+namespace http://example.com/generated
+
+grammar {
+	( //li/ul/li/ul/li/ul/li/ul/li | //div/div/div/div/ul/li/ul/li/ul/li/ul/li | //dd ) = {
+		attribute http-equiv { string }?,
+		attribute content { string }?,
+		attribute rel { string }?,
+		attribute type { string }?,
+		attribute href { string }?,
+		attribute media { string }?,
+		attribute src { string }?,
+		attribute class { string }?,
+		attribute title { string }?,
+		attribute value { string }?,
+		attribute selected { string }?,
+		attribute name { string }?,
+		attribute width { string }?,
+		attribute height { string }?,
+		attribute alt { string }?,
+		attribute colspan { string }?,
+		attribute disabled { string }?,
+		attribute checked { string }?,
+		attribute onclick { string }?,
+		( element meta, element link*, element script*, element title )
+	}
+
+	( //body/ul/li | //body/div/ul/li | //h1 | //h3 ) = {
+		( element a | ( element h3, element h4, element p ) )
+	}
+
+	( //body/ul | //body/div/ul ) = {
+		attribute class { string },
+		element li*
+	}
+
+	//body/div/div/ul/li = {
+		attribute class { string }?,
+		attribute id { string }?,
+		( element ul | element a | element p | element span | element img | element h4 | element h3 | element strong )+?
+	}
+
+	//body/div/div/ul = {
+		attribute class { string }?,
+		attribute id { string }?,
+		element li*
+	}
+
+	//div/div/p = {
+		attribute class { string }?,
+		( element a | element br )?
+	}
+
+	//body/div/div = {
+		attribute class { string },
+		( element ul | element p | element form | element table | element div | element dl | element h2 | element pre | element h3 | element script | element code )+?
+	}
+
+	//body/div = {
+		attribute class { string },
+		( element div | element p | element h2 | element ul )+
+	}
+
+	//body/div/p = {
+		element a*
+	}
+
+	//body = {
+		attribute class { string },
+		attribute id { string }?,
+		( element h1, ( element h2, element ul )?, element div* )
+	}
+
+	//html = {
+		attribute xmlns { string },
+		( element head, element body )
+	}
+
+	( //fieldset/table/tbody/tr/td | //label ) = {
+		attribute title { string }?,
+		attribute width { string }?,
+		( element input | element select )
+	}
+
+	//fieldset/table/thead/tr = {
+		element th*
+	}
+
+	//fieldset/table/thead = {
+		element tr
+	}
+
+	//select = {
+		attribute size { string },
+		attribute multiple { string }?,
+		attribute name { string },
+		element option*
+	}
+
+	//fieldset/table/tbody/tr = {
+		attribute class { string }?,
+		( element th | element td )
+	}
+
+	//fieldset/table/tbody = {
+		element tr*
+	}
+
+	//fieldset/table = {
+		( element thead, element tbody* )
+	}
+
+	//fieldset = {
+		( element table | element legend | element input | element div | element label )+
+	}
+
+	//form = {
+		attribute method { string },
+		attribute action { string },
+		attribute onsubmit { string }?,
+		attribute class { string }?,
+		( element fieldset | ( element select, element input ) )
+	}
+
+	//div/table/thead = {
+		( element tr | element th* )
+	}
+
+	( //td/a | //th/a/a | //li/a/a ) = {
+		attribute onclick { string }?,
+		attribute href { string }?,
+		element strong?
+	}
+
+	//div/table/tbody/tr/td = {
+		attribute class { string }?,
+		attribute style { string }?,
+		attribute href { string }?,
+		( element a | element img | element code )+
+	}
+
+	//div/table/tbody/tr = {
+		attribute class { string },
+		element td*
+	}
+
+	//div/table/tbody = {
+		element tr*
+	}
+
+	//div/table = {
+		attribute class { string },
+		( element thead, element tbody )
+	}
+
+	//div/table/thead/tr/th = {
+		element a?
+	}
+
+	//div/table/thead/tr = {
+		element th*
+	}
+
+	//body/div/div/div/ul/li = {
+		attribute class { string }?,
+		attribute style { string }?,
+		( element ul | element span )
+	}
+
+	( //div/div/div/div/div/ul/li | //body/div/div/div/ul/li/ul/li ) = {
+		( element ul | element span )
+	}
+
+	( //div/div/div/div/ul/li/ul/li | //body/div/div/div/ul/li/ul/li/ul/li ) = {
+		( element ul | element span )?
+	}
+
+	( //li/ul/li/ul/li/ul/li/ul | //div/div/div/div/ul/li/ul/li/ul/li/ul ) = {
+		attribute class { string },
+		element li*
+	}
+
+	( //div/div/div/div/ul/li/ul/li/ul/li | //body/div/div/div/ul/li/ul/li/ul/li/ul/li ) = {
+		( element ul | element span )
+	}
+
+	( //div/div/div/div/ul/li/ul/li/ul | //body/div/div/div/ul/li/ul/li/ul/li/ul ) = {
+		attribute class { string },
+		element li*
+	}
+
+	( //div/div/div/div/ul/li/ul | //body/div/div/div/ul/li/ul/li/ul ) = {
+		attribute class { string },
+		element li*
+	}
+
+	( //div/div/div/div/div/ul | //body/div/div/div/ul/li/ul ) = {
+		attribute class { string },
+		element li*
+	}
+
+	//body/div/div/div/ul = {
+		attribute class { string },
+		element li*
+	}
+
+	//body/div/div/div = {
+		attribute class { string },
+		( element ul | ( ( element h4 | element dl ), element div, element a? ) )
+	}
+
+	//body/div/div/ul/li/ul/li = {
+		( element img, element a )?
+	}
+
+	//body/div/div/ul/li/ul = {
+		element li*
+	}
+
+	//body/div/div/div/div = {
+		attribute class { string },
+		( element ul | element h2 | element p | element h3 | element div )+
+	}
+
+	//dl = {
+		attribute class { string },
+		( element dt | element dd )
+	}
+
+	//body/div/div/div/div/ul/li = {
+		element p
+	}
+
+	//body/div/div/div/div/ul = {
+		element li*
+	}
+
+}

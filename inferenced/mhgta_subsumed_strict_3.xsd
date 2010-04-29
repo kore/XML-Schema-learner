@@ -1,0 +1,1604 @@
+<?xml version="1.0"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/gegenrated" elementFormDefault="qualified">
+  <complexType name="teiHeader/fileDesc/titleStmt/title" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="w" type="lg/l/w/w"/>
+          <element name="hi" type="lg/l/w/hi"/>
+          <element name="orig" type="lg/l/w/orig"/>
+          <element name="add" type="TEI.2/teiHeader/fileDesc"/>
+          <element name="gap" type="l/hi/hi/hi"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="part" type="string"/>
+  </complexType>
+  <complexType name="teiHeader/fileDesc/titleStmt/author">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="TEIform" type="string"/>
+        <attribute name="role" type="string"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="fileDesc/titleStmt/respStmt/resp" mixed="true">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="resp" type="fileDesc/titleStmt/respStmt/resp"/>
+        <element name="name" type="fileDesc/titleStmt/respStmt/resp"/>
+      </choice>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="n" type="string"/>
+    <attribute name="id" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/fileDesc/titleStmt">
+    <sequence>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="title" type="teiHeader/fileDesc/titleStmt/title"/>
+      </sequence>
+      <element name="author" type="teiHeader/fileDesc/titleStmt/author"/>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="editor" type="teiHeader/fileDesc/titleStmt/author"/>
+      </sequence>
+      <element name="respStmt" type="fileDesc/titleStmt/respStmt/resp"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="place" type="string"/>
+    <attribute name="anchored" type="string"/>
+    <attribute name="type" type="string"/>
+    <attribute name="resp" type="string"/>
+  </complexType>
+  <complexType name="teiHeader/fileDesc/publicationStmt/availability">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="p" type="fileDesc/titleStmt/respStmt/resp"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="type" type="string"/>
+    <attribute name="level" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/fileDesc/publicationStmt">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="availability" type="teiHeader/fileDesc/publicationStmt/availability"/>
+        <element name="idno" type="teiHeader/fileDesc/titleStmt/title"/>
+        <element name="publisher" type="fileDesc/titleStmt/respStmt/resp"/>
+        <element name="pubPlace" type="fileDesc/titleStmt/respStmt/resp"/>
+        <element name="date" type="TEI.2/teiHeader/fileDesc/titleStmt"/>
+      </choice>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="id" type="string"/>
+    <attribute name="n" type="string"/>
+  </complexType>
+  <complexType name="teiHeader/fileDesc/seriesStmt/p" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="note" type="text/front/titlePage/docAuthor"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="type" type="string"/>
+    <attribute name="place" type="string"/>
+    <attribute name="anchored" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/fileDesc/seriesStmt">
+    <element name="p" type="teiHeader/fileDesc/seriesStmt/p"/>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="unit" type="string"/>
+    <attribute name="rend" type="string"/>
+    <attribute name="ed" type="string"/>
+    <attribute name="n" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/fileDesc/notesStmt">
+    <choice>
+      <element name="note" type="TEI.2/teiHeader/fileDesc/titleStmt"/>
+      <element name="fw" type="div1/lg/l/fw"/>
+      <element name="hi" type="div1/lg/l/hi"/>
+      <element name="name" type="div1/lg/l/name"/>
+      <element name="foreign" type="div1/lg/l/foreign"/>
+      <element name="corr" type="div1/lg/l/corr"/>
+      <element name="seg" type="div1/lg/l/seg"/>
+      <element name="w" type="teiHeader/fileDesc/titleStmt/title"/>
+      <element name="gap" type="fileDesc/sourceDesc/biblFull/publicationStmt"/>
+      <element name="lb" type="TEI.2/teiHeader/encodingDesc/classDecl"/>
+      <element name="orig" type="div1/lg/l/name"/>
+      <element name="milestone" type="p/hi/hi/hi"/>
+      <element name="pb" type="div2/p/hi/hi"/>
+    </choice>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="id" type="string"/>
+    <attribute name="n" type="string"/>
+    <attribute name="part" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="fileDesc/sourceDesc/biblFull/titleStmt">
+    <sequence>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="title" type="teiHeader/fileDesc/publicationStmt/availability"/>
+      </sequence>
+      <element name="author" type="TEI.2/teiHeader/fileDesc/publicationStmt"/>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="editor" type="teiHeader/fileDesc/titleStmt/author"/>
+      </sequence>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="unit" type="string"/>
+    <attribute name="rend" type="string"/>
+    <attribute name="ed" type="string"/>
+    <attribute name="n" type="string"/>
+  </complexType>
+  <complexType name="fileDesc/sourceDesc/biblFull/editionStmt">
+    <element name="p" type="TEI.2/teiHeader/fileDesc/publicationStmt"/>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="default" type="string"/>
+  </complexType>
+  <complexType name="fileDesc/sourceDesc/biblFull/publicationStmt">
+    <sequence>
+      <element name="publisher" type="TEI.2/teiHeader/fileDesc/publicationStmt"/>
+      <element name="pubPlace" type="TEI.2/teiHeader/fileDesc/publicationStmt"/>
+      <element name="date" type="TEI.2/teiHeader/fileDesc/publicationStmt"/>
+      <element name="idno" type="teiHeader/fileDesc/titleStmt/title"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="rend" type="string"/>
+    <attribute name="extent" type="string"/>
+  </complexType>
+  <complexType name="teiHeader/fileDesc/sourceDesc/biblFull">
+    <sequence>
+      <element name="titleStmt" type="fileDesc/sourceDesc/biblFull/titleStmt"/>
+      <element name="editionStmt" type="fileDesc/sourceDesc/biblFull/editionStmt"/>
+      <element name="extent" type="TEI.2/teiHeader/fileDesc/publicationStmt"/>
+      <element name="publicationStmt" type="fileDesc/sourceDesc/biblFull/publicationStmt"/>
+      <element name="seriesStmt" type="fileDesc/sourceDesc/biblFull/editionStmt"/>
+      <element name="notesStmt" type="TEI.2/teiHeader/fileDesc/notesStmt"/>
+    </sequence>
+    <attribute name="default" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/fileDesc/sourceDesc">
+    <element name="biblFull" type="teiHeader/fileDesc/sourceDesc/biblFull"/>
+    <attribute name="default" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/fileDesc">
+    <sequence>
+      <element name="titleStmt" type="TEI.2/teiHeader/fileDesc/titleStmt"/>
+      <element name="extent" type="fileDesc/titleStmt/respStmt/resp"/>
+      <element name="publicationStmt" type="TEI.2/teiHeader/fileDesc/publicationStmt"/>
+      <element name="seriesStmt" type="TEI.2/teiHeader/fileDesc/seriesStmt"/>
+      <element name="notesStmt" type="TEI.2/teiHeader/fileDesc/notesStmt"/>
+      <element name="sourceDesc" type="TEI.2/teiHeader/fileDesc/sourceDesc"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="rend" type="string"/>
+    <attribute name="unit" type="string"/>
+    <attribute name="n" type="string"/>
+    <attribute name="ed" type="string"/>
+  </complexType>
+  <complexType name="teiHeader/encodingDesc/editorialDecl/p" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="seg" type="teiHeader/fileDesc/titleStmt/title"/>
+        <element name="note" type="TEI.2/teiHeader/fileDesc/titleStmt"/>
+        <element name="lb" type="TEI.2/teiHeader/fileDesc/publicationStmt"/>
+        <element name="hi" type="TEI.2/teiHeader/fileDesc"/>
+        <element name="cb" type="text/front/titlePage/docAuthor"/>
+        <element name="name" type="text/front/titlePage/docAuthor"/>
+        <element name="sic" type="div1/p/orig/hi"/>
+      </choice>
+    </sequence>
+    <attribute name="id" type="string"/>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="n" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/encodingDesc/editorialDecl">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="p" type="teiHeader/encodingDesc/editorialDecl/p"/>
+    </sequence>
+    <attribute name="default" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/encodingDesc/refsDecl">
+    <element name="p" type="TEI.2/teiHeader/fileDesc/publicationStmt"/>
+    <attribute name="doctype" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="encodingDesc/classDecl/taxonomy/bibl">
+    <element name="title" type="TEI.2/teiHeader/fileDesc/publicationStmt"/>
+    <attribute name="default" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="teiHeader/encodingDesc/classDecl/taxonomy">
+    <element name="bibl" type="encodingDesc/classDecl/taxonomy/bibl"/>
+    <attribute name="id" type="string" use="required"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/encodingDesc/classDecl">
+    <element name="taxonomy" type="teiHeader/encodingDesc/classDecl/taxonomy"/>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/encodingDesc">
+    <sequence>
+      <element name="projectDesc" type="fileDesc/sourceDesc/biblFull/editionStmt"/>
+      <element name="editorialDecl" type="TEI.2/teiHeader/encodingDesc/editorialDecl"/>
+      <element name="refsDecl" type="TEI.2/teiHeader/encodingDesc/refsDecl"/>
+      <element name="classDecl" type="TEI.2/teiHeader/encodingDesc/classDecl"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="unit" type="string"/>
+    <attribute name="rend" type="string"/>
+    <attribute name="ed" type="string"/>
+    <attribute name="n" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/profileDesc/creation">
+    <element name="date" type="TEI.2/teiHeader/fileDesc/publicationStmt"/>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/profileDesc/langUsage">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="language" type="TEI.2/teiHeader/fileDesc/publicationStmt"/>
+    </sequence>
+    <attribute name="default" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="teiHeader/profileDesc/textClass/keywords">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="term" type="teiHeader/fileDesc/seriesStmt/p"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="scheme" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/profileDesc/textClass">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="keywords" type="teiHeader/profileDesc/textClass/keywords"/>
+    </sequence>
+    <attribute name="default" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/profileDesc">
+    <sequence>
+      <element name="creation" type="TEI.2/teiHeader/profileDesc/creation"/>
+      <element name="langUsage" type="TEI.2/teiHeader/profileDesc/langUsage"/>
+      <element name="textClass" type="TEI.2/teiHeader/profileDesc/textClass"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="n" type="string"/>
+  </complexType>
+  <complexType name="teiHeader/revisionDesc/change/respStmt">
+    <sequence>
+      <element name="resp" type="TEI.2/teiHeader/fileDesc/seriesStmt"/>
+      <element name="name" type="TEI.2/teiHeader/fileDesc/seriesStmt"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="teiHeader/revisionDesc/change/item" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="lb" type="revisionDesc/change/item/lb"/>
+          <element name="gap" type="l/hi/hi/hi"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/revisionDesc/change">
+    <sequence>
+      <element name="date" type="TEI.2/teiHeader/fileDesc/seriesStmt"/>
+      <element name="respStmt" type="teiHeader/revisionDesc/change/respStmt"/>
+      <element name="item" type="teiHeader/revisionDesc/change/item"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader/revisionDesc">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="change" type="TEI.2/teiHeader/revisionDesc/change"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/teiHeader">
+    <sequence>
+      <element name="fileDesc" type="TEI.2/teiHeader/fileDesc"/>
+      <element name="encodingDesc" type="TEI.2/teiHeader/encodingDesc"/>
+      <element name="profileDesc" type="TEI.2/teiHeader/profileDesc"/>
+      <element name="revisionDesc" type="TEI.2/teiHeader/revisionDesc"/>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="status" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="text/front/titlePage/docAuthor" mixed="true">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="hi" type="revisionDesc/change/item/lb"/>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="place" type="string"/>
+    <attribute name="anchored" type="string"/>
+    <attribute name="type" type="string"/>
+  </complexType>
+  <complexType name="front/titlePage/docTitle/titlePart" mixed="true">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="lb" type="TEI.2/teiHeader/encodingDesc"/>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="text/front/titlePage/docTitle">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="titlePart" type="front/titlePage/docTitle/titlePart"/>
+        <element name="lb" type="front/titlePage/docTitle/lb"/>
+      </choice>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="text/front/titlePage/docEdition" mixed="true">
+    <choice>
+      <element name="name" type="teiHeader/fileDesc/seriesStmt/p"/>
+      <element name="lb" type="TEI.2/teiHeader/fileDesc/seriesStmt"/>
+    </choice>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="text/front/titlePage/docImprint" mixed="true">
+    <choice>
+      <element name="pubPlace" type="TEI.2/teiHeader/fileDesc/seriesStmt"/>
+      <element name="publisher" type="TEI.2/teiHeader/fileDesc/seriesStmt"/>
+      <element name="date" type="TEI.2/teiHeader/fileDesc/seriesStmt"/>
+      <element name="lb" type="text/front/titlePage/epigraph"/>
+    </choice>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/text/front/titlePage">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="docAuthor" type="text/front/titlePage/docAuthor"/>
+        <element name="docTitle" type="text/front/titlePage/docTitle"/>
+        <element name="docEdition" type="text/front/titlePage/docEdition"/>
+        <element name="docImprint" type="text/front/titlePage/docImprint"/>
+        <element name="byline" type="text/front/titlePage/byline"/>
+        <element name="epigraph" type="text/front/titlePage/epigraph"/>
+        <element name="imprimatur" type="text/front/titlePage/epigraph"/>
+      </choice>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/text/front">
+    <element name="titlePage" type="TEI.2/text/front/titlePage"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="body/div1/head/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="hi" type="div1/head/hi/hi"/>
+          <element name="orig" type="div1/head/hi/orig"/>
+          <element name="corr" type="lg/l/hi/corr"/>
+          <element name="lb" type="div1/p/orig/hi"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="rend" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="text/body/div1/head" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="hi" type="body/div1/head/hi"/>
+          <element name="fw" type="body/div1/head/fw"/>
+          <element name="lb" type="TEI.2/teiHeader/encodingDesc"/>
+          <element name="note" type="text/front/titlePage/docAuthor"/>
+          <element name="milestone" type="p/hi/hi/name"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="type" type="string"/>
+    <attribute name="rend" type="string"/>
+    <attribute name="id" type="string"/>
+    <attribute name="n" type="string"/>
+  </complexType>
+  <complexType name="l/fw/hi/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="corr" type="lg/l/hi/corr"/>
+    </sequence>
+    <attribute name="rend" type="string" use="required"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="lg/l/fw/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="hi" type="l/fw/hi/hi"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="div1/lg/l/fw" mixed="true">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="hi" type="lg/l/fw/hi"/>
+    </sequence>
+    <attribute name="type" type="string"/>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="n" type="string"/>
+  </complexType>
+  <complexType name="div1/lg/l/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="hi" type="lg/l/hi/hi"/>
+          <element name="w" type="lg/l/hi/w"/>
+          <element name="note" type="p/hi/orig/name"/>
+          <element name="caesura" type="lg/l/seg/hi"/>
+          <element name="lb" type="text/front/titlePage/epigraph"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="rend" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="body/div1/lg/fw" mixed="true">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="hi" type="teiHeader/revisionDesc/change/respStmt"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="lg/l/hi/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="w" type="l/hi/hi/w"/>
+          <element name="note" type="l/hi/hi/note"/>
+          <element name="name" type="l/hi/hi/name"/>
+          <element name="hi" type="l/hi/hi/hi"/>
+          <element name="pb" type="div2/p/hi/hi"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="rend" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="text/body/div1/lg">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="fw" type="body/div1/lg/fw"/>
+        <element name="pb" type="TEI.2/teiHeader/fileDesc/publicationStmt"/>
+        <element name="l" type="TEI.2/teiHeader/fileDesc/notesStmt"/>
+        <element name="milestone" type="fileDesc/sourceDesc/biblFull/titleStmt"/>
+        <element name="lb" type="teiHeader/revisionDesc/change/respStmt"/>
+        <element name="gap" type="l/hi/hi/hi"/>
+      </choice>
+    </sequence>
+    <attribute name="type" type="string"/>
+    <attribute name="sample" type="string"/>
+    <attribute name="part" type="string"/>
+    <attribute name="org" type="string"/>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="n" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/text/body/div1">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="head" type="text/body/div1/head"/>
+        <element name="lg" type="text/body/div1/lg"/>
+        <element name="lg1" type="text/body/div1/lg1"/>
+        <element name="p" type="text/body/div1/p"/>
+        <element name="div2" type="text/body/div1/div2"/>
+        <element name="pb" type="fileDesc/titleStmt/respStmt/resp"/>
+        <element name="milestone" type="TEI.2/teiHeader/fileDesc/seriesStmt"/>
+        <element name="lb" type="p/name/orig/lb"/>
+        <element name="fw" type="div1/p/orig/hi"/>
+      </choice>
+    </sequence>
+    <attribute name="id" type="string"/>
+    <attribute name="n" type="string"/>
+    <attribute name="sample" type="string"/>
+    <attribute name="part" type="string"/>
+    <attribute name="org" type="string"/>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="type" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/text/body">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="div1" type="TEI.2/text/body/div1"/>
+        <element name="pb" type="teiHeader/encodingDesc/editorialDecl/p"/>
+        <element name="milestone" type="div1/p/hi/hi"/>
+      </choice>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="TEI.2/text">
+    <sequence>
+      <sequence minOccurs="0" maxOccurs="1">
+        <element name="front" type="TEI.2/text/front"/>
+      </sequence>
+      <element name="body" type="TEI.2/text/body"/>
+    </sequence>
+    <attribute name="id" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <element name="TEI.2" type="TEI.2"/>
+  <complexType name="TEI.2">
+    <sequence>
+      <element name="teiHeader" type="TEI.2/teiHeader"/>
+      <element name="text" type="TEI.2/text"/>
+    </sequence>
+    <attribute name="id" type="string" use="required"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="div1/head/hi/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="hi" type="TEI.2/teiHeader/fileDesc"/>
+        <element name="lb" type="div1/p/orig/hi"/>
+      </choice>
+    </sequence>
+    <attribute name="rend" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="div1/lg/l/name" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="hi" type="TEI.2/teiHeader/fileDesc"/>
+        <element name="lb" type="teiHeader/revisionDesc/change/respStmt"/>
+        <element name="w" type="p/ref/w/w"/>
+        <element name="name" type="div1/p/orig/hi"/>
+      </choice>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="reg" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="div1/lg/l/foreign" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="note" type="lg1/lg2/l/fw"/>
+    </sequence>
+    <attribute name="lang" type="string" use="required"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="revisionDesc/change/item/lb">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="hi" type="TEI.2/teiHeader/encodingDesc/classDecl"/>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="rend" type="string"/>
+    <attribute name="unit" type="string"/>
+    <attribute name="n" type="string"/>
+    <attribute name="ed" type="string"/>
+  </complexType>
+  <complexType name="text/front/titlePage/byline" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="docAuthor" type="front/titlePage/docTitle/lb"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="body/div1/lg1/head" mixed="true">
+    <element name="fw" type="text/front/titlePage/docAuthor"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="unit" type="string"/>
+    <attribute name="n" type="string"/>
+    <attribute name="rend" type="string"/>
+    <attribute name="ed" type="string"/>
+  </complexType>
+  <complexType name="lg2/l/fw/hi" mixed="true">
+    <sequence>
+      <sequence minOccurs="0" maxOccurs="1">
+        <element name="corr" type="lg/l/hi/corr"/>
+      </sequence>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="hi" type="l/fw/hi/hi"/>
+      </sequence>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="n" type="string"/>
+    <attribute name="id" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="lg1/lg2/l/fw" mixed="true">
+    <element name="hi" type="lg2/l/fw/hi"/>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="place" type="string"/>
+    <attribute name="anchored" type="string"/>
+  </complexType>
+  <complexType name="lg1/lg2/l/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="lb" type="lg2/l/hi/lb"/>
+          <element name="hi" type="lg1/lg2/l/hi"/>
+          <element name="orig" type="l/hi/orig/lb"/>
+          <element name="corr" type="lg2/l/hi/lb"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="rend" type="string"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="id" type="string"/>
+    <attribute name="n" type="string"/>
+  </complexType>
+  <complexType name="div1/lg1/lg2/l" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="fw" type="lg1/lg2/l/fw"/>
+          <element name="hi" type="lg1/lg2/l/hi"/>
+          <element name="orig" type="lg1/lg2/l/orig"/>
+          <element name="lb" type="lg2/l/fw/hi"/>
+          <element name="corr" type="lg2/l/hi/lb"/>
+          <element name="gap" type="l/hi/hi/hi"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="id" type="string" use="required"/>
+    <attribute name="n" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="lg1/lg2/l/orig" mixed="true">
+    <choice>
+      <element name="lb" type="lg2/l/fw/hi"/>
+      <element name="hi" type="lg2/l/hi/lb"/>
+    </choice>
+    <attribute name="reg" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="body/div1/lg1/lg2">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="l" type="div1/lg1/lg2/l"/>
+        <element name="milestone" type="body/div1/lg1/head"/>
+        <element name="pb" type="lg2/l/fw/hi"/>
+        <element name="fw" type="div1/p/orig/hi"/>
+      </choice>
+    </sequence>
+    <attribute name="sample" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="org" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="l/hi/orig/lb">
+    <sequence>
+      <sequence minOccurs="0" maxOccurs="1">
+        <element name="hi" type="l/hi/orig/hi"/>
+      </sequence>
+      <element name="lb" type="l/hi/orig/lb"/>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="reg" type="string"/>
+  </complexType>
+  <complexType name="lg2/l/hi/lb">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="orig" type="p/hi/name/orig"/>
+        <element name="hi" type="p/hi/hi/hi"/>
+      </choice>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="sic" type="string"/>
+    <attribute name="resp" type="string"/>
+  </complexType>
+  <complexType name="l/hi/orig/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="hi" type="w/w/add/hi"/>
+    </sequence>
+    <attribute name="rend" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="unit" type="string"/>
+    <attribute name="ed" type="string"/>
+  </complexType>
+  <complexType name="text/body/div1/lg1">
+    <sequence>
+      <sequence minOccurs="0" maxOccurs="1">
+        <sequence>
+          <element name="head" type="body/div1/lg1/head"/>
+          <sequence minOccurs="0" maxOccurs="unbounded">
+            <element name="milestone" type="revisionDesc/change/item/lb"/>
+          </sequence>
+        </sequence>
+      </sequence>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="lg2" type="body/div1/lg1/lg2"/>
+      </sequence>
+    </sequence>
+    <attribute name="sample" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="org" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="body/div1/p/foreign" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence>
+        <sequence minOccurs="0" maxOccurs="1">
+          <element name="pb" type="body/div1/p/pb"/>
+        </sequence>
+        <element name="lb" type="p/name/orig/lb"/>
+      </sequence>
+    </sequence>
+    <attribute name="lang" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="body/div1/p/name" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="orig" type="div1/p/name/orig"/>
+        <element name="hi" type="div3/p/hi/name"/>
+      </choice>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="place" type="string"/>
+    <attribute name="anchored" type="string"/>
+    <attribute name="type" type="string"/>
+  </complexType>
+  <complexType name="div1/p/ref/w" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="w" type="p/ref/w/w"/>
+        <element name="hi" type="p/ref/w/hi"/>
+        <element name="orig" type="ref/w/orig/hi"/>
+      </choice>
+    </sequence>
+    <attribute name="lemma" type="string" use="required"/>
+    <attribute name="n" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="body/div1/p/ref">
+    <element name="w" type="div1/p/ref/w"/>
+    <attribute name="n" type="string" use="required"/>
+    <attribute name="targOrder" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="ref/w/orig/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          <element name="hi" type="ref/w/orig/hi"/>
+        </sequence>
+        <sequence>
+          <sequence minOccurs="0" maxOccurs="1">
+            <element name="pb" type="body/div1/p/pb"/>
+          </sequence>
+          <element name="lb" type="p/name/orig/lb"/>
+        </sequence>
+      </choice>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="reg" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="text/body/div1/p" mixed="true">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="foreign" type="body/div1/p/foreign"/>
+        <element name="name" type="body/div1/p/name"/>
+        <element name="ref" type="body/div1/p/ref"/>
+        <element name="pb" type="body/div1/p/pb"/>
+        <element name="w" type="body/div1/p/w"/>
+        <element name="hi" type="body/div1/p/hi"/>
+        <element name="fw" type="body/div1/p/fw"/>
+        <element name="lb" type="fileDesc/titleStmt/respStmt/resp"/>
+        <element name="note" type="body/div1/p/name"/>
+        <element name="orig" type="p/ref/w/hi"/>
+        <element name="milestone" type="body/div1/div2/p"/>
+      </choice>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="p/name/orig/lb">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="hi" type="div2/p/seg/hi"/>
+          <element name="orig" type="div2/p/seg/orig"/>
+          <element name="fw" type="div2/p/seg/fw"/>
+          <element name="seg" type="div2/p/seg/seg"/>
+          <element name="q" type="div2/p/seg/q"/>
+          <element name="corr" type="lg/l/hi/corr"/>
+          <element name="pb" type="div1/p/orig/hi"/>
+          <element name="lb" type="l/w/w/hi"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="id" type="string" use="required"/>
+    <attribute name="n" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="part" type="string"/>
+  </complexType>
+  <complexType name="div1/p/name/orig" mixed="true">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="lb" type="p/name/orig/lb"/>
+        <element name="hi" type="l/hi/orig/hi"/>
+        <element name="pb" type="div2/p/hi/hi"/>
+      </choice>
+    </sequence>
+    <attribute name="reg" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="p/ref/w/w" mixed="true">
+    <sequence>
+      <element name="add" type="l/hi/orig/hi"/>
+      <sequence minOccurs="0" maxOccurs="1">
+        <element name="orig" type="w/w/add/hi"/>
+      </sequence>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="body/div1/p/pb">
+    <attribute name="n" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="id" type="string"/>
+  </complexType>
+  <complexType name="body/div1/p/w" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          <element name="hi" type="div3/p/hi/name"/>
+        </sequence>
+        <element name="orig" type="div1/p/w/orig"/>
+        <element name="fw" type="div1/p/w/fw"/>
+        <element name="add" type="l/hi/orig/hi"/>
+        <element name="w" type="p/ref/w/w"/>
+      </choice>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="p/ref/w/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="hi" type="div1/p/orig/hi"/>
+          <element name="fw" type="div1/p/orig/fw"/>
+          <element name="lb" type="lg1/lg2/l/hi"/>
+          <element name="pb" type="div2/p/hi/hi"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="reg" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="body/div1/p/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="hi" type="div1/p/hi/hi"/>
+          <element name="lb" type="lg2/l/fw/hi"/>
+          <element name="ref" type="body/div1/p/ref"/>
+          <element name="w" type="div2/p/hi/w"/>
+          <element name="orig" type="div2/p/hi/orig"/>
+          <element name="note" type="div3/p/hi/name"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="w/w/add/hi" mixed="true">
+    <element name="hi" type="w/w/add/hi"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="reg" type="string"/>
+  </complexType>
+  <complexType name="body/div1/p/fw" mixed="true">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="hi" type="front/titlePage/docTitle/lb"/>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="type" type="string"/>
+    <attribute name="place" type="string"/>
+    <attribute name="anchored" type="string"/>
+  </complexType>
+  <complexType name="div1/p/hi/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="foreign" type="div2/p/hi/foreign"/>
+          <element name="w" type="div2/p/hi/w"/>
+          <element name="hi" type="div2/p/hi/hi"/>
+          <element name="orig" type="div2/p/hi/orig"/>
+          <element name="lb" type="p/name/orig/lb"/>
+          <element name="pb" type="body/div1/p/pb"/>
+          <element name="note" type="body/div1/p/fw"/>
+          <element name="name" type="lg2/l/hi/lb"/>
+          <element name="corr" type="lg2/l/hi/lb"/>
+          <element name="gap" type="p/hi/orig/name"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="rend" type="string"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="unit" type="string"/>
+    <attribute name="n" type="string"/>
+  </complexType>
+  <complexType name="div1/p/orig/hi" mixed="true">
+    <element name="hi" type="div1/p/orig/hi"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="id" type="string"/>
+    <attribute name="n" type="string"/>
+  </complexType>
+  <complexType name="body/div1/div2/head" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="seg" type="div1/div2/head/seg"/>
+          <element name="hi" type="div1/p/hi/hi"/>
+          <element name="milestone" type="div2/p/hi/hi"/>
+          <element name="abbr" type="div1/p/orig/hi"/>
+          <element name="lb" type="l/w/w/hi"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="div2/p/hi/foreign" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="name" type="p/hi/orig/name"/>
+    </sequence>
+    <attribute name="lang" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="div2/p/hi/w" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="w" type="p/hi/w/w"/>
+        <element name="add" type="l/hi/orig/hi"/>
+        <element name="orig" type="div1/p/name/orig"/>
+        <element name="hi" type="p/hi/hi/name"/>
+      </choice>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="body/div1/div2/p" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="seg" type="p/name/orig/lb"/>
+        <element name="pb" type="body/div1/p/pb"/>
+        <element name="hi" type="div1/p/hi/hi"/>
+        <element name="lb" type="div1/p/orig/hi"/>
+        <element name="note" type="l/hi/hi/note"/>
+        <element name="w" type="l/hi/hi/name"/>
+        <element name="name" type="p/hi/hi/name"/>
+        <element name="orig" type="div2/div3/p/orig"/>
+        <element name="fw" type="div1/p/orig/hi"/>
+      </choice>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="n" type="string"/>
+    <attribute name="unit" type="string"/>
+    <attribute name="rend" type="string"/>
+    <attribute name="ed" type="string"/>
+  </complexType>
+  <complexType name="text/body/div1/div2">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="head" type="body/div1/div2/head"/>
+        <element name="p" type="body/div1/div2/p"/>
+        <element name="lg" type="body/div1/div2/lg"/>
+        <element name="div3" type="body/div1/div2/div3"/>
+        <element name="linkGrp" type="body/div1/div2/linkGrp"/>
+        <element name="pb" type="TEI.2/teiHeader/fileDesc/publicationStmt"/>
+        <element name="milestone" type="TEI.2/teiHeader/encodingDesc"/>
+        <element name="lb" type="div1/p/orig/hi"/>
+      </choice>
+    </sequence>
+    <attribute name="id" type="string" use="required"/>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="sample" type="string"/>
+    <attribute name="part" type="string"/>
+    <attribute name="org" type="string"/>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="n" type="string"/>
+  </complexType>
+  <complexType name="div2/p/hi/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="w" type="p/hi/hi/w"/>
+          <element name="name" type="p/hi/hi/name"/>
+          <element name="hi" type="p/hi/hi/hi"/>
+          <element name="orig" type="p/hi/hi/orig"/>
+          <element name="lb" type="p/name/orig/lb"/>
+          <element name="note" type="l/hi/hi/note"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="rend" type="string"/>
+    <attribute name="n" type="string"/>
+    <attribute name="unit" type="string"/>
+    <attribute name="ed" type="string"/>
+  </complexType>
+  <complexType name="div2/p/hi/orig" mixed="true">
+    <choice>
+      <element name="name" type="p/hi/orig/name"/>
+      <sequence>
+        <sequence minOccurs="0" maxOccurs="1">
+          <element name="pb" type="div2/p/hi/hi"/>
+        </sequence>
+        <element name="lb" type="lg2/l/fw/hi"/>
+      </sequence>
+    </choice>
+    <attribute name="reg" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="p/hi/name/orig" mixed="true">
+    <choice>
+      <element name="lb" type="p/name/orig/lb"/>
+      <element name="hi" type="div1/p/hi/hi"/>
+      <element name="note" type="div3/p/hi/name"/>
+    </choice>
+    <attribute name="reg" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="p/hi/w/w" mixed="true">
+    <sequence>
+      <element name="add" type="l/hi/orig/hi"/>
+      <sequence minOccurs="0" maxOccurs="1">
+        <element name="orig" type="div2/div3/p/orig"/>
+      </sequence>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="p/hi/orig/name" mixed="true">
+    <element name="lb" type="p/name/orig/lb"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="type" type="string"/>
+    <attribute name="place" type="string"/>
+    <attribute name="anchored" type="string"/>
+  </complexType>
+  <complexType name="lg/l/hi/w" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="orig" type="lg1/lg2/l/orig"/>
+        <element name="hi" type="l/hi/orig/hi"/>
+        <element name="w" type="p/ref/w/w"/>
+      </choice>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="div2/lg/l/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="w" type="lg/l/hi/w"/>
+          <element name="hi" type="lg/l/hi/hi"/>
+          <element name="corr" type="lg/l/hi/corr"/>
+          <element name="note" type="p/hi/orig/name"/>
+          <element name="name" type="l/hi/hi/name"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="rend" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="div1/div2/lg/l" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="hi" type="div2/lg/l/hi"/>
+          <element name="fw" type="div2/lg/l/fw"/>
+          <element name="name" type="div2/lg/l/name"/>
+          <element name="orig" type="div2/lg/l/orig"/>
+          <element name="w" type="teiHeader/fileDesc/titleStmt/title"/>
+          <element name="note" type="teiHeader/fileDesc/seriesStmt/p"/>
+          <element name="gap" type="TEI.2/teiHeader/fileDesc"/>
+          <element name="pb" type="body/div1/p/pb"/>
+          <element name="corr" type="lg/l/hi/corr"/>
+          <element name="foreign" type="div2/lg/l/name"/>
+          <element name="lb" type="text/front/titlePage/epigraph"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="id" type="string"/>
+    <attribute name="n" type="string"/>
+    <attribute name="part" type="string"/>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="l/hi/hi/w" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="w" type="p/ref/w/w"/>
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          <element name="hi" type="p/hi/hi/hi"/>
+        </sequence>
+      </choice>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="body/div1/div2/lg">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="l" type="div1/div2/lg/l"/>
+        <element name="milestone" type="TEI.2/teiHeader/fileDesc"/>
+        <element name="pb" type="TEI.2/teiHeader/profileDesc"/>
+        <element name="lb" type="teiHeader/revisionDesc/change/respStmt"/>
+        <element name="fw" type="body/div1/lg/fw"/>
+      </choice>
+    </sequence>
+    <attribute name="type" type="string"/>
+    <attribute name="sample" type="string"/>
+    <attribute name="part" type="string"/>
+    <attribute name="org" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="l/hi/hi/note">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="type" type="string"/>
+        <attribute name="place" type="string" use="required"/>
+        <attribute name="anchored" type="string" use="required"/>
+        <attribute name="TEIform" type="string" use="required"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="l/hi/hi/name" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          <element name="hi" type="div1/p/hi/hi"/>
+        </sequence>
+        <element name="orig" type="p/hi/name/orig"/>
+        <element name="add" type="p/hi/hi/hi"/>
+        <element name="w" type="p/hi/w/w"/>
+      </choice>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="type" type="string"/>
+    <attribute name="part" type="string"/>
+  </complexType>
+  <complexType name="p/hi/hi/w" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="orig" type="hi/hi/w/orig"/>
+        <element name="w" type="p/ref/w/w"/>
+        <element name="hi" type="p/hi/hi/hi"/>
+      </choice>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="p/hi/hi/name" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="hi" type="l/hi/orig/hi"/>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="rend" type="string"/>
+    <attribute name="n" type="string"/>
+    <attribute name="unit" type="string"/>
+    <attribute name="ed" type="string"/>
+  </complexType>
+  <complexType name="p/hi/hi/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="orig" type="div2/div3/p/orig"/>
+        <sequence>
+          <element name="w" type="body/div1/p/w"/>
+          <sequence minOccurs="0" maxOccurs="1">
+            <element name="note" type="l/hi/hi/note"/>
+          </sequence>
+        </sequence>
+      </choice>
+    </sequence>
+    <attribute name="rend" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="unit" type="string"/>
+    <attribute name="ed" type="string"/>
+    <attribute name="n" type="string"/>
+  </complexType>
+  <complexType name="div1/div2/div3/head" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="lb" type="p/hi/hi/name"/>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="n" type="string"/>
+  </complexType>
+  <complexType name="div2/div3/p/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="hi" type="div3/p/hi/hi"/>
+          <element name="name" type="div3/p/hi/name"/>
+          <element name="lb" type="p/name/orig/lb"/>
+          <element name="w" type="div2/p/hi/w"/>
+          <element name="orig" type="div2/p/hi/orig"/>
+          <element name="note" type="l/hi/hi/note"/>
+          <element name="pb" type="p/hi/hi/name"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="div2/div3/p/w" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="w" type="p/ref/w/w"/>
+        <element name="orig" type="p/hi/name/orig"/>
+        <element name="add" type="p/hi/hi/hi"/>
+        <element name="hi" type="div2/div3/p/name"/>
+      </choice>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="div2/div3/p/orig" mixed="true">
+    <choice>
+      <element name="lb" type="p/name/orig/lb"/>
+      <element name="pb" type="div2/p/hi/hi"/>
+      <element name="hi" type="div1/div2/div3/p"/>
+    </choice>
+    <attribute name="reg" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="div2/div3/p/name" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="orig" type="div2/div3/p/orig"/>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="div1/div2/div3/p" mixed="true">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="hi" type="div2/div3/p/hi"/>
+        <element name="w" type="div2/div3/p/w"/>
+        <element name="orig" type="div2/div3/p/orig"/>
+        <element name="name" type="div2/div3/p/name"/>
+        <element name="lb" type="p/name/orig/lb"/>
+        <element name="note" type="l/hi/hi/note"/>
+        <element name="pb" type="div1/div2/div3/head"/>
+        <element name="corr" type="lg/l/hi/corr"/>
+      </choice>
+    </sequence>
+    <attribute name="n" type="string"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="rend" type="string"/>
+    <attribute name="unit" type="string"/>
+    <attribute name="ed" type="string"/>
+  </complexType>
+  <complexType name="div3/p/hi/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="w" type="p/hi/hi/w"/>
+          <element name="hi" type="p/hi/hi/hi"/>
+          <element name="orig" type="p/hi/hi/orig"/>
+          <element name="lb" type="p/name/orig/lb"/>
+          <element name="note" type="l/hi/hi/note"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="rend" type="string"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="body/div1/div2/div3">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="head" type="div1/div2/div3/head"/>
+        <element name="p" type="div1/div2/div3/p"/>
+        <element name="milestone" type="l/hi/orig/hi"/>
+        <element name="pb" type="div2/p/hi/hi"/>
+      </choice>
+    </sequence>
+    <attribute name="type" type="string"/>
+    <attribute name="sample" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="org" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="id" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="hi/hi/w/orig" mixed="true">
+    <choice>
+      <element name="hi" type="l/hi/orig/hi"/>
+      <element name="lb" type="p/name/orig/lb"/>
+    </choice>
+    <attribute name="reg" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="lg/l/hi/corr" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="hi" type="TEI.2/teiHeader/encodingDesc/classDecl"/>
+    </sequence>
+    <attribute name="sic" type="string" use="required"/>
+    <attribute name="resp" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="p/hi/hi/orig" mixed="true">
+    <sequence>
+      <element name="lb" type="p/name/orig/lb"/>
+      <sequence minOccurs="0" maxOccurs="1">
+        <element name="hi" type="p/hi/hi/hi"/>
+      </sequence>
+    </sequence>
+    <attribute name="reg" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="l/hi/hi/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence>
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          <element name="w" type="body/div1/p/w"/>
+        </sequence>
+        <sequence minOccurs="0" maxOccurs="1">
+          <element name="note" type="l/hi/hi/note"/>
+        </sequence>
+      </sequence>
+    </sequence>
+    <attribute name="rend" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="extent" type="string"/>
+  </complexType>
+  <complexType name="div3/p/hi/name" mixed="true">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="hi" type="p/hi/hi/hi"/>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="place" type="string"/>
+    <attribute name="anchored" type="string"/>
+  </complexType>
+  <complexType name="front/titlePage/docTitle/lb">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="hi" type="p/hi/hi/hi"/>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="div1/p/orig/fw">
+    <element name="hi" type="div3/p/hi/name"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="type" type="string"/>
+  </complexType>
+  <complexType name="div1/p/w/orig" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="fw" type="p/w/orig/fw"/>
+          <element name="w" type="p/w/orig/w"/>
+          <element name="lb" type="p/name/orig/lb"/>
+          <element name="hi" type="div1/p/hi/hi"/>
+          <element name="pb" type="div2/p/hi/hi"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="reg" type="string" use="required"/>
+    <attribute name="rend" type="string"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="p/w/orig/fw">
+    <element name="hi" type="div3/p/hi/name"/>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="p/w/orig/w" mixed="true">
+    <sequence>
+      <element name="add" type="p/hi/hi/hi"/>
+      <element name="lb" type="p/name/orig/lb"/>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="p/w/fw/hi" mixed="true">
+    <element name="hi" type="p/hi/hi/hi"/>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="targets" type="string"/>
+    <attribute name="targOrder" type="string"/>
+  </complexType>
+  <complexType name="div1/p/w/fw">
+    <element name="hi" type="p/w/fw/hi"/>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="lg/l/w/w" mixed="true">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="hi" type="l/w/w/hi"/>
+        <element name="add" type="TEI.2/teiHeader/profileDesc/creation"/>
+      </choice>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="part" type="string"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="lg/l/w/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="hi" type="div1/div2/div3/p"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="lg/l/w/orig" mixed="true">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="hi" type="div1/p/orig/hi"/>
+    </sequence>
+    <attribute name="reg" type="string" use="required"/>
+    <attribute name="rend" type="string"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="div2/lg/l/fw" mixed="true">
+    <element name="hi" type="lg/l/fw/hi"/>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="body/div1/div2/linkGrp">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="link" type="p/w/fw/hi"/>
+    </sequence>
+    <attribute name="targOrder" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="div1/lg/l/corr" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="hi" type="TEI.2/teiHeader/encodingDesc/classDecl"/>
+    </sequence>
+    <attribute name="sic" type="string"/>
+    <attribute name="resp" type="string"/>
+    <attribute name="TEIform" type="string"/>
+    <attribute name="rend" type="string"/>
+  </complexType>
+  <complexType name="div1/head/fw/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="hi" type="TEI.2/teiHeader/encodingDesc/classDecl"/>
+    </sequence>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="body/div1/head/fw" mixed="true">
+    <element name="hi" type="div1/head/fw/hi"/>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="TEIform" type="string"/>
+  </complexType>
+  <complexType name="div2/lg/l/name">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="lang" type="string"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="l/seg/hi/orig" mixed="true">
+    <element name="lb" type="div1/p/orig/hi"/>
+    <attribute name="reg" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="lg/l/seg/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="orig" type="l/seg/hi/orig"/>
+          <element name="lb" type="div1/p/orig/hi"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="rend" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="div1/lg/l/seg">
+    <element name="hi" type="lg/l/seg/hi"/>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="l/w/w/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="add" type="div1/div2/div3/p"/>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="part" type="string"/>
+  </complexType>
+  <complexType name="div2/p/seg/hi" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="orig" type="l/hi/orig/lb"/>
+        <element name="hi" type="l/w/w/hi"/>
+      </choice>
+    </sequence>
+    <attribute name="rend" type="string"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="div1/div2/head/seg" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="milestone" type="div1/div2/div3/p"/>
+        <element name="lb" type="l/w/w/hi"/>
+        <element name="hi" type="div2/p/seg/hi"/>
+        <element name="fw" type="p/seg/seg/fw"/>
+      </choice>
+    </sequence>
+    <attribute name="id" type="string" use="required"/>
+    <attribute name="n" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="div2/p/seg/orig" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          <element name="hi" type="l/w/w/hi"/>
+        </sequence>
+        <element name="fw" type="p/seg/seg/fw"/>
+      </choice>
+    </sequence>
+    <attribute name="reg" type="string"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="div2/p/seg/fw" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="hi" type="l/w/w/hi"/>
+    </sequence>
+    <attribute name="TEIform" type="string" use="required"/>
+    <attribute name="type" type="string"/>
+  </complexType>
+  <complexType name="div2/p/seg/seg" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="fw" type="p/seg/seg/fw"/>
+          <element name="orig" type="l/hi/orig/lb"/>
+          <element name="hi" type="div2/p/hi/hi"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="id" type="string" use="required"/>
+    <attribute name="n" type="string" use="required"/>
+    <attribute name="part" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="div2/p/seg/q" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="hi" type="l/w/w/hi"/>
+    </sequence>
+    <attribute name="rend" type="string" use="required"/>
+    <attribute name="direct" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="p/seg/seg/fw">
+    <element name="hi" type="l/w/w/hi"/>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="text/front/titlePage/epigraph">
+    <element name="l" type="l/w/w/hi"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="div1/head/hi/orig" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="lb" type="text/front/titlePage/epigraph"/>
+    </sequence>
+    <attribute name="reg" type="string"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+  <complexType name="div2/lg/l/orig" mixed="true">
+    <choice>
+      <element name="hi" type="TEI.2/teiHeader/fileDesc"/>
+      <element name="lb" type="teiHeader/revisionDesc/change/respStmt"/>
+    </choice>
+    <attribute name="reg" type="string" use="required"/>
+    <attribute name="TEIform" type="string" use="required"/>
+  </complexType>
+</schema>

@@ -1,0 +1,971 @@
+<?xml version="1.0"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/gegenrated" elementFormDefault="qualified">
+  <complexType name="bdl/messages/message/title/text">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="lang" type="string" use="required"/>
+        <attribute name="key" type="string"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="bdl/messages/message/title">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="text" type="bdl/messages/message/title/text"/>
+    </sequence>
+    <attribute name="special" type="string"/>
+  </complexType>
+  <complexType name="bdl/messages/message/content/block/check/equal">
+    <sequence>
+      <element name="user" type="bdl/messages/message/title"/>
+      <element name="entity" type="bdl/messages/message/title"/>
+    </sequence>
+    <attribute name="name" type="string"/>
+    <attribute name="id" type="string"/>
+    <attribute name="alias" type="string"/>
+    <attribute name="refId" type="string"/>
+  </complexType>
+  <complexType name="bdl/messages/message/content/block/check">
+    <element name="equal" type="bdl/messages/message/content/block/check/equal"/>
+    <attribute name="src" type="string"/>
+    <attribute name="field" type="string"/>
+  </complexType>
+  <complexType name="bdl/messages/message/content/block">
+    <sequence>
+      <element name="check" type="bdl/messages/message/content/block/check"/>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="text" type="bdl/messages/message/title/text"/>
+      </sequence>
+    </sequence>
+    <attribute name="name" type="string"/>
+    <attribute name="nam" type="string"/>
+    <attribute name="category" type="string"/>
+    <attribute name="mode" type="string"/>
+  </complexType>
+  <complexType name="bdl/messages/message/content">
+    <element name="block" type="bdl/messages/message/content/block"/>
+    <attribute name="name" type="string"/>
+  </complexType>
+  <complexType name="bdl/messages/message">
+    <sequence>
+      <element name="title" type="bdl/messages/message/title"/>
+      <element name="content" type="bdl/messages/message/content"/>
+    </sequence>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="target" type="string"/>
+    <attribute name="type" type="string"/>
+  </complexType>
+  <complexType name="bdl/messages">
+    <element name="message" type="bdl/messages/message"/>
+    <attribute name="type" type="string"/>
+  </complexType>
+  <element name="bdl" type="bdl"/>
+  <complexType name="bdl">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="messages" type="bdl/messages"/>
+        <element name="entities" type="bdl/entities"/>
+        <element name="components" type="bdl/components"/>
+        <element name="processes" type="bdl/processes"/>
+        <element name="managements" type="bdl/managements"/>
+      </choice>
+    </sequence>
+    <attribute name="version" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/attribute" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="display" type="bdl/entities/entity/attributes/attribute/display"/>
+          <element name="uiElement" type="bdl/entities/entity/attributes/attribute/uiElement"/>
+          <element name="identField" type="bdl/entities/entity/attributes/attribute/identField"/>
+          <element name="events" type="bdl/entities/entity/attributes/attribute/events"/>
+          <element name="label" type="bdl/entities/entity/attributes/attribute/label"/>
+          <element name="sequence" type="bdl/messages/message/content/block"/>
+          <element name="ref" type="bdl/messages/message/content/block"/>
+          <element name="emebd" type="bdl/messages/message/content"/>
+          <element name="embed" type="bdl/messages/message"/>
+          <element name="name" type="bdl/messages"/>
+          <element name="search" type="bdl/messages"/>
+          <element name="groups" type="bdl/entities/entity/attributes"/>
+          <element name="description" type="bdl/entities/entity/references/ref/label"/>
+          <element name="tableField" type="bdl/entities/entity/references/ref/label"/>
+          <element name="hidden" type="bdl/components"/>
+          <element name="comment" type="bdl/entities/entity/concepts"/>
+          <element name="fk" type="bdl/entities/entity/concepts"/>
+          <element name="categories" type="bdl/entities/entity/references/ref/connection/attributes"/>
+          <element name="optional" type="bdl/entities/entity/attributes/categories"/>
+          <element name="searchField" type="bdl/entities/entity/properties/component"/>
+          <element name="link" type="bdl/components/component/label"/>
+          <element name="groupBy" type="bdl/processes/process/node/paths"/>
+          <element name="typed" type="bdl/processes/process/node/events/onArrive/acl"/>
+          <element name="category" type="bdl/components/component/body/tab"/>
+          <element name="concepts" type="bdl/entities/entity/semantic/concepts"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="is_a" type="string"/>
+    <attribute name="name" type="string"/>
+    <attribute name="type" type="string"/>
+    <attribute name="size" type="string"/>
+    <attribute name="target" type="string"/>
+    <attribute name="required" type="string"/>
+    <attribute name="validator" type="string"/>
+    <attribute name="equired" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="attribute" type="bdl/entities/entity/attributes/attribute"/>
+          <element name="categories" type="bdl/entities/entity/attributes/categories"/>
+          <element name="semantic" type="bdl/entities/entity/attributes/semantic"/>
+          <element name="condition" type="bdl/entities/entity/attributes/condition"/>
+          <element name="attribut" type="bdl/components/component_ex/bars/title"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="name" type="string"/>
+    <attribute name="position" type="string"/>
+    <attribute name="size" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/references/ref/label" mixed="true">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="text" type="bdl/messages/message/title/text"/>
+    </sequence>
+    <attribute name="src" type="string"/>
+    <attribute name="useRef" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/references/ref/target">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="filters" type="bdl/entities/entity/references/ref/target/filters"/>
+    </sequence>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="id" type="string" use="required"/>
+    <attribute name="alias" type="string"/>
+    <attribute name="inherit" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/references/ref">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="label" type="bdl/entities/entity/references/ref/label"/>
+          <element name="target" type="bdl/entities/entity/references/ref/target"/>
+          <element name="connection" type="bdl/entities/entity/references/ref/connection"/>
+          <element name="src" type="bdl/messages/message/content/block/check/equal"/>
+          <element name="comment" type="bdl/messages"/>
+          <element name="description" type="bdl/processes/process/node/events/onArrive/acl"/>
+        </choice>
+      </sequence>
+    </sequence>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="binding" type="string"/>
+    <attribute name="relation" type="string" use="required"/>
+    <attribute name="target" type="string"/>
+    <attribute name="base" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/references">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="ref" type="bdl/entities/entity/references/ref"/>
+    </sequence>
+    <attribute name="valign" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="attributes" type="bdl/entities/entity/attributes"/>
+        <element name="references" type="bdl/entities/entity/references"/>
+        <element name="concepts" type="bdl/entities/entity/concepts"/>
+        <element name="properties" type="bdl/entities/entity/properties"/>
+        <element name="semantic" type="bdl/entities/entity/semantic"/>
+        <element name="access" type="bdl/entities/entity/access"/>
+        <element name="categories" type="bdl/entities/entity/categories"/>
+        <element name="keys" type="bdl/entities/entity/keys"/>
+        <element name="comment" type="bdl/messages"/>
+        <element name="description" type="bdl/entities/entity/references/ref/label"/>
+        <element name="label" type="bdl/components/component/label"/>
+        <element name="lable" type="bdl/components/component/label"/>
+      </choice>
+    </sequence>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="label" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities">
+    <sequence>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="entity" type="bdl/entities/entity"/>
+      </sequence>
+      <sequence minOccurs="0" maxOccurs="1">
+        <element name="references" type="bdl/entities/references"/>
+      </sequence>
+    </sequence>
+    <attribute name="width" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/attribute/display">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="table" type="bdl/messages/message/content/block/check"/>
+        <element name="text" type="bdl/messages/message/content/block"/>
+        <element name="overview" type="bdl/entities/entity/attributes"/>
+      </choice>
+    </sequence>
+    <attribute name="field" type="string"/>
+    <attribute name="type" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component/fields">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence>
+        <element name="id" type="bdl/messages/message/content"/>
+        <element name="value" type="bdl/messages/message/content"/>
+        <element name="order" type="bdl/messages/message/content"/>
+      </sequence>
+    </sequence>
+    <attribute name="value" type="string"/>
+    <attribute name="id" type="string"/>
+    <attribute name="join" type="string"/>
+    <attribute name="srcId" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component">
+    <choice>
+      <sequence>
+        <sequence minOccurs="0" maxOccurs="1">
+          <element name="source" type="bdl/components/component/source"/>
+        </sequence>
+        <element name="head" type="bdl/components/component/head"/>
+        <sequence minOccurs="0" maxOccurs="1">
+          <element name="body" type="bdl/components/component/body"/>
+        </sequence>
+      </sequence>
+      <sequence>
+        <sequence minOccurs="0" maxOccurs="1">
+          <sequence>
+            <sequence minOccurs="0" maxOccurs="unbounded">
+              <element name="label" type="bdl/components/component/label"/>
+            </sequence>
+            <sequence minOccurs="0" maxOccurs="1">
+              <element name="description" type="bdl/components/component/label"/>
+            </sequence>
+          </sequence>
+        </sequence>
+        <element name="fields" type="bdl/components/component/fields"/>
+        <sequence minOccurs="0" maxOccurs="1">
+          <element name="filters" type="bdl/components/component/filters"/>
+        </sequence>
+      </sequence>
+    </choice>
+    <attribute name="name" type="string"/>
+    <attribute name="src" type="string" use="required"/>
+    <attribute name="type" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/components">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="component" type="bdl/components/component"/>
+        <element name="component_ex" type="bdl/components/component_ex"/>
+      </choice>
+    </sequence>
+    <attribute name="value" type="string"/>
+    <attribute name="id" type="string"/>
+    <attribute name="order" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/concepts">
+    <element name="concept" type="bdl/messages/message"/>
+    <attribute name="target" type="string"/>
+    <attribute name="targetId" type="string"/>
+    <attribute name="src" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/references/ref/connection">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="attributes" type="bdl/entities/entity/references/ref/connection/attributes"/>
+    </sequence>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="id" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/references/ref/connection/attributes">
+    <element name="attribute" type="bdl/messages/message"/>
+    <attribute name="main" type="string"/>
+    <attribute name="position" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/categories/category">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence>
+        <sequence minOccurs="0" maxOccurs="1">
+          <choice>
+            <element name="layout" type="bdl/entities/entity/attributes/categories/category/layout"/>
+            <element name="access" type="bdl/entities/entity/attributes/categories/category/access"/>
+          </choice>
+        </sequence>
+        <element name="label" type="bdl/entities/entity/attributes/categories/category/label"/>
+      </sequence>
+    </sequence>
+    <attribute name="name" type="string"/>
+    <attribute name="label" type="string"/>
+    <attribute name="main" type="string"/>
+    <attribute name="type" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/categories">
+    <choice>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="category" type="bdl/entities/entity/attributes/categories/category"/>
+      </sequence>
+      <element name="group" type="bdl/entities/entity/semantic/tags"/>
+    </choice>
+    <attribute name="lang" type="string"/>
+    <attribute name="value" type="string"/>
+    <attribute name="key" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/attribute/uiElement" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="filters" type="bdl/entities/entity/attributes/attribute/uiElement/filters"/>
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          <element name="field" type="bdl/components/component/body/tab"/>
+        </sequence>
+        <sequence>
+          <element name="layout" type="bdl/entities/entity/references"/>
+          <element name="size" type="bdl/entities"/>
+        </sequence>
+      </choice>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="class" type="string"/>
+    <attribute name="size" type="string"/>
+    <attribute name="src" type="string"/>
+    <attribute name="readonly" type="string"/>
+    <attribute name="hardcoded" type="string"/>
+    <attribute name="filter" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/attribute/identField">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="paths" type="bdl/entities/entity/attributes/attribute/identField/paths"/>
+    </sequence>
+    <attribute name="src" type="string"/>
+    <attribute name="field" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/semantic">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="group" type="bdl/entities/entity"/>
+    </sequence>
+    <attribute name="name" type="string"/>
+    <attribute name="is_a" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/properties/component">
+    <element name="fields" type="bdl/components"/>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="name" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/properties">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="component" type="bdl/entities/entity/properties/component"/>
+    </sequence>
+    <attribute name="name" type="string"/>
+    <attribute name="id" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component/label">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="text" type="bdl/messages/message/title/text"/>
+    </sequence>
+    <attribute name="name" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/semantic/tags">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="tag" type="bdl/messages/message/title/text"/>
+    </sequence>
+    <attribute name="name" type="string"/>
+    <attribute name="label" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/semantic">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="concepts" type="bdl/entities/entity/semantic/concepts"/>
+        <sequence>
+          <sequence minOccurs="0" maxOccurs="1">
+            <element name="parent" type="bdl/entities/entity/semantic/parent"/>
+          </sequence>
+          <element name="tags" type="bdl/entities/entity/semantic/tags"/>
+        </sequence>
+      </choice>
+    </sequence>
+    <attribute name="src" type="string"/>
+    <attribute name="id" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/access">
+    <element name="acl" type="bdl/entities/entity/attributes/categories"/>
+    <attribute name="name" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/categories/category/label">
+    <element name="text" type="bdl/entities/entity/attributes/categories"/>
+    <attribute name="name" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/references/ref/connection/attributes">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="attribute" type="bdl/entities/entity/attributes/semantic"/>
+    </sequence>
+    <attribute name="name" type="string"/>
+    <attribute name="is" type="string"/>
+    <attribute name="max_lower" type="string"/>
+    <attribute name="max_higher" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/references/ref/connection">
+    <element name="attributes" type="bdl/entities/references/ref/connection/attributes"/>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="alias" type="string"/>
+    <attribute name="srcId" type="string"/>
+    <attribute name="targetId" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/references/ref">
+    <sequence>
+      <element name="label" type="bdl/entities/entity/attributes/semantic"/>
+      <element name="src" type="bdl/entities/entity/references/ref/connection"/>
+      <element name="connection" type="bdl/entities/references/ref/connection"/>
+      <element name="target" type="bdl/entities/entity/properties"/>
+    </sequence>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="binding" type="string" use="required"/>
+    <attribute name="relation" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/entities/references">
+    <element name="ref" type="bdl/entities/references/ref"/>
+    <attribute name="name" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/references/ref/target/filters/filter">
+    <element name="description" type="bdl/components/component/label"/>
+    <attribute name="srcField" type="string" use="required"/>
+    <attribute name="targetField" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/references/ref/target/filters">
+    <element name="filter" type="bdl/entities/entity/references/ref/target/filters/filter"/>
+    <attribute name="srcId" type="string"/>
+    <attribute name="targetId" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/attribute/events/onUpdate">
+    <element name="update" type="bdl/entities/entity/concepts"/>
+    <attribute name="width" type="string"/>
+    <attribute name="height" type="string"/>
+    <attribute name="minWidth" type="string"/>
+    <attribute name="minHeight" type="string"/>
+    <attribute name="maxWidth" type="string"/>
+    <attribute name="maxHeight" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/attribute/events">
+    <element name="onUpdate" type="bdl/entities/entity/attributes/attribute/events/onUpdate"/>
+    <attribute name="width" type="string"/>
+    <attribute name="height" type="string"/>
+    <attribute name="minWidth" type="string"/>
+    <attribute name="minHeight" type="string"/>
+    <attribute name="maxWidth" type="string"/>
+    <attribute name="maxHeight" type="string"/>
+  </complexType>
+  <complexType name="bdl/processes/process/status">
+    <element name="reference" type="bdl/entities/entity/semantic"/>
+    <attribute name="src" type="string" use="required"/>
+    <attribute name="id" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/processes/process/node/events/onArrive">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="acl" type="bdl/processes/process/node/events/onArrive/acl"/>
+    </sequence>
+    <attribute name="name" type="string"/>
+  </complexType>
+  <complexType name="bdl/processes/process/node/events">
+    <sequence>
+      <element name="onArrive" type="bdl/processes/process/node/events/onArrive"/>
+      <sequence minOccurs="0" maxOccurs="1">
+        <sequence>
+          <element name="onDeadline" type="bdl/entities/entity/access"/>
+          <element name="onFallback" type="bdl/entities/entity/access"/>
+        </sequence>
+      </sequence>
+      <element name="onLeave" type="bdl/entities/entity/access"/>
+    </sequence>
+    <attribute name="name" type="string"/>
+    <attribute name="mode" type="string"/>
+  </complexType>
+  <complexType name="bdl/processes/process/node/paths/path/acl">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="owner" type="bdl/entities/entity/access"/>
+        <element name="group" type="bdl/entities/entity/access"/>
+      </choice>
+    </sequence>
+    <attribute name="lang" type="string"/>
+  </complexType>
+  <complexType name="bdl/processes/process/node/paths/path/always/action">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="param" type="bdl/processes/process/node/paths/path/acl"/>
+    </sequence>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="field" type="string"/>
+  </complexType>
+  <complexType name="bdl/processes/process/node/paths/path/always">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="action" type="bdl/processes/process/node/paths/path/always/action"/>
+    </sequence>
+    <attribute name="page" type="string"/>
+    <attribute name="slice" type="string"/>
+  </complexType>
+  <complexType name="bdl/processes/process/node/paths/path">
+    <sequence>
+      <element name="label" type="bdl/entities/entity/access"/>
+      <sequence minOccurs="0" maxOccurs="1">
+        <element name="description" type="bdl/entities/entity/attributes/categories/category/label"/>
+      </sequence>
+      <element name="acl" type="bdl/processes/process/node/paths/path/acl"/>
+      <sequence minOccurs="0" maxOccurs="1">
+        <sequence>
+          <sequence minOccurs="0" maxOccurs="1">
+            <sequence>
+              <element name="check" type="bdl/processes/process/node/paths/path/check"/>
+              <element name="success" type="bdl/entities/entity/attributes/categories/category/label"/>
+              <element name="fail" type="bdl/entities/entity/attributes/categories/category/label"/>
+            </sequence>
+          </sequence>
+          <element name="always" type="bdl/processes/process/node/paths/path/always"/>
+        </sequence>
+      </sequence>
+    </sequence>
+    <attribute name="target" type="string" use="required"/>
+    <attribute name="srcId" type="string"/>
+  </complexType>
+  <complexType name="bdl/processes/process/node/paths/path/check/field">
+    <element name="required" type="bdl/entities/entity/properties/component"/>
+    <attribute name="field" type="string" use="required"/>
+    <attribute name="src" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/processes/process/node/paths/path/check">
+    <element name="field" type="bdl/processes/process/node/paths/path/check/field"/>
+    <attribute name="type" type="string"/>
+    <attribute name="align" type="string"/>
+  </complexType>
+  <complexType name="bdl/processes/process/node/paths">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="path" type="bdl/processes/process/node/paths/path"/>
+    </sequence>
+    <attribute name="srcId" type="string"/>
+    <attribute name="targetId" type="string"/>
+  </complexType>
+  <complexType name="bdl/processes/process/node">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="events" type="bdl/processes/process/node/events"/>
+        <element name="paths" type="bdl/processes/process/node/paths"/>
+        <element name="activ" type="bdl/processes/process/node/activ"/>
+        <element name="endpoint" type="bdl/entities/entity/properties/component"/>
+        <element name="startpoint" type="bdl/entities/entity/access"/>
+        <element name="label" type="bdl/entities/references"/>
+      </choice>
+    </sequence>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="target" type="string"/>
+  </complexType>
+  <complexType name="bdl/processes/process/node/events/onArrive/acl">
+    <element name="group" type="bdl/entities/entity/attributes/categories/category/label"/>
+    <attribute name="lang" type="string"/>
+  </complexType>
+  <complexType name="bdl/processes/process/node/activ">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="target" type="bdl/entities/references/ref/connection/attributes"/>
+    </sequence>
+    <attribute name="lang" type="string"/>
+  </complexType>
+  <complexType name="bdl/processes/process">
+    <sequence>
+      <element name="status" type="bdl/processes/process/status"/>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="node" type="bdl/processes/process/node"/>
+      </sequence>
+    </sequence>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="src" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/processes">
+    <element name="process" type="bdl/processes/process"/>
+    <attribute name="lang" type="string"/>
+    <attribute name="key" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/attribute/identField/paths">
+    <element name="path" type="bdl/entities/references/ref/connection"/>
+    <attribute name="window" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/categories">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="category" type="bdl/entities/references"/>
+    </sequence>
+    <attribute name="main" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/components/component/filters">
+    <element name="filter" type="bdl/entities/entity/references/ref/target/filters"/>
+    <attribute name="window" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component/head/properties">
+    <sequence>
+      <element name="close" type="bdl/entities/entity/attributes/attribute/events"/>
+      <element name="max" type="bdl/entities/entity/attributes/attribute/events"/>
+    </sequence>
+    <attribute name="src" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component/head/bars/title/menus">
+    <sequence>
+      <element name="left" type="bdl/entities/entity/attributes/attribute/events"/>
+      <element name="right" type="bdl/entities/entity/attributes/attribute/events"/>
+    </sequence>
+    <attribute name="src" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component/head/bars/title">
+    <sequence>
+      <element name="menus" type="bdl/components/component/head/bars/title/menus"/>
+      <element name="text" type="bdl/messages/message/title/text"/>
+    </sequence>
+    <attribute name="src" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component/head/bars">
+    <sequence>
+      <element name="title" type="bdl/components/component/head/bars/title"/>
+      <element name="status" type="bdl/components/component/head/bars/title"/>
+      <element name="info" type="bdl/entities/entity/attributes/attribute/events"/>
+      <element name="action" type="bdl/entities/entity/attributes/attribute/events"/>
+    </sequence>
+    <attribute name="src" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component/head">
+    <choice>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="field" type="bdl/components/component/head/field"/>
+      </sequence>
+      <sequence>
+        <element name="size" type="bdl/entities/entity/attributes/attribute/events/onUpdate"/>
+        <element name="properties" type="bdl/components/component/head/properties"/>
+        <element name="bars" type="bdl/components/component/head/bars"/>
+        <element name="access" type="bdl/entities/entity/attributes/attribute/events"/>
+        <element name="events" type="bdl/entities/entity/attributes/attribute/events"/>
+      </sequence>
+    </choice>
+    <attribute name="unit" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component/body/tab/head/properties">
+    <sequence>
+      <element name="closable" type="bdl/entities/entity/attributes/attribute/events"/>
+      <element name="readonly" type="bdl/entities/entity/attributes/attribute/events"/>
+      <element name="disabled" type="bdl/entities/entity/attributes/attribute/events"/>
+      <element name="reload" type="bdl/entities/entity/attributes/attribute/events"/>
+      <element name="hidden" type="bdl/entities/entity/attributes/attribute/events"/>
+    </sequence>
+    <attribute name="name" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component/body/tab/head">
+    <sequence>
+      <element name="properties" type="bdl/components/component/body/tab/head/properties"/>
+      <element name="label" type="bdl/entities/entity/attributes/attribute/events"/>
+      <element name="tooltip" type="bdl/entities/entity/attributes/attribute/events"/>
+      <element name="access" type="bdl/entities/entity/attributes/attribute/events"/>
+      <element name="constraint" type="bdl/entities/entity/attributes/attribute/events"/>
+      <element name="events" type="bdl/entities/entity/attributes/attribute/events"/>
+    </sequence>
+    <attribute name="src" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component/body/tab/body/row/caption">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="text" type="bdl/messages/message/title/text"/>
+    </sequence>
+    <attribute name="key" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/components/component/body/tab/body/row/col" mixed="true">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="text" type="bdl/messages/message/title/text"/>
+    </sequence>
+    <attribute name="size" type="string" use="required"/>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="key" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component/body/tab/body/row">
+    <sequence>
+      <element name="caption" type="bdl/components/component/body/tab/body/row/caption"/>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="col" type="bdl/components/component/body/tab/body/row/col"/>
+      </sequence>
+    </sequence>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="type" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/components/component/body/tab/body">
+    <element name="row" type="bdl/components/component/body/tab/body/row"/>
+    <attribute name="name" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component/body/tab">
+    <sequence>
+      <element name="head" type="bdl/components/component/body/tab/head"/>
+      <element name="body" type="bdl/components/component/body/tab/body"/>
+    </sequence>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="position" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component/body">
+    <element name="tab" type="bdl/components/component/body/tab"/>
+    <attribute name="field" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component_ex/properties">
+    <sequence>
+      <element name="close" type="bdl/processes/process/node/events/onArrive"/>
+      <element name="max" type="bdl/processes/process/node/events/onArrive"/>
+    </sequence>
+    <attribute name="width" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component_ex/bars/title/menus">
+    <sequence>
+      <element name="left" type="bdl/processes/process/node/events/onArrive"/>
+      <element name="right" type="bdl/processes/process/node/events/onArrive"/>
+    </sequence>
+    <attribute name="value" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component_ex/bars/title">
+    <sequence>
+      <element name="menus" type="bdl/components/component_ex/bars/title/menus"/>
+      <element name="text" type="bdl/messages/message/title/text"/>
+    </sequence>
+    <attribute name="is_a" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component_ex/bars">
+    <sequence>
+      <element name="title" type="bdl/components/component_ex/bars/title"/>
+      <element name="status" type="bdl/components/component_ex/bars/title"/>
+      <element name="info" type="bdl/processes/process/node/events/onArrive"/>
+      <element name="action" type="bdl/processes/process/node/events/onArrive"/>
+    </sequence>
+    <attribute name="type" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component_ex/content/tab/properties">
+    <sequence>
+      <element name="closable" type="bdl/processes/process/node/events/onArrive"/>
+      <element name="readonly" type="bdl/processes/process/node/events/onArrive"/>
+      <element name="disabled" type="bdl/processes/process/node/events/onArrive"/>
+      <element name="reload" type="bdl/processes/process/node/events/onArrive"/>
+      <element name="hidden" type="bdl/processes/process/node/events/onArrive"/>
+    </sequence>
+    <attribute name="lang" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component_ex/content/tab/row/caption">
+    <element name="text" type="bdl/messages/message/title/text"/>
+  </complexType>
+  <complexType name="bdl/components/component_ex/content/tab/row/col">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="entity" type="bdl/processes/process/node/events"/>
+        <element name="text" type="bdl/processes/process/node/paths/path/acl"/>
+      </choice>
+    </sequence>
+    <attribute name="size" type="string"/>
+    <attribute name="type" type="string"/>
+    <attribute name="key" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component_ex/content/tab/row">
+    <choice>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="cms" type="bdl/processes/process/node/paths/path/always"/>
+      </sequence>
+      <element name="entity" type="bdl/messages/message/content/block"/>
+      <element name="ref" type="bdl/entities/entity/properties/component"/>
+      <element name="html" type="bdl/processes/process/node/paths/path/always"/>
+      <element name="template" type="bdl/processes/process/node/paths/path/always"/>
+      <element name="text" type="bdl/components/component/body/tab/body/row/caption"/>
+      <sequence>
+        <element name="access" type="bdl/processes/process/node/events/onArrive"/>
+        <element name="constraint" type="bdl/processes/process/node/events/onArrive"/>
+        <element name="category" type="bdl/processes/process/node/events/onArrive"/>
+      </sequence>
+      <sequence>
+        <sequence minOccurs="0" maxOccurs="1">
+          <element name="caption" type="bdl/components/component_ex/content/tab/row/caption"/>
+        </sequence>
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          <element name="col" type="bdl/components/component_ex/content/tab/row/col"/>
+        </sequence>
+      </sequence>
+    </choice>
+    <attribute name="name" type="string"/>
+    <attribute name="type" type="string"/>
+  </complexType>
+  <complexType name="bdl/components/component_ex/content/tab">
+    <sequence>
+      <element name="properties" type="bdl/components/component_ex/content/tab/properties"/>
+      <element name="label" type="bdl/processes/process/node/events/onArrive"/>
+      <element name="tooltip" type="bdl/processes/process/node/events/onArrive"/>
+      <element name="access" type="bdl/processes/process/node/events/onArrive"/>
+      <element name="constraint" type="bdl/processes/process/node/events/onArrive"/>
+      <element name="events" type="bdl/processes/process/node/events/onArrive"/>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="row" type="bdl/components/component_ex/content/tab/row"/>
+      </sequence>
+    </sequence>
+    <attribute name="name" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/components/component_ex/content">
+    <element name="tab" type="bdl/components/component_ex/content/tab"/>
+  </complexType>
+  <complexType name="bdl/components/component_ex">
+    <sequence>
+      <element name="size" type="bdl/entities/entity/attributes/attribute/events"/>
+      <element name="properties" type="bdl/components/component_ex/properties"/>
+      <element name="bars" type="bdl/components/component_ex/bars"/>
+      <element name="access" type="bdl/processes/process/node/events/onArrive"/>
+      <element name="events" type="bdl/processes/process/node/events/onArrive"/>
+      <element name="content" type="bdl/components/component_ex/content"/>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="src" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/semantic/concepts">
+    <element name="concept" type="bdl/processes/process/node/paths/path/always/action"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/categories/category/layout">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="col" type="bdl/processes/process/node/paths/path/check"/>
+    </sequence>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/categories/category/access/acl">
+    <sequence>
+      <element name="role" type="bdl/processes/process/node/paths"/>
+      <element name="owner" type="bdl/processes/process/node/paths"/>
+      <element name="responsible" type="bdl/processes/process/node/paths"/>
+      <element name="user" type="bdl/processes/process/node/paths"/>
+    </sequence>
+    <attribute name="type" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/categories/category/access">
+    <element name="acl" type="bdl/entities/entity/attributes/categories/category/access/acl"/>
+  </complexType>
+  <complexType name="bdl/managements/management/label">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="text" type="bdl/processes/process/node/events/onArrive/acl"/>
+    </sequence>
+  </complexType>
+  <complexType name="bdl/managements/management/description">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="text" type="bdl/processes/process/node/activ"/>
+    </sequence>
+  </complexType>
+  <complexType name="bdl/managements/management/semantic/genders">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="gender" type="bdl/processes"/>
+    </sequence>
+  </complexType>
+  <complexType name="bdl/managements/management/semantic">
+    <element name="genders" type="bdl/managements/management/semantic/genders"/>
+  </complexType>
+  <complexType name="bdl/managements/management/events">
+    <sequence>
+      <element name="onInsert" type="bdl/entities/entity/attributes/attribute/identField/paths"/>
+      <element name="onUpdate" type="bdl/entities/entity/attributes/attribute/identField/paths"/>
+    </sequence>
+  </complexType>
+  <complexType name="bdl/managements/management/view/condition/if">
+    <choice>
+      <element name="entity" type="bdl/processes/process/node/paths/path/always/action"/>
+      <element name="group_role" type="bdl/components/component/body/tab/head/properties"/>
+    </choice>
+  </complexType>
+  <complexType name="bdl/managements/management/view/condition/then">
+    <element name="form_edit" type="bdl/components/component/body/tab/head"/>
+  </complexType>
+  <complexType name="bdl/managements/management/view/condition">
+    <sequence>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="if" type="bdl/managements/management/view/condition/if"/>
+      </sequence>
+      <element name="then" type="bdl/managements/management/view/condition/then"/>
+    </sequence>
+  </complexType>
+  <complexType name="bdl/managements/management/view">
+    <sequence>
+      <element name="insert" type="bdl/entities/entity/attributes/attribute/identField/paths"/>
+      <element name="update" type="bdl/components/component/filters"/>
+      <element name="table" type="bdl/components/component/head/properties"/>
+      <element name="overview" type="bdl/components/component/head/bars/title/menus"/>
+      <element name="form_insert" type="bdl/components/component/head/bars/title"/>
+      <element name="form_edit" type="bdl/components/component/head/bars"/>
+      <element name="condition" type="bdl/managements/management/view/condition"/>
+    </sequence>
+  </complexType>
+  <complexType name="bdl/managements/management/references">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="ref" type="bdl/components/component/body/tab/body"/>
+    </sequence>
+  </complexType>
+  <complexType name="bdl/managements/management">
+    <sequence>
+      <element name="label" type="bdl/managements/management/label"/>
+      <element name="description" type="bdl/managements/management/description"/>
+      <element name="semantic" type="bdl/managements/management/semantic"/>
+      <element name="events" type="bdl/managements/management/events"/>
+      <element name="view" type="bdl/managements/management/view"/>
+      <element name="references" type="bdl/managements/management/references"/>
+    </sequence>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="src" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/managements">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="management" type="bdl/managements/management"/>
+    </sequence>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/attribute/uiElement/filters/filter/paths">
+    <element name="path" type="bdl/components/component/body"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/attribute/uiElement/filters/filter">
+    <sequence minOccurs="0" maxOccurs="1">
+      <element name="paths" type="bdl/entities/entity/attributes/attribute/uiElement/filters/filter/paths"/>
+    </sequence>
+    <attribute name="srcId" type="string" use="required"/>
+    <attribute name="targetId" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/attribute/uiElement/filters">
+    <element name="filter" type="bdl/entities/entity/attributes/attribute/uiElement/filters/filter"/>
+    <attribute name="name" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/keys/primaryKey">
+    <element name="key" type="bdl/components/component_ex/properties"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/keys">
+    <element name="primaryKey" type="bdl/entities/entity/keys/primaryKey"/>
+  </complexType>
+  <complexType name="bdl/components/component/source">
+    <element name="path" type="bdl/processes/process/node/paths/path"/>
+    <attribute name="name" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/components/component/head/field">
+    <choice>
+      <element name="size" type="bdl/components/component_ex/properties"/>
+      <element name="color" type="bdl/components/component_ex/bars/title/menus"/>
+      <element name="label" type="bdl/components/component_ex/bars/title"/>
+      <element name="sum" type="bdl/components/component_ex/bars/title"/>
+    </choice>
+    <attribute name="name" type="string" use="required"/>
+    <attribute name="src" type="string"/>
+    <attribute name="type" type="string"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/condition/if">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="attribute" type="bdl/messages/message"/>
+    </sequence>
+    <attribute name="exists" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/condition/else">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="attribute" type="bdl/messages/message"/>
+    </sequence>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/condition">
+    <sequence>
+      <element name="if" type="bdl/entities/entity/attributes/condition/if"/>
+      <element name="else" type="bdl/entities/entity/attributes/condition/else"/>
+    </sequence>
+  </complexType>
+  <complexType name="bdl/entities/entity/semantic/parent">
+    <element name="uiElement" type="bdl/components/component_ex/bars"/>
+    <attribute name="target" type="string" use="required"/>
+  </complexType>
+  <complexType name="bdl/entities/entity/attributes/attribute/label">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="text" type="bdl/components/component_ex/content/tab/properties"/>
+    </sequence>
+  </complexType>
+</schema>

@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/gegenrated" elementFormDefault="qualified">
+  <complexType name="dblp/mastersthesis/author" mixed="true">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="author" type="dblp/mastersthesis/author"/>
+        <element name="title" type="dblp/mastersthesis/author"/>
+        <element name="year" type="dblp/mastersthesis/author"/>
+        <element name="school" type="dblp/mastersthesis/author"/>
+        <element name="series" type="dblp/mastersthesis/author"/>
+        <element name="number" type="dblp/mastersthesis/author"/>
+        <element name="publisher" type="dblp/mastersthesis/author"/>
+        <element name="month" type="dblp/mastersthesis/author"/>
+        <element name="isbn" type="dblp/mastersthesis/author"/>
+        <element name="ee" type="dblp/mastersthesis/author"/>
+      </choice>
+    </sequence>
+    <attribute name="mdate" type="string"/>
+    <attribute name="key" type="string"/>
+    <attribute name="href" type="string"/>
+    <attribute name="label" type="string"/>
+  </complexType>
+  <complexType name="dblp/article/title" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="sub" type="dblp/article/title/sub"/>
+          <element name="i" type="dblp/article/title/i"/>
+          <element name="tt" type="dblp/mastersthesis/author"/>
+          <element name="sup" type="dblp/article/title/sub"/>
+        </choice>
+      </sequence>
+    </sequence>
+  </complexType>
+  <complexType name="dblp/article">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="title" type="dblp/article/title"/>
+        <element name="editor" type="dblp/mastersthesis/author"/>
+        <element name="journal" type="dblp/mastersthesis/author"/>
+        <element name="volume" type="dblp/mastersthesis/author"/>
+        <element name="year" type="dblp/mastersthesis/author"/>
+        <element name="ee" type="dblp/mastersthesis/author"/>
+        <element name="cdrom" type="dblp/mastersthesis/author"/>
+        <element name="author" type="dblp/mastersthesis/author"/>
+        <element name="month" type="dblp/mastersthesis/author"/>
+        <element name="url" type="dblp/mastersthesis/author"/>
+        <element name="publisher" type="dblp/mastersthesis/author"/>
+        <element name="pages" type="dblp/mastersthesis/author"/>
+        <element name="number" type="dblp/mastersthesis/author"/>
+        <element name="cite" type="dblp/mastersthesis/author"/>
+      </choice>
+    </sequence>
+    <attribute name="mdate" type="string" use="required"/>
+    <attribute name="key" type="string" use="required"/>
+    <attribute name="reviewid" type="string"/>
+    <attribute name="rating" type="string"/>
+  </complexType>
+  <complexType name="dblp/article/title/sub" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="i" type="dblp/mastersthesis/author"/>
+        <element name="sub" type="dblp/mastersthesis/author"/>
+        <element name="sup" type="dblp/article/title/sub"/>
+      </choice>
+    </sequence>
+  </complexType>
+  <complexType name="dblp/proceedings/title" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="sup" type="dblp/mastersthesis/author"/>
+        <element name="sub" type="dblp/mastersthesis/author"/>
+      </choice>
+    </sequence>
+  </complexType>
+  <complexType name="dblp/proceedings">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="title" type="dblp/proceedings/title"/>
+        <element name="editor" type="dblp/mastersthesis/author"/>
+        <element name="booktitle" type="dblp/mastersthesis/author"/>
+        <element name="series" type="dblp/mastersthesis/author"/>
+        <element name="volume" type="dblp/mastersthesis/author"/>
+        <element name="year" type="dblp/mastersthesis/author"/>
+        <element name="url" type="dblp/mastersthesis/author"/>
+        <element name="publisher" type="dblp/mastersthesis/author"/>
+        <element name="isbn" type="dblp/mastersthesis/author"/>
+        <element name="author" type="dblp/mastersthesis/author"/>
+        <element name="number" type="dblp/mastersthesis/author"/>
+        <element name="cite" type="dblp/mastersthesis/author"/>
+        <element name="address" type="dblp/mastersthesis/author"/>
+        <element name="crossref" type="dblp/mastersthesis/author"/>
+        <element name="month" type="dblp/mastersthesis/author"/>
+        <element name="note" type="dblp/mastersthesis/author"/>
+        <element name="ee" type="dblp/mastersthesis/author"/>
+        <element name="journal" type="dblp/mastersthesis/author"/>
+      </choice>
+    </sequence>
+    <attribute name="mdate" type="string" use="required"/>
+    <attribute name="key" type="string" use="required"/>
+  </complexType>
+  <complexType name="dblp/www">
+    <choice>
+      <element name="title" type="dblp/mastersthesis/author"/>
+      <element name="url" type="dblp/mastersthesis/author"/>
+      <element name="year" type="dblp/mastersthesis/author"/>
+      <element name="author" type="dblp/mastersthesis/author"/>
+      <element name="editor" type="dblp/mastersthesis/author"/>
+      <element name="booktitle" type="dblp/mastersthesis/author"/>
+      <element name="publisher" type="dblp/mastersthesis/author"/>
+      <element name="isbn" type="dblp/mastersthesis/author"/>
+      <element name="cite" type="dblp/mastersthesis/author"/>
+      <element name="cdrom" type="dblp/mastersthesis/author"/>
+      <element name="series" type="dblp/mastersthesis/author"/>
+      <element name="volume" type="dblp/mastersthesis/author"/>
+      <element name="month" type="dblp/mastersthesis/author"/>
+      <element name="ee" type="dblp/mastersthesis/author"/>
+    </choice>
+    <attribute name="mdate" type="string" use="required"/>
+    <attribute name="key" type="string" use="required"/>
+  </complexType>
+  <complexType name="dblp/inproceedings/title" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <choice>
+          <element name="sub" type="dblp/inproceedings/title/sub"/>
+          <element name="tt" type="dblp/mastersthesis/author"/>
+          <element name="i" type="dblp/proceedings/title"/>
+          <element name="sup" type="dblp/inproceedings/title/sub"/>
+        </choice>
+      </sequence>
+    </sequence>
+  </complexType>
+  <complexType name="dblp/inproceedings">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="title" type="dblp/inproceedings/title"/>
+        <element name="author" type="dblp/mastersthesis/author"/>
+        <element name="pages" type="dblp/mastersthesis/author"/>
+        <element name="year" type="dblp/mastersthesis/author"/>
+        <element name="crossref" type="dblp/mastersthesis/author"/>
+        <element name="booktitle" type="dblp/mastersthesis/author"/>
+        <element name="ee" type="dblp/mastersthesis/author"/>
+        <element name="url" type="dblp/mastersthesis/author"/>
+        <element name="cdrom" type="dblp/mastersthesis/author"/>
+        <element name="cite" type="dblp/mastersthesis/author"/>
+        <element name="number" type="dblp/mastersthesis/author"/>
+        <element name="note" type="dblp/mastersthesis/author"/>
+        <element name="month" type="dblp/mastersthesis/author"/>
+      </choice>
+    </sequence>
+    <attribute name="mdate" type="string" use="required"/>
+    <attribute name="key" type="string" use="required"/>
+  </complexType>
+  <complexType name="dblp/inproceedings/title/sub" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="sup" type="dblp/mastersthesis/author"/>
+        <element name="i" type="dblp/mastersthesis/author"/>
+      </choice>
+    </sequence>
+  </complexType>
+  <complexType name="dblp/incollection">
+    <choice>
+      <element name="author" type="dblp/mastersthesis/author"/>
+      <element name="pages" type="dblp/mastersthesis/author"/>
+      <element name="year" type="dblp/mastersthesis/author"/>
+      <element name="booktitle" type="dblp/mastersthesis/author"/>
+      <element name="url" type="dblp/mastersthesis/author"/>
+      <element name="ee" type="dblp/mastersthesis/author"/>
+      <element name="cdrom" type="dblp/mastersthesis/author"/>
+      <element name="publisher" type="dblp/mastersthesis/author"/>
+      <element name="crossref" type="dblp/mastersthesis/author"/>
+      <element name="isbn" type="dblp/mastersthesis/author"/>
+      <element name="chapter" type="dblp/mastersthesis/author"/>
+      <element name="cite" type="dblp/mastersthesis/author"/>
+      <element name="title" type="dblp/proceedings/title"/>
+    </choice>
+    <attribute name="mdate" type="string" use="required"/>
+    <attribute name="key" type="string" use="required"/>
+  </complexType>
+  <complexType name="dblp/article/title/i" mixed="true">
+    <sequence minOccurs="0" maxOccurs="1">
+      <choice>
+        <element name="sup" type="dblp/mastersthesis/author"/>
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          <element name="sub" type="dblp/article/title/sub"/>
+        </sequence>
+      </choice>
+    </sequence>
+  </complexType>
+  <element name="dblp" type="dblp"/>
+  <complexType name="dblp">
+    <sequence minOccurs="1" maxOccurs="unbounded">
+      <choice>
+        <element name="article" type="dblp/article"/>
+        <element name="proceedings" type="dblp/proceedings"/>
+        <element name="www" type="dblp/www"/>
+        <element name="inproceedings" type="dblp/inproceedings"/>
+        <element name="incollection" type="dblp/incollection"/>
+        <element name="mastersthesis" type="dblp/mastersthesis/author"/>
+        <element name="phdthesis" type="dblp/mastersthesis/author"/>
+        <element name="book" type="dblp/www"/>
+      </choice>
+    </sequence>
+  </complexType>
+</schema>
