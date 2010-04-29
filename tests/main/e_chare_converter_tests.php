@@ -81,11 +81,9 @@ class slMainEChareConverterTests extends PHPUnit_Framework_TestCase
         $converter = new slEChareConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionSequence(
-                new slRegularExpressionAll(
-                    new slRegularExpressionElement( 'a' ),
-                    new slRegularExpressionElement( 'b' )
-                )
+            new slRegularExpressionAll(
+                new slRegularExpressionElement( 'a' ),
+                new slRegularExpressionElement( 'b' )
             ),
             $regexp
         );
@@ -101,12 +99,10 @@ class slMainEChareConverterTests extends PHPUnit_Framework_TestCase
         $converter = new slEChareConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
-            new slRegularExpressionSequence(
-                new slRegularExpressionAll( 
-                    new slRegularExpressionElement( 'a' ),
-                    new slRegularExpressionElement( 'b' ),
-                    new slRegularExpressionElement( 'c' )
-                )
+            new slRegularExpressionAll( 
+                new slRegularExpressionElement( 'a' ),
+                new slRegularExpressionElement( 'b' ),
+                new slRegularExpressionElement( 'c' )
             ),
             $regexp
         );
@@ -121,14 +117,12 @@ class slMainEChareConverterTests extends PHPUnit_Framework_TestCase
 
         $converter = new slEChareConverter();
         $regexp    = $converter->convertAutomaton( $automaton );
-        $expected  = new slRegularExpressionSequence(
-            $all = new slRegularExpressionAll( 
-                new slRegularExpressionElement( 'a' ),
-                new slRegularExpressionElement( 'b' ),
-                new slRegularExpressionElement( 'c' )
-            )
+        $expected  = new slRegularExpressionAll(
+            new slRegularExpressionElement( 'a' ),
+            new slRegularExpressionElement( 'b' ),
+            new slRegularExpressionElement( 'c' )
         );
-        $all->minOccurences = 0;
+        $expected->minOccurences = 0;
 
         $this->assertEquals(
             $expected,
@@ -146,9 +140,11 @@ class slMainEChareConverterTests extends PHPUnit_Framework_TestCase
         $regexp    = $converter->convertAutomaton( $automaton );
         $this->assertEquals(
             new slRegularExpressionSequence(
-                new slRegularExpressionAll( 
-                    new slRegularExpressionElement( 'a' ),
-                    new slRegularExpressionElement( 'b' )
+                new slRegularExpressionRepeatedAtLeastOnce(
+                    new slRegularExpressionChoice( 
+                        new slRegularExpressionElement( 'a' ),
+                        new slRegularExpressionElement( 'b' )
+                    )
                 ),
                 new slRegularExpressionElement( 'c' )
             ),

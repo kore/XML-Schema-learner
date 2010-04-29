@@ -51,26 +51,18 @@ class slEChareConverter extends slChareConverter
      */
     protected function buildRegularExpression( slCountingSingleOccurenceAutomaton $automaton, array $classes )
     {
-        $terms = array();
-        $nodes = $automaton->getNodes();
-        foreach ( $classes as $class )
+        // xsd:all may only occur outmost and makes only sense for equivalence 
+        // classes with more then one elment.
+        if ( count( $classes ) === 1 )
         {
-            $term  = $classes = $this->equivalenceClasses[$class];
-            $count = $automaton->getOccurenceSum( $classes );
+            $class = reset( $classes );
+            $term  = $eClasses = $this->equivalenceClasses[$class];
+            $count = $automaton->getOccurenceSum( $eClasses );
+            $nodes = $automaton->getNodes();
 
-            // Handle singletons first
-            if ( count( $term ) === 1 )
-            {
-                $terms[] = $this->wrapCountingPattern(
-                    $count,
-                    new slRegularExpressionElement( $nodes[reset( $term )] )
-                );
-                continue;
-            }
-
-            // Handle node equivalence classes with multiple elements
-            $generalCount = $automaton->getGeneralOccurences( $classes );
-            if ( ( $generalCount['max'] === 1 ) &&
+            $generalCount = $automaton->getGeneralOccurences( $eClasses );
+            if ( ( count( $term ) > 1 ) &&
+                 ( $generalCount['max'] === 1 ) &&
                  ( $count['max'] > 1 ) )
             {
                 // Inference all
@@ -83,22 +75,12 @@ class slEChareConverter extends slChareConverter
                 ) );
                 $term->minOccurences = $generalCount['min'];
                 $count = array( 'min' => 1, 'max' => 1 );
-            }
-            else
-            {
-                $term = new slRegularExpressionChoice( array_map(
-                    function( $term ) use ( $nodes )
-                    {
-                        return new slRegularExpressionElement( $nodes[$term] );
-                    },
-                    $term 
-                ) );
-            }
 
-            $terms[] = $this->wrapCountingPattern( $count, $term );
+                return $term;
+            }
         }
 
-        return new slRegularExpressionSequence( $terms );
+        return parent::buildRegularExpression( $automaton, $classes );
     }
 }
 
