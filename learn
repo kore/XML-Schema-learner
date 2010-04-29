@@ -27,11 +27,13 @@ require __DIR__ . '/src/environment.php';
 
 // Handle provided options
 $defaults = array(
-    'help'     => null,
-    'type'     => 'dtd',
-    'locality' => false,
-    'attrComp' => 'strict',
-    'ptrnComp' => null,
+    'help'       => null,
+    'type'       => 'dtd',
+    'locality'   => false,
+    'attrComp'   => 'strict',
+    'ptrnComp'   => null,
+    'snAttrComp' => null,
+    'snPtrnComp' => null,
 );
 
 $mapping = array(
@@ -50,6 +52,8 @@ $options = getopt(
         'locality:',
         'attrComp:',
         'ptrnComp:',
+        'snAttrComp:',
+        'snPtrnComp:',
     )
 );
 
@@ -92,8 +96,14 @@ XML Schema / BonXai specific options:
                 Defaults to "equals".
 
 -p / --ptrnComp Algorithm used to compare patterns in the type merger. Available
-                algorithms are "exact", "node-based" and "subsumed". If not 
-                specified, no types will be merged.
+                algorithms are "exact", "node-based", "subsumed" and
+                "node-subsumed". If not specified, no types will be merged.
+
+--snAttrComp    Attribute comparator used for elements with the same name.
+                Only need to be specified if it differs from the attrComp.
+
+--snPtrnComp    Pattern comparator used for elements with the same name. Only
+                need to be specified if it differs from the ptrnComp.
 
 EOHELP;
     exit( 0 );
@@ -107,9 +117,10 @@ $attributeComparators = array(
 );
 
 $patternComparators = array(
-    'exact'      => new slSchemaTypeEqualPatternComparator(),
-    'node-based' => new slSchemaTypeNodeBasedPatternComparator(),
-    'subsumed'   => new slSchemaTypeSubsumingPatternComparator(),
+    'exact'         => new slSchemaTypeEqualPatternComparator(),
+    'node-based'    => new slSchemaTypeNodeBasedPatternComparator(),
+    'subsumed'      => new slSchemaTypeSubsumingPatternComparator(),
+    'node-subsumed' => new slSchemaTypeNodeSubsumingPatternComparator(),
 );
 
 switch ( $options['type'] )
@@ -147,12 +158,22 @@ elseif ( is_numeric( $options['locality'] ) )
 // Set type merger based on configuration options.
 if ( isset( $patternComparators[$options['ptrnComp']] ) )
 {
-    $schema->setTypeMerger(
-        new slConfigurableTypeMerger(
-            $patternComparators[$options['ptrnComp']],
-            $attributeComparators[$options['attrComp']]
-        )
+    $typeMerger = new slConfigurableTypeMerger(
+        $patternComparators[$options['ptrnComp']],
+        $attributeComparators[$options['attrComp']]
     );
+
+    if ( $options['snAttrComp'] !== null )
+    {
+        $typeMerger->setSameNameAttributeComparator( $attributeComparators[$options['snAttrComp']] );
+    }
+
+    if ( $options['snPtrnComp'] !== null )
+    {
+        $typeMerger->setSameNamePatternComparator( $patternComparators[$options['snPtrnComp']] );
+    }
+
+    $schema->setTypeMerger( $typeMerger );
 }
 
 // Learn from files

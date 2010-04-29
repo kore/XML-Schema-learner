@@ -49,6 +49,22 @@ class slConfigurableTypeMerger extends slTypeMerger
     protected $attributeComparator;
 
     /**
+     * Comparator used to compare the pattern defined in a type, for elements 
+     * which have the same name.
+     * 
+     * @var slSchemaTypePatternComparator
+     */
+    protected $snPatternComparator;
+
+    /**
+     * Comparator used to compare the attributes defined in a type, for 
+     * elements which have the same name.
+     * 
+     * @var slSchemaTypeAttributeComparator
+     */
+    protected $snAttributeComparator;
+
+    /**
      * Construct configurable type merger from comparators
      *
      * Construct the type merger from an instance of a pattern comparator and 
@@ -60,8 +76,32 @@ class slConfigurableTypeMerger extends slTypeMerger
      */
     public function __construct( slSchemaTypePatternComparator $patternComparator, slSchemaTypeAttributeComparator $attributeComparator )
     {
-        $this->patternComparator   = $patternComparator;
-        $this->attributeComparator = $attributeComparator;
+        $this->patternComparator     = $patternComparator;
+        $this->attributeComparator   = $attributeComparator;
+        $this->snPatternComparator   = $patternComparator;
+        $this->snAttributeComparator = $attributeComparator;
+    }
+
+    /**
+     * Set atribute comparator for elements with the same name
+     * 
+     * @param slSchemaTypeAttributeComparator $attributeComparator 
+     * @return void
+     */
+    public function setSameNameAttributeComparator( slSchemaTypeAttributeComparator $attributeComparator )
+    {
+        $this->snAttributeComparator = $attributeComparator;
+    }
+
+    /**
+     * Set atribute comparator for elements with the same name
+     * 
+     * @param slSchemaTypePatternComparator $patternComparator 
+     * @return void
+     */
+    public function setSameNamePatternComparator( slSchemaTypePatternComparator $patternComparator )
+    {
+        $this->snPatternComparator = $patternComparator;
     }
 
     /**
@@ -97,8 +137,12 @@ class slConfigurableTypeMerger extends slTypeMerger
                         continue;
                     }
 
-                    if ( $this->patternComparator->compare( $elementI->type, $elementJ->type ) &&
-                         $this->attributeComparator->compare( $elementI->type, $elementJ->type ) )
+                    if ( ( ( $elementI->name === $elementJ->name ) &&
+                           ( $this->snPatternComparator->compare( $elementI->type, $elementJ->type ) &&
+                             $this->snAttributeComparator->compare( $elementI->type, $elementJ->type ) ) ) ||
+                         ( ( $elementI->name !== $elementJ->name ) &&
+                           ( $this->patternComparator->compare( $elementI->type, $elementJ->type ) &&
+                             $this->attributeComparator->compare( $elementI->type, $elementJ->type ) ) ) )
                     {
                         $this->mergeTypes( $elements, $typeIndex[$i], $typeIndex[$j] );
                         $elements = $this->applyTypeMapping( $elements );
