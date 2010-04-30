@@ -97,6 +97,7 @@ require __DIR__ . '/schema/type/attribute_comparator/merge.php';
 
 require __DIR__ . '/schema/type/pattern_comparator.php';
 require __DIR__ . '/schema/type/pattern_comparator/equal.php';
+require __DIR__ . '/schema/type/pattern_comparator/reduce.php';
 require __DIR__ . '/schema/type/pattern_comparator/node_based.php';
 require __DIR__ . '/schema/type/pattern_comparator/subsumption.php';
 require __DIR__ . '/schema/type/pattern_comparator/node_subsumption.php';

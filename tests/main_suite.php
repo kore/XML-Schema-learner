@@ -53,6 +53,7 @@ require 'main/schema_type_same_attribute_comparator_tests.php';
 require 'main/schema_type_equal_attribute_comparator_tests.php';
 require 'main/schema_type_merge_attribute_comparator_tests.php';
 require 'main/schema_type_equal_pattern_comparator_tests.php';
+require 'main/schema_type_reduce_pattern_comparator_tests.php';
 require 'main/schema_type_node_based_pattern_comparator_tests.php';
 require 'main/schema_type_subsumption_pattern_comparator_tests.php';
 require 'main/schema_element_tests.php';
@@ -97,6 +98,7 @@ class slMainTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTest( slMainSchemaTypeEqualAttributeComparatorTests::suite() );
         $this->addTest( slMainSchemaTypeMergeAttributeComparatorTests::suite() );
         $this->addTest( slMainSchemaTypeEqualPatternComparatorTests::suite() );
+        $this->addTest( slMainSchemaTypeReducePatternComparatorTests::suite() );
         $this->addTest( slMainSchemaTypeNodeBasedPatternComparatorTests::suite() );
         $this->addTest( slMainSchemaTypeSubsumingPatternComparatorTests::suite() );
         $this->addTest( slMainSchemaElementTests::suite() );
