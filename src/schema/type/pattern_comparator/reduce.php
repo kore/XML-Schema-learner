@@ -47,20 +47,21 @@ class slSchemaTypeReducePatternComparator extends slSchemaTypePatternComparator
      * 
      * @var float
      */
-    protected $epsilon;
+    protected $𝛆;
 
     /**
-     * Conxtruct from epsilon
+     * Construct from 𝛆
      *
-     * Epsilon defines the maximum distance between the two compared 
-     * automatons.
+     * 𝛆 defines the maximum distance between the two compared automatons.
+     *
+     * 𝛆 ∈ [0, 1]
      * 
-     * @param float $epsilon 
+     * @param float $𝛆 
      * @return void
      */
-    public function __construct( $epsilon = .25 )
+    public function __construct( $𝛆 = .25 )
     {
-        $this->epsilon = $epsilon;
+        $this->𝛆 = $𝛆;
     }
 
     /**
@@ -75,7 +76,7 @@ class slSchemaTypeReducePatternComparator extends slSchemaTypePatternComparator
      */
     public function compare( slSchemaType $a, slSchemaType $b )
     {
-        return ( $this->getDistance( $a, $b ) + $this->getDistance( $b, $a ) ) <= $this->epsilon;
+        return ( $this->getDistance( $a, $b ) + $this->getDistance( $b, $a ) ) <= $this->𝛆;
     }
 
     /**
@@ -100,15 +101,15 @@ class slSchemaTypeReducePatternComparator extends slSchemaTypePatternComparator
             {
                 $support   = $a->automaton->getEdgeWeight( $src, $dst );
                 $vertices += $support;
-                if ( !in_array( $src, $bNodes ) ||
-                     !in_array( $dst, $b->automaton->getOutgoing( $src ) ) )
+                if ( !in_array( $src, $bNodes, true ) ||
+                     !in_array( $dst, $b->automaton->getOutgoing( $src ), true ) )
                 {
                     $missingVertices += $support;
                 }
             }
         }
 
-        return $missingVertices / $vertices;
+        return $vertices === 0 ? 0 : $missingVertices / $vertices;
     }
 }
 
