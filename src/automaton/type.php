@@ -55,6 +55,18 @@ class slTypeAutomaton extends slAutomaton
     }
 
     /**
+     * Get edge label
+     * 
+     * @param string $src 
+     * @param string $dst 
+     * @return string
+     */
+    public function getEdgeLabel( $src, $dst )
+    {
+        return $this->reverseEdges[(string) $dst][(string) $src];
+    }
+
+    /**
      * Remove the given edge from the graph
      *
      * Removes the given edge from the graph, but keep the associated nodes.
