@@ -78,7 +78,7 @@ class slConfigurableTypeMerger extends slTypeMerger
     {
         $this->patternComparator     = $patternComparator;
         $this->attributeComparator   = $attributeComparator;
-        $this->snPatternComparator   = $patternComparator;
+        $this->snPatternComparator   = null;
         $this->snAttributeComparator = $attributeComparator;
     }
 
@@ -119,6 +119,43 @@ class slConfigurableTypeMerger extends slTypeMerger
      */
     public function groupTypes( array $elements )
     {
+        if ( $this->snPatternComparator !== null )
+        {
+            // Group elements with the same name first, if a special type 
+            // comperator has been provided for them.
+            do {
+                $changed   = false;
+                $typeCount = count( $elements );
+                $typeIndex = array_keys( $elements );
+
+                for ( $i = 0; $i < $typeCount; ++$i )
+                {
+                    for ( $j = $i + 1; $j < $typeCount; ++$j )
+                    {
+                        $elementI = $elements[$typeIndex[$i]];
+                        $elementJ = $elements[$typeIndex[$j]];
+
+                        // Skip if the type already points to the same object
+                        if ( $elementI->type === $elementJ->type )
+                        {
+                            continue;
+                        }
+
+                        if ( ( $elementI->name === $elementJ->name ) &&
+                             ( $this->snPatternComparator->compare( $elementI->type, $elementJ->type ) &&
+                               $this->snAttributeComparator->compare( $elementI->type, $elementJ->type ) ) )
+                        {
+                            $this->mergeTypes( $elements, $typeIndex[$i], $typeIndex[$j] );
+                            $elements = $this->applyTypeMapping( $elements );
+                            $changed = true;
+                            break 2;
+                        }
+                    }
+                }
+
+            } while ( $changed );
+        }
+
         do {
             $changed   = false;
             $typeCount = count( $elements );
@@ -137,12 +174,8 @@ class slConfigurableTypeMerger extends slTypeMerger
                         continue;
                     }
 
-                    if ( ( ( $elementI->name === $elementJ->name ) &&
-                           ( $this->snPatternComparator->compare( $elementI->type, $elementJ->type ) &&
-                             $this->snAttributeComparator->compare( $elementI->type, $elementJ->type ) ) ) ||
-                         ( ( $elementI->name !== $elementJ->name ) &&
-                           ( $this->patternComparator->compare( $elementI->type, $elementJ->type ) &&
-                             $this->attributeComparator->compare( $elementI->type, $elementJ->type ) ) ) )
+                    if ( $this->patternComparator->compare( $elementI->type, $elementJ->type ) &&
+                         $this->attributeComparator->compare( $elementI->type, $elementJ->type ) )
                     {
                         $this->mergeTypes( $elements, $typeIndex[$i], $typeIndex[$j] );
                         $elements = $this->applyTypeMapping( $elements );
