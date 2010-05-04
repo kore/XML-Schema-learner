@@ -82,11 +82,21 @@ EOSTYLE;
         {
             foreach ( $automaton->getOutgoing( $node ) as $dst )
             {
-                $content .= sprintf( "    \"%s\" -> \"%s\" [label = \"%s\"]\n",
-                    $node,
-                    $dst,
-                    $automaton->getEdgeLabel( $node, $dst )
-                );
+                if ( $automaton instanceof slTypeAutomaton )
+                {
+                    $content .= sprintf( "    \"%s\" -> \"%s\" [label = \"%s\"]\n",
+                        $node,
+                        $dst,
+                        $automaton->getEdgeLabel( $node, $dst )
+                    );
+                }
+                else
+                {
+                    $content .= sprintf( "    \"%s\" -> \"%s\"\n",
+                        $node,
+                        $dst
+                    );
+                }
             }
         }
 
