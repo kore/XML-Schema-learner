@@ -35,6 +35,7 @@ require __DIR__ . '/learn/baum_welch.php';
 require __DIR__ . '/automaton/visitor.php';
 require __DIR__ . '/automaton/visitor/dot.php';
 require __DIR__ . '/automaton/visitor/page_rank.php';
+require __DIR__ . '/automaton/visitor/support.php';
 
 require __DIR__ . '/converter.php';
 require __DIR__ . '/converter/chare.php';

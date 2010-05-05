@@ -35,6 +35,7 @@ require 'visitor/regular_expression_dtd_visitor_tests.php';
 require 'visitor/regular_expression_xml_schema_visitor_tests.php';
 require 'visitor/regular_expression_bonxai_visitor_tests.php';
 require 'visitor/automaton_page_rank_visitor.php';
+require 'visitor/automaton_support_visitor.php';
 require 'visitor/automaton_dot_visitor.php';
 require 'visitor/schema_dtd_visitor.php';
 require 'visitor/schema_xsd_visitor.php';
@@ -60,6 +61,7 @@ class slVisitorTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTest( slVisitorRegularExpressionXmlSchemaTests::suite() );
         $this->addTest( slVisitorRegularExpressionBonxaiTests::suite() );
         $this->addTest( slVisitorAutomatonPageRankTests::suite() );
+        $this->addTest( slVisitorAutomatonSupportTests::suite() );
         $this->addTest( slVisitorAutomatonDotTests::suite() );
         $this->addTest( slVisitorSchemaDtdTests::suite() );
         $this->addTest( slVisitorSchemaXmlSchemaTests::suite() );
