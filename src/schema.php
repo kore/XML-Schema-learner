@@ -126,6 +126,16 @@ abstract class slSchema
     }
 
     /**
+     * Get used type merger
+     * 
+     * @return slTypeMerger
+     */
+    public function getTypeMerger()
+    {
+        return $this->typeMerger;
+    }
+
+    /**
      * Learn XML file
      *
      * Learn the automaton from an XML file
@@ -238,7 +248,6 @@ abstract class slSchema
         }
 
         $this->elements = $this->typeMerger->groupTypes( $this->elements );
-        $typeMapping    = $this->typeMerger->getTypeMapping();
 
         $optimizer = new slRegularExpressionOptimizer();
 
