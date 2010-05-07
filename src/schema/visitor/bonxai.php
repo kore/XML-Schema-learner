@@ -105,9 +105,6 @@ class slSchemaBonxaiVisitor extends slSchemaVisitor
             }
         }
 
-        $visitor = new slAutomatonDotVisitor();
-        file_put_contents( 'debug/type_automaton.dot', $visitor->visit( $automaton ) );
-
         return $automaton;
     }
 
