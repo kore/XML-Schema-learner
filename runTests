@@ -13,6 +13,12 @@ if ( isset( $modules[end( $argv )] ) )
     $module = array_pop( $argv );
 }
 
+$module = false;
+if ( isset( $modules[end( $argv )] ) )
+{
+    $module = array_pop( $argv );
+}
+
 $argv = array_merge(
     array( 'phpunit' ),
     array_slice( $argv, 1 ),
@@ -30,6 +36,8 @@ else
 }
 
 echo "Executing: ", array_reduce( array_map( function( $arg ) { return escapeshellarg( $arg ); }, $_SERVER['argv'] ), function( $a, $b ) { return $a . ' ' . $b; } ), "\n";
+
+require_once 'PHPUnit/Autoload.php';
 
 require __DIR__ . '/tests/runner/command.php';
 arbitTextUiCommand::main();
