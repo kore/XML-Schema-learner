@@ -74,7 +74,6 @@ class slEChareConverter extends slChareConverter
                     $term 
                 ) );
                 $term->minOccurences = $generalCount['min'];
-                $count = array( 'min' => 1, 'max' => 1 );
 
                 return $term;
             }
