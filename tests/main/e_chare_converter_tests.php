@@ -192,5 +192,27 @@ class slMainEChareConverterTests extends PHPUnit_Framework_TestCase
             $regexp
         );
     }
+
+    public function testLearnAll()
+    {
+        $automaton = new slCountingSingleOccurenceAutomaton();
+        $automaton->learn( array( 'a', 'b', 'c' ) );
+        $automaton->learn( array( 'a', 'c', 'b' ) );
+        $automaton->learn( array( 'b', 'a', 'c' ) );
+        $automaton->learn( array( 'b', 'c', 'a' ) );
+        $automaton->learn( array( 'c', 'a', 'b' ) );
+        $automaton->learn( array( 'c', 'b', 'a' ) );
+
+        $converter = new slEChareConverter();
+        $regexp    = $converter->convertAutomaton( $automaton );
+        $this->assertEquals(
+            new slRegularExpressionAll(
+                new slRegularExpressionElement( 'a' ),
+                new slRegularExpressionElement( 'b' ),
+                new slRegularExpressionElement( 'c' )
+            ),
+            $regexp
+        );
+    }
 }
 

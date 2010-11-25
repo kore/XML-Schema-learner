@@ -241,5 +241,23 @@ class slMainSoreConverterTests extends PHPUnit_Framework_TestCase
             $regexp
         );
     }
+
+    public function testLearnAll()
+    {
+        $automaton = new slSingleOccurenceAutomaton();
+        $automaton->learn( array( 'a', 'b', 'c' ) );
+        $automaton->learn( array( 'a', 'c', 'b' ) );
+        $automaton->learn( array( 'b', 'a', 'c' ) );
+        $automaton->learn( array( 'b', 'c', 'a' ) );
+        $automaton->learn( array( 'c', 'a', 'b' ) );
+        $automaton->learn( array( 'c', 'b', 'a' ) );
+
+        $converter = new slSoreConverter();
+        $regexp    = $converter->convertAutomaton( $automaton );
+        $this->assertEquals(
+            false,
+            $regexp
+        );
+    }
 }
 
