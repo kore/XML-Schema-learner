@@ -1,0 +1,20 @@
+<shop>
+    <sale>
+        <item id="23">
+            <name>Some stuff</name>
+            <price currency="EUR">23.42</price>
+        </item>
+        <item id="42">
+            <name>Some other stuff</name>
+            <price currency="EUR">42.23</price>
+        </item>
+    </sale>
+    <stock>
+        <item id="23">
+            <amount>456</amount>
+        </item>
+        <item id="42">
+            <amount>123</amount>
+        </item>
+    </stock>
+</shop>
