@@ -2,6 +2,9 @@
 XML Schema learner
 ==================
 
+.. image:: https://travis-ci.org/kore/XML-Schema-learner.png?branch=master
+   :target: https://travis-ci.org/kore/XML-Schema-learner
+
 This software implements various state-of-the-art algorithms for algorithmic
 learning of XML Schema definitions and Document Type Definitions.
 
