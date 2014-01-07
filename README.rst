@@ -14,7 +14,7 @@ Usage
 
 To learn about the usage of the tool type::
 
-    ./learn --help
+    ./schema-learn --help
 
 To run the unit tests type::
 
