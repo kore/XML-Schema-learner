@@ -57,7 +57,7 @@ class slSchemaXmlSchemaVisitor extends slSchemaVisitor
         $doc->formatOutput = true;
 
         $root = $doc->createElementNS( 'http://www.w3.org/2001/XMLSchema', 'schema' );
-        $root->setAttribute( 'targetNamespace', 'http://example.com/gegenrated' );
+        $root->setAttribute( 'targetNamespace', 'http://example.com/generated' );
         $root->setAttribute( 'elementFormDefault', 'qualified' );
         $doc->appendChild( $root );
 
