@@ -54,7 +54,7 @@ class slPcdataSimpleTypeInferencer extends slSimpleTypeInferencer
      */
     public function learnString( $string )
     {
-        if ( !empty( $string ) )
+        if ( strlen( $string ) )
         {
             $this->empty = false;
         }

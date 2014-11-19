@@ -198,5 +198,30 @@ class slMainTypeInferencerTests extends PHPUnit_Framework_TestCase
             ) )
         );
     }
+
+    /**
+     * Get simple PCDATA types
+     *
+     * @return array
+     */
+    public function getSimplePcdataTypes()
+    {
+        return array(
+            array('string', 'PCDATA'),
+            array('false', 'PCDATA'),
+            array('0', 'PCDATA'),
+            array('', 'empty'),
+        );
+    }
+
+    /**
+     * @dataProvider getSimplePcdataTypes
+     */
+    public function testInferenceSimplePcdataTypes($string, $type)
+    {
+        $typeInferencer = new slPcdataSimpleTypeInferencer();
+        $typeInferencer->learnString($string);
+        $this->assertEquals($type, $typeInferencer->inferenceType());
+    }
 }
 
