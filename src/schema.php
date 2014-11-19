@@ -227,6 +227,7 @@ abstract class slSchema
 
                 case XMLReader::TEXT:
                 case XMLReader::CDATA:
+                case XMLReader::SIGNIFICANT_WHITESPACE:
                     // Text content
                     $contents[] = $reader->value;
                     break;
@@ -377,7 +378,7 @@ abstract class slSchema
     {
         foreach ( $contents as $string )
         {
-            $element->type->simpleTypeInferencer->learnString( trim( $string ) );
+            $element->type->simpleTypeInferencer->learnString( $string );
         }
     }
 

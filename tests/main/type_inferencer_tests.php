@@ -210,6 +210,7 @@ class slMainTypeInferencerTests extends PHPUnit_Framework_TestCase
             array('string', 'PCDATA'),
             array('false', 'PCDATA'),
             array('0', 'PCDATA'),
+            array("\n", 'PCDATA'),
             array('', 'empty'),
         );
     }
