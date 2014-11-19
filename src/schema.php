@@ -168,6 +168,7 @@ abstract class slSchema
     protected function traverse( XMLReader $reader, $path = array() )
     {
         $contents   = array();
+        $whitespace = array();
         $children   = array();
         $attributes = array();
 
@@ -220,6 +221,13 @@ abstract class slSchema
                     // Closing tag
                     $element = $this->getType( $path );
 
+                    if (!count($children)) {
+                        // Significant whitespace seems only significant if
+                        // there are children, but there is still some
+                        // whitespace.
+                        $contents = array_merge($contents, $whitespace);
+                    }
+
                     $this->learnAutomaton( $element, $children );
                     $this->learnSimpleType( $element, $contents );
                     $this->learnAttributes( $element, $attributes );
@@ -227,9 +235,12 @@ abstract class slSchema
 
                 case XMLReader::TEXT:
                 case XMLReader::CDATA:
-                case XMLReader::SIGNIFICANT_WHITESPACE:
                     // Text content
                     $contents[] = $reader->value;
+                    break;
+
+                case XMLReader::SIGNIFICANT_WHITESPACE:
+                    $whitespace[] = $reader->value;
                     break;
             }
         }

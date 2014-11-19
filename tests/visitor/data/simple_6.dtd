@@ -1,0 +1,3 @@
+<!ELEMENT alpha (#PCDATA)>
+<!ELEMENT beta (#PCDATA)>
+<!ELEMENT root ( ( alpha, beta ) )>
